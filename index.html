@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alloy Media — Paid Media for Home Improvement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #131311;
+  --bg-mid:   #191816;
+  --bg-lt:    #201F1C;
+  --teal:     #2EC4B6;
+  --teal-lt:  #5ED4CB;
+  --teal-dim: rgba(46,196,182,0.10);
+  --white:    #F4F1EC;
+  --muted:    #8A8880;
+  --border:   rgba(46,196,182,0.13);
+  --serif:    'Cormorant Garamond', Georgia, serif;
+  --sans:     'DM Sans', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--sans);
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 5vw;
+  background: rgba(19,19,17,0.0);
+  backdrop-filter: blur(0px);
+  border-bottom: 1px solid rgba(46,196,182,0);
+  transition: background 0.5s, backdrop-filter 0.5s, border-color 0.5s;
+}
+nav.scrolled {
+  background: rgba(19,19,17,0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--serif); font-size: 1.35rem; font-weight: 600;
+  letter-spacing: 0.02em; color: var(--white); text-decoration: none;
+}
+.nav-logo span { color: var(--teal); }
+
+.btn-primary {
+  font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--bg); background: var(--teal);
+  padding: 0.65rem 1.6rem; border: none; cursor: pointer;
+  text-decoration: none; display: inline-block;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-primary:hover { background: var(--teal-lt); transform: translateY(-1px); }
+
+/* ─── HERO + PARALLAX ─── */
+#hero {
+  position: relative;
+  height: 100vh; min-height: 600px;
+  display: flex; align-items: center;
+  overflow: hidden;
+}
+
+/* subtle grid overlay */
+.hero-grid {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(46,196,182,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46,196,182,0.03) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* radial teal bloom */
+.hero-bloom {
+  position: absolute; top: -20%; right: -10%;
+  width: 60vw; height: 60vw; z-index: 1; pointer-events: none;
+  background: radial-gradient(circle, rgba(46,196,182,0.06) 0%, transparent 60%);
+}
+
+/* vertical editorial rule */
+.hero-rule {
+  position: absolute; left: 5vw; top: 0; bottom: 0; z-index: 3;
+  width: 1px; pointer-events: none;
+  background: linear-gradient(to bottom, transparent 5%, var(--border) 25%, var(--border) 75%, transparent 95%);
+}
+
+/* parallax mountain container — each layer transforms on scroll */
+.mountains {
+  position: absolute; inset: 0; z-index: 1;
+  /* perspective for depth */
+}
+
+.m-layer {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  will-change: transform;
+  line-height: 0;
+}
+
+/* sky gradient sits behind everything */
+.sky {
+  position: absolute; inset: 0; z-index: 0;
+  background: linear-gradient(
+    to bottom,
+    #0C0C0A 0%,
+    #131311 40%,
+    #1A1E1D 75%,
+    #1D2420 100%
+  );
+}
+
+/* faint horizontal mist bands */
+.mist {
+  position: absolute; left: 0; right: 0; z-index: 2; pointer-events: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(46,196,182,0.06) 30%, rgba(46,196,182,0.09) 50%, rgba(46,196,182,0.06) 70%, transparent 100%);
+}
+.mist-1 { bottom: 38%; }
+.mist-2 { bottom: 28%; opacity: 0.6; }
+.mist-3 { bottom: 18%; opacity: 0.4; }
+
+/* hero text */
+.hero-content {
+  position: relative; z-index: 10;
+  padding: 0 5vw; padding-left: calc(5vw + 2rem);
+  max-width: 880px;
+}
+
+.hero-eyebrow {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--teal);
+  margin-bottom: 1.6rem;
+  display: flex; align-items: center; gap: 0.9rem;
+  animation: fadeUp 0.6s ease both;
+}
+.hero-eyebrow::before { content:''; display:block; width:2rem; height:1px; background:var(--teal); }
+
+h1 {
+  font-family: var(--serif);
+  font-size: clamp(3.6rem, 9vw, 7.2rem); font-weight: 700;
+  line-height: 0.95; letter-spacing: -0.015em;
+  margin-bottom: 1.6rem; color: var(--white);
+  animation: fadeUp 0.7s 0.08s ease both;
+  text-shadow: 0 2px 40px rgba(0,0,0,0.6);
+}
+h1 em { font-style: italic; color: var(--teal); }
+
+.hero-sub {
+  font-size: 1.05rem; font-weight: 300; color: rgba(244,241,236,0.7);
+  max-width: 480px; margin-bottom: 2.6rem; line-height: 1.75;
+  animation: fadeUp 0.7s 0.16s ease both;
+  text-shadow: 0 1px 20px rgba(0,0,0,0.8);
+}
+
+.hero-cta { animation: fadeUp 0.7s 0.24s ease both; }
+
+/* scroll indicator */
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  animation: fadeUp 1s 0.8s ease both;
+}
+.scroll-hint span {
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.5;
+}
+.scroll-arrow {
+  width: 1px; height: 36px;
+  background: linear-gradient(to bottom, var(--teal), transparent);
+  animation: scrollPulse 1.8s ease-in-out infinite;
+}
+@keyframes scrollPulse { 0%,100%{opacity:0.3;transform:scaleY(0.7)} 50%{opacity:1;transform:scaleY(1)} }
+
+/* ─── SECTIONS ─── */
+section { padding: 6rem 5vw; }
+
+.section-label {
+  font-size: 0.66rem; font-weight: 500; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 2.5rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+.section-label::before { content:''; display:block; width:1.6rem; height:1px; background:var(--teal); }
+
+h2 {
+  font-family: var(--serif);
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 600;
+  line-height: 1.15; margin-bottom: 1.4rem;
+}
+
+/* ─── PROBLEM ─── */
+#problem { border-top: 1px solid var(--border); background: var(--bg-mid); }
+.problem-text { max-width: 700px; font-size: 1.12rem; line-height: 1.88; color: #A8A49E; }
+.problem-text strong { color: var(--white); font-weight: 500; }
+
+/* ─── SERVICES ─── */
+#services { border-top: 1px solid var(--border); }
+.services-grid {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  margin-top: 3rem; border: 1px solid var(--border);
+}
+.service-card {
+  padding: 2.6rem 2.2rem; border-right: 1px solid var(--border);
+  transition: background 0.3s;
+}
+.service-card:last-child { border-right: none; }
+.service-card:hover { background: var(--teal-dim); }
+.service-number {
+  font-family: var(--serif); font-size: 3rem; font-weight: 700;
+  color: rgba(46,196,182,0.14); line-height: 1; margin-bottom: 1rem;
+}
+.service-card h3 {
+  font-family: var(--serif); font-size: 1.4rem; font-weight: 600;
+  margin-bottom: 0.7rem; color: var(--white);
+}
+.service-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+.service-tag {
+  display: block; margin-top: 1.4rem; font-size: 0.62rem; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal);
+  border-top: 1px solid var(--border); padding-top: 1rem;
+}
+
+/* ─── RESULTS ─── */
+#results { border-top: 1px solid var(--border); background: var(--bg-mid); }
+.results-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.stat-number {
+  font-family: var(--serif);
+  font-size: clamp(4rem, 9vw, 7rem); font-weight: 700;
+  color: var(--teal); line-height: 1; letter-spacing: -0.02em; margin-bottom: 0.5rem;
+}
+.stat-descriptor { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.6rem; }
+.stat-context-box { border-left: 2px solid var(--teal); padding-left: 1.2rem; }
+.stat-context-box p { font-size: 0.9rem; color: #A8A49E; line-height: 1.75; }
+.stat-context-box strong { color: var(--white); font-weight: 500; }
+.stat-secondary { display: flex; flex-direction: column; gap: 1.4rem; }
+.mini-stat { padding: 1.4rem 1.6rem; border: 1px solid var(--border); background: var(--bg-lt); }
+.mini-stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 0.3rem; }
+.mini-stat-label { font-size: 0.69rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
+
+/* ─── WHY ─── */
+#why { border-top: 1px solid var(--border); }
+.why-bullets { list-style: none; margin-top: 1rem; max-width: 680px; }
+.why-bullets li {
+  display: flex; gap: 1.2rem; padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem; color: #A8A49E; line-height: 1.65;
+}
+.why-bullets li:first-child { border-top: 1px solid var(--border); }
+.why-bullets li::before { content:'→'; color:var(--teal); font-size:0.85rem; margin-top:0.12em; flex-shrink:0; }
+.why-bullets li strong { color: var(--white); font-weight: 500; display: block; margin-bottom: 0.2rem; }
+
+/* ─── ABOUT ─── */
+#about { border-top: 1px solid var(--border); background: var(--bg-mid); }
+.about-inner { display: grid; grid-template-columns: 200px 1fr; gap: 3.5rem; align-items: start; max-width: 820px; }
+.about-photo {
+  width: 200px; aspect-ratio: 3/4; object-fit: cover;
+  object-position: center top; display: block;
+  border: 1px solid var(--border); filter: grayscale(15%);
+}
+.about-photo-placeholder {
+  width: 200px; aspect-ratio: 3/4; background: var(--bg-lt); border: 1px solid var(--border);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem;
+}
+.photo-note { font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); opacity:0.4; text-align:center; padding:0 1rem; }
+.about-name { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+.about-role { font-size: 0.71rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem; }
+.about-bio { font-size: 0.92rem; color: #A8A49E; line-height: 1.88; }
+
+/* ─── CTA ─── */
+#cta { border-top: 1px solid var(--border); text-align: center; }
+#cta h2 { font-size: clamp(2.6rem, 6vw, 4.6rem); margin-bottom: 0.7rem; }
+#cta > p { color: var(--muted); margin-bottom: 3rem; font-size: 1rem; }
+.contact-form { display:flex; flex-direction:column; gap:1rem; max-width:460px; margin:0 auto; text-align:left; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.form-group { display:flex; flex-direction:column; gap:0.4rem; }
+label { font-size:0.62rem; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); }
+input, textarea {
+  background:var(--bg-lt); border:1px solid var(--border); color:var(--white);
+  font-family:var(--sans); font-size:0.88rem; font-weight:300;
+  padding:0.8rem 1rem; outline:none; transition:border-color 0.2s; width:100%;
+}
+input::placeholder, textarea::placeholder { color:var(--muted); opacity:0.5; }
+input:focus, textarea:focus { border-color:var(--teal); }
+textarea { resize:none; min-height:100px; }
+.hp { display:none; }
+.form-submit { margin-top:0.3rem; width:100%; text-align:center; padding:0.95rem; font-size:0.79rem; }
+.form-note { font-size:0.67rem; color:var(--muted); opacity:0.55; text-align:center; margin-top:0.5rem; }
+.form-success { display:none; padding:2.5rem; border:1px solid var(--border); background:var(--teal-dim); max-width:460px; margin:0 auto; }
+.form-success p { font-family:var(--serif); font-size:1.4rem; font-style:italic; color:var(--white); }
+
+/* ─── FOOTER ─── */
+footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; align-items:center; justify-content:space-between; }
+.footer-logo { font-family:var(--serif); font-size:1.1rem; font-weight:600; color:var(--white); }
+.footer-logo span { color:var(--teal); }
+.footer-email { font-size:0.8rem; color:var(--muted); text-decoration:none; letter-spacing:0.04em; transition:color 0.2s; }
+.footer-email:hover { color:var(--teal); }
+.footer-copy { font-size:0.7rem; color:var(--muted); opacity:0.4; }
+
+/* ─── FLOATING CONTACT PANEL ─── */
+.float-trigger {
+  position: fixed; right: 0; top: 50%; transform: translateY(-50%);
+  z-index: 300;
+  background: var(--teal); color: var(--bg);
+  writing-mode: vertical-rl; text-orientation: mixed;
+  font-family: var(--sans); font-size: 0.65rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  padding: 1.2rem 0.65rem;
+  cursor: pointer; border: none;
+  transition: background 0.2s, opacity 0.4s;
+  opacity: 0;
+}
+.float-trigger:hover { background: var(--teal-lt); }
+.float-trigger.visible { opacity: 1; }
+
+.float-panel {
+  position: fixed; right: 0; top: 50%; transform: translateY(-50%) translateX(100%);
+  z-index: 299; width: 280px;
+  background: var(--bg-lt); border: 1px solid var(--border);
+  border-right: none;
+  padding: 2rem 1.8rem;
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+  box-shadow: -8px 0 40px rgba(0,0,0,0.4);
+}
+.float-panel.open { transform: translateY(-50%) translateX(0); }
+.float-panel .trigger-close {
+  position: absolute; top: 0.8rem; right: 0.8rem;
+  background: none; border: none; color: var(--muted); cursor: pointer;
+  font-size: 1.1rem; line-height: 1; padding: 0.3rem;
+  transition: color 0.2s;
+}
+.float-panel .trigger-close:hover { color: var(--white); }
+
+.panel-avatar {
+  width: 56px; height: 56px;
+  background: var(--bg); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+}
+.panel-avatar img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+.panel-avatar-initials { font-family:var(--serif); font-size:1.4rem; font-weight:600; color:var(--teal); }
+
+.panel-name { font-family:var(--serif); font-size:1.15rem; font-weight:600; margin-bottom:0.15rem; }
+.panel-title { font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:1.2rem; }
+.panel-divider { height:1px; background:var(--border); margin-bottom:1.2rem; }
+.panel-msg { font-size:0.82rem; color:#A8A49E; line-height:1.65; margin-bottom:1.4rem; }
+.panel-email {
+  display: block; font-size:0.78rem; color:var(--teal);
+  text-decoration:none; letter-spacing:0.04em; margin-bottom:1.2rem;
+  transition:color 0.2s;
+}
+.panel-email:hover { color:var(--teal-lt); }
+.panel-cta { width:100%; display:block; text-align:center; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 840px) {
+  .services-grid { grid-template-columns:1fr; }
+  .service-card { border-right:none; border-bottom:1px solid var(--border); }
+  .service-card:last-child { border-bottom:none; }
+  .results-inner { grid-template-columns:1fr; gap:3rem; }
+  .about-inner { grid-template-columns:1fr; gap:2rem; }
+  footer { flex-direction:column; gap:0.8rem; text-align:center; }
+  .form-row { grid-template-columns:1fr; }
+  .float-panel { width: 260px; }
+}
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <a href="#" class="nav-logo">Alloy<span>.</span></a>
+  <a href="#cta" class="btn-primary">Work With Us</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+
+  <!-- Sky gradient -->
+  <div class="sky"></div>
+
+  <!-- Parallax mountain layers (SVG, zero HTTP requests) -->
+  <div class="mountains">
+
+    <!-- Layer 0: farthest peaks — darkest, barely visible -->
+    <div class="m-layer" id="m0" style="bottom:-2%;">
+      <svg viewBox="0 0 1440 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="g0" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1C2622" stop-opacity="0.7"/>
+            <stop offset="100%" stop-color="#131311" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#g0)" d="M0,420 L0,280 C80,220 120,260 180,200 C230,150 260,170 320,130 C380,90 420,110 480,80 C520,58 550,72 590,50 C630,28 660,40 700,30 C740,20 770,35 810,55 C850,75 880,60 930,90 C980,120 1010,100 1060,130 C1110,160 1140,145 1190,170 C1240,195 1280,180 1320,210 C1360,240 1400,225 1440,250 L1440,420 Z"/>
+      </svg>
+    </div>
+
+    <!-- Layer 1: mid-far peaks — slightly lighter, teal-hinted ridgeline -->
+    <div class="m-layer" id="m1" style="bottom:-1%;">
+      <svg viewBox="0 0 1440 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#1E2926" stop-opacity="0.9"/>
+            <stop offset="60%" stop-color="#181815" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#131311" stop-opacity="1"/>
+          </linearGradient>
+          <!-- teal glow along ridgeline -->
+          <filter id="ridge-glow">
+            <feGaussianBlur stdDeviation="3" result="blur"/>
+            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+          </filter>
+        </defs>
+        <!-- main body -->
+        <path fill="url(#g1)" d="M0,380 L0,310 C60,270 100,290 150,250 C190,218 220,232 270,200 C310,174 340,185 390,160 C440,135 470,148 520,120 C560,96 590,108 640,88 C680,70 710,82 750,68 C790,54 820,66 860,82 C900,98 930,86 975,105 C1020,124 1050,112 1095,130 C1140,148 1165,140 1210,158 C1255,176 1280,168 1330,185 C1380,202 1410,196 1440,210 L1440,380 Z"/>
+        <!-- subtle teal ridgeline highlight -->
+        <path fill="none" stroke="rgba(46,196,182,0.18)" stroke-width="1.5"
+          d="M0,310 C60,270 100,290 150,250 C190,218 220,232 270,200 C310,174 340,185 390,160 C440,135 470,148 520,120 C560,96 590,108 640,88 C680,70 710,82 750,68 C790,54 820,66 860,82 C900,98 930,86 975,105 C1020,124 1050,112 1095,130 C1140,148 1165,140 1210,158 C1255,176 1280,168 1330,185 C1380,202 1410,196 1440,210"/>
+      </svg>
+    </div>
+
+    <!-- Layer 2: mid peaks — main character mountains -->
+    <div class="m-layer" id="m2" style="bottom:0%;">
+      <svg viewBox="0 0 1440 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#212420" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#131311" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#g2)" d="M0,340 L0,320 C40,305 70,315 110,295 C150,275 175,285 220,260 C255,240 275,248 315,225 C355,202 375,210 415,195 C445,183 465,188 498,175 C528,163 548,167 578,160 C605,153 625,157 660,148 C690,140 715,144 750,135 C780,127 805,130 840,140 C875,150 900,145 940,155 C975,165 1000,160 1040,170 C1075,180 1100,175 1140,185 C1175,195 1200,192 1245,202 C1285,212 1310,210 1360,220 C1395,228 1420,226 1440,232 L1440,340 Z"/>
+        <!-- teal snow-cap glints on main peaks -->
+        <path fill="none" stroke="rgba(46,196,182,0.30)" stroke-width="1"
+          d="M490,178 C498,175 510,168 520,162 C530,156 540,160 550,155 C558,151 565,153 578,148"/>
+        <path fill="none" stroke="rgba(46,196,182,0.22)" stroke-width="0.8"
+          d="M740,137 C748,133 758,127 768,122 C778,117 790,120 802,115"/>
+        <path fill="none" stroke="rgba(46,196,182,0.20)" stroke-width="0.8"
+          d="M210,264 C220,258 230,252 242,246"/>
+      </svg>
+    </div>
+
+    <!-- Layer 3: foreground ridge — darkest, closest -->
+    <div class="m-layer" id="m3" style="bottom:0%;">
+      <svg viewBox="0 0 1440 240" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;display:block;">
+        <defs>
+          <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#191816" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#131311" stop-opacity="1"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#g3)" d="M0,240 L0,210 C50,195 90,205 140,188 C180,174 210,180 260,168 C300,158 330,162 380,152 C415,144 440,148 480,140 C515,133 545,136 585,130 C620,124 650,127 690,122 C725,117 755,120 795,126 C830,132 860,128 900,134 C935,140 960,137 1000,143 C1035,149 1060,146 1100,152 C1135,158 1160,156 1200,162 C1240,168 1270,166 1320,172 C1360,177 1400,175 1440,180 L1440,240 Z"/>
+      </svg>
+    </div>
+
+  </div><!-- /mountains -->
+
+  <!-- Mist bands -->
+  <div class="mist mist-1"></div>
+  <div class="mist mist-2"></div>
+  <div class="mist mist-3"></div>
+
+  <!-- Grid overlay -->
+  <div class="hero-grid"></div>
+  <div class="hero-bloom"></div>
+  <div class="hero-rule"></div>
+
+  <!-- Text content -->
+  <div class="hero-content">
+    <div class="hero-eyebrow">Paid Media · Home Improvement</div>
+    <h1>Grow without<br><em>guessing.</em></h1>
+    <p class="hero-sub">Alloy Media runs paid media for home improvement companies that want real revenue — not vanity metrics from agencies that treat every vertical the same.</p>
+    <div class="hero-cta">
+      <a href="#cta" class="btn-primary">Work With Us</a>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+
+</section>
+
+<!-- PROBLEM -->
+<section id="problem">
+  <div class="section-label">The Problem</div>
+  <p class="problem-text">
+    Most home improvement companies hand their ad budgets to <strong>generalist agencies that have never sold a window or booked a remodeling estimate.</strong> They optimize for leads. You need closed revenue. There's a real difference — and it costs you every single month you stay with the wrong partner.
+  </p>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">What We Do</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-number">01</div>
+      <h3>Meta Ads</h3>
+      <p>Demand creation for homeowners who don't know they're ready yet — until they see the right creative at the right moment.</p>
+      <span class="service-tag">Facebook · Instagram · Reels</span>
+    </div>
+    <div class="service-card">
+      <div class="service-number">02</div>
+      <h3>Google Ads</h3>
+      <p>Capture high-intent buyers at the exact moment they're searching for what you install.</p>
+      <span class="service-tag">Search · Performance Max · LSA</span>
+    </div>
+    <div class="service-card">
+      <div class="service-number">03</div>
+      <h3>Full-Funnel Attribution</h3>
+      <p>Custom infrastructure that ties ad clicks to signed contracts inside your CRM — not just form fills.</p>
+      <span class="service-tag">Offline Conversions · CRM Sync · Revenue Tracking</span>
+    </div>
+  </div>
+</section>
+
+<!-- RESULTS -->
+<section id="results">
+  <div class="section-label">Results</div>
+  <div class="results-inner">
+    <div class="stat-block">
+      <div class="stat-number">$136K</div>
+      <div class="stat-descriptor">Revenue Generated</div>
+      <div class="stat-context-box">
+        <p>
+          <strong>9% blended marketing cost</strong> across Meta and Google. Window replacement company, Midwest market. Six-month campaign — starting from a blank ad account.
+        </p>
+      </div>
+    </div>
+    <div class="stat-secondary">
+      <div class="mini-stat">
+        <div class="mini-stat-num">9%</div>
+        <div class="mini-stat-label">Marketing cost on revenue — well below the 12–15% industry average</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">2 channels</div>
+        <div class="mini-stat-label">Meta + Google working in tandem, attributed to the same closed jobs</div>
+      </div>
+      <div class="mini-stat">
+        <div class="mini-stat-num">1 market</div>
+        <div class="mini-stat-label">We don't work with your competitors. One client per geography, full stop.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="why">
+  <div class="section-label">Why Alloy</div>
+  <h2>Built for this<br>vertical. Specifically.</h2>
+  <ul class="why-bullets">
+    <li>
+      <span>
+        <strong>Specialist, not generalist</strong>
+        We don't run ads for dentists, e-commerce, or SaaS. Home improvement is the only vertical we work in — so the playbook is real, not adapted from somewhere else.
+      </span>
+    </li>
+    <li>
+      <span>
+        <strong>Playbook built for windows and remodeling</strong>
+        Angles, hooks, and offer structures tested in the actual vertical — not borrowed from a DTC brand with crossed fingers.
+      </span>
+    </li>
+    <li>
+      <span>
+        <strong>Attribution to closed revenue, not just leads</strong>
+        We connect your CRM to your ad accounts so you know exactly which campaigns are generating signed jobs — and which ones are burning budget.
+      </span>
+    </li>
+    <li>
+      <span>
+        <strong>One client per market</strong>
+        When we take you on, your geography is yours. We will never work with your direct competitor.
+      </span>
+    </li>
+  </ul>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">The Founder</div>
+  <div class="about-inner">
+    <!--
+      PHOTO SWAP: replace the div below with:
+      <img class="about-photo" src="your-photo.jpg" alt="Alex Moriarty">
+    -->
+    <div class="about-photo-placeholder">
+      <div class="photo-note">Your photo here</div>
+    </div>
+    <div>
+      <div class="about-name">Alex Moriarty</div>
+      <div class="about-role">Founder, Alloy Media</div>
+      <p class="about-bio">
+        Alex spent years at SageHome watching home improvement companies lose revenue to agencies that measured success in clicks instead of contracts. He built Alloy Media to be the agency he wished existed — one with a real vertical playbook, custom attribution infrastructure, and a genuine stake in the client's closed revenue. If it doesn't sign, it doesn't count.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="section-label" style="justify-content:center;">Let's Talk</div>
+  <h2>Ready to grow?</h2>
+  <p>Tell us your market and where your ads stand today. We'll be direct about whether we're a fit.</p>
+
+  <!--
+    FORMSPREE (5 min setup):
+    1. formspree.io → free account → new form
+    2. Copy your endpoint URL (e.g. https://formspree.io/f/xyzabc123)
+    3. Replace YOUR_FORMSPREE_ENDPOINT below
+    4. Formspree dashboard: enable email alerts + connect Google Sheets
+  -->
+  <form
+    class="contact-form"
+    action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT"
+    method="POST"
+    id="contact-form"
+  >
+    <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="First Last" required>
+      </div>
+      <div class="form-group">
+        <label for="company">Company</label>
+        <input type="text" id="company" name="company" placeholder="Your company" required>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" placeholder="you@yourcompany.com" required>
+    </div>
+    <div class="form-group">
+      <label for="msg">Your market, monthly ad budget, and current cost per lead</label>
+      <textarea id="msg" name="message" placeholder="e.g. Chicago metro, ~$6K/mo on Google, CPL sitting around $180 and I want it under $100..."></textarea>
+    </div>
+    <button type="submit" class="btn-primary form-submit">Send Message →</button>
+    <div class="form-note">No pitch decks. No sales calls unless we think we can actually help.</div>
+  </form>
+  <div class="form-success" id="form-success">
+    <p>Got it — we'll be in touch shortly.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Alloy<span>.</span></div>
+  <a href="/cdn-cgi/l/email-protection#ea828f868685aa8b868685938d98859d9e82c4898587" class="footer-email"><span class="__cf_email__" data-cfemail="422a272e2e2d02232e2e2d3b25302d35362a6c212d2f">[email&#160;protected]</span></a>
+  <div class="footer-copy">© 2026 Alloy Media</div>
+</footer>
+
+<!-- FLOATING CONTACT PANEL -->
+<button class="float-trigger" id="float-trigger" onclick="togglePanel()">Let's&nbsp;Talk</button>
+
+<div class="float-panel" id="float-panel">
+  <button class="trigger-close" onclick="togglePanel()">✕</button>
+
+  <div class="panel-avatar">
+    <!--
+      PHOTO: replace the initials span with:
+      <img src="your-photo.jpg" alt="Alex Moriarty">
+    -->
+    <span class="panel-avatar-initials">AM</span>
+  </div>
+
+  <div class="panel-name">Alex Moriarty</div>
+  <div class="panel-title">Founder, Alloy Media</div>
+  <div class="panel-divider"></div>
+  <p class="panel-msg">Direct question about whether we're a fit for your market? Just reach out — no forms, no sales team.</p>
+  <a href="/cdn-cgi/l/email-protection#ef878a838380af8e83838096889d80989b87c18c8082" class="panel-email"><span class="__cf_email__" data-cfemail="39515c5555567958555556405e4b564e4d51175a5654">[email&#160;protected]</span></a>
+  <a href="#cta" class="btn-primary panel-cta" onclick="togglePanel()">Work With Us</a>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── Parallax mountains on scroll ── */
+(function() {
+  const layers = [
+    { el: document.getElementById('m0'), speed: 0.08 },
+    { el: document.getElementById('m1'), speed: 0.14 },
+    { el: document.getElementById('m2'), speed: 0.22 },
+    { el: document.getElementById('m3'), speed: 0.32 },
+  ];
+  const heroH = document.getElementById('hero').offsetHeight;
+
+  let ticking = false;
+  function onScroll() {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        const sy = window.scrollY;
+        if (sy <= heroH) {
+          layers.forEach(l => {
+            l.el.style.transform = `translateY(${sy * l.speed}px)`;
+          });
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+})();
+
+/* ── Nav fade-in on scroll ── */
+(function() {
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, { passive: true });
+})();
+
+/* ── Floating panel: show trigger after 3s ── */
+(function() {
+  const trigger = document.getElementById('float-trigger');
+  setTimeout(() => trigger.classList.add('visible'), 3000);
+})();
+
+function togglePanel() {
+  const panel = document.getElementById('float-panel');
+  const trigger = document.getElementById('float-trigger');
+  const open = panel.classList.toggle('open');
+  trigger.style.opacity = open ? '0' : '1';
+  trigger.style.pointerEvents = open ? 'none' : 'auto';
+}
+
+/* ── Form submission ── */
+(function() {
+  const form = document.getElementById('contact-form');
+  const success = document.getElementById('form-success');
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    btn.textContent = 'Sending…'; btn.disabled = true;
+    try {
+      const res 
