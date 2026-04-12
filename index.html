@@ -10,21 +10,24 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:       #131311;
-  --bg-mid:   #191816;
-  --bg-lt:    #201F1C;
-  --teal:     #2EC4B6;
-  --teal-lt:  #5ED4CB;
-  --teal-dim: rgba(46,196,182,0.10);
-  --white:    #F4F1EC;
-  --muted:    #8A8880;
-  --border:   rgba(46,196,182,0.13);
-  --serif:    'Cormorant Garamond', Georgia, serif;
-  --sans:     'DM Sans', sans-serif;
+  --bg:        #131311;
+  --bg-mid:    #191816;
+  --bg-lt:     #201F1C;
+  --bg-teal:   #0D1E1C;
+  --off-white: #F0EDE6;
+  --teal:      #2EC4B6;
+  --teal-lt:   #5ED4CB;
+  --teal-dim:  rgba(46,196,182,0.10);
+  --teal-dark: #1A6E67;
+  --white:     #F4F1EC;
+  --muted:     #8A8880;
+  --dark-text: #1A1916;
+  --border:    rgba(46,196,182,0.13);
+  --serif:     'Cormorant Garamond', Georgia, serif;
+  --sans:      'DM Sans', sans-serif;
 }
 
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--white);
@@ -35,7 +38,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ─── NAV ─── */
+/* ── NAV ── */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   display: flex; align-items: center; justify-content: space-between;
@@ -55,7 +58,6 @@ nav.scrolled {
   letter-spacing: 0.02em; color: var(--white); text-decoration: none;
 }
 .nav-logo span { color: var(--teal); }
-
 .btn-primary {
   font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
   letter-spacing: 0.13em; text-transform: uppercase;
@@ -66,82 +68,110 @@ nav.scrolled {
 }
 .btn-primary:hover { background: var(--teal-lt); transform: translateY(-1px); }
 
-/* ─── HERO + PARALLAX ─── */
+/* ── HERO ── */
 #hero {
   position: relative;
-  height: 100vh; min-height: 600px;
+  height: 100vh; min-height: 620px;
   display: flex; align-items: center;
   overflow: hidden;
+  background: #0A0B0A;
 }
 
-/* subtle grid overlay */
-.hero-grid {
+/* All image layers share these base styles */
+.hero-layer {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 108%; /* 8% extra height pushes watermark below fold */
+  object-fit: cover;
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Layer 1: Kitchen background */
+.layer-kitchen {
+  z-index: 1;
+  object-position: center 30%;
+  opacity: 0.75;
+  /* subtle Ken Burns */
+  animation: kenBurns 30s ease-in-out infinite alternate;
+}
+@keyframes kenBurns {
+  from { transform: scale(1.0) translate(0, 0); }
+  to   { transform: scale(1.06) translate(-1%, -1%); }
+}
+
+/* Dark gradient overlay — deepens bottom and left so text pops */
+.hero-overlay {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background:
+    linear-gradient(to right,  rgba(10,11,10,0.82) 0%, rgba(10,11,10,0.55) 45%, rgba(10,11,10,0.1) 100%),
+    linear-gradient(to top,    rgba(10,11,10,0.9)  0%, transparent 40%),
+    linear-gradient(to bottom, rgba(10,11,10,0.6)  0%, transparent 20%);
+}
+
+/* Layer 2: Blueprint lines — screen blend, slow rightward drift */
+.layer-blueprint {
+  z-index: 3;
+  mix-blend-mode: screen;
+  opacity: 0.55;
+  object-position: right center;
+  animation: blueprintDrift 28s ease-in-out infinite alternate;
+}
+@keyframes blueprintDrift {
+  from { transform: translateX(0)    translateY(0); }
+  to   { transform: translateX(18px) translateY(-8px); }
+}
+
+/* Layer 3: Light beam — screen blend, breathing pulse */
+.layer-beam {
+  z-index: 4;
+  mix-blend-mode: screen;
+  opacity: 0.75;
+  object-position: right top;
+  animation: beamBreath 5s ease-in-out infinite;
+}
+@keyframes beamBreath {
+  0%,100% { opacity: 0.65; }
+  50%      { opacity: 0.85; }
+}
+
+/* Layer 4: Cube — screen blend, gentle float */
+.layer-cube {
+  z-index: 5;
+  mix-blend-mode: screen;
+  opacity: 0.95;
+  object-position: center center;
+  animation: cubeFloat 8s ease-in-out infinite;
+}
+@keyframes cubeFloat {
+  0%,100% { transform: translateY(0)    scale(1); }
+  50%      { transform: translateY(-12px) scale(1.01); }
+}
+
+/* Grid overlay — very faint, unifies the composition */
+.hero-grid {
+  position: absolute; inset: 0; z-index: 6; pointer-events: none;
   background-image:
-    linear-gradient(rgba(46,196,182,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(46,196,182,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(46,196,182,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(46,196,182,0.025) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
-/* radial teal bloom */
-.hero-bloom {
-  position: absolute; top: -20%; right: -10%;
-  width: 60vw; height: 60vw; z-index: 1; pointer-events: none;
-  background: radial-gradient(circle, rgba(46,196,182,0.06) 0%, transparent 60%);
-}
-
-/* vertical editorial rule */
+/* Left editorial rule */
 .hero-rule {
-  position: absolute; left: 5vw; top: 0; bottom: 0; z-index: 3;
-  width: 1px; pointer-events: none;
+  position: absolute; left: 5vw; top: 0; bottom: 0; z-index: 7; width: 1px; pointer-events: none;
   background: linear-gradient(to bottom, transparent 5%, var(--border) 25%, var(--border) 75%, transparent 95%);
 }
 
-/* parallax mountain container — each layer transforms on scroll */
-.mountains {
-  position: absolute; inset: 0; z-index: 1;
-  /* perspective for depth */
-}
-
-.m-layer {
-  position: absolute; left: 0; right: 0; bottom: 0;
-  will-change: transform;
-  line-height: 0;
-}
-
-/* sky gradient sits behind everything */
-.sky {
-  position: absolute; inset: 0; z-index: 0;
-  background: linear-gradient(
-    to bottom,
-    #0C0C0A 0%,
-    #131311 40%,
-    #1A1E1D 75%,
-    #1D2420 100%
-  );
-}
-
-/* faint horizontal mist bands */
-.mist {
-  position: absolute; left: 0; right: 0; z-index: 2; pointer-events: none;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(46,196,182,0.06) 30%, rgba(46,196,182,0.09) 50%, rgba(46,196,182,0.06) 70%, transparent 100%);
-}
-.mist-1 { bottom: 38%; }
-.mist-2 { bottom: 28%; opacity: 0.6; }
-.mist-3 { bottom: 18%; opacity: 0.4; }
-
-/* hero text */
+/* Hero text */
 .hero-content {
-  position: relative; z-index: 10;
+  position: relative; z-index: 8;
   padding: 0 5vw; padding-left: calc(5vw + 2rem);
-  max-width: 880px;
+  max-width: 680px;
 }
-
 .hero-eyebrow {
   font-size: 0.68rem; font-weight: 500; letter-spacing: 0.24em;
-  text-transform: uppercase; color: var(--teal);
-  margin-bottom: 1.6rem;
+  text-transform: uppercase; color: var(--teal); margin-bottom: 1.6rem;
   display: flex; align-items: center; gap: 0.9rem;
   animation: fadeUp 0.6s ease both;
 }
@@ -149,146 +179,159 @@ nav.scrolled {
 
 h1 {
   font-family: var(--serif);
-  font-size: clamp(3.6rem, 9vw, 7.2rem); font-weight: 700;
+  font-size: clamp(3.6rem, 8vw, 6.8rem); font-weight: 700;
   line-height: 0.95; letter-spacing: -0.015em;
   margin-bottom: 1.6rem; color: var(--white);
   animation: fadeUp 0.7s 0.08s ease both;
-  text-shadow: 0 2px 40px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.8), 0 0 80px rgba(0,0,0,0.5);
 }
 h1 em { font-style: italic; color: var(--teal); }
 
 .hero-sub {
-  font-size: 1.05rem; font-weight: 300; color: rgba(244,241,236,0.7);
-  max-width: 480px; margin-bottom: 2.6rem; line-height: 1.75;
+  font-size: 1rem; font-weight: 300; color: rgba(244,241,236,0.75);
+  max-width: 420px; margin-bottom: 2.6rem; line-height: 1.78;
   animation: fadeUp 0.7s 0.16s ease both;
-  text-shadow: 0 1px 20px rgba(0,0,0,0.8);
+  text-shadow: 0 1px 16px rgba(0,0,0,0.9);
 }
-
 .hero-cta { animation: fadeUp 0.7s 0.24s ease both; }
 
-/* scroll indicator */
+/* Scroll hint */
 .scroll-hint {
   position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-  z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  z-index: 8; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
   animation: fadeUp 1s 0.8s ease both;
 }
-.scroll-hint span {
-  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.5;
-}
-.scroll-arrow {
-  width: 1px; height: 36px;
-  background: linear-gradient(to bottom, var(--teal), transparent);
-  animation: scrollPulse 1.8s ease-in-out infinite;
-}
+.scroll-hint span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); opacity: 0.5; }
+.scroll-arrow { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--teal), transparent); animation: scrollPulse 1.8s ease-in-out infinite; }
 @keyframes scrollPulse { 0%,100%{opacity:0.3;transform:scaleY(0.7)} 50%{opacity:1;transform:scaleY(1)} }
 
-/* ─── SECTIONS ─── */
+/* ── SHARED ── */
 section { padding: 6rem 5vw; }
-
 .section-label {
   font-size: 0.66rem; font-weight: 500; letter-spacing: 0.22em;
   text-transform: uppercase; color: var(--teal); margin-bottom: 2.5rem;
   display: flex; align-items: center; gap: 0.8rem;
 }
 .section-label::before { content:''; display:block; width:1.6rem; height:1px; background:var(--teal); }
-
-h2 {
-  font-family: var(--serif);
-  font-size: clamp(2rem, 4vw, 3rem); font-weight: 600;
-  line-height: 1.15; margin-bottom: 1.4rem;
+.section-label-dark {
+  font-size: 0.66rem; font-weight: 500; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--teal-dark); margin-bottom: 2.5rem;
+  display: flex; align-items: center; gap: 0.8rem;
 }
+.section-label-dark::before { content:''; display:block; width:1.6rem; height:1px; background:var(--teal-dark); }
+h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; line-height: 1.15; margin-bottom: 1.4rem; }
 
-/* ─── PROBLEM ─── */
+/* ── PROBLEM ── */
 #problem { border-top: 1px solid var(--border); background: var(--bg-mid); }
 .problem-text { max-width: 700px; font-size: 1.12rem; line-height: 1.88; color: #A8A49E; }
 .problem-text strong { color: var(--white); font-weight: 500; }
 
-/* ─── SERVICES ─── */
-#services { border-top: 1px solid var(--border); }
-.services-grid {
-  display: grid; grid-template-columns: repeat(3,1fr);
-  margin-top: 3rem; border: 1px solid var(--border);
-}
-.service-card {
-  padding: 2.6rem 2.2rem; border-right: 1px solid var(--border);
-  transition: background 0.3s;
-}
+/* ── SERVICES ── */
+#services { border-top: 1px solid var(--border); background: var(--bg-teal); }
+.services-grid { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 3rem; border: 1px solid var(--border); }
+.service-card { padding: 2.6rem 2.2rem; border-right: 1px solid var(--border); transition: background 0.3s; }
 .service-card:last-child { border-right: none; }
 .service-card:hover { background: var(--teal-dim); }
-.service-number {
-  font-family: var(--serif); font-size: 3rem; font-weight: 700;
-  color: rgba(46,196,182,0.14); line-height: 1; margin-bottom: 1rem;
-}
-.service-card h3 {
-  font-family: var(--serif); font-size: 1.4rem; font-weight: 600;
-  margin-bottom: 0.7rem; color: var(--white);
-}
+.service-number { font-family: var(--serif); font-size: 3rem; font-weight: 700; color: rgba(46,196,182,0.14); line-height: 1; margin-bottom: 1rem; }
+.service-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.7rem; color: var(--white); }
 .service-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
-.service-tag {
-  display: block; margin-top: 1.4rem; font-size: 0.62rem; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal);
-  border-top: 1px solid var(--border); padding-top: 1rem;
-}
+.service-tag { display: block; margin-top: 1.4rem; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); border-top: 1px solid var(--border); padding-top: 1rem; }
 
-/* ─── RESULTS ─── */
-#results { border-top: 1px solid var(--border); background: var(--bg-mid); }
-.results-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-.stat-number {
-  font-family: var(--serif);
-  font-size: clamp(4rem, 9vw, 7rem); font-weight: 700;
-  color: var(--teal); line-height: 1; letter-spacing: -0.02em; margin-bottom: 0.5rem;
-}
-.stat-descriptor { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); margin-bottom: 1.6rem; }
-.stat-context-box { border-left: 2px solid var(--teal); padding-left: 1.2rem; }
-.stat-context-box p { font-size: 0.9rem; color: #A8A49E; line-height: 1.75; }
-.stat-context-box strong { color: var(--white); font-weight: 500; }
-.stat-secondary { display: flex; flex-direction: column; gap: 1.4rem; }
-.mini-stat { padding: 1.4rem 1.6rem; border: 1px solid var(--border); background: var(--bg-lt); }
-.mini-stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--white); line-height: 1; margin-bottom: 0.3rem; }
-.mini-stat-label { font-size: 0.69rem; letter-spacing: 0.13em; text-transform: uppercase; color: var(--muted); }
+/* ── RESULTS (LIGHT) ── */
+#results { background: var(--off-white); color: var(--dark-text); border-top: none; }
+.results-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.stat-number { font-family: var(--serif); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 700; color: var(--dark-text); line-height: 1; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+.stat-teal { color: var(--teal-dark); }
+.stat-descriptor { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; color: #6A6860; margin-bottom: 1.6rem; }
+.stat-context-box { border-left: 2px solid var(--teal-dark); padding-left: 1.2rem; }
+.stat-context-box p { font-size: 0.9rem; color: #5A5855; line-height: 1.75; }
+.stat-context-box strong { color: var(--dark-text); font-weight: 500; }
+.client-quote-wrap { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(26,110,103,0.15); }
+.client-logo { height: 28px; opacity: 0.5; margin-bottom: 1rem; filter: grayscale(100%) brightness(0); display: block; }
+.client-quote { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--dark-text); line-height: 1.65; margin-bottom: 0.7rem; }
+.client-quote-attr { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: #6A6860; }
+.stat-secondary { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 0.5rem; }
+.mini-stat { padding: 1.4rem 1.6rem; border: 1px solid rgba(26,110,103,0.18); background: #E8E4DD; }
+.mini-stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--dark-text); line-height: 1; margin-bottom: 0.3rem; }
+.mini-stat-label { font-size: 0.69rem; letter-spacing: 0.13em; text-transform: uppercase; color: #6A6860; }
 
-/* ─── WHY ─── */
-#why { border-top: 1px solid var(--border); }
+/* ── WHY ── */
+#why { border-top: 1px solid var(--border); background: var(--bg); }
 .why-bullets { list-style: none; margin-top: 1rem; max-width: 680px; }
-.why-bullets li {
-  display: flex; gap: 1.2rem; padding: 1.5rem 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.92rem; color: #A8A49E; line-height: 1.65;
-}
+.why-bullets li { display: flex; gap: 1.2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; color: #A8A49E; line-height: 1.65; }
 .why-bullets li:first-child { border-top: 1px solid var(--border); }
 .why-bullets li::before { content:'→'; color:var(--teal); font-size:0.85rem; margin-top:0.12em; flex-shrink:0; }
 .why-bullets li strong { color: var(--white); font-weight: 500; display: block; margin-bottom: 0.2rem; }
 
-/* ─── ABOUT ─── */
-#about { border-top: 1px solid var(--border); background: var(--bg-mid); }
-.about-inner { display: grid; grid-template-columns: 200px 1fr; gap: 3.5rem; align-items: start; max-width: 820px; }
-.about-photo {
-  width: 200px; aspect-ratio: 3/4; object-fit: cover;
-  object-position: center top; display: block;
-  border: 1px solid var(--border); filter: grayscale(15%);
-}
-.about-photo-placeholder {
-  width: 200px; aspect-ratio: 3/4; background: var(--bg-lt); border: 1px solid var(--border);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.6rem;
-}
-.photo-note { font-size:0.62rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); opacity:0.4; text-align:center; padding:0 1rem; }
-.about-name { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; margin-bottom: 0.3rem; }
-.about-role { font-size: 0.71rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem; }
-.about-bio { font-size: 0.92rem; color: #A8A49E; line-height: 1.88; }
+/* ── ATTRIBUTION ── */
+#attribution { border-top: 1px solid var(--border); background: var(--bg-teal); }
+.attr-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center; }
+.attr-copy h2 { margin-bottom: 1rem; }
+.attr-copy p { font-size: 0.93rem; color: #A8A49E; line-height: 1.85; margin-bottom: 1rem; }
+.attr-copy p strong { color: var(--white); font-weight: 500; }
+.verticals { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.6rem; }
+.vertical-tag { font-size: 0.64rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); border: 1px solid var(--border); padding: 0.45rem 0.9rem; }
 
-/* ─── CTA ─── */
-#cta { border-top: 1px solid var(--border); text-align: center; }
+.attr-diagram { position: relative; background: rgba(13,30,28,0.8); border: 1px solid var(--border); padding: 2rem 1.5rem; }
+.diag-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.diag-col { display: flex; flex-direction: column; gap: 0.7rem; }
+.diag-node { background: var(--bg-lt); border: 1px solid var(--border); padding: 0.55rem 0.8rem; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; color: var(--white); text-align: center; white-space: nowrap; }
+.diag-node.platform { border-color: rgba(46,196,182,0.3); }
+.diag-node.crm      { border-color: rgba(46,196,182,0.2); }
+.diag-node.core     { background: rgba(46,196,182,0.1); border: 1px solid var(--teal); padding: 1rem 1.2rem; font-size: 0.75rem; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; text-align: center; flex-shrink: 0; }
+.diag-node.platform::before { content:''; display:inline-block; width:5px; height:5px; background:var(--teal); border-radius:50%; margin-right:6px; vertical-align:middle; animation:nodePulse 2s ease-in-out infinite; }
+@keyframes nodePulse { 0%,100%{opacity:0.4;transform:scale(0.8)} 50%{opacity:1;transform:scale(1.2)} }
+.diag-node.platform:nth-child(2)::before { animation-delay:0.5s; }
+.diag-node.platform:nth-child(3)::before { animation-delay:1s; }
+.diag-arrows { display:flex; flex-direction:column; align-items:center; gap:0.4rem; flex-shrink:0; }
+.diag-arrow-track { position:relative; width:48px; height:2px; background:var(--border); overflow:visible; }
+.diag-arrow-track::after { content:''; position:absolute; top:50%; left:-6px; width:6px; height:6px; background:var(--teal); border-radius:50%; transform:translateY(-50%); animation:packetFlow 2.4s ease-in-out infinite; }
+@keyframes packetFlow { 0%{left:-6px;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{left:calc(100% + 6px);opacity:0} }
+.diag-arrow-track.reverse::after { animation:packetFlowReverse 2.4s ease-in-out infinite; }
+@keyframes packetFlowReverse { 0%{left:calc(100% + 6px);opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{left:-6px;opacity:0} }
+.diag-arrow-track:nth-child(1)::after { animation-delay:0s; }
+.diag-arrow-track:nth-child(2)::after { animation-delay:0.6s; }
+.diag-arrow-track:nth-child(3)::after { animation-delay:1.2s; }
+.diag-arrow-track.reverse:nth-child(1)::after { animation-delay:0.3s; }
+.diag-arrow-track.reverse:nth-child(2)::after { animation-delay:0.9s; }
+.diag-arrow-track.reverse:nth-child(3)::after { animation-delay:1.5s; }
+.diag-arrow-track::before { content:''; position:absolute; right:-5px; top:50%; transform:translateY(-50%); border-left:5px solid rgba(46,196,182,0.35); border-top:4px solid transparent; border-bottom:4px solid transparent; }
+.diag-arrow-track.reverse::before { right:auto; left:-5px; border-left:none; border-right:5px solid rgba(46,196,182,0.35); }
+.diag-analysis { margin-top:1.2rem; padding:0.7rem 1rem; border:1px dashed rgba(46,196,182,0.25); font-size:0.63rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; text-align:center; position:relative; }
+.diag-analysis::before { content:''; position:absolute; top:-1.2rem; left:50%; width:1px; height:1.2rem; background:var(--border); }
+.diag-analysis span { color:var(--teal); animation:blink 1.4s step-end infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.diag-ids { margin-top:0.6rem; display:flex; gap:0.4rem; justify-content:center; flex-wrap:wrap; }
+.diag-id-pill { font-size:0.58rem; font-family:monospace; background:rgba(46,196,182,0.08); border:1px solid rgba(46,196,182,0.2); color:var(--teal); padding:0.2rem 0.5rem; border-radius:2px; animation:pillFade 3s ease-in-out infinite; }
+.diag-id-pill:nth-child(2) { animation-delay:1s; }
+.diag-id-pill:nth-child(3) { animation-delay:2s; }
+@keyframes pillFade { 0%,100%{opacity:0.4} 50%{opacity:1} }
+.diag-label { font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); opacity:0.6; text-align:center; margin-top:0.4rem; }
+
+/* ── ABOUT ── */
+#about { border-top: 1px solid var(--border); background: var(--bg-mid); }
+.about-inner { display: grid; grid-template-columns: 220px 1fr; gap: 3.5rem; align-items: start; max-width: 840px; }
+/*
+  PHOTO: Replace placeholder div with:
+  <img class="about-photo" src="Profile photo for website.png" alt="Alex Moriarty">
+*/
+.about-photo { width:220px; aspect-ratio:3/4; object-fit:cover; object-position:center top; display:block; border:1px solid var(--border); filter:grayscale(10%); }
+.about-photo-placeholder { width:220px; aspect-ratio:3/4; background:var(--bg-lt); border:1px solid var(--border); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:0.8rem; }
+.photo-note { font-size:0.62rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); opacity:0.4; text-align:center; padding:0 1rem; line-height:1.7; }
+.about-name { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+.about-role { font-size: 0.71rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.8rem; }
+.about-quote { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: #C8C4BE; line-height: 1.85; border-left: 2px solid var(--border); padding-left: 1.2rem; }
+.about-quote p + p { margin-top: 1.1rem; }
+
+/* ── CTA ── */
+#cta { border-top: 1px solid var(--border); background: var(--bg); text-align: center; }
 #cta h2 { font-size: clamp(2.6rem, 6vw, 4.6rem); margin-bottom: 0.7rem; }
 #cta > p { color: var(--muted); margin-bottom: 3rem; font-size: 1rem; }
 .contact-form { display:flex; flex-direction:column; gap:1rem; max-width:460px; margin:0 auto; text-align:left; }
 .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
 .form-group { display:flex; flex-direction:column; gap:0.4rem; }
 label { font-size:0.62rem; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); }
-input, textarea {
-  background:var(--bg-lt); border:1px solid var(--border); color:var(--white);
-  font-family:var(--sans); font-size:0.88rem; font-weight:300;
-  padding:0.8rem 1rem; outline:none; transition:border-color 0.2s; width:100%;
-}
+input, textarea { background:var(--bg-lt); border:1px solid var(--border); color:var(--white); font-family:var(--sans); font-size:0.88rem; font-weight:300; padding:0.8rem 1rem; outline:none; transition:border-color 0.2s; width:100%; }
 input::placeholder, textarea::placeholder { color:var(--muted); opacity:0.5; }
 input:focus, textarea:focus { border-color:var(--teal); }
 textarea { resize:none; min-height:100px; }
@@ -298,87 +341,55 @@ textarea { resize:none; min-height:100px; }
 .form-success { display:none; padding:2.5rem; border:1px solid var(--border); background:var(--teal-dim); max-width:460px; margin:0 auto; }
 .form-success p { font-family:var(--serif); font-size:1.4rem; font-style:italic; color:var(--white); }
 
-/* ─── FOOTER ─── */
-footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; align-items:center; justify-content:space-between; }
+/* ── FOOTER ── */
+footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; align-items:center; justify-content:space-between; background:var(--bg); }
 .footer-logo { font-family:var(--serif); font-size:1.1rem; font-weight:600; color:var(--white); }
 .footer-logo span { color:var(--teal); }
 .footer-email { font-size:0.8rem; color:var(--muted); text-decoration:none; letter-spacing:0.04em; transition:color 0.2s; }
 .footer-email:hover { color:var(--teal); }
 .footer-copy { font-size:0.7rem; color:var(--muted); opacity:0.4; }
 
-/* ─── FLOATING CONTACT PANEL ─── */
-.float-trigger {
-  position: fixed; right: 0; top: 50%; transform: translateY(-50%);
-  z-index: 300;
-  background: var(--teal); color: var(--bg);
-  writing-mode: vertical-rl; text-orientation: mixed;
-  font-family: var(--sans); font-size: 0.65rem; font-weight: 500;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  padding: 1.2rem 0.65rem;
-  cursor: pointer; border: none;
-  transition: background 0.2s, opacity 0.4s;
-  opacity: 0;
-}
-.float-trigger:hover { background: var(--teal-lt); }
-.float-trigger.visible { opacity: 1; }
-
-.float-panel {
-  position: fixed; right: 0; top: 50%; transform: translateY(-50%) translateX(100%);
-  z-index: 299; width: 280px;
-  background: var(--bg-lt); border: 1px solid var(--border);
-  border-right: none;
-  padding: 2rem 1.8rem;
-  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
-  box-shadow: -8px 0 40px rgba(0,0,0,0.4);
-}
-.float-panel.open { transform: translateY(-50%) translateX(0); }
-.float-panel .trigger-close {
-  position: absolute; top: 0.8rem; right: 0.8rem;
-  background: none; border: none; color: var(--muted); cursor: pointer;
-  font-size: 1.1rem; line-height: 1; padding: 0.3rem;
-  transition: color 0.2s;
-}
-.float-panel .trigger-close:hover { color: var(--white); }
-
-.panel-avatar {
-  width: 56px; height: 56px;
-  background: var(--bg); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.2rem;
-  overflow: hidden;
-}
-.panel-avatar img { width:100%; height:100%; object-fit:cover; object-position:center top; }
+/* ── FLOATING PANEL ── */
+.float-trigger { position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:300; background:var(--teal); color:var(--bg); writing-mode:vertical-rl; font-family:var(--sans); font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; padding:1.2rem 0.65rem; cursor:pointer; border:none; transition:background 0.2s, opacity 0.4s; opacity:0; pointer-events:none; }
+.float-trigger:hover { background:var(--teal-lt); }
+.float-trigger.visible { opacity:1; pointer-events:auto; }
+.float-panel { position:fixed; right:0; top:50%; transform:translateY(-50%) translateX(100%); z-index:299; width:280px; background:var(--bg-lt); border:1px solid var(--border); border-right:none; padding:2rem 1.8rem; transition:transform 0.4s cubic-bezier(0.22,1,0.36,1); box-shadow:-8px 0 40px rgba(0,0,0,0.5); }
+.float-panel.open { transform:translateY(-50%) translateX(0); }
+.trigger-close { position:absolute; top:0.8rem; right:0.8rem; background:none; border:none; color:var(--muted); cursor:pointer; font-size:1.1rem; line-height:1; padding:0.3rem; transition:color 0.2s; }
+.trigger-close:hover { color:var(--white); }
+/*
+  PANEL PHOTO: Replace placeholder with:
+  <img class="panel-avatar-photo" src="Profile photo for website.png" alt="Alex Moriarty">
+*/
+.panel-avatar-photo { width:64px; height:64px; object-fit:cover; object-position:center top; border:1px solid var(--border); margin-bottom:1.2rem; display:block; border-radius: 0; }
+.panel-avatar-placeholder { width:64px; height:64px; background:var(--bg); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; margin-bottom:1.2rem; }
 .panel-avatar-initials { font-family:var(--serif); font-size:1.4rem; font-weight:600; color:var(--teal); }
-
 .panel-name { font-family:var(--serif); font-size:1.15rem; font-weight:600; margin-bottom:0.15rem; }
 .panel-title { font-size:0.65rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--teal); margin-bottom:1.2rem; }
 .panel-divider { height:1px; background:var(--border); margin-bottom:1.2rem; }
 .panel-msg { font-size:0.82rem; color:#A8A49E; line-height:1.65; margin-bottom:1.4rem; }
-.panel-email {
-  display: block; font-size:0.78rem; color:var(--teal);
-  text-decoration:none; letter-spacing:0.04em; margin-bottom:1.2rem;
-  transition:color 0.2s;
-}
+.panel-email { display:block; font-size:0.78rem; color:var(--teal); text-decoration:none; letter-spacing:0.04em; margin-bottom:1.2rem; transition:color 0.2s; }
 .panel-email:hover { color:var(--teal-lt); }
 .panel-cta { width:100%; display:block; text-align:center; }
 
-/* ─── RESPONSIVE ─── */
-@media (max-width: 840px) {
+/* ── RESPONSIVE ── */
+@media (max-width: 860px) {
   .services-grid { grid-template-columns:1fr; }
   .service-card { border-right:none; border-bottom:1px solid var(--border); }
   .service-card:last-child { border-bottom:none; }
   .results-inner { grid-template-columns:1fr; gap:3rem; }
+  .attr-inner { grid-template-columns:1fr; gap:3rem; }
   .about-inner { grid-template-columns:1fr; gap:2rem; }
   footer { flex-direction:column; gap:0.8rem; text-align:center; }
   .form-row { grid-template-columns:1fr; }
-  .float-panel { width: 260px; }
+  .float-panel { width:260px; }
+  .diag-arrow-track { width:28px; }
+  /* on mobile stack cube behind text comfortably */
+  .layer-cube { object-position: 70% center; opacity: 0.6; }
 }
 
-/* ─── ANIMATIONS ─── */
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(22px); }
-  to   { opacity:1; transform:translateY(0); }
-}
+/* ── ANIMATIONS ── */
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 </style>
 </head>
 <body>
@@ -389,111 +400,47 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   <a href="#cta" class="btn-primary">Work With Us</a>
 </nav>
 
-<!-- HERO -->
+<!-- ═══════════════════════════════════════════
+     HERO — composited from four image layers
+     All four files must be in the same GitHub
+     repo folder as index.html:
+       cube.png
+       kitchen.png
+       beam.png
+       blueprint.png
+     ═══════════════════════════════════════════ -->
 <section id="hero">
 
-  <!-- Sky gradient -->
-  <div class="sky"></div>
+  <!-- Layer 1: Kitchen background photo -->
+  <img class="hero-layer layer-kitchen" src="kitchen.png" alt="">
 
-  <!-- Parallax mountain layers (SVG, zero HTTP requests) -->
-  <div class="mountains">
+  <!-- Dark gradient overlay -->
+  <div class="hero-overlay"></div>
 
-    <!-- Layer 0: farthest peaks — darkest, barely visible -->
-    <div class="m-layer" id="m0" style="bottom:-2%;">
-      <svg viewBox="0 0 1440 420" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;display:block;">
-        <defs>
-          <linearGradient id="g0" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1C2622" stop-opacity="0.7"/>
-            <stop offset="100%" stop-color="#131311" stop-opacity="1"/>
-          </linearGradient>
-        </defs>
-        <path fill="url(#g0)" d="M0,420 L0,280 C80,220 120,260 180,200 C230,150 260,170 320,130 C380,90 420,110 480,80 C520,58 550,72 590,50 C630,28 660,40 700,30 C740,20 770,35 810,55 C850,75 880,60 930,90 C980,120 1010,100 1060,130 C1110,160 1140,145 1190,170 C1240,195 1280,180 1320,210 C1360,240 1400,225 1440,250 L1440,420 Z"/>
-      </svg>
-    </div>
+  <!-- Layer 2: Blueprint lines (screen blend — black disappears) -->
+  <img class="hero-layer layer-blueprint" src="blueprint.png" alt="">
 
-    <!-- Layer 1: mid-far peaks — slightly lighter, teal-hinted ridgeline -->
-    <div class="m-layer" id="m1" style="bottom:-1%;">
-      <svg viewBox="0 0 1440 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;display:block;">
-        <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1E2926" stop-opacity="0.9"/>
-            <stop offset="60%" stop-color="#181815" stop-opacity="1"/>
-            <stop offset="100%" stop-color="#131311" stop-opacity="1"/>
-          </linearGradient>
-          <!-- teal glow along ridgeline -->
-          <filter id="ridge-glow">
-            <feGaussianBlur stdDeviation="3" result="blur"/>
-            <feComposite in="SourceGraphic" in2="blur" operator="over"/>
-          </filter>
-        </defs>
-        <!-- main body -->
-        <path fill="url(#g1)" d="M0,380 L0,310 C60,270 100,290 150,250 C190,218 220,232 270,200 C310,174 340,185 390,160 C440,135 470,148 520,120 C560,96 590,108 640,88 C680,70 710,82 750,68 C790,54 820,66 860,82 C900,98 930,86 975,105 C1020,124 1050,112 1095,130 C1140,148 1165,140 1210,158 C1255,176 1280,168 1330,185 C1380,202 1410,196 1440,210 L1440,380 Z"/>
-        <!-- subtle teal ridgeline highlight -->
-        <path fill="none" stroke="rgba(46,196,182,0.18)" stroke-width="1.5"
-          d="M0,310 C60,270 100,290 150,250 C190,218 220,232 270,200 C310,174 340,185 390,160 C440,135 470,148 520,120 C560,96 590,108 640,88 C680,70 710,82 750,68 C790,54 820,66 860,82 C900,98 930,86 975,105 C1020,124 1050,112 1095,130 C1140,148 1165,140 1210,158 C1255,176 1280,168 1330,185 C1380,202 1410,196 1440,210"/>
-      </svg>
-    </div>
+  <!-- Layer 3: Teal light beam (screen blend) -->
+  <img class="hero-layer layer-beam" src="beam.png" alt="">
 
-    <!-- Layer 2: mid peaks — main character mountains -->
-    <div class="m-layer" id="m2" style="bottom:0%;">
-      <svg viewBox="0 0 1440 340" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;display:block;">
-        <defs>
-          <linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#212420" stop-opacity="1"/>
-            <stop offset="100%" stop-color="#131311" stop-opacity="1"/>
-          </linearGradient>
-        </defs>
-        <path fill="url(#g2)" d="M0,340 L0,320 C40,305 70,315 110,295 C150,275 175,285 220,260 C255,240 275,248 315,225 C355,202 375,210 415,195 C445,183 465,188 498,175 C528,163 548,167 578,160 C605,153 625,157 660,148 C690,140 715,144 750,135 C780,127 805,130 840,140 C875,150 900,145 940,155 C975,165 1000,160 1040,170 C1075,180 1100,175 1140,185 C1175,195 1200,192 1245,202 C1285,212 1310,210 1360,220 C1395,228 1420,226 1440,232 L1440,340 Z"/>
-        <!-- teal snow-cap glints on main peaks -->
-        <path fill="none" stroke="rgba(46,196,182,0.30)" stroke-width="1"
-          d="M490,178 C498,175 510,168 520,162 C530,156 540,160 550,155 C558,151 565,153 578,148"/>
-        <path fill="none" stroke="rgba(46,196,182,0.22)" stroke-width="0.8"
-          d="M740,137 C748,133 758,127 768,122 C778,117 790,120 802,115"/>
-        <path fill="none" stroke="rgba(46,196,182,0.20)" stroke-width="0.8"
-          d="M210,264 C220,258 230,252 242,246"/>
-      </svg>
-    </div>
+  <!-- Layer 4: Bronze cube cluster with glow dots (screen blend) -->
+  <img class="hero-layer layer-cube" src="cube.png" alt="">
 
-    <!-- Layer 3: foreground ridge — darkest, closest -->
-    <div class="m-layer" id="m3" style="bottom:0%;">
-      <svg viewBox="0 0 1440 240" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice" style="width:100%;display:block;">
-        <defs>
-          <linearGradient id="g3" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#191816" stop-opacity="1"/>
-            <stop offset="100%" stop-color="#131311" stop-opacity="1"/>
-          </linearGradient>
-        </defs>
-        <path fill="url(#g3)" d="M0,240 L0,210 C50,195 90,205 140,188 C180,174 210,180 260,168 C300,158 330,162 380,152 C415,144 440,148 480,140 C515,133 545,136 585,130 C620,124 650,127 690,122 C725,117 755,120 795,126 C830,132 860,128 900,134 C935,140 960,137 1000,143 C1035,149 1060,146 1100,152 C1135,158 1160,156 1200,162 C1240,168 1270,166 1320,172 C1360,177 1400,175 1440,180 L1440,240 Z"/>
-      </svg>
-    </div>
-
-  </div><!-- /mountains -->
-
-  <!-- Mist bands -->
-  <div class="mist mist-1"></div>
-  <div class="mist mist-2"></div>
-  <div class="mist mist-3"></div>
-
-  <!-- Grid overlay -->
+  <!-- Subtle grid overlay -->
   <div class="hero-grid"></div>
-  <div class="hero-bloom"></div>
+
+  <!-- Left editorial rule -->
   <div class="hero-rule"></div>
 
   <!-- Text content -->
   <div class="hero-content">
     <div class="hero-eyebrow">Paid Media · Home Improvement</div>
     <h1>Grow without<br><em>guessing.</em></h1>
-    <p class="hero-sub">Alloy Media runs paid media for home improvement companies that want real revenue — not vanity metrics from agencies that treat every vertical the same.</p>
-    <div class="hero-cta">
-      <a href="#cta" class="btn-primary">Work With Us</a>
-    </div>
+    <p class="hero-sub">Alloy Media runs paid media exclusively for home improvement companies — with the attribution infrastructure to prove what's actually working.</p>
+    <div class="hero-cta"><a href="#cta" class="btn-primary">Work With Us</a></div>
   </div>
 
-  <!-- Scroll hint -->
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-arrow"></div>
-  </div>
+  <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
 
 </section>
 
@@ -512,7 +459,7 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
     <div class="service-card">
       <div class="service-number">01</div>
       <h3>Meta Ads</h3>
-      <p>Demand creation for homeowners who don't know they're ready yet — until they see the right creative at the right moment.</p>
+      <p>Demand creation for homeowners who don't know they're ready yet — until they see creative that actually stands out.</p>
       <span class="service-tag">Facebook · Instagram · Reels</span>
     </div>
     <div class="service-card">
@@ -524,7 +471,7 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
     <div class="service-card">
       <div class="service-number">03</div>
       <h3>Full-Funnel Attribution</h3>
-      <p>Custom infrastructure that ties ad clicks to signed contracts inside your CRM — not just form fills.</p>
+      <p>Custom infrastructure that connects ad clicks to signed contracts in your CRM — not just form fills.</p>
       <span class="service-tag">Offline Conversions · CRM Sync · Revenue Tracking</span>
     </div>
   </div>
@@ -532,29 +479,34 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
 
 <!-- RESULTS -->
 <section id="results">
-  <div class="section-label">Results</div>
+  <div class="section-label-dark">Results</div>
   <div class="results-inner">
-    <div class="stat-block">
-      <div class="stat-number">$136K</div>
-      <div class="stat-descriptor">Revenue Generated</div>
+    <div>
+      <div class="stat-number" style="font-size:clamp(1.8rem,4vw,3rem);color:#6A6860;margin-bottom:0.2rem;">$0 to</div>
+      <div class="stat-number stat-teal">$136K</div>
+      <div class="stat-descriptor">Closed Revenue · 5 Months · $10K Budget</div>
       <div class="stat-context-box">
-        <p>
-          <strong>9% blended marketing cost</strong> across Meta and Google. Window replacement company, Midwest market. Six-month campaign — starting from a blank ad account.
-        </p>
+        <p>We leaned into <strong>rapid video production and AI-supplemented creative</strong> to launch fast and iterate faster — finding the unconventional formats that make home improvement brands actually stand out. Blended 9% marketing cost across Meta and Google.</p>
+      </div>
+      <div class="client-quote-wrap">
+        <!-- MWC Logo: file named "MWC Logo.png" in your GitHub repo -->
+        <img class="client-logo" src="MWC Logo.png" alt="Midwest Window Company">
+        <div class="client-quote">"Your marketing is lighting up. Great work — super happy with what you've built."</div>
+        <div class="client-quote-attr">— Midwest Window Company</div>
       </div>
     </div>
     <div class="stat-secondary">
       <div class="mini-stat">
         <div class="mini-stat-num">9%</div>
-        <div class="mini-stat-label">Marketing cost on revenue — well below the 12–15% industry average</div>
+        <div class="mini-stat-label">Blended marketing cost on revenue — vs. 12–15% industry average</div>
       </div>
       <div class="mini-stat">
-        <div class="mini-stat-num">2 channels</div>
-        <div class="mini-stat-label">Meta + Google working in tandem, attributed to the same closed jobs</div>
+        <div class="mini-stat-num">$10K</div>
+        <div class="mini-stat-label">Total ad spend to generate $136K in closed revenue</div>
       </div>
       <div class="mini-stat">
-        <div class="mini-stat-num">1 market</div>
-        <div class="mini-stat-label">We don't work with your competitors. One client per geography, full stop.</div>
+        <div class="mini-stat-num">5 months</div>
+        <div class="mini-stat-label">From blank ad account to consistent revenue pipeline</div>
       </div>
     </div>
   </div>
@@ -565,31 +517,64 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   <div class="section-label">Why Alloy</div>
   <h2>Built for this<br>vertical. Specifically.</h2>
   <ul class="why-bullets">
-    <li>
-      <span>
-        <strong>Specialist, not generalist</strong>
-        We don't run ads for dentists, e-commerce, or SaaS. Home improvement is the only vertical we work in — so the playbook is real, not adapted from somewhere else.
-      </span>
-    </li>
-    <li>
-      <span>
-        <strong>Playbook built for windows and remodeling</strong>
-        Angles, hooks, and offer structures tested in the actual vertical — not borrowed from a DTC brand with crossed fingers.
-      </span>
-    </li>
-    <li>
-      <span>
-        <strong>Attribution to closed revenue, not just leads</strong>
-        We connect your CRM to your ad accounts so you know exactly which campaigns are generating signed jobs — and which ones are burning budget.
-      </span>
-    </li>
-    <li>
-      <span>
-        <strong>One client per market</strong>
-        When we take you on, your geography is yours. We will never work with your direct competitor.
-      </span>
-    </li>
+    <li><span><strong>Specialist, not generalist</strong>We don't run ads for dentists, e-commerce, or SaaS. Home improvement is the only vertical we work in — so the playbook is real, not adapted from somewhere else.</span></li>
+    <li><span><strong>Creative that actually stands out</strong>The industry defaults to the same templated formats. We test branded content, employee video, and customer stories — and find what makes prospects respond differently.</span></li>
+    <li><span><strong>Attribution to closed revenue, not just leads</strong>We connect your CRM to your ad accounts so you know exactly which campaigns are generating signed jobs — and which ones are burning budget.</span></li>
+    <li><span><strong>One client per market</strong>When we take you on, your geography is yours. We will never work with your direct competitor.</span></li>
   </ul>
+</section>
+
+<!-- ATTRIBUTION -->
+<section id="attribution">
+  <div class="section-label">The Infrastructure</div>
+  <div class="attr-inner">
+    <div class="attr-copy">
+      <h2>Built around how this industry <em style="font-style:italic;color:var(--teal);">actually works.</em></h2>
+      <p>The home improvement industry runs on CRMs like <strong>MarketSharp, Lead Perfection, and ServiceTitan</strong> — none of which were built for marketing attribution. They'll tell you how many leads came in. They won't tell you which specific ad drove which signed job.</p>
+      <p>We built the infrastructure that closes that gap. Creative performance connects directly to closed revenue, feeds back into the ad platform's targeting algorithm, and surfaces the <strong>unconventional formats your competitors haven't found yet.</strong></p>
+      <div class="verticals">
+        <span class="vertical-tag">Windows</span>
+        <span class="vertical-tag">Water Filtration</span>
+        <span class="vertical-tag">Bathroom Remodeling</span>
+      </div>
+    </div>
+    <div>
+      <div class="attr-diagram">
+        <div class="diag-row">
+          <div class="diag-col">
+            <div class="diag-node platform">Meta Ads API</div>
+            <div class="diag-node platform">Google Ads API</div>
+            <div class="diag-node platform">Platform Metrics</div>
+          </div>
+          <div class="diag-arrows">
+            <div class="diag-arrow-track"></div>
+            <div class="diag-arrow-track"></div>
+            <div class="diag-arrow-track"></div>
+          </div>
+          <div class="diag-node core">Alloy<br>Attribution<br>Layer</div>
+          <div class="diag-arrows">
+            <div class="diag-arrow-track reverse"></div>
+            <div class="diag-arrow-track reverse"></div>
+            <div class="diag-arrow-track reverse"></div>
+          </div>
+          <div class="diag-col">
+            <div class="diag-node crm">MarketSharp</div>
+            <div class="diag-node crm">Lead Perfection</div>
+            <div class="diag-node crm">ServiceTitan</div>
+          </div>
+        </div>
+        <div class="diag-analysis">
+          Creative Performance Analysis <span>|</span>
+          <div class="diag-ids">
+            <span class="diag-id-pill">GCLID →</span>
+            <span class="diag-id-pill">FBLID →</span>
+            <span class="diag-id-pill">creative_id →</span>
+          </div>
+          <div class="diag-label">Closed revenue signals fed back to targeting algorithm</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ABOUT -->
@@ -597,18 +582,17 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   <div class="section-label">The Founder</div>
   <div class="about-inner">
     <!--
-      PHOTO SWAP: replace the div below with:
-      <img class="about-photo" src="your-photo.jpg" alt="Alex Moriarty">
+      Replace this div with:
+      <img class="about-photo" src="Profile photo for website.png" alt="Alex Moriarty">
     -->
-    <div class="about-photo-placeholder">
-      <div class="photo-note">Your photo here</div>
-    </div>
+    <img class="about-photo" src="Profile photo for website.png" alt="Alex Moriarty">
     <div>
       <div class="about-name">Alex Moriarty</div>
       <div class="about-role">Founder, Alloy Media</div>
-      <p class="about-bio">
-        Alex spent years at SageHome watching home improvement companies lose revenue to agencies that measured success in clicks instead of contracts. He built Alloy Media to be the agency he wished existed — one with a real vertical playbook, custom attribution infrastructure, and a genuine stake in the client's closed revenue. If it doesn't sign, it doesn't count.
-      </p>
+      <div class="about-quote">
+        <p>"I led in-house lead generation campaigns for SageHome — one of the largest bathroom remodeling companies in the country. I saw the industry's problems up close: leads with bad contact info, CPLs that climbed every quarter, and creative that was completely indistinguishable from every competitor in the space."</p>
+        <p>"I started experimenting — branded content, employee video, customer testimonials, polished and raw. When home improvement brands actually had a point of view, prospects responded differently. I repeated the same approach at Midwest Window Company. It worked again. Alloy Media is what comes next."</p>
+      </div>
     </div>
   </div>
 </section>
@@ -618,134 +602,86 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   <div class="section-label" style="justify-content:center;">Let's Talk</div>
   <h2>Ready to grow?</h2>
   <p>Tell us your market and where your ads stand today. We'll be direct about whether we're a fit.</p>
-
-  <!--
-    FORMSPREE (5 min setup):
-    1. formspree.io → free account → new form
-    2. Copy your endpoint URL (e.g. https://formspree.io/f/xyzabc123)
-    3. Replace YOUR_FORMSPREE_ENDPOINT below
-    4. Formspree dashboard: enable email alerts + connect Google Sheets
-  -->
-  <form
-    class="contact-form"
-    action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT"
-    method="POST"
-    id="contact-form"
-  >
+  <form class="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" id="contact-form">
     <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
     <div class="form-row">
-      <div class="form-group">
-        <label for="name">Your Name</label>
-        <input type="text" id="name" name="name" placeholder="First Last" required>
-      </div>
-      <div class="form-group">
-        <label for="company">Company</label>
-        <input type="text" id="company" name="company" placeholder="Your company" required>
-      </div>
+      <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="name" placeholder="First Last" required></div>
+      <div class="form-group"><label for="company">Company</label><input type="text" id="company" name="company" placeholder="Your company" required></div>
     </div>
-    <div class="form-group">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" placeholder="you@yourcompany.com" required>
-    </div>
+    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="you@yourcompany.com" required></div>
     <div class="form-group">
       <label for="msg">Your market, monthly ad budget, and current cost per lead</label>
-      <textarea id="msg" name="message" placeholder="e.g. Chicago metro, ~$6K/mo on Google, CPL sitting around $180 and I want it under $100..."></textarea>
+      <textarea id="msg" name="message" placeholder="e.g. Chicago metro, ~$6K/mo on Google, CPL around $180 and I want it under $100..."></textarea>
     </div>
     <button type="submit" class="btn-primary form-submit">Send Message →</button>
     <div class="form-note">No pitch decks. No sales calls unless we think we can actually help.</div>
   </form>
-  <div class="form-success" id="form-success">
-    <p>Got it — we'll be in touch shortly.</p>
-  </div>
+  <div class="form-success" id="form-success"><p>Got it — we'll be in touch shortly.</p></div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Alloy<span>.</span></div>
-  <a href="/cdn-cgi/l/email-protection#ea828f868685aa8b868685938d98859d9e82c4898587" class="footer-email"><span class="__cf_email__" data-cfemail="422a272e2e2d02232e2e2d3b25302d35362a6c212d2f">[email&#160;protected]</span></a>
+  <a href="mailto:hello@alloymedia.io" class="footer-email">hello@alloymedia.io</a>
   <div class="footer-copy">© 2026 Alloy Media</div>
 </footer>
 
-<!-- FLOATING CONTACT PANEL -->
+<!-- FLOATING PANEL -->
 <button class="float-trigger" id="float-trigger" onclick="togglePanel()">Let's&nbsp;Talk</button>
-
 <div class="float-panel" id="float-panel">
   <button class="trigger-close" onclick="togglePanel()">✕</button>
-
-  <div class="panel-avatar">
-    <!--
-      PHOTO: replace the initials span with:
-      <img src="your-photo.jpg" alt="Alex Moriarty">
-    -->
-    <span class="panel-avatar-initials">AM</span>
-  </div>
-
+  <!--
+    Replace with:
+    <img class="panel-avatar-photo" src="Profile photo for website.png" alt="Alex Moriarty">
+  -->
+  <img class="panel-avatar-photo" src="Profile photo for website.png" alt="Alex Moriarty">
   <div class="panel-name">Alex Moriarty</div>
   <div class="panel-title">Founder, Alloy Media</div>
   <div class="panel-divider"></div>
-  <p class="panel-msg">Direct question about whether we're a fit for your market? Just reach out — no forms, no sales team.</p>
-  <a href="/cdn-cgi/l/email-protection#ef878a838380af8e83838096889d80989b87c18c8082" class="panel-email"><span class="__cf_email__" data-cfemail="39515c5555567958555556405e4b564e4d51175a5654">[email&#160;protected]</span></a>
+  <p class="panel-msg">Direct question about whether we're a fit for your market? Reach out — no forms, no sales team.</p>
+  <a href="mailto:hello@alloymedia.io" class="panel-email">hello@alloymedia.io</a>
   <a href="#cta" class="btn-primary panel-cta" onclick="togglePanel()">Work With Us</a>
 </div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-/* ── Parallax mountains on scroll ── */
+<script>
+/* Nav scroll */
 (function() {
-  const layers = [
-    { el: document.getElementById('m0'), speed: 0.08 },
-    { el: document.getElementById('m1'), speed: 0.14 },
-    { el: document.getElementById('m2'), speed: 0.22 },
-    { el: document.getElementById('m3'), speed: 0.32 },
-  ];
-  const heroH = document.getElementById('hero').offsetHeight;
-
-  let ticking = false;
-  function onScroll() {
-    if (!ticking) {
-      requestAnimationFrame(() => {
-        const sy = window.scrollY;
-        if (sy <= heroH) {
-          layers.forEach(l => {
-            l.el.style.transform = `translateY(${sy * l.speed}px)`;
-          });
-        }
-        ticking = false;
-      });
-      ticking = true;
-    }
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-})();
-
-/* ── Nav fade-in on scroll ── */
-(function() {
-  const nav = document.getElementById('main-nav');
-  window.addEventListener('scroll', () => {
+  var nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', function() {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   }, { passive: true });
 })();
 
-/* ── Floating panel: show trigger after 3s ── */
-(function() {
-  const trigger = document.getElementById('float-trigger');
-  setTimeout(() => trigger.classList.add('visible'), 3000);
-})();
+/* Float trigger delay */
+setTimeout(function() {
+  var t = document.getElementById('float-trigger');
+  t.classList.add('visible');
+}, 3000);
 
+/* Toggle panel */
 function togglePanel() {
-  const panel = document.getElementById('float-panel');
-  const trigger = document.getElementById('float-trigger');
-  const open = panel.classList.toggle('open');
+  var panel = document.getElementById('float-panel');
+  var trigger = document.getElementById('float-trigger');
+  var open = panel.classList.toggle('open');
   trigger.style.opacity = open ? '0' : '1';
   trigger.style.pointerEvents = open ? 'none' : 'auto';
 }
 
-/* ── Form submission ── */
+/* Form */
 (function() {
-  const form = document.getElementById('contact-form');
-  const success = document.getElementById('form-success');
+  var form = document.getElementById('contact-form');
+  var success = document.getElementById('form-success');
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
-    const btn = form.querySelector('button[type="submit"]');
+    var btn = form.querySelector('button[type="submit"]');
     btn.textContent = 'Sending…'; btn.disabled = true;
     try {
-      const res 
+      var res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
+      if (res.ok) { form.style.display='none'; success.style.display='block'; }
+      else { btn.textContent='Try again'; btn.disabled=false; }
+    } catch(e) { btn.textContent='Try again'; btn.disabled=false; }
+  });
+})();
+</script>
+</body>
+</html>
