@@ -38,7 +38,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* ── NAV ── */
+/* NAV */
 nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   display: flex; align-items: center; justify-content: space-between;
@@ -68,23 +68,17 @@ nav.scrolled {
 }
 .btn-primary:hover { background: var(--teal-lt); transform: translateY(-1px); }
 
-/* ── HERO ── */
+/* HERO */
 #hero {
   position: relative;
-  height: 100vh;
-  min-height: 600px;
-  display: flex;
-  align-items: center;
+  height: 100vh; min-height: 600px;
+  display: flex; align-items: center;
   overflow: hidden;
-
-  /* Single background image — scales to cover on every screen */
   background-image: url('HeroSection.png');
   background-size: cover;
   background-position: 62% center;
   background-repeat: no-repeat;
 }
-
-/* Gradient overlay — dark left for text, transparent right for image */
 #hero::before {
   content: '';
   position: absolute; inset: 0; z-index: 1;
@@ -94,15 +88,9 @@ nav.scrolled {
       rgba(10,11,10,0.72) 35%,
       rgba(10,11,10,0.35) 55%,
       rgba(10,11,10,0.0)  75%),
-    linear-gradient(to top,
-      rgba(10,11,10,0.80) 0%,
-      transparent 30%),
-    linear-gradient(to bottom,
-      rgba(10,11,10,0.50) 0%,
-      transparent 15%);
+    linear-gradient(to top,    rgba(10,11,10,0.80) 0%, transparent 30%),
+    linear-gradient(to bottom, rgba(10,11,10,0.50) 0%, transparent 15%);
 }
-
-/* Subtle grid on top */
 #hero::after {
   content: '';
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
@@ -111,18 +99,15 @@ nav.scrolled {
     linear-gradient(90deg, rgba(46,196,182,0.025) 1px, transparent 1px);
   background-size: 64px 64px;
 }
-
 .hero-rule {
   position: absolute; left: 5vw; top: 0; bottom: 0; z-index: 3; width: 1px; pointer-events: none;
   background: linear-gradient(to bottom, transparent 5%, var(--border) 25%, var(--border) 75%, transparent 95%);
 }
-
 .hero-content {
   position: relative; z-index: 4;
   padding-left: calc(5vw + 2rem);
   max-width: 560px;
 }
-
 .hero-eyebrow {
   font-size: 0.68rem; font-weight: 500; letter-spacing: 0.24em;
   text-transform: uppercase; color: var(--teal); margin-bottom: 1.6rem;
@@ -130,7 +115,6 @@ nav.scrolled {
   animation: fadeUp 0.6s ease both;
 }
 .hero-eyebrow::before { content:''; display:block; width:2rem; height:1px; background:var(--teal); }
-
 h1 {
   font-family: var(--serif);
   font-size: clamp(3.6rem, 8vw, 7rem); font-weight: 700;
@@ -140,7 +124,6 @@ h1 {
   text-shadow: 0 2px 30px rgba(0,0,0,0.6);
 }
 h1 em { font-style: italic; color: var(--teal); }
-
 .hero-sub {
   font-size: 1rem; font-weight: 300; color: rgba(244,241,236,0.80);
   max-width: 400px; margin-bottom: 2.6rem; line-height: 1.78;
@@ -148,7 +131,6 @@ h1 em { font-style: italic; color: var(--teal); }
   text-shadow: 0 1px 12px rgba(0,0,0,0.7);
 }
 .hero-cta { animation: fadeUp 0.7s 0.24s ease both; }
-
 .scroll-hint {
   position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
   z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
@@ -158,7 +140,7 @@ h1 em { font-style: italic; color: var(--teal); }
 .scroll-arrow { width: 1px; height: 36px; background: linear-gradient(to bottom, var(--teal), transparent); animation: scrollPulse 1.8s ease-in-out infinite; }
 @keyframes scrollPulse { 0%,100%{opacity:0.3;transform:scaleY(0.7)} 50%{opacity:1;transform:scaleY(1)} }
 
-/* ── SHARED ── */
+/* SHARED */
 section { padding: 6rem 5vw; }
 .section-label {
   font-size: 0.66rem; font-weight: 500; letter-spacing: 0.22em;
@@ -174,12 +156,54 @@ section { padding: 6rem 5vw; }
 .section-label-dark::before { content:''; display:block; width:1.6rem; height:1px; background:var(--teal-dark); }
 h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; line-height: 1.15; margin-bottom: 1.4rem; }
 
-/* ── PROBLEM ── */
-#problem { border-top: 1px solid var(--border); background: var(--bg-mid); }
-.problem-text { max-width: 700px; font-size: 1.12rem; line-height: 1.88; color: #A8A49E; }
-.problem-text strong { color: var(--white); font-weight: 500; }
+/* ABOUT */
+#about { border-top: 1px solid var(--border); background: var(--bg-mid); }
+.about-inner { display: grid; grid-template-columns: 220px 1fr; gap: 3.5rem; align-items: start; max-width: 840px; }
+.about-photo { width:220px; aspect-ratio:3/4; object-fit:cover; object-position:center top; display:block; border:1px solid var(--border); filter:grayscale(10%); }
+.about-name { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; margin-bottom: 0.3rem; }
+.about-role { font-size: 0.71rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.8rem; }
+.about-body { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: #C8C4BE; line-height: 1.85; border-left: 2px solid var(--border); padding-left: 1.2rem; }
+.about-body p + p { margin-top: 1.2rem; }
 
-/* ── SERVICES ── */
+/* RESULTS (LIGHT) */
+#results { background: var(--off-white); color: var(--dark-text); border-top: none; }
+
+/* MWC logo — prominent at top */
+.client-intro {
+  display: flex; align-items: center; gap: 1.2rem;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(26,110,103,0.15);
+}
+.client-logo-lg {
+  height: 42px;
+  filter: grayscale(100%) brightness(0);
+  opacity: 0.65;
+  display: block;
+  flex-shrink: 0;
+}
+.client-intro-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #6A6860;
+}
+
+.results-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.stat-number { font-family: var(--serif); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 700; color: var(--dark-text); line-height: 1; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+.stat-teal { color: var(--teal-dark); }
+.stat-descriptor { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; color: #6A6860; margin-bottom: 1.6rem; }
+.results-body { font-size: 0.93rem; color: #5A5855; line-height: 1.82; margin-bottom: 1.8rem; }
+.results-body strong { color: var(--dark-text); font-weight: 500; }
+.result-quote-wrap { padding: 1.4rem 1.4rem; border-left: 3px solid var(--teal-dark); background: #E8E4DD; margin-top: 2rem; }
+.result-quote { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--dark-text); line-height: 1.65; margin-bottom: 0.5rem; }
+.result-quote-attr { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: #6A6860; }
+.stat-secondary { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 0.5rem; }
+.mini-stat { padding: 1.4rem 1.6rem; border: 1px solid rgba(26,110,103,0.18); background: #E8E4DD; }
+.mini-stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--dark-text); line-height: 1; margin-bottom: 0.3rem; }
+.mini-stat-label { font-size: 0.69rem; letter-spacing: 0.13em; text-transform: uppercase; color: #6A6860; }
+
+/* SERVICES */
 #services { border-top: 1px solid var(--border); background: var(--bg-teal); }
 .services-grid { display: grid; grid-template-columns: repeat(3,1fr); margin-top: 3rem; border: 1px solid var(--border); }
 .service-card { padding: 2.6rem 2.2rem; border-right: 1px solid var(--border); transition: background 0.3s; }
@@ -187,44 +211,18 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
 .service-card:hover { background: var(--teal-dim); }
 .service-number { font-family: var(--serif); font-size: 3rem; font-weight: 700; color: rgba(46,196,182,0.14); line-height: 1; margin-bottom: 1rem; }
 .service-card h3 { font-family: var(--serif); font-size: 1.4rem; font-weight: 600; margin-bottom: 0.7rem; color: var(--white); }
-.service-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.65; }
+.service-card p { font-size: 0.87rem; color: var(--muted); line-height: 1.68; }
 .service-tag { display: block; margin-top: 1.4rem; font-size: 0.62rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); border-top: 1px solid var(--border); padding-top: 1rem; }
 
-/* ── RESULTS ── */
-#results { background: var(--off-white); color: var(--dark-text); border-top: none; }
-.results-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
-.stat-number { font-family: var(--serif); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 700; color: var(--dark-text); line-height: 1; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
-.stat-teal { color: var(--teal-dark); }
-.stat-descriptor { font-size: 0.76rem; letter-spacing: 0.16em; text-transform: uppercase; color: #6A6860; margin-bottom: 1.6rem; }
-.stat-context-box { border-left: 2px solid var(--teal-dark); padding-left: 1.2rem; }
-.stat-context-box p { font-size: 0.9rem; color: #5A5855; line-height: 1.75; }
-.stat-context-box strong { color: var(--dark-text); font-weight: 500; }
-.client-quote-wrap { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(26,110,103,0.15); }
-.client-logo { height: 28px; opacity: 0.5; margin-bottom: 1rem; filter: grayscale(100%) brightness(0); display: block; }
-.client-quote { font-family: var(--serif); font-size: 1.15rem; font-style: italic; color: var(--dark-text); line-height: 1.65; margin-bottom: 0.7rem; }
-.client-quote-attr { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: #6A6860; }
-.stat-secondary { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 0.5rem; }
-.mini-stat { padding: 1.4rem 1.6rem; border: 1px solid rgba(26,110,103,0.18); background: #E8E4DD; }
-.mini-stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--dark-text); line-height: 1; margin-bottom: 0.3rem; }
-.mini-stat-label { font-size: 0.69rem; letter-spacing: 0.13em; text-transform: uppercase; color: #6A6860; }
-
-/* ── WHY ── */
-#why { border-top: 1px solid var(--border); background: var(--bg); }
-.why-bullets { list-style: none; margin-top: 1rem; max-width: 680px; }
-.why-bullets li { display: flex; gap: 1.2rem; padding: 1.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.92rem; color: #A8A49E; line-height: 1.65; }
-.why-bullets li:first-child { border-top: 1px solid var(--border); }
-.why-bullets li::before { content:'→'; color:var(--teal); font-size:0.85rem; margin-top:0.12em; flex-shrink:0; }
-.why-bullets li strong { color: var(--white); font-weight: 500; display: block; margin-bottom: 0.2rem; }
-
-/* ── ATTRIBUTION ── */
-#attribution { border-top: 1px solid var(--border); background: var(--bg-teal); }
+/* INFRASTRUCTURE */
+#attribution { border-top: 1px solid var(--border); background: var(--bg); }
 .attr-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: center; }
 .attr-copy h2 { margin-bottom: 1rem; }
 .attr-copy p { font-size: 0.93rem; color: #A8A49E; line-height: 1.85; margin-bottom: 1rem; }
 .attr-copy p strong { color: var(--white); font-weight: 500; }
 .verticals { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.6rem; }
 .vertical-tag { font-size: 0.64rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); border: 1px solid var(--border); padding: 0.45rem 0.9rem; }
-.attr-diagram { position: relative; background: rgba(13,30,28,0.8); border: 1px solid var(--border); padding: 2rem 1.5rem; }
+.attr-diagram { background: rgba(13,30,28,0.8); border: 1px solid var(--border); padding: 2rem 1.5rem; }
 .diag-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
 .diag-col { display: flex; flex-direction: column; gap: 0.7rem; }
 .diag-node { background: var(--bg-lt); border: 1px solid var(--border); padding: 0.55rem 0.8rem; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; color: var(--white); text-align: center; white-space: nowrap; }
@@ -260,34 +258,27 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
 @keyframes pillFade { 0%,100%{opacity:0.4} 50%{opacity:1} }
 .diag-label { font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); opacity:0.6; text-align:center; margin-top:0.4rem; }
 
-/* ── ABOUT ── */
-#about { border-top: 1px solid var(--border); background: var(--bg-mid); }
-.about-inner { display: grid; grid-template-columns: 220px 1fr; gap: 3.5rem; align-items: start; max-width: 840px; }
-.about-photo { width:220px; aspect-ratio:3/4; object-fit:cover; object-position:center top; display:block; border:1px solid var(--border); filter:grayscale(10%); }
-.about-name { font-family: var(--serif); font-size: 1.9rem; font-weight: 600; margin-bottom: 0.3rem; }
-.about-role { font-size: 0.71rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--teal); margin-bottom: 1.8rem; }
-.about-quote { font-family: var(--serif); font-size: 1.05rem; font-style: italic; color: #C8C4BE; line-height: 1.85; border-left: 2px solid var(--border); padding-left: 1.2rem; }
-.about-quote p + p { margin-top: 1.1rem; }
+/* CTA */
+#cta { border-top: 1px solid var(--border); background: var(--bg-teal); text-align: center; }
+#cta h2 { font-size: clamp(2.4rem, 5vw, 4rem); margin-bottom: 0.8rem; }
+#cta > p { color: var(--muted); margin-bottom: 2.4rem; font-size: 1rem; max-width: 480px; margin-left: auto; margin-right: auto; }
+.cta-actions { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.btn-cta-primary {
+  font-family: var(--sans); font-size: 0.82rem; font-weight: 500;
+  letter-spacing: 0.13em; text-transform: uppercase;
+  color: var(--bg); background: var(--teal);
+  padding: 1rem 2.4rem; border: none; cursor: pointer;
+  text-decoration: none; display: inline-block;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-cta-primary:hover { background: var(--teal-lt); transform: translateY(-1px); }
+.cta-alt {
+  font-size: 0.78rem; color: var(--muted);
+}
+.cta-alt a { color: var(--teal); text-decoration: none; }
+.cta-alt a:hover { color: var(--teal-lt); }
 
-/* ── CTA ── */
-#cta { border-top: 1px solid var(--border); background: var(--bg); text-align: center; }
-#cta h2 { font-size: clamp(2.6rem, 6vw, 4.6rem); margin-bottom: 0.7rem; }
-#cta > p { color: var(--muted); margin-bottom: 3rem; font-size: 1rem; }
-.contact-form { display:flex; flex-direction:column; gap:1rem; max-width:460px; margin:0 auto; text-align:left; }
-.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-.form-group { display:flex; flex-direction:column; gap:0.4rem; }
-label { font-size:0.62rem; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); }
-input, textarea { background:var(--bg-lt); border:1px solid var(--border); color:var(--white); font-family:var(--sans); font-size:0.88rem; font-weight:300; padding:0.8rem 1rem; outline:none; transition:border-color 0.2s; width:100%; }
-input::placeholder, textarea::placeholder { color:var(--muted); opacity:0.5; }
-input:focus, textarea:focus { border-color:var(--teal); }
-textarea { resize:none; min-height:100px; }
-.hp { display:none; }
-.form-submit { margin-top:0.3rem; width:100%; text-align:center; padding:0.95rem; font-size:0.79rem; }
-.form-note { font-size:0.67rem; color:var(--muted); opacity:0.55; text-align:center; margin-top:0.5rem; }
-.form-success { display:none; padding:2.5rem; border:1px solid var(--border); background:var(--teal-dim); max-width:460px; margin:0 auto; }
-.form-success p { font-family:var(--serif); font-size:1.4rem; font-style:italic; color:var(--white); }
-
-/* ── FOOTER ── */
+/* FOOTER */
 footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; align-items:center; justify-content:space-between; background:var(--bg); }
 .footer-logo { font-family:var(--serif); font-size:1.1rem; font-weight:600; color:var(--white); }
 .footer-logo span { color:var(--teal); }
@@ -295,7 +286,7 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
 .footer-email:hover { color:var(--teal); }
 .footer-copy { font-size:0.7rem; color:var(--muted); opacity:0.4; }
 
-/* ── FLOATING PANEL ── */
+/* FLOATING PANEL */
 .float-trigger { position:fixed; right:0; top:50%; transform:translateY(-50%); z-index:300; background:var(--teal); color:var(--bg); writing-mode:vertical-rl; font-family:var(--sans); font-size:0.65rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; padding:1.2rem 0.65rem; cursor:pointer; border:none; transition:background 0.2s, opacity 0.4s; opacity:0; pointer-events:none; }
 .float-trigger:hover { background:var(--teal-lt); }
 .float-trigger.visible { opacity:1; pointer-events:auto; }
@@ -312,70 +303,51 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
 .panel-email:hover { color:var(--teal-lt); }
 .panel-cta { width:100%; display:block; text-align:center; }
 
-/* ════════════════════
-   MOBILE ≤ 768px
-   ════════════════════ */
+/* MOBILE */
 @media (max-width: 768px) {
-  /* Shift background focus to cube area on narrow screens */
   #hero { background-position: 72% center; }
-
-  /* Heavier overlay so text is always readable */
   #hero::before {
     background:
-      linear-gradient(to right,
-        rgba(10,11,10,0.92) 0%,
-        rgba(10,11,10,0.88) 50%,
-        rgba(10,11,10,0.55) 100%),
+      linear-gradient(to right, rgba(10,11,10,0.92) 0%, rgba(10,11,10,0.88) 50%, rgba(10,11,10,0.55) 100%),
       linear-gradient(to top, rgba(10,11,10,0.85) 0%, transparent 30%),
       linear-gradient(to bottom, rgba(10,11,10,0.60) 0%, transparent 15%);
   }
-
   .hero-content { padding: 0 1.5rem; max-width: 100%; }
   .hero-rule { display: none; }
-
   section { padding: 4rem 1.5rem; }
   h2 { font-size: clamp(1.8rem, 6vw, 2.4rem); }
-
+  .about-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .about-photo { width: 130px; aspect-ratio: 1/1; object-position: center 15%; }
+  .client-intro { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+  .results-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .stat-number { font-size: clamp(3rem, 14vw, 5rem); }
   .services-grid { grid-template-columns: 1fr; margin-top: 2rem; }
   .service-card { border-right: none; border-bottom: 1px solid var(--border); }
   .service-card:last-child { border-bottom: none; }
-
-  .results-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .stat-number { font-size: clamp(3rem, 14vw, 5rem); }
-
   .attr-inner { grid-template-columns: 1fr; gap: 2.5rem; }
   .diag-arrow-track { width: 18px; }
   .diag-node { font-size: 0.58rem; padding: 0.4rem 0.5rem; white-space: normal; }
   .diag-node.core { padding: 0.7rem 0.5rem; font-size: 0.62rem; }
-
-  .about-inner { grid-template-columns: 1fr; gap: 2rem; }
-  .about-photo { width: 130px; aspect-ratio: 1/1; object-position: center 15%; }
-
-  .form-row { grid-template-columns: 1fr; }
   footer { flex-direction: column; gap: 0.8rem; text-align: center; }
-
   .float-trigger { display: none; }
   .float-panel { width:100%; border:none; border-top:1px solid var(--border); top:auto; bottom:0; right:0; transform:translateY(100%); max-height:85vh; overflow-y:auto; }
   .float-panel.open { transform:translateY(0); top:auto; }
 }
 
-/* ════════════════════
-   TABLET 769–1024px
-   ════════════════════ */
+/* TABLET */
 @media (min-width: 769px) and (max-width: 1024px) {
   #hero { background-position: 65% center; }
   .hero-content { max-width: 55%; }
+  .about-inner { grid-template-columns: 160px 1fr; gap: 2.5rem; }
+  .about-photo { width: 160px; }
   .services-grid { grid-template-columns: 1fr; }
   .service-card { border-right: none; border-bottom: 1px solid var(--border); }
   .service-card:last-child { border-bottom: none; }
   .results-inner { grid-template-columns: 1fr; gap: 3rem; }
   .attr-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .about-inner { grid-template-columns: 160px 1fr; gap: 2.5rem; }
-  .about-photo { width: 160px; }
   .diag-arrow-track { width: 28px; }
 }
 
-/* ── ANIMATIONS ── */
 @keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 </style>
 </head>
@@ -387,105 +359,114 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   <a href="#cta" class="btn-primary">Work With Us</a>
 </nav>
 
-<!-- HERO — single background image, no layers, no blend modes -->
+<!-- HERO -->
 <section id="hero">
   <div class="hero-rule"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">Paid Media · Home Improvement</div>
     <h1>Grow without<br><em>guessing.</em></h1>
-    <p class="hero-sub">Alloy Media runs paid media exclusively for home improvement companies — with the attribution infrastructure to prove what's actually working.</p>
+    <p class="hero-sub">Paid media built specifically for home improvement companies. Every dollar tracked to closed revenue.</p>
     <div class="hero-cta"><a href="#cta" class="btn-primary">Work With Us</a></div>
   </div>
   <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
 </section>
 
-<!-- PROBLEM -->
-<section id="problem">
-  <div class="section-label">The Problem</div>
-  <p class="problem-text">
-    Most home improvement companies hand their ad budgets to <strong>generalist agencies that have never sold a window or booked a remodeling estimate.</strong> They optimize for leads. You need closed revenue. There's a real difference — and it costs you every single month you stay with the wrong partner.
-  </p>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="section-label">What We Do</div>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-number">01</div>
-      <h3>Meta Ads</h3>
-      <p>Demand creation for homeowners who don't know they're ready yet — until they see creative that actually stands out.</p>
-      <span class="service-tag">Facebook · Instagram · Reels</span>
-    </div>
-    <div class="service-card">
-      <div class="service-number">02</div>
-      <h3>Google Ads</h3>
-      <p>Capture high-intent buyers at the exact moment they're searching for what you install.</p>
-      <span class="service-tag">Search · Performance Max · LSA</span>
-    </div>
-    <div class="service-card">
-      <div class="service-number">03</div>
-      <h3>Full-Funnel Attribution</h3>
-      <p>Custom infrastructure that connects ad clicks to signed contracts in your CRM — not just form fills.</p>
-      <span class="service-tag">Offline Conversions · CRM Sync · Revenue Tracking</span>
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">The Founder</div>
+  <div class="about-inner">
+    <img class="about-photo" src="Profile photo for website.png" alt="Alex Moriarty">
+    <div>
+      <div class="about-name">Alex Moriarty</div>
+      <div class="about-role">Founder, Alloy Media</div>
+      <div class="about-body">
+        <p>"I spent six years leading in-house lead generation for SageHome, one of the largest bathroom remodeling companies in the country. I got a close look at how the industry buys leads and how well it actually works."</p>
+        <p>"Most of the market still runs on aggregators. Shared leads. Costs that go up every year. Prospects who requested quotes from three other companies before you even called them back. No brand being built, no predictability in the pipeline, and conversion rates that make the math hard to justify."</p>
+        <p>"I started testing something different. Less templated content, more real people and real customer moments. Prospects responded. The quality of conversations at the door improved. I took the same approach to Midwest Window Company. It worked again. Alloy Media is the agency I built around that playbook."</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- RESULTS -->
 <section id="results">
-  <div class="section-label-dark">Results</div>
+
+  <!-- MWC logo prominent at top -->
+  <div class="client-intro">
+    <img class="client-logo-lg" src="MWC Logo.png" alt="Midwest Window Company">
+    <div class="client-intro-label">Client Case Study</div>
+  </div>
+
   <div class="results-inner">
     <div>
-      <div class="stat-number" style="font-size:clamp(1.8rem,4vw,3rem);color:#6A6860;margin-bottom:0.2rem;">$0 to</div>
+      <div class="stat-number" style="font-size:clamp(1.6rem,3.5vw,2.6rem);color:#6A6860;margin-bottom:0.2rem;">$0 to</div>
       <div class="stat-number stat-teal">$136K</div>
-      <div class="stat-descriptor">Closed Revenue · 5 Months · $10K Budget</div>
-      <div class="stat-context-box">
-        <p>We leaned into <strong>rapid video production and AI-supplemented creative</strong> to launch fast and iterate faster — finding the unconventional formats that make home improvement brands actually stand out. Blended 9% marketing cost across Meta and Google.</p>
-      </div>
-      <div class="client-quote-wrap">
-        <img class="client-logo" src="MWC Logo.png" alt="Midwest Window Company">
-        <div class="client-quote">"Your marketing is lighting up. Great work — super happy with what you've built."</div>
-        <div class="client-quote-attr">— Midwest Window Company</div>
+      <div class="stat-descriptor">Closed Revenue · 5 Months · $10K Ad Spend</div>
+
+      <p class="results-body">
+        Midwest Window came to us with a paid media setup that wasn't producing. Over five months across Iowa and Illinois, we rebuilt it from the ground up. New landing pages built around lead quality, not lead volume. Fresh creative on a consistent twice-monthly cadence. AI-assisted animation and short-form video replacing the static graphics and stock footage they had been running. Custom attribution connecting every ad click back to the CRM.
+      </p>
+      <p class="results-body">
+        The volume improved. More importantly, so did the quality.
+      </p>
+
+      <div class="result-quote-wrap">
+        <div class="result-quote">"Before, we were getting low-intent leads that were hard to convert. Almost all of Alloy's leads understand what we offer. They're easy to book and easy to sell to."</div>
+        <div class="result-quote-attr">Midwest Window Company, Iowa and Illinois</div>
       </div>
     </div>
+
     <div class="stat-secondary">
       <div class="mini-stat">
         <div class="mini-stat-num">9%</div>
-        <div class="mini-stat-label">Blended marketing cost on revenue — vs. 12–15% industry average</div>
+        <div class="mini-stat-label">Blended marketing cost on revenue. Industry average sits at 12 to 15%.</div>
       </div>
       <div class="mini-stat">
         <div class="mini-stat-num">$10K</div>
-        <div class="mini-stat-label">Total ad spend to generate $136K in closed revenue</div>
+        <div class="mini-stat-label">Total ad spend to generate $136K in closed revenue.</div>
       </div>
       <div class="mini-stat">
         <div class="mini-stat-num">5 months</div>
-        <div class="mini-stat-label">From blank ad account to consistent revenue pipeline</div>
+        <div class="mini-stat-label">From underperforming account to a consistent revenue pipeline.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHY -->
-<section id="why">
-  <div class="section-label">Why Alloy</div>
-  <h2>Built for this<br>vertical. Specifically.</h2>
-  <ul class="why-bullets">
-    <li><span><strong>Specialist, not generalist</strong>We don't run ads for dentists, e-commerce, or SaaS. Home improvement is the only vertical we work in — so the playbook is real, not adapted from somewhere else.</span></li>
-    <li><span><strong>Creative that actually stands out</strong>The industry defaults to the same templated formats. We test branded content, employee video, and customer stories — and find what makes prospects respond differently.</span></li>
-    <li><span><strong>Attribution to closed revenue, not just leads</strong>We connect your CRM to your ad accounts so you know exactly which campaigns are generating signed jobs — and which ones are burning budget.</span></li>
-    <li><span><strong>One client per market</strong>When we take you on, your geography is yours. We will never work with your direct competitor.</span></li>
-  </ul>
+<!-- WHAT WE DO -->
+<section id="services">
+  <div class="section-label">What We Do</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-number">01</div>
+      <h3>Meta Ads</h3>
+      <p>Most home improvement creative looks identical. Same stock footage, same offer cards, same formats every competitor is already running. We publish new creative twice a month, test across a structured library of angles, and use AI-assisted production to move fast without cutting quality. The goal is an ad that feels real, because it is.</p>
+      <span class="service-tag">Facebook · Instagram · Reels</span>
+    </div>
+    <div class="service-card">
+      <div class="service-number">02</div>
+      <h3>Google Ads</h3>
+      <p>Capture buyers who are already searching for what you install. We build and manage campaigns optimized for lead quality, not just lead volume. A lower cost per lead means nothing if your sales team can't close the calls, so we build toward the sale, not the form fill.</p>
+      <span class="service-tag">Search · Performance Max · LSA</span>
+    </div>
+    <div class="service-card">
+      <div class="service-number">03</div>
+      <h3>Full-Funnel Attribution</h3>
+      <p>We build the technical layer that connects your ad account to your CRM so you can see which specific creative drove which signed jobs. That data feeds back into platform targeting as offline conversion signals, so the algorithm gets better at finding buyers, not browsers. Most agencies optimize for leads. We optimize for revenue.</p>
+      <span class="service-tag">Offline Conversions · CRM Sync · Revenue Tracking</span>
+    </div>
+  </div>
 </section>
 
-<!-- ATTRIBUTION -->
+<!-- INFRASTRUCTURE -->
 <section id="attribution">
   <div class="section-label">The Infrastructure</div>
   <div class="attr-inner">
     <div class="attr-copy">
-      <h2>Built around how this industry <em style="font-style:italic;color:var(--teal);">actually works.</em></h2>
-      <p>The home improvement industry runs on CRMs like <strong>MarketSharp, Lead Perfection, and ServiceTitan</strong> — none of which were built for marketing attribution. They'll tell you how many leads came in. They won't tell you which specific ad drove which signed job.</p>
-      <p>We built the infrastructure that closes that gap. Creative performance connects directly to closed revenue, feeds back into the ad platform's targeting algorithm, and surfaces the <strong>unconventional formats your competitors haven't found yet.</strong></p>
+      <h2>The CRMs this industry runs on were not built for marketing.</h2>
+      <p><strong>MarketSharp. Lead Perfection. ServiceTitan.</strong> Out of the box, they tell you how many leads came in. They do not tell you which ad, which creative, or which angle drove the ones that actually closed.</p>
+      <p>We built the infrastructure that does. Every lead that enters your CRM is tied to the specific campaign and creative that generated it. That data goes back to Meta and Google as offline conversion signals, teaching the platforms to find more of the buyers who sign, not just the ones who fill out forms.</p>
+      <p>It compounds over time. The longer the system runs, the better the targeting gets.</p>
       <div class="verticals">
         <span class="vertical-tag">Windows</span>
         <span class="vertical-tag">Water Filtration</span>
@@ -520,28 +501,12 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
         <div class="diag-analysis">
           Creative Performance Analysis <span>|</span>
           <div class="diag-ids">
-            <span class="diag-id-pill">GCLID →</span>
-            <span class="diag-id-pill">FBLID →</span>
-            <span class="diag-id-pill">creative_id →</span>
+            <span class="diag-id-pill">GCLID</span>
+            <span class="diag-id-pill">FBLID</span>
+            <span class="diag-id-pill">creative_id</span>
           </div>
-          <div class="diag-label">Closed revenue signals fed back to targeting algorithm</div>
+          <div class="diag-label">Closed revenue fed back to targeting algorithm</div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="section-label">The Founder</div>
-  <div class="about-inner">
-    <img class="about-photo" src="Profile photo for website.png" alt="Alex Moriarty">
-    <div>
-      <div class="about-name">Alex Moriarty</div>
-      <div class="about-role">Founder, Alloy Media</div>
-      <div class="about-quote">
-        <p>"I led in-house lead generation campaigns for SageHome — one of the largest bathroom remodeling companies in the country. I saw the industry's problems up close: leads with bad contact info, CPLs that climbed every quarter, and creative that was completely indistinguishable from every competitor in the space."</p>
-        <p>"I started experimenting — branded content, employee video, customer testimonials, polished and raw. When home improvement brands actually had a point of view, prospects responded differently. I repeated the same approach at Midwest Window Company. It worked again. Alloy Media is what comes next."</p>
       </div>
     </div>
   </div>
@@ -550,43 +515,37 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
 <!-- CTA -->
 <section id="cta">
   <div class="section-label" style="justify-content:center;">Let's Talk</div>
-  <h2>Ready to grow?</h2>
-  <p>Tell us your market and where your ads stand today. We'll be direct about whether we're a fit.</p>
-  <form class="contact-form" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" id="contact-form">
-    <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
-    <div class="form-row">
-      <div class="form-group"><label for="name">Your Name</label><input type="text" id="name" name="name" placeholder="First Last" required></div>
-      <div class="form-group"><label for="company">Company</label><input type="text" id="company" name="company" placeholder="Your company" required></div>
-    </div>
-    <div class="form-group"><label for="email">Email</label><input type="email" id="email" name="email" placeholder="you@yourcompany.com" required></div>
-    <div class="form-group">
-      <label for="msg">Your market, monthly ad budget, and current cost per lead</label>
-      <textarea id="msg" name="message" placeholder="e.g. Chicago metro, ~$6K/mo on Google, CPL around $180 and I want it under $100..."></textarea>
-    </div>
-    <button type="submit" class="btn-primary form-submit">Send Message →</button>
-    <div class="form-note">No pitch decks. No sales calls unless we think we can actually help.</div>
-  </form>
-  <div class="form-success" id="form-success"><p>Got it — we'll be in touch shortly.</p></div>
+  <h2>Ready to find out<br>if we're a fit?</h2>
+  <p>If someone sent you here, there is probably already a conversation worth having. Book 30 minutes and we will figure it out quickly.</p>
+  <div class="cta-actions">
+    <!--
+      CALENDLY: Replace the href below with your Calendly link.
+      Free at calendly.com. Takes 5 minutes to set up.
+      e.g. href="https://calendly.com/alexmoriarty/30min"
+    -->
+    <a href="https://calendly.com/YOUR_LINK" class="btn-cta-primary">Book a 30-Minute Call</a>
+    <div class="cta-alt">Or reach out directly at <a href="mailto:hello@alloymedia.io">hello@alloymedia.io</a></div>
+  </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Alloy<span>.</span></div>
   <a href="mailto:hello@alloymedia.io" class="footer-email">hello@alloymedia.io</a>
-  <div class="footer-copy">© 2026 Alloy Media</div>
+  <div class="footer-copy">2026 Alloy Media</div>
 </footer>
 
 <!-- FLOATING PANEL -->
 <button class="float-trigger" id="float-trigger" onclick="togglePanel()">Let's&nbsp;Talk</button>
 <div class="float-panel" id="float-panel">
-  <button class="trigger-close" onclick="togglePanel()">✕</button>
+  <button class="trigger-close" onclick="togglePanel()">x</button>
   <img class="panel-avatar-photo" src="Profile photo for website.png" alt="Alex Moriarty">
   <div class="panel-name">Alex Moriarty</div>
   <div class="panel-title">Founder, Alloy Media</div>
   <div class="panel-divider"></div>
-  <p class="panel-msg">Direct question about whether we're a fit for your market? Reach out — no forms, no sales team.</p>
+  <p class="panel-msg">Direct question about whether we are a fit for your market? Reach out. No forms, no sales team.</p>
   <a href="mailto:hello@alloymedia.io" class="panel-email">hello@alloymedia.io</a>
-  <a href="#cta" class="btn-primary panel-cta" onclick="togglePanel()">Work With Us</a>
+  <a href="#cta" class="btn-primary panel-cta" onclick="togglePanel()">Book a Call</a>
 </div>
 
 <script>
@@ -611,21 +570,6 @@ function togglePanel() {
     trigger.style.pointerEvents = open ? 'none' : 'auto';
   }
 }
-
-(function() {
-  var form = document.getElementById('contact-form');
-  var success = document.getElementById('form-success');
-  form.addEventListener('submit', async function(e) {
-    e.preventDefault();
-    var btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Sending…'; btn.disabled = true;
-    try {
-      var res = await fetch(form.action, { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} });
-      if (res.ok) { form.style.display='none'; success.style.display='block'; }
-      else { btn.textContent='Try again'; btn.disabled=false; }
-    } catch(e) { btn.textContent='Try again'; btn.disabled=false; }
-  });
-})();
 </script>
 </body>
 </html>
