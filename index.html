@@ -4,14 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alloy Media — Paid Media for Home Improvement</title>
-
-<!--
-  FAVICON: Once you have your logo file, add it to your GitHub repo
-  and replace "newlogo.png" below with the actual filename.
--->
-<link rel="icon" type="image/png" href="newlogo.png">
-<link rel="apple-touch-icon" href="newlogo.png">
-
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
@@ -164,29 +158,19 @@ section { padding: 6rem 5vw; }
 .section-label-dark::before { content:''; display:block; width:1.6rem; height:1px; background:var(--teal-dark); }
 h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 600; line-height: 1.15; margin-bottom: 1.4rem; }
 
-/* ── ABOUT — collapsible bios ── */
+/* ABOUT — single founder */
 #about { border-top: 1px solid var(--border); background: var(--bg-mid); }
-
-.founders-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-}
 
 .founder-card {
   display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 2rem;
+  grid-template-columns: 220px 1fr;
+  gap: 3.5rem;
   align-items: start;
-}
-
-.founders-grid .founder-card:first-child {
-  padding-right: 4rem;
-  border-right: 1px solid var(--border);
+  max-width: 840px;
 }
 
 .founder-photo {
-  width: 140px;
+  width: 220px;
   aspect-ratio: 3/4;
   object-fit: cover;
   object-position: center top;
@@ -197,34 +181,30 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
 
 .founder-name {
   font-family: var(--serif);
-  font-size: 1.5rem; font-weight: 600;
-  margin-bottom: 0.2rem; color: var(--white);
+  font-size: 1.9rem; font-weight: 600;
+  margin-bottom: 0.3rem; color: var(--white);
 }
 .founder-role {
-  font-size: 0.68rem; letter-spacing: 0.16em;
+  font-size: 0.71rem; letter-spacing: 0.16em;
   text-transform: uppercase; color: var(--teal);
   margin-bottom: 1rem;
 }
 
-/* collapsible bio */
 .founder-bio-preview {
-  font-size: 0.9rem;
+  font-size: 0.93rem;
   color: #A8A49E;
-  line-height: 1.82;
-  /* show roughly 3 lines */
+  line-height: 1.85;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   transition: all 0.35s ease;
 }
-
 .founder-bio-preview.expanded {
   display: block;
   -webkit-line-clamp: unset;
   overflow: visible;
 }
-
 .founder-bio-preview p + p { margin-top: 0.9rem; }
 
 .bio-toggle {
@@ -232,26 +212,16 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
   align-items: center;
   gap: 0.4rem;
   margin-top: 0.75rem;
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--teal);
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.2s;
+  font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--teal); background: none; border: none;
+  cursor: pointer; padding: 0; transition: color 0.2s;
 }
 .bio-toggle:hover { color: var(--teal-lt); }
-.bio-toggle-arrow {
-  display: inline-block;
-  transition: transform 0.3s ease;
-  font-style: normal;
-}
+.bio-toggle-arrow { display: inline-block; transition: transform 0.3s ease; }
 .bio-toggle.open .bio-toggle-arrow { transform: rotate(180deg); }
 
-/* RESULTS (LIGHT) */
+/* RESULTS */
 #results { background: var(--off-white); color: var(--dark-text); border-top: none; }
 
 .client-intro {
@@ -267,7 +237,6 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
   font-size: 0.68rem; letter-spacing: 0.16em;
   text-transform: uppercase; color: #6A6860;
 }
-
 .results-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
 .stat-number { font-family: var(--serif); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 700; color: var(--dark-text); line-height: 1; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
 .stat-teal { color: var(--teal-dark); }
@@ -275,22 +244,13 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
 .results-body { font-size: 0.92rem; color: #5A5855; line-height: 1.85; }
 .results-body p + p { margin-top: 0.9rem; }
 .results-body strong { color: var(--dark-text); font-weight: 500; }
-
-.results-list {
-  list-style: none; margin-top: 1rem;
-  display: flex; flex-direction: column; gap: 0.6rem;
-}
-.results-list li {
-  display: flex; gap: 0.8rem;
-  font-size: 0.88rem; color: #5A5855; line-height: 1.6;
-}
+.results-list { list-style: none; margin-top: 1rem; display: flex; flex-direction: column; gap: 0.6rem; }
+.results-list li { display: flex; gap: 0.8rem; font-size: 0.88rem; color: #5A5855; line-height: 1.6; }
 .results-list li::before { content: '+'; color: var(--teal-dark); font-weight: 600; flex-shrink: 0; margin-top: 0.05em; }
 .results-list li strong { color: var(--dark-text); font-weight: 500; }
-
 .result-quote-wrap { padding: 1.4rem; border-left: 3px solid var(--teal-dark); background: #E8E4DD; margin-top: 2rem; }
 .result-quote { font-family: var(--serif); font-size: 1.1rem; font-style: italic; color: var(--dark-text); line-height: 1.65; margin-bottom: 0.5rem; }
 .result-quote-attr { font-size: 0.67rem; letter-spacing: 0.16em; text-transform: uppercase; color: #6A6860; }
-
 .stat-secondary { display: flex; flex-direction: column; gap: 1.2rem; padding-top: 0.5rem; }
 .mini-stat { padding: 1.4rem 1.6rem; border: 1px solid rgba(26,110,103,0.18); background: #E8E4DD; }
 .mini-stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--dark-text); line-height: 1; margin-bottom: 0.3rem; }
@@ -305,7 +265,6 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
 .attr-copy p em { color: var(--teal); font-style: normal; }
 .verticals { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.6rem; }
 .vertical-tag { font-size: 0.64rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); border: 1px solid var(--border); padding: 0.45rem 0.9rem; }
-
 .attr-diagram { background: rgba(13,30,28,0.8); border: 1px solid var(--border); padding: 2rem 1.5rem; }
 .diag-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
 .diag-col { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -342,27 +301,15 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
 @keyframes pillFade { 0%,100%{opacity:0.4} 50%{opacity:1} }
 .diag-label { font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); opacity:0.6; text-align:center; margin-top:0.4rem; }
 
-/* SERVICES — 4 cards, 2x2 grid */
+/* SERVICES — 2x2 */
 #services { border-top: 1px solid var(--border); background: var(--bg-mid); }
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  margin-top: 3rem;
-  border: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(2,1fr);
+  margin-top: 3rem; border: 1px solid var(--border);
 }
-.service-card {
-  padding: 2.4rem 2.2rem;
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  transition: background 0.3s;
-}
-/* remove bottom border from last row */
-.service-card:nth-child(3),
-.service-card:nth-child(4) { border-bottom: none; }
-/* remove right border from right column */
-.service-card:nth-child(2),
-.service-card:nth-child(4) { border-right: none; }
-
+.service-card { padding: 2.4rem 2.2rem; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: background 0.3s; }
+.service-card:nth-child(2), .service-card:nth-child(4) { border-right: none; }
+.service-card:nth-child(3), .service-card:nth-child(4) { border-bottom: none; }
 .service-card:hover { background: var(--teal-dim); }
 .service-number { font-family: var(--serif); font-size: 2.8rem; font-weight: 700; color: rgba(46,196,182,0.14); line-height: 1; margin-bottom: 0.9rem; }
 .service-card h3 { font-family: var(--serif); font-size: 1.35rem; font-weight: 600; margin-bottom: 0.6rem; color: var(--white); }
@@ -373,30 +320,10 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
 #cta { border-top: 1px solid var(--border); background: var(--bg-teal); }
 #cta h2 { font-size: clamp(2.4rem, 5vw, 4rem); margin-bottom: 0.8rem; text-align: center; }
 .cta-intro { color: var(--muted); font-size: 1rem; max-width: 480px; margin: 0 auto 3rem; text-align: center; line-height: 1.7; }
-
-.cta-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 780px;
-  margin: 0 auto;
-}
-
-.cta-option {
-  border: 1px solid var(--border);
-  padding: 2rem;
-  background: rgba(13,30,28,0.5);
-}
-
-.cta-option-label {
-  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--teal); margin-bottom: 1rem;
-}
-
-.cta-option p {
-  font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.4rem;
-}
-
+.cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 780px; margin: 0 auto; }
+.cta-option { border: 1px solid var(--border); padding: 2rem; background: rgba(13,30,28,0.5); }
+.cta-option-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-bottom: 1rem; }
+.cta-option p { font-size: 0.85rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.4rem; }
 .btn-cta-primary {
   font-family: var(--sans); font-size: 0.78rem; font-weight: 500;
   letter-spacing: 0.13em; text-transform: uppercase;
@@ -406,8 +333,6 @@ h2 { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 
   transition: background 0.2s, transform 0.15s;
 }
 .btn-cta-primary:hover { background: var(--teal-lt); transform: translateY(-1px); }
-
-/* form inside CTA */
 .cta-form { display: flex; flex-direction: column; gap: 0.8rem; }
 .cta-form input, .cta-form textarea {
   background: var(--bg-lt); border: 1px solid var(--border); color: var(--white);
@@ -459,11 +384,8 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   section { padding: 4rem 1.5rem; }
   h2 { font-size: clamp(1.8rem, 6vw, 2.4rem); }
 
-  .founders-grid { grid-template-columns: 1fr; gap: 0; }
-  .founders-grid .founder-card:first-child { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 3rem; margin-bottom: 3rem; }
-  .founder-card { grid-template-columns: 100px 1fr; gap: 1.4rem; }
-  .founder-photo { width: 100px; }
-  .founder-name { font-size: 1.3rem; }
+  .founder-card { grid-template-columns: 1fr; gap: 2rem; }
+  .founder-photo { width: 130px; aspect-ratio: 1/1; object-position: center 15%; }
 
   .client-intro { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
   .results-inner { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -474,14 +396,12 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   .diag-node { font-size: 0.58rem; padding: 0.4rem 0.5rem; white-space: normal; }
   .diag-node.core { padding: 0.7rem 0.5rem; font-size: 0.62rem; }
 
-  /* services stack to single column on mobile */
   .services-grid { grid-template-columns: 1fr; }
   .service-card { border-right: none; border-bottom: 1px solid var(--border); }
-  .service-card:nth-child(3) { border-bottom: 1px solid var(--border); }
   .service-card:nth-child(4) { border-bottom: none; }
+  .service-card:nth-child(3) { border-bottom: 1px solid var(--border); }
 
   .cta-grid { grid-template-columns: 1fr; }
-
   footer { flex-direction: column; gap: 0.8rem; text-align: center; }
   .float-trigger { display: none; }
   .float-panel { width:100%; border:none; border-top:1px solid var(--border); top:auto; bottom:0; right:0; transform:translateY(100%); max-height:85vh; overflow-y:auto; }
@@ -492,8 +412,8 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
 @media (min-width: 769px) and (max-width: 1024px) {
   #hero { background-position: 65% center; }
   .hero-content { max-width: 55%; }
-  .founders-grid { grid-template-columns: 1fr; gap: 0; }
-  .founders-grid .founder-card:first-child { padding-right: 0; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 3rem; margin-bottom: 3rem; }
+  .founder-card { grid-template-columns: 160px 1fr; gap: 2.5rem; }
+  .founder-photo { width: 160px; }
   .results-inner { grid-template-columns: 1fr; gap: 3rem; }
   .attr-inner { grid-template-columns: 1fr; gap: 3rem; }
   .diag-arrow-track { width: 28px; }
@@ -524,41 +444,22 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   <div class="scroll-hint"><span>Scroll</span><div class="scroll-arrow"></div></div>
 </section>
 
-<!-- ABOUT -->
+<!-- ABOUT — single founder -->
 <section id="about">
-  <div class="section-label">The Founders</div>
-  <div class="founders-grid">
-
-    <div class="founder-card">
-      <img class="founder-photo" src="Profile photo for website.png" alt="Alex Moriarty">
-      <div>
-        <div class="founder-name">Alex Moriarty</div>
-        <div class="founder-role">Co-Founder</div>
-        <div class="founder-bio-preview" id="bio-alex">
-          <p>Alex previously led internal lead generation for one of the largest home remodeling companies in the country. He got a close look at the problems that stem from relying on lead aggregators: low close rates, unpredictable volume, rising costs, and minimal brand-building despite six and seven figure marketing budgets.</p>
-          <p>He has leveraged years of creative testing, repeatable workflows, and custom software to build a reliable paid marketing funnel for window and bathroom remodeling companies.</p>
-        </div>
-        <button class="bio-toggle" id="toggle-alex" onclick="toggleBio('alex')">
-          Read more <span class="bio-toggle-arrow">&#x2304;</span>
-        </button>
+  <div class="section-label">The Founder</div>
+  <div class="founder-card">
+    <img class="founder-photo" src="Profile photo for website.png" alt="Alex Moriarty">
+    <div>
+      <div class="founder-name">Alex Moriarty</div>
+      <div class="founder-role">Founder</div>
+      <div class="founder-bio-preview" id="bio-alex">
+        <p>Alex previously led internal lead generation for one of the largest home remodeling companies in the country. He got a close look at the problems that stem from relying on lead aggregators: low close rates, unpredictable volume, rising costs, and minimal brand-building despite six and seven figure marketing budgets.</p>
+        <p>He has leveraged years of creative testing, repeatable workflows, and custom software to build a reliable paid marketing funnel for window and bathroom remodeling companies.</p>
       </div>
+      <button class="bio-toggle" id="toggle-alex" onclick="toggleBio('alex')">
+        Read more <span class="bio-toggle-arrow">&#x2304;</span>
+      </button>
     </div>
-
-    <div class="founder-card">
-      <img class="founder-photo" src="Gurjeetprofilephoto.jpeg" alt="Gurjeet Singh">
-      <div>
-        <div class="founder-name">Gurjeet Singh</div>
-        <div class="founder-role">Co-Founder</div>
-        <div class="founder-bio-preview" id="bio-gurjeet">
-          <p>Gurjeet's background is in operations at a Fortune 500 company, where his work touched over 10,000 dialysis clinics nationwide. Every system had to be repeatable, with minimal variance.</p>
-          <p>That philosophy is what he has brought to Alloy. It has helped standardize and replicate successful campaigns across clients, while leaving room for the localization and branding that makes each market unique.</p>
-        </div>
-        <button class="bio-toggle" id="toggle-gurjeet" onclick="toggleBio('gurjeet')">
-          Read more <span class="bio-toggle-arrow">&#x2304;</span>
-        </button>
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -613,7 +514,7 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
       <h2>The CRMs that run this industry weren't built for marketing.</h2>
       <p><strong>MarketSharp. Lead Perfection. ServiceTitan.</strong> Out of the box, they tell you how many leads came in. They do not tell you which ad, which creative, or which angle drove the ones that actually closed.</p>
       <p>We built the infrastructure that does. Every lead that enters your CRM is tied to the specific campaign and creative that generated it. That data goes back to Meta and Google as offline conversion signals, teaching the platforms to find more of the buyers who sign, not just the ones who submit forms.</p>
-      <p>It compounds over time. The longer the system runs, the better the targeting gets. And then we compound the value further by feeding transcripts of all live video ads to our Creative Analysis agent. <em>We can walk you through exactly how it works on a call. It's pretty cool stuff.</em></p>
+      <p>It compounds over time. The longer the system runs, the better the targeting gets. And then we compound the value further by feeding transcripts of all live video ads to our Creative Analysis agent. <em>We can walk you through exactly how it works on a call. It is pretty cool stuff.</em></p>
       <div class="verticals">
         <span class="vertical-tag">Windows</span>
         <span class="vertical-tag">Water Filtration</span>
@@ -659,51 +560,43 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   </div>
 </section>
 
-<!-- SERVICES — 2x2 grid with landing page optimization added -->
+<!-- SERVICES -->
 <section id="services">
   <div class="section-label">What We Do</div>
   <div class="services-grid">
-
     <div class="service-card">
       <div class="service-number">01</div>
       <h3>Meta Ads</h3>
       <p>Most home improvement creative looks identical. Same stock footage, same offer cards, same formats every competitor is already running. We publish new creative twice a month, test across a structured library of angles, and use AI-assisted production to move fast without cutting quality. The goal is an ad that feels real, because it is.</p>
       <span class="service-tag">Facebook · Instagram · Reels</span>
     </div>
-
     <div class="service-card">
       <div class="service-number">02</div>
       <h3>Google Ads</h3>
       <p>Capture buyers who are already searching for what you install. We build and manage campaigns optimized for lead quality, not just lead volume. A lower cost per lead means nothing if your sales team cannot close the calls, so we build toward the sale, not the form fill.</p>
       <span class="service-tag">Search · Performance Max · LSA</span>
     </div>
-
     <div class="service-card">
       <div class="service-number">03</div>
       <h3>Landing Page Optimization</h3>
-      <p>Getting someone to click your ad is only half the job. The landing page is where the lead either converts or leaves. We build and continuously test landing pages around what actually drives qualified form fills: accurate offers, clear social proof, and no bait-and-switch copy that wastes your sales team's time on low-intent leads.</p>
+      <p>Getting someone to click your ad is only half the job. The landing page is where the lead either converts or leaves. We build and continuously test pages around what actually drives qualified form fills: accurate offers, clear social proof, and no bait-and-switch copy that wastes your sales team's time on low-intent leads.</p>
       <span class="service-tag">Conversion Rate · A/B Testing · Lead Quality</span>
     </div>
-
     <div class="service-card">
       <div class="service-number">04</div>
       <h3>Full-Funnel Attribution</h3>
       <p>We build the technical layer that connects your ad account to your CRM so you can see which specific creative drove which signed jobs. That data feeds back into platform targeting as offline conversion signals, so the algorithm gets better at finding buyers, not browsers.</p>
       <span class="service-tag">Offline Conversions · CRM Sync · Revenue Tracking</span>
     </div>
-
   </div>
 </section>
 
-<!-- CTA — Calendly + Formspree side by side -->
+<!-- CTA -->
 <section id="cta">
   <div class="section-label" style="justify-content:center;">Let's Talk</div>
   <h2>Ready to find out if we are a fit?</h2>
   <p class="cta-intro">If someone sent you here, there is probably already a conversation worth having. Pick whichever works best for you.</p>
-
   <div class="cta-grid">
-
-    <!-- Option 1: Book a call -->
     <div class="cta-option">
       <div class="cta-option-label">Book a Call</div>
       <p>30 minutes. We will figure out quickly whether your market is a good fit and what a realistic result looks like.</p>
@@ -713,18 +606,14 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
       -->
       <a href="https://calendly.com/YOUR_CALENDLY_LINK" class="btn-cta-primary">Book 30 Minutes</a>
     </div>
-
-    <!-- Option 2: Send a message (Formspree -> Google Sheet) -->
     <div class="cta-option">
       <div class="cta-option-label">Send a Message</div>
       <!--
         FORMSPREE SETUP:
-        1. Go to formspree.io and create a free account
-        2. Create a new form and copy your endpoint URL
-        3. Replace YOUR_FORMSPREE_ENDPOINT below
-        4. In Formspree dashboard: enable email notifications
-        5. Connect Google Sheets under Integrations
-        Every submission will email you and log a row automatically.
+        1. formspree.io, free account, create a new form
+        2. Replace YOUR_FORMSPREE_ENDPOINT below with your form URL
+        3. In Formspree dashboard: enable email notifications
+        4. Connect Google Sheets under Integrations tab
       -->
       <form
         class="cta-form"
@@ -740,7 +629,6 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
       </form>
       <div class="form-success-msg" id="form-success">Got it. We will be in touch shortly.</div>
     </div>
-
   </div>
 </section>
 
@@ -757,7 +645,7 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   <button class="trigger-close" onclick="togglePanel()">x</button>
   <img class="panel-avatar-photo" src="Profile photo for website.png" alt="Alex Moriarty">
   <div class="panel-name">Alex Moriarty</div>
-  <div class="panel-title">Co-Founder, Alloy Media</div>
+  <div class="panel-title">Founder, Alloy Media</div>
   <div class="panel-divider"></div>
   <p class="panel-msg">Direct question about whether we are a fit for your market? Reach out. No forms, no sales team.</p>
   <a href="mailto:hello@alloymedia.io" class="panel-email">hello@alloymedia.io</a>
@@ -765,7 +653,6 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
 </div>
 
 <script>
-/* Nav scroll */
 (function() {
   var nav = document.getElementById('main-nav');
   window.addEventListener('scroll', function() {
@@ -773,7 +660,6 @@ footer { border-top:1px solid var(--border); padding:2rem 5vw; display:flex; ali
   }, { passive: true });
 })();
 
-/* Float panel trigger */
 setTimeout(function() {
   var t = document.getElementById('float-trigger');
   if (t) t.classList.add('visible');
@@ -789,7 +675,6 @@ function togglePanel() {
   }
 }
 
-/* Collapsible bios */
 function toggleBio(name) {
   var bio    = document.getElementById('bio-' + name);
   var toggle = document.getElementById('toggle-' + name);
@@ -799,7 +684,6 @@ function toggleBio(name) {
   toggle.childNodes[0].textContent = isOpen ? 'Read less ' : 'Read more ';
 }
 
-/* Form submission */
 (function() {
   var form    = document.getElementById('contact-form');
   var success = document.getElementById('form-success');
@@ -807,25 +691,15 @@ function toggleBio(name) {
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     var btn = form.querySelector('button[type="submit"]');
-    btn.textContent = 'Sending...';
-    btn.disabled = true;
+    btn.textContent = 'Sending...'; btn.disabled = true;
     try {
       var res = await fetch(form.action, {
-        method: 'POST',
-        body: new FormData(form),
+        method: 'POST', body: new FormData(form),
         headers: { 'Accept': 'application/json' }
       });
-      if (res.ok) {
-        form.style.display = 'none';
-        success.style.display = 'block';
-      } else {
-        btn.textContent = 'Try again';
-        btn.disabled = false;
-      }
-    } catch(err) {
-      btn.textContent = 'Try again';
-      btn.disabled = false;
-    }
+      if (res.ok) { form.style.display = 'none'; success.style.display = 'block'; }
+      else { btn.textContent = 'Try again'; btn.disabled = false; }
+    } catch(err) { btn.textContent = 'Try again'; btn.disabled = false; }
   });
 })();
 </script>
