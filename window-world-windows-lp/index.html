@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Window World of Western Massachusetts | Buy 2 Windows, Get 1 Free</title>
+<meta name="description" content="Energy-efficient replacement windows for Western Massachusetts homes. Buy 2 windows, get 1 free — $99/mo, 0% interest for 18 months. Free in-home estimate, installed in one day, backed by a lifetime warranty.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ANALYTICS REMOVED for this prospect copy: Midwest Window's Google Tag Manager (GTM-NJC5MPGV)
+     and PostHog were stripped out so prospect traffic does not report into MWC's accounts.
+     Add Window World of Western Massachusetts's OWN GTM container + PostHog project here before launch. -->
+
+<!-- PostHog removed for prospect copy: add Window World's own PostHog project before launch -->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    /* Window World of Western Massachusetts brand palette.
+       NOTE: --orange now holds Window World Cerulean (kept the var name to avoid
+       a repo-wide rename); --navy stays dark (it is used for dark text on white
+       cards as well as dark backgrounds, so it cannot become bright cerulean). */
+    --blue:       #0033A1;   /* WW International Klein Blue — primary */
+    --blue-dark:  #00297F;   /* darker Klein — hero gradient mid */
+    --blue-deep:  #001F5E;   /* deepest Klein — hero gradient start */
+    --navy:       #0A1B3D;   /* deep WW navy-blue — dark bg + dark text on white */
+    --navy-2:     #122A52;
+    --orange:     #00A6DE;   /* WW Cerulean — CTAs / highlights / accents */
+    --orange-dk:  #0085B5;   /* darker cerulean — hover / active */
+    --white:      #FFFFFF;
+    --gray-1:     #F4F6F8;
+    --gray-2:     #E8ECF0;
+    --gray-3:     #D0D8DF;
+    --text:       #1A2733;
+    --text-mid:   #4A5C6A;
+    --text-lt:    #7A8C9A;
+    --green:      #1A9E5C;
+    --red:        #D63B2F;
+
+    --strip-h: 42px; /* height of the single orange offer strip — keep in sync with strip padding/font */
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--navy);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    padding-top: var(--strip-h);   /* compensate for fixed top strip */
+    padding-bottom: 76px;          /* compensate for fixed bottom mobile bar */
+  }
+
+  /* ── GHL ESCAPE ── */
+  .mwc-wrap {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow-x: hidden;
+  }
+
+  /* ── STICKY TOP STRIP (two lines, flush, no transform = no overlap) ── */
+  .v2-top-strip {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    width: 100%;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+    /* Both rows share the same horizontal edges; no geometry-shifting animation on either child so they always butt cleanly. */
+  }
+  .v2-strip-trust {
+    background: var(--navy);
+    color: #fff;
+    text-align: center;
+    padding: 5px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    display: block;
+  }
+  .v2-strip-trust .star { color: #FFD100; }
+
+  /* Flash-of-light sheen on the orange offer line. A translucent gradient
+     sweeps left-to-right under the text every ~3.5s. Doesn't shift the
+     element's geometry, so no overlap/gap with the trust line above. */
+  .v2-strip-offer {
+    background: var(--orange);
+    color: #fff;
+    text-align: center;
+    padding: 8px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+  .v2-strip-offer > * { position: relative; z-index: 1; }
+  .v2-strip-offer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -70%;
+    width: 55%; height: 100%;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
+    animation: shine 3.5s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes shine {
+    0%        { left: -70%; }
+    55%, 100% { left: 130%; }
+  }
+  .v2-strip-offer strong { color: #fff; }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(155deg, var(--blue-deep) 0%, var(--blue-dark) 45%, var(--blue) 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 85% 15%, rgba(255,255,255,0.08) 0%, transparent 45%),
+      radial-gradient(ellipse at 5% 85%, rgba(0,0,0,0.22) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  /* Hero layout — single column on mobile, 2-col with photo on desktop */
+  .hero-inner {
+    max-width: 560px; margin: 0 auto;
+    padding: 14px 22px 36px;
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+  }
+  .hero-content { display: flex; flex-direction: column; }
+
+  /* Photo column — hidden on mobile, visible 2-col on desktop */
+  .hero-photo-wrap {
+    display: none;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 48px rgba(0,0,0,0.32);
+    align-self: stretch;
+    min-height: 100%;
+  }
+  .hero-photo-wrap img {
+    width: 100%; height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+  /* Subtle bottom-shadow gradient inside the photo so any text overlaid here reads */
+  .hero-photo-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.18) 100%);
+    pointer-events: none;
+  }
+  .hero-photo-caption {
+    position: absolute; left: 14px; top: 14px;
+    background: rgba(10,27,61,0.82);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 12px; border-radius: 4px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 2;
+  }
+
+  /* Mobile-only hero photo card — sits between sub-headline and form.
+     Inset 20px from each viewport edge with rounded corners + drop shadow.
+     Hidden on desktop where the photo lives in the left column of the
+     hero grid. */
+  .hero-photo-mobile {
+    display: none;
+    position: relative;
+    width: calc(100vw - 40px);                       /* 20px from each viewport edge */
+    margin-left: calc(-50vw + 50% + 20px);           /* centered, breaks out of hero-inner padding */
+    margin-right: 0;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    height: 180px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .hero-photo-mobile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+  }
+  .hero-photo-mobile:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+  }
+  .hero-photo-mobile img {
+    width: 100%; height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center top;
+  }
+  .hero-photo-mobile-badge {
+    position: absolute;
+    top: 12px; left: 12px;
+    background: rgba(10, 27, 61, 0.80); /* WW navy #0A1B3D @ 80% */
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.625rem; /* ~10px */
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 100px; /* pill */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  /* Geo line above H1 */
+  .v2-geo-pill {
+    display: inline-block;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.28);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+
+  .hero-h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2.1rem, 6vw, 3.2rem);
+    font-weight: 700; color: #fff; line-height: 1.04;
+    margin-bottom: 6px; letter-spacing: 0.01em;
+  }
+  .hero-h1 .orange { color: var(--orange); display: block; font-size: clamp(1.7rem, 5vw, 2.5rem); font-weight: 600; }
+  .hero-sub {
+    font-size: 0.98rem; color: rgba(255,255,255,0.86);
+    margin: 8px 0 16px; line-height: 1.5;
+  }
+  .hero-sub strong { color: #fff; font-weight: 600; }
+
+  /* Testimonial — now inside the white form card, styled as a subtle inset
+     so it reads as part of the form's voice rather than competing with it. */
+  .v2-pullquote {
+    background: var(--gray-1);
+    border-left: 4px solid var(--orange);
+    padding: 12px 14px;
+    margin: 14px 0 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .v2-pullquote p {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.48;
+    margin-bottom: 6px;
+  }
+  .v2-pullquote .by {
+    font-size: 0.68rem;
+    color: var(--text-mid);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .v2-pullquote .by .stars { color: #FFB300; margin-right: 6px; letter-spacing: 0.04em; }
+
+  /* ── MULTI-STEP FORM (white card, sits on the dark hero) ── */
+  .v2-form {
+    background: #fff;
+    color: var(--text);
+    border-radius: 12px;
+    padding: 20px 20px 18px;
+    box-shadow: 0 18px 44px rgba(0,0,0,0.22);
+    position: relative;
+  }
+
+  /* 3-dot progress indicator — recolored for white form card */
+  .v2-progress-dots {
+    display: flex; justify-content: center; align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .v2-progress-dots .dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--gray-3);
+    transition: background 0.3s, transform 0.3s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .v2-progress-dots .dot.active {
+    background: var(--orange);
+    transform: scale(1.15);
+  }
+  .v2-progress-dots .dot.done { background: var(--orange); }
+  .v2-progress-dots .dot.done::after {
+    content: '\2713';
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .v2-progress-dots .step-text {
+    margin-left: 8px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .m2s-question {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.18rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 14px; line-height: 1.25; text-align: center;
+  }
+  .m2s-input {
+    width: 100%; padding: 13px 14px;
+    border: 1.5px solid var(--gray-3); border-radius: 6px;
+    font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text);
+    background: var(--gray-1); outline: none; margin-bottom: 10px;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .m2s-input:focus { border-color: var(--blue); background: #fff; box-shadow: 0 0 0 3px rgba(0,51,161,0.1); }
+  .m2s-input::placeholder { color: var(--text-lt); }
+  .m2s-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .m2s-btn {
+    width: 100%; background: var(--orange); color: #fff; border: none;
+    padding: 15px 20px; font-family: 'Oswald', sans-serif;
+    font-size: 1.18rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    border-radius: 6px; cursor: pointer; margin-top: 4px;
+    box-shadow: 0 4px 18px rgba(0,166,222,0.38);
+    transition: background 0.18s, transform 0.12s;
+  }
+  .m2s-btn:hover { background: var(--orange-dk); }
+  .m2s-btn:active { background: var(--orange-dk); transform: scale(0.98); }
+
+  /* Tile grid for window count — light on white card */
+  .v2-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 4px 0 0;
+  }
+  .v2-tile {
+    background: var(--gray-1);
+    border: 1.5px solid var(--gray-3);
+    color: var(--navy);
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.12rem; font-weight: 700; letter-spacing: 0.04em;
+    padding: 22px 8px;
+    border-radius: 8px;
+    cursor: pointer; text-align: center;
+    transition: all 0.18s;
+  }
+  .v2-tile:hover, .v2-tile:active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: #fff;
+    transform: scale(0.98);
+  }
+
+  /* Tri-microcopy under CTA */
+  .v2-cta-micro {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-mid);
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .v2-cta-micro .sep { margin: 0 5px; opacity: 0.5; }
+
+  /* Co-equal secondary call link */
+  .v2-call-secondary {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1.5px solid var(--gray-3);
+    border-radius: 6px;
+    color: var(--navy);
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.92rem; font-weight: 600; letter-spacing: 0.04em;
+    transition: background 0.18s, border-color 0.18s;
+  }
+  .v2-call-secondary:hover { background: var(--gray-1); border-color: var(--text-lt); }
+  .v2-call-secondary .phone-num { color: var(--orange); }
+
+  .m2s-fine {
+    text-align: center; font-size: 0.66rem;
+    color: var(--text-lt); margin-top: 8px; line-height: 1.45;
+  }
+
+  /* 3-checkmark blended benefits — sits BELOW form as supporting context */
+  .v2-benefits {
+    list-style: none;
+    margin: 18px 0 0;
+  }
+  .v2-benefits li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.94);
+    padding: 6px 0;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  .v2-benefits .ck {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── WHY-MIDWEST EDUCATIONAL STRIP (replaces vanity stats) ── */
+  .why-strip {
+    background: #fff;
+    border-bottom: 1px solid var(--gray-2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 36px 22px;
+  }
+  .why-inner { max-width: 1040px; margin: 0 auto; }
+  .why-eyebrow {
+    text-align: center;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 6px; display: block;
+  }
+  .why-h2 {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    font-weight: 700; color: var(--navy); line-height: 1.15;
+    margin-bottom: 22px;
+  }
+  .why-h2 .accent { color: var(--orange); }
+  /* Double-pane vs triple-pane comparison image (replaces previous 3-icon grid) */
+  .why-compare {
+    max-width: 760px;
+    margin: 8px auto 0;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .why-compare:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.1);
+  }
+  .why-compare:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+  }
+  .why-compare img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+  }
+
+  /* ── GENERIC SECTION ── */
+  .sec { padding: 64px 22px; }
+  .sec-gray { background: var(--gray-1); }
+  .sec-white { background: var(--white); }
+  .sec-navy { background: var(--navy); }
+  .sec-inner { max-width: 1040px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 8px; display: block;
+  }
+  .sec-navy .eyebrow { color: var(--orange); }
+  .sec-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.7rem, 3.2vw, 2.5rem); font-weight: 700;
+    color: var(--navy); line-height: 1.1; margin-bottom: 12px; letter-spacing: 0.01em;
+  }
+  .sec-navy .sec-title { color: #fff; }
+  .sec-title .accent { color: var(--orange); }
+
+  /* ── FOUNDER SECTION ── */
+  .founder-grid {
+    display: grid; grid-template-columns: 360px 1fr;
+    gap: 56px; align-items: center;
+  }
+  .founder-photo { position: relative; }
+  .founder-photo img {
+    width: 100%; border-radius: 10px; display: block;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.14);
+  }
+  .founder-photo::before {
+    content: ''; position: absolute; top: -10px; left: -10px; right: 20px; bottom: 20px;
+    border: 3px solid var(--blue); border-radius: 10px; z-index: -1;
+  }
+  .f-badge {
+    position: absolute; bottom: 20px; right: -14px;
+    background: var(--orange); color: #fff;
+    font-family: 'Oswald', sans-serif; font-size: 0.78rem; font-weight: 600;
+    padding: 7px 14px; border-radius: 4px; letter-spacing: 0.06em; text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(0,166,222,0.35);
+  }
+  .founder-content blockquote {
+    font-family: 'Source Serif 4', serif; font-style: italic;
+    font-size: 1.1rem; color: var(--text); line-height: 1.65;
+    border-left: 4px solid var(--orange); padding-left: 20px; margin: 16px 0 18px;
+  }
+  .founder-sig {
+    font-size: 0.78rem; font-weight: 700; color: var(--blue);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .trust-tiles {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 22px;
+  }
+  .t-tile {
+    background: #fff; border: 1px solid var(--gray-2); border-radius: 8px;
+    padding: 11px 13px; display: flex; align-items: flex-start; gap: 11px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+  }
+  .t-tile-icon {
+    width: 32px; height: 32px; background: var(--blue); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0; color: #fff;
+  }
+  .t-tile-text strong { display: block; font-size: 0.82rem; font-weight: 700; color: var(--navy); margin-bottom: 1px; }
+  .t-tile-text span { font-size: 0.74rem; color: var(--text-mid); }
+
+  /* ── WORK PHOTOS GRID ── */
+  .photos-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 10px; margin-top: 28px;
+  }
+  .photo-item {
+    border-radius: 8px; overflow: hidden; aspect-ratio: 4/3;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
+  }
+  .photo-item:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
+  .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  /* ── HOW IT WORKS ── */
+  .steps-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 40px; position: relative;
+  }
+  .steps-row::before {
+    content: ''; position: absolute; top: 24px;
+    left: calc(16.66% + 28px); right: calc(16.66% + 28px);
+    height: 2px; background: linear-gradient(90deg, var(--orange), var(--blue)); z-index: 0;
+  }
+  .step { text-align: center; padding: 0 22px; position: relative; z-index: 1; }
+  .step-num {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: var(--orange); color: #fff;
+    font-family: 'Oswald', sans-serif; font-size: 1.35rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px; box-shadow: 0 4px 16px rgba(0,166,222,0.38);
+  }
+  .step h3 {
+    font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 600;
+    color: #fff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .step p { font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.55; }
+
+  /* ── TESTIMONIALS ── */
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 18px; margin-top: 32px;
+  }
+  .review-card {
+    background: #fff; border: 1px solid var(--gray-2); border-radius: 10px;
+    padding: 22px; border-top: 3px solid var(--blue);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  }
+  .r-stars { color: #FFD100; font-size: 0.96rem; margin-bottom: 10px; display: block; }
+  .review-card p {
+    font-family: 'Source Serif 4', serif; font-style: italic;
+    font-size: 0.88rem; color: var(--text); line-height: 1.6; margin-bottom: 14px;
+  }
+  .reviewer {
+    font-size: 0.74rem; font-weight: 700; color: var(--blue);
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+
+  /* ── BEFORE / AFTER ── */
+  .ba-intro { max-width: 640px; margin-bottom: 32px; }
+  .ba-intro p { font-size: 0.98rem; color: var(--text-mid); line-height: 1.55; margin-top: 8px; }
+  .ba-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .ba-card {
+    border-radius: 10px; overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.1); border: 1px solid var(--gray-2);
+  }
+  .ba-card img { width: 100%; display: block; }
+  .ba-label {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 13px; background: var(--gray-1); border-top: 1px solid var(--gray-2);
+  }
+  .ba-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .ba-dot.before { background: var(--red); }
+  .ba-dot.after { background: var(--green); }
+  .ba-label span { font-size: 0.72rem; font-weight: 600; color: var(--text-mid); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ── OFFER CLOSER (form removed — anchor CTA to hero form) ── */
+  .offer-closer {
+    max-width: 600px; margin: 0 auto; text-align: center;
+  }
+  .offer-closer .offer-h {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.9rem, 3.6vw, 2.6rem); font-weight: 700;
+    color: #fff; line-height: 1.05; margin: 8px 0 18px;
+  }
+  .offer-closer .offer-h .orange { color: var(--orange); }
+  .offer-closer .offer-list { list-style: none; margin: 0 auto 24px; max-width: 460px; text-align: left; }
+  .offer-closer .offer-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.95rem; color: rgba(255,255,255,0.92);
+    padding: 7px 0; line-height: 1.4;
+  }
+  .offer-closer .offer-list .ck { color: var(--orange); font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .offer-closer .closer-cta {
+    display: inline-block; width: 100%; max-width: 360px;
+    background: var(--orange); color: #fff; text-decoration: none;
+    font-family: 'Oswald', sans-serif; font-size: 1.18rem; font-weight: 700;
+    padding: 16px 20px; border-radius: 6px; letter-spacing: 0.06em; text-transform: uppercase;
+    box-shadow: 0 4px 18px rgba(0,166,222,0.38);
+    transition: background 0.18s, transform 0.12s;
+  }
+  .offer-closer .closer-cta:hover { background: var(--orange-dk); transform: translateY(-2px); }
+  .offer-closer .closer-call {
+    display: inline-block; margin-top: 12px;
+    color: rgba(255,255,255,0.85); text-decoration: none;
+    font-family: 'Oswald', sans-serif; font-size: 0.92rem; font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+  .offer-closer .closer-call .phone-num { color: var(--orange); }
+  .offer-fine { font-size: 0.66rem; color: rgba(255,255,255,0.32); line-height: 1.5; margin-top: 14px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); padding: 32px 22px; text-align: center;
+    border-top: 3px solid var(--blue);
+  }
+  .footer-logo { height: 40px; mix-blend-mode: screen; filter: brightness(1.5); margin-bottom: 12px; }
+  footer p { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 5px; line-height: 1.55; }
+  footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  footer a:hover { color: var(--orange); }
+
+  /* ── STICKY MOBILE BAR ── */
+  .mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 9998;
+    background: var(--navy);
+    border-top: 3px solid var(--orange);
+    padding: 9px 14px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    box-shadow: 0 -4px 18px rgba(0,0,0,0.25);
+  }
+  .mb-call {
+    background: transparent; border: 2px solid rgba(255,255,255,0.25); color: #fff;
+    text-decoration: none; text-align: center; padding: 11px 8px; border-radius: 6px;
+    font-family: 'Oswald', sans-serif; font-size: 0.95rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 6px; letter-spacing: 0.04em;
+  }
+  .mb-book {
+    background: var(--orange); color: #fff; border: none; text-align: center;
+    padding: 11px 8px; border-radius: 6px; font-family: 'Oswald', sans-serif;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer; letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .mb-book:active { background: var(--orange-dk); }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
+    padding: 22px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+  .lightbox-close {
+    position: absolute; top: 16px; right: 20px; font-size: 2rem; color: #fff;
+    cursor: pointer; background: none; border: none; line-height: 1;
+  }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .js-ready .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.in { opacity: 1 !important; transform: translateY(0) !important; }
+  .d1 { transition-delay: 0.08s; }
+  .d2 { transition-delay: 0.16s; }
+
+  /* ── FOCUS MODE ── Triggered on first user interaction with form.
+     Fades out surrounding page chrome, repositions the form to center of
+     viewport on a warm neutral background. */
+  .focus-progress {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: rgba(0,0,0,0.08);
+    z-index: 10001;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .focus-progress .focus-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    width: 33%;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .focus-back {
+    position: fixed; top: 12px; left: 14px;
+    z-index: 10002;
+    display: inline-flex; align-items: center; gap: 4px;
+    color: var(--text-mid);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    background: rgba(255,255,255,0.85);
+    padding: 6px 12px; border-radius: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0,0,0,0.06);
+    opacity: 0; visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background 0.18s;
+  }
+  .focus-back:hover { background: #fff; color: var(--navy); }
+
+  /* Activate */
+  body.focus-mode {
+    overflow: hidden;
+    background: #F5F0E8;
+  }
+  /* .mwc-wrap has transform:translateX which creates a containing block
+     for position:fixed descendants — neutralize the transform in focus
+     mode so the form is positioned relative to the viewport. The wrap's
+     content is opacity:0 in focus mode, so the layout shift is invisible. */
+  body.focus-mode .mwc-wrap { transform: none; left: 0; width: 100%; }
+  body.focus-mode .focus-progress,
+  body.focus-mode .focus-back {
+    opacity: 1; visibility: visible; pointer-events: auto;
+  }
+
+  /* Fade out the rest of the page */
+  body.focus-mode .v2-top-strip,
+  body.focus-mode .hero-photo-wrap,
+  body.focus-mode .hero-photo-mobile,
+  body.focus-mode .hero-h1,
+  body.focus-mode .hero-sub,
+  body.focus-mode .v2-benefits,
+  body.focus-mode .why-strip,
+  body.focus-mode .sec,
+  body.focus-mode footer,
+  body.focus-mode .mobile-bar {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+  }
+  body.focus-mode .hero { background: transparent; }
+  body.focus-mode .hero::after { display: none; }
+
+  /* Re-layer the form on top of everything, centered. Smooth transform fade. */
+  body.focus-mode .v2-form {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 560px;
+    width: calc(100% - 32px);
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    z-index: 10000;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.16);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, max-width 0.3s ease;
+  }
+  @media (max-width: 600px) {
+    body.focus-mode .v2-form {
+      width: calc(100% - 24px);
+      max-height: calc(100vh - 56px);
+    }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (min-width: 901px) {
+    /* Desktop: 2-col hero — photo on left (flex), content on right (~480px) */
+    .hero-inner {
+      max-width: 1140px;
+      padding: 28px 32px 56px;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 44px;
+      align-items: stretch;
+    }
+    .hero-photo-wrap { display: block; }
+    .hero-content { justify-content: center; }
+    .v2-form { padding: 22px 24px 22px; }
+    .m2s-question { font-size: 1.28rem; }
+    .v2-tile { padding: 26px 8px; font-size: 1.15rem; }
+    .m2s-btn { font-size: 1.2rem; padding: 16px 22px; }
+    .hero-h1 { font-size: 2.7rem; }
+    .hero-h1 .orange { font-size: 2.1rem; }
+    .v2-pullquote { margin-bottom: 16px; }
+    /* Why-strip slightly tighter on desktop */
+    .why-strip { padding: 44px 22px; }
+  }
+
+  @media (max-width: 900px) {
+    .founder-grid { grid-template-columns: 1fr; gap: 28px; }
+    .founder-photo { max-width: 300px; margin: 0 auto; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .steps-row { grid-template-columns: 1fr; gap: 28px; }
+    .steps-row::before { display: none; }
+    .trust-tiles { grid-template-columns: 1fr; }
+    .sdiv { display: none; }
+    .photos-grid { grid-template-columns: repeat(2, 1fr); }
+    .ba-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Mobile (≤767px) — hero collapses to: offer strip → photo → form.
+     H1 + sub-head are hidden so the photo carries the visual weight. */
+  @media (max-width: 767px) {
+    .hero-h1 { display: none; }
+    .hero-sub { display: none; }
+    .v2-form { padding: 20px; }
+    .hero-photo-mobile {
+      display: block;
+      height: 300px;
+      margin-top: 14px;
+      margin-bottom: 16px;      /* gap to form card */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sec { padding: 48px 18px; }
+    .photos-grid { grid-template-columns: 1fr; }
+    .v2-strip-offer { font-size: 0.82rem; padding: 7px 12px; }
+    .hero-inner { padding: 12px 18px 32px; }
+  }
+</style>
+</head>
+<body>
+<!-- GTM (noscript) removed for prospect copy — add Window World's own GTM noscript here before launch -->
+
+<!-- FOCUS MODE UI (hidden until user starts filling the form) -->
+<div class="focus-progress" id="focus-progress" aria-hidden="true">
+  <div class="focus-progress-fill" id="focus-progress-fill"></div>
+</div>
+<a href="#" class="focus-back" id="focus-back" onclick="exitFocusMode(event)">&larr; Back to page</a>
+
+<!-- STICKY SINGLE-LINE OFFER STRIP -->
+<div class="v2-top-strip">
+  <div class="v2-strip-offer">
+    <strong><span class="js-month-upper">MAY</span> ONLY:</strong> Buy 2, Get 1 FREE &middot; $99/mo, 0% for 18 Mo.
+  </div>
+</div>
+
+<!-- MAIN CONTENT WRAPPER -->
+<div class="mwc-wrap">
+
+<!-- HERO -->
+<section class="hero" id="hero-anchor">
+  <div class="hero-inner">
+
+    <!-- Desktop-only photo column (left) — hidden on mobile via CSS -->
+    <div class="hero-photo-wrap">
+      <!-- REPLACE: Need Window World photo (Midwest Window project photo on MWC's CDN) -->
+      <img src="https://assets.midwestwindowcompany.com/new3%20(2).jpg" alt="Massachusetts home with new replacement windows installed by Window World of Western Massachusetts">
+      <div class="hero-photo-caption">Massachusetts Home &middot; Recent Install</div>
+    </div>
+
+    <!-- Content column (right on desktop, full width on mobile) -->
+    <div class="hero-content">
+
+    <h1 class="hero-h1">
+      Buy 2 Windows,
+      <span class="orange">Get 1 FREE.</span>
+      $99 / Month.
+    </h1>
+
+    <p class="hero-sub"><strong>Free in-home estimate. Installed in one day.</strong></p>
+
+    <!-- Mobile-only hero photo card — sits between sub-headline (hidden on
+         mobile) and the form. Clickable: opens the same image in the
+         lightbox, matching the .photo-item and .why-compare patterns.
+         Hidden on desktop where the photo lives in the left column of the
+         hero grid (.hero-photo-wrap). -->
+    <!-- REPLACE: Need Window World photo (Midwest Window project photo on MWC's CDN) -->
+    <div class="hero-photo-mobile" onclick="openLightbox('https://assets.midwestwindowcompany.com/new3%20(2).jpg')" role="button" tabindex="0" aria-label="View larger: recent Massachusetts home install">
+      <img src="https://assets.midwestwindowcompany.com/new3%20(2).jpg" alt="Sunroom with newly installed Window World of Western Massachusetts windows, Massachusetts home">
+      <div class="hero-photo-mobile-badge">Massachusetts Home &middot; Recent Install</div>
+    </div>
+
+    <!-- MULTI-STEP FORM (visible on all viewports) -->
+    <div class="v2-form" id="mobile-form-anchor">
+      <div class="v2-progress-dots" id="v2-dots">
+        <div class="dot active" data-step="1"></div>
+        <div class="dot" data-step="2"></div>
+        <div class="dot" data-step="3"></div>
+        <div class="dot" data-step="4"></div>
+        <span class="step-text" id="v2-step-text">Step 1 of 4</span>
+      </div>
+
+      <!-- Step 1: home age tile -->
+      <div id="m2s-step0">
+        <p class="m2s-question">Approximately how old is your home?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sStartTile('1-5 years')">1&ndash;5 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile('5-10 years')">5&ndash;10 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile('10-20 years')">10&ndash;20 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile('20+ years')">20+ years</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <!-- Step 2: state tile -->
+      <div id="m2s-step-state" style="display:none">
+        <p class="m2s-question">Which state do you live in?</p>
+        <div class="v2-tiles">
+          <!-- VERIFY SERVICE AREA: Western MA window cos often also serve northern CT; adjust or remove the second tile to match Window World of Western MA's actual coverage -->
+          <button type="button" class="v2-tile" onclick="m2sSelectState('Massachusetts')">Massachusetts</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectState('Connecticut')">Connecticut</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <!-- Step 2: ZIP CODE (low-friction qualifier — confirms service area before asking for personal contact info) -->
+      <div id="m2s-step1" style="display:none">
+        <p class="m2s-question">What&rsquo;s your zip code?</p>
+        <input class="m2s-input" type="text" id="m2s-zip" placeholder="01103" maxlength="5" inputmode="numeric">
+        <button class="m2s-btn" onclick="m2sNext()">Continue &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <!-- REPLACE WITH REAL PHONE: placeholder (413) 000-0000 is used here + success box, offer-closer, footer, and sticky mobile bar -->
+        <a href="tel:4130000000" class="v2-call-secondary">Or call <span class="phone-num">(413) 000-0000</span></a>
+        <p class="m2s-fine">Western Massachusetts only</p>
+      </div>
+
+      <!-- Step 3: name + phone + email (PII collected only after zip qualifier) -->
+      <div id="m2s-step2" style="display:none">
+        <p class="m2s-question">Just a couple more details:</p>
+        <div class="m2s-row">
+          <input class="m2s-input" type="text" id="m2s-fname" placeholder="First name" style="margin-bottom:0">
+          <input class="m2s-input" type="text" id="m2s-lname" placeholder="Last name" style="margin-bottom:0">
+        </div>
+        <input class="m2s-input" type="tel" id="m2s-phone" placeholder="(413) 555-0000" inputmode="tel" style="margin-top:10px">
+        <input class="m2s-input" type="email" id="m2s-email" placeholder="Email address" style="margin-bottom:4px">
+        <button class="m2s-btn" onclick="m2sSubmit()">Claim My Free Window &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <a href="tel:4130000000" class="v2-call-secondary">Or call <span class="phone-num">(413) 000-0000</span></a>
+        <p class="m2s-fine">Western Massachusetts only &middot; No obligation</p>
+      </div>
+
+      <!-- Success -->
+      <div id="m2s-success" style="display:none; text-align:center; padding:8px 0 4px;">
+        <div style="font-size:2.4rem; margin-bottom:10px">&#127881;</div>
+        <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:8px">You&rsquo;re All Set!</p>
+        <p style="font-size:0.88rem; color:var(--text-mid); line-height:1.6">We&rsquo;ll call within the hour.<br>Questions? <a href="tel:4130000000" style="color:var(--orange); font-weight:700">(413) 000-0000</a></p>
+      </div>
+
+      <!-- Testimonial — moved INSIDE the form card. Persistent across steps. -->
+      <!-- REPLACE WITH LOCAL TESTIMONIALS -->
+      <div class="v2-pullquote">
+        <p>&ldquo;12 windows in and out in 8 hours, complete and cleaned up. Couldn&rsquo;t ask for better.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; LeVon M. &middot; Verified Google Review</div>
+      </div>
+    </div>
+
+    <!-- 3-checkmark blended benefit list (supporting context below form) -->
+    <ul class="v2-benefits">
+      <li><span class="ck">&#10003;</span> <strong>Triple-Pane Glass.</strong> Top-rated for New England winters.</li>
+      <li><span class="ck">&#10003;</span> <strong>3X the Insulation</strong> of a Standard Window.</li>
+      <li><span class="ck">&#10003;</span> Backed by <strong>lifetime warranty</strong></li>
+    </ul>
+
+    </div><!-- /.hero-content -->
+  </div>
+</section>
+
+<!-- WHY-MIDWEST EDUCATIONAL STRIP -->
+<section class="why-strip">
+  <div class="why-inner">
+    <span class="why-eyebrow">Built for New England Homes</span>
+    <h2 class="why-h2">Specifically Engineered for <span class="accent">New England Weather.</span></h2>
+    <!-- REVIEW: generic double/triple-pane diagram, but hosted on Midwest Window's CDN — re-host under Window World's assets -->
+    <div class="why-compare" onclick="openLightbox('https://assets.midwestwindowcompany.com/Double%20Pane%20vs.%20Triple%20Pane.png')" role="button" tabindex="0" aria-label="View larger: double-pane vs. triple-pane comparison">
+      <img src="https://assets.midwestwindowcompany.com/Double%20Pane%20vs.%20Triple%20Pane.png" alt="Double-pane vs. triple-pane window construction comparison" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER / TRUST -->
+<section class="sec sec-gray">
+  <div class="sec-inner">
+    <div class="founder-grid reveal">
+      <div class="founder-photo">
+        <!-- REPLACE: Need Window World owner/team photo -->
+        <img src="https://assets.midwestwindowcompany.com/Photo%20Jun%2026%202024%2C%2012%2016%2046%20PM%20(2).jpg" alt="Window World of Western Massachusetts owner"><!-- REPLACE WITH OWNER NAME -->
+        <div class="f-badge">Locally Owned &amp; Operated</div><!-- CUSTOMIZE: add "Since YEAR" if known -->
+      </div>
+      <div class="founder-content">
+        <span class="eyebrow">From the Owner</span>
+        <h2 class="sec-title">You Call. <span class="accent">We Answer.</span></h2>
+        <!-- CUSTOMIZE: Add owner name, photo, and local story -->
+        <blockquote>
+          Window World of Western Massachusetts is your local, trusted window replacement team. We&rsquo;re proud to serve homeowners across Western Massachusetts with high-quality, energy-efficient windows backed by a lifetime warranty.
+        </blockquote>
+        <p class="founder-sig">&mdash; the Window World team <!-- REPLACE WITH OWNER NAME --></p>
+        <div class="trust-tiles">
+          <div class="t-tile"><div class="t-tile-icon">&#128737;</div><div class="t-tile-text"><strong>Licensed &amp; Insured</strong><span>Certified pros on every job</span></div></div>
+          <div class="t-tile"><div class="t-tile-icon">&#9889;</div><div class="t-tile-text"><strong>1-Day Installation</strong><span>Full crew, job site cleaned up immediately after installation is complete.</span></div></div>
+          <div class="t-tile"><div class="t-tile-icon">&#128176;</div><div class="t-tile-text"><strong>0% Financing</strong><span>$99/mo &middot; 18 months, $0 down</span></div></div>
+          <div class="t-tile"><div class="t-tile-icon">&#128222;</div><div class="t-tile-text"><strong>We Answer the Phone</strong><span>Real people, real follow-through</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR WORK -->
+<section class="sec sec-white">
+  <div class="sec-inner">
+    <span class="eyebrow">Our Work</span>
+    <h2 class="sec-title reveal">Real Jobs. Real Western Massachusetts Homes.<br><span class="accent">See the Difference.</span></h2>
+    <!-- REPLACE: Need Window World photos — all 6 below are Midwest Window project photos on MWC's CDN -->
+    <div class="photos-grid reveal">
+      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/new3%20(2).jpg')"><img src="https://assets.midwestwindowcompany.com/new3%20(2).jpg" alt="Sunroom window installation" loading="lazy"></div>
+      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current2%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current2%20(1).jpg" alt="Exterior window replacement stone home" loading="lazy"></div>
+      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current3%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current3%20(1).jpg" alt="Interior arched window installation" loading="lazy"></div>
+      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current4%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current4%20(1).jpg" alt="Bay window replacement" loading="lazy"></div>
+      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current5%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current5%20(1).jpg" alt="Exterior double window brick home" loading="lazy"></div>
+      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current6%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current6%20(1).jpg" alt="Window installation siding home" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="sec sec-navy">
+  <div class="sec-inner">
+    <span class="eyebrow">Simple Process</span>
+    <h2 class="sec-title reveal">From Your Call to Installed &mdash;<br><span class="accent">3 Easy Steps</span></h2>
+    <div class="steps-row">
+      <div class="step reveal"><div class="step-num">1</div><h3>Book Free Estimate</h3><p>Fill out the form or call us. We&rsquo;ll schedule a free in-home visit usually within 24 hours.</p></div>
+      <div class="step reveal d1"><div class="step-num">2</div><h3>We Measure &amp; Quote</h3><p>Our expert measures every window, walks you through options, and finds a payment plan that fits your budget.</p></div>
+      <div class="step reveal d2"><div class="step-num">3</div><h3>Installed In One Day</h3><p>Our certified crew installs every window in a single day and cleans up before leaving. Done.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec sec-gray">
+  <div class="sec-inner">
+    <span class="eyebrow">Real Western Massachusetts Homeowners</span>
+    <h2 class="sec-title reveal">196 Five-Star Reviews.<br><span class="accent">Here&rsquo;s Why Homeowners Trust Us.</span></h2>
+    <!-- REPLACE WITH LOCAL TESTIMONIALS (names, quotes, and any reviewer cities below are Midwest Window customers) -->
+    <div class="reviews-grid">
+      <div class="review-card reveal"><span class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><p>Weston and the crew were the best &mdash; well organized, knowledgeable, definitely not new to the business. 12 windows in and out in 8 hours, complete and cleaned up. Couldn&rsquo;t ask for better people. 10 star service!!</p><div class="reviewer">&mdash; LeVon M. &middot; Verified Google Review</div></div>
+      <div class="review-card reveal d1"><span class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><p>I almost went with another company that couldn&rsquo;t even do my skylights &mdash; at a higher price. Weston came the next day. I got the whole house done including 3 skylights and paid less than the other quote.</p><div class="reviewer">&mdash; Jana T. &middot; Verified Google Review</div></div>
+      <div class="review-card reveal d2"><span class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><p>Sam was on time, friendly and really knows his stuff. Isaac came for final measurements &mdash; professional and very friendly. We would HIGHLY recommend Window World to anyone!</p><div class="reviewer">&mdash; Michael C. &middot; Verified Google Review</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section class="sec sec-white">
+  <div class="sec-inner">
+    <span class="eyebrow">Before &amp; After</span>
+    <h2 class="sec-title reveal">This Is What Old Windows<br><span class="accent">Are Costing Your Home.</span></h2>
+    <div class="ba-intro reveal">
+      <p>Drafts, rot, failed seals, higher energy bills. These are real Western Massachusetts homes &mdash; before and after Window World of Western Massachusetts</p>
+    </div>
+    <!-- REPLACE: Need Window World photos — all 3 before/after images below are Midwest Window projects on MWC's CDN -->
+    <div class="ba-grid reveal">
+      <div class="ba-card" onclick="openLightbox('https://assets.midwestwindowcompany.com/Before%26After_NoWater3.png')">
+        <img src="https://assets.midwestwindowcompany.com/Before%26After_NoWater3.png" alt="Before and after window replacement exterior" loading="lazy">
+        <div class="ba-label"><span class="ba-dot before"></span><span>Before</span>&nbsp;&nbsp;&nbsp;<span class="ba-dot after"></span><span>After</span></div>
+      </div>
+      <div class="ba-card" onclick="openLightbox('https://assets.midwestwindowcompany.com/Before%26After_NoWater.png')">
+        <img src="https://assets.midwestwindowcompany.com/Before%26After_NoWater.png" alt="Before and after rotted window frame replacement" loading="lazy">
+        <div class="ba-label"><span class="ba-dot before"></span><span>Before</span>&nbsp;&nbsp;&nbsp;<span class="ba-dot after"></span><span>After</span></div>
+      </div>
+      <div class="ba-card" onclick="openLightbox('https://assets.midwestwindowcompany.com/Before%26After_NoWater2.png')">
+        <img src="https://assets.midwestwindowcompany.com/Before%26After_NoWater2.png" alt="Before and after full home window replacement" loading="lazy">
+        <div class="ba-label"><span class="ba-dot before"></span><span>Before</span>&nbsp;&nbsp;&nbsp;<span class="ba-dot after"></span><span>After</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER CLOSER (form removed — single anchor-CTA scrolls back to hero form) -->
+<section class="sec sec-navy">
+  <div class="offer-closer reveal">
+    <span class="eyebrow"><span class="js-month">May</span> Only</span>
+    <h2 class="offer-h"><span class="orange">Buy 2 Windows, Get 1 FREE.</span></h2>
+    <ul class="offer-list">
+      <li><span class="ck">&#10003;</span> Buy any 2 windows &mdash; your 3rd is on us</li>
+      <li><span class="ck">&#10003;</span> $99/month &mdash; 0% interest for 18 months</li>
+      <li><span class="ck">&#10003;</span> Free in-home estimate, zero obligation</li>
+      <li><span class="ck">&#10003;</span> Installed in one day, crew cleans up after</li>
+      <li><span class="ck">&#10003;</span> Trusted by 215+ Western Massachusetts homeowners</li>
+      <li><span class="ck">&#10003;</span> Backed by lifetime warranty</li>
+    </ul>
+    <a href="#mobile-form-anchor" class="closer-cta" onclick="scrollToForm(event)">Claim My Free Window &rarr;</a>
+    <br>
+    <a href="tel:4130000000" class="closer-call">or call <span class="phone-num">(413) 000-0000</span></a>
+    <p class="offer-fine">*0% financing for qualified homeowners. Free window applied to lowest-priced unit in order. Offer expires <span class="js-month">May</span> <span class="js-month-end">31</span>, <span class="js-year">2026</span> or when slots are filled.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <!-- footer-logo CSS applies mix-blend-mode:screen + brightness(1.5) to show a light logo on the dark footer; verify the WW SVG renders correctly on the navy footer and remove those filters if it looks washed out -->
+  <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/Window%20World%20Logo.svg" alt="Window World of Western Massachusetts" class="footer-logo">
+  <p>Serving Western Massachusetts &mdash; Springfield, Northampton &amp; surrounding areas</p>
+  <p><a href="tel:4130000000">(413) 000-0000</a></p>
+  <p style="margin-top:10px">&copy; <span class="js-year">2026</span> Window World of Western Massachusetts All rights reserved.</p>
+</footer>
+
+</div><!-- end .mwc-wrap -->
+
+<!-- STICKY BOTTOM BAR (mobile) & LIGHTBOX outside .mwc-wrap -->
+<div class="mobile-bar">
+  <a href="tel:4130000000" class="mb-call">&#128222; (413) 000-0000</a>
+  <button class="mb-book" onclick="scrollToForm()">Claim Free Window &rarr;</button>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // TODO: SET WINDOW WORLD'S OWN LEAD WEBHOOK. Left empty so form submissions do NOT post to
+  // Midwest Window's attribution pipeline. sendToRailway() no-ops while this is blank.
+  const RAILWAY_WEBHOOK = '';
+  var v2HomeAge = '';
+  var v2State   = '';
+
+  document.body.classList.add('js-ready');
+
+  function getUrlParams() {
+    var p = new URLSearchParams(window.location.search);
+    return {
+      gclid:        p.get('gclid') || '',
+      fbclid:       p.get('fbclid') || '',
+      utm_source:   p.get('utm_source') || '',
+      utm_medium:   p.get('utm_medium') || '',
+      utm_campaign: p.get('utm_campaign') || '',
+      utm_content:  p.get('utm_content') || '',
+      utm_term:     p.get('utm_term') || ''
+    };
+  }
+
+  function appendAnswers(source) {
+    var parts = [];
+    if (v2HomeAge) parts.push('age: ' + v2HomeAge);
+    if (v2State)   parts.push('state: ' + v2State);
+    return parts.length ? source + ' (' + parts.join(', ') + ')' : source;
+  }
+
+  async function sendToRailway(data) {
+    if (!RAILWAY_WEBHOOK) return;   // no endpoint configured yet for Window World — do not post leads anywhere
+    try {
+      var params = getUrlParams();
+      await fetch(RAILWAY_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          first_name:   data.first_name || '',
+          last_name:    data.last_name || '',
+          email:        data.email || '',
+          phone:        data.phone || '',
+          zip:          data.zip || '',
+          gclid:        params.gclid,
+          fbclid:       params.fbclid,
+          utm_source:   params.utm_source,
+          utm_medium:   params.utm_medium,
+          utm_campaign: params.utm_campaign,
+          utm_content:  params.utm_content,
+          utm_term:     params.utm_term,
+          source:       appendAnswers(data.source || 'LP v2')
+        })
+      });
+    } catch (err) {
+      console.error('Railway webhook error:', err);
+    }
+  }
+
+  // Sticky bottom bar — hidden until hero scrolls out of view. Shows on
+  // every viewport (mobile + desktop) since the v2 desktop layout has no
+  // sticky nav of its own; this is the only persistent CTA after scroll.
+  const mobileBar = document.querySelector('.mobile-bar');
+  const heroSection = document.getElementById('hero-anchor');
+  if (mobileBar && heroSection) {
+    mobileBar.style.display = 'none';
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        mobileBar.style.display = e.isIntersecting ? 'none' : 'grid';
+      });
+    }, { threshold: 0 });
+    barObserver.observe(heroSection);
+  }
+
+  // Dynamic month/year — drives the sticky strip + offer fine print
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const now = new Date();
+  const monthLabel = monthNames[now.getMonth()].toUpperCase();
+  const monthTitle = monthNames[now.getMonth()];
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+  document.querySelectorAll('.js-month').forEach(el => el.textContent = monthTitle);
+  document.querySelectorAll('.js-month-upper').forEach(el => el.textContent = monthLabel);
+  document.querySelectorAll('.js-month-end').forEach(el => el.textContent = end.getDate());
+  document.querySelectorAll('.js-year').forEach(el => el.textContent = now.getFullYear());
+
+  // 4-step form flow ─────────────────────────────────────────────────────
+  function v2UpdateDots(activeStep) {
+    var dots = document.querySelectorAll('#v2-dots .dot');
+    dots.forEach(function(d) {
+      var s = parseInt(d.dataset.step, 10);
+      d.classList.remove('active','done');
+      if (s < activeStep) d.classList.add('done');
+      else if (s === activeStep) d.classList.add('active');
+    });
+    var label = document.getElementById('v2-step-text');
+    if (label) label.textContent = 'Step ' + activeStep + ' of 4';
+  }
+
+  // ── Focus mode (full-screen takeover on first form interaction) ─────
+  var focusEntered = false;
+
+  function enterFocusMode() {
+    if (focusEntered) return;
+    focusEntered = true;
+    document.body.classList.add('focus-mode');
+    updateFocusProgress(1);
+  }
+
+  function exitFocusMode(e) {
+    if (e) e.preventDefault();
+    focusEntered = false;
+    document.body.classList.remove('focus-mode');
+    // Reset form to step 1 (home-age tile) so a returning visitor starts over
+    document.getElementById('m2s-step0').style.display = 'block';
+    document.getElementById('m2s-step-state').style.display = 'none';
+    document.getElementById('m2s-step1').style.display = 'none';
+    document.getElementById('m2s-step2').style.display = 'none';
+    document.getElementById('m2s-success').style.display = 'none';
+    v2UpdateDots(1);
+    updateFocusProgress(1);
+    v2HomeAge = '';
+    v2State   = '';
+    // Same scroll-reset as forward step transitions, so back-navigation
+    // lands the user at the top of the form card (with breathing room).
+    scrollFormToTop();
+  }
+
+  function updateFocusProgress(step) {
+    var pct = step === 1 ? 25 : step === 2 ? 50 : step === 3 ? 75 : 100;
+    var fill = document.getElementById('focus-progress-fill');
+    if (fill) fill.style.width = pct + '%';
+  }
+
+  /* Scroll the form card so its TOP is visible with ~16px breathing room.
+     Called on every step transition (1→2, 2→3, and back-navigation to 1).
+     Handles both modes:
+       - Normal mode: form is in normal page flow → page scrolls.
+       - Focus mode: form is position:fixed → page scroll is a no-op, but
+         the form's internal overflow-y:auto may have a non-zero scrollTop
+         from a previous step; resetting that surfaces the form's top.
+     Triggered universally (desktop too); scrollIntoView is a no-op when
+     the element is already in view. */
+  function scrollFormToTop() {
+    var form = document.getElementById('mobile-form-anchor');
+    if (!form) return;
+    form.scrollTop = 0;
+    requestAnimationFrame(function() {
+      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Let the smooth scroll start, then nudge up 16px for breathing room
+      setTimeout(function() { window.scrollBy(0, -16); }, 60);
+    });
+  }
+
+  // Step 1 → 2: home age tile clicked, advance to state-select step
+  function m2sStartTile(age) {
+    v2HomeAge = age;
+    enterFocusMode();                              // first interaction → focus mode
+    document.getElementById('m2s-step0').style.display = 'none';
+    document.getElementById('m2s-step-state').style.display = 'block';
+    v2UpdateDots(2);
+    updateFocusProgress(2);
+    scrollFormToTop();
+  }
+
+  // Step 2 → 3: state tile clicked, advance to zip step
+  function m2sSelectState(state) {
+    v2State = state;
+    document.getElementById('m2s-step-state').style.display = 'none';
+    document.getElementById('m2s-step1').style.display = 'block';
+    v2UpdateDots(3);
+    updateFocusProgress(3);
+    scrollFormToTop();
+    var zipInput = document.getElementById('m2s-zip');
+    if (zipInput) zipInput.focus();
+  }
+
+  // Step 3 → 4: zip submitted, advance to name+phone+email step
+  function m2sNext() {
+    const zip = document.getElementById('m2s-zip').value.trim();
+    if (!zip) { document.getElementById('m2s-zip').focus(); return; }
+    document.getElementById('m2s-step1').style.display = 'none';
+    document.getElementById('m2s-step2').style.display = 'block';
+    v2UpdateDots(4);
+    updateFocusProgress(4);
+    scrollFormToTop();
+    document.getElementById('m2s-fname').focus();
+  }
+
+  async function m2sSubmit() {
+    const fname = document.getElementById('m2s-fname').value.trim();
+    const lname = document.getElementById('m2s-lname').value.trim();
+    const zip   = document.getElementById('m2s-zip').value.trim();
+    const email = document.getElementById('m2s-email').value.trim();
+    const phone = document.getElementById('m2s-phone').value.trim();
+    if (!fname) { document.getElementById('m2s-fname').focus(); return; }
+    if (!phone) { document.getElementById('m2s-phone').focus(); return; }
+    if (!email) { document.getElementById('m2s-email').focus(); return; }
+    var data = {
+      first_name: fname,
+      last_name:  lname,
+      email:      email,
+      phone:      phone,
+      zip:        zip,
+      source:     'LP v2 (3-step)'
+    };
+    await sendToRailway(data);
+    // TODO: point this at Window World of Western Massachusetts's own thank-you page.
+    // Until then, show the in-page success state instead of redirecting to Midwest Window's site.
+    document.getElementById('m2s-step2').style.display = 'none';
+    document.getElementById('m2s-success').style.display = 'block';
+    scrollFormToTop();
+  }
+
+  // Anchor scroll helper used by bottom-bar + offer-closer CTA
+  function scrollToForm(e) {
+    if (e) e.preventDefault();
+    document.getElementById('mobile-form-anchor').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  // Reveal-on-scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>
