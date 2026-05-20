@@ -881,9 +881,8 @@
 
     <!-- Desktop-only photo column (left) — hidden on mobile via CSS -->
     <div class="hero-photo-wrap">
-      <!-- REPLACE: Need Window World photo (Midwest Window project photo on MWC's CDN) -->
-      <img src="https://assets.midwestwindowcompany.com/new3%20(2).jpg" alt="Massachusetts home with new replacement windows installed by Window World of Western Massachusetts">
-      <div class="hero-photo-caption">Massachusetts Home &middot; Recent Install</div>
+      <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/KitchenWindowForHero.png" alt="Kitchen window installation by Window World of Western Massachusetts">
+      <div class="hero-photo-caption">Western Massachusetts &middot; Recent Install</div>
     </div>
 
     <!-- Content column (right on desktop, full width on mobile) -->
@@ -902,10 +901,9 @@
          lightbox, matching the .photo-item and .why-compare patterns.
          Hidden on desktop where the photo lives in the left column of the
          hero grid (.hero-photo-wrap). -->
-    <!-- REPLACE: Need Window World photo (Midwest Window project photo on MWC's CDN) -->
-    <div class="hero-photo-mobile" onclick="openLightbox('https://assets.midwestwindowcompany.com/new3%20(2).jpg')" role="button" tabindex="0" aria-label="View larger: recent Massachusetts home install">
-      <img src="https://assets.midwestwindowcompany.com/new3%20(2).jpg" alt="Sunroom with newly installed Window World of Western Massachusetts windows, Massachusetts home">
-      <div class="hero-photo-mobile-badge">Massachusetts Home &middot; Recent Install</div>
+    <div class="hero-photo-mobile" onclick="openLightbox('https://assets.midwestwindowcompany.com/WindowWorldWesternMA/KitchenWindowForHero.png')" role="button" tabindex="0" aria-label="View larger: kitchen window installation by Window World of Western Massachusetts">
+      <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/KitchenWindowForHero.png" alt="Kitchen window installation by Window World of Western Massachusetts">
+      <div class="hero-photo-mobile-badge">Western Massachusetts &middot; Recent Install</div>
     </div>
 
     <!-- MULTI-STEP FORM (visible on all viewports) -->
@@ -1021,6 +1019,158 @@
   </div>
 </section>
 
+<!-- ============ SEE WHAT PEOPLE ARE SAYING (local testimonials) ============ -->
+<section class="sec sec-gray" id="wwt-testimonials">
+  <style>
+    .wwt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+    .wwt-card {
+      background: #fff; border: 1px solid var(--gray-2); border-radius: 12px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.06); overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    /* Featured image (rounded top via card overflow:hidden) */
+    .wwt-media { position: relative; width: 100%; height: 300px; overflow: hidden; }
+    .wwt-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .wwt-verified {
+      position: absolute; bottom: 10px; right: 10px;
+      background: rgba(255,255,255,0.92); color: var(--text);
+      font-size: 0.66rem; font-weight: 700; letter-spacing: 0.03em;
+      padding: 4px 9px; border-radius: 100px;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .wwt-verified .ck { color: var(--green); font-weight: 800; }
+    /* Reviewer row */
+    .wwt-head { display: flex; align-items: center; gap: 11px; padding: 16px 18px 0; }
+    .wwt-avatar {
+      width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%;
+      background: var(--text-lt); color: #fff;
+      font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.05rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .wwt-head-text { display: flex; flex-direction: column; gap: 1px; }
+    .wwt-name { font-weight: 700; color: var(--navy); font-size: 0.95rem; }
+    .wwt-stars { color: #FFB800; font-size: 0.9rem; letter-spacing: 0.04em; }
+    /* Review text + Show More/Less */
+    .wwt-review { padding: 10px 18px 0; }
+    .wwt-review-text {
+      color: var(--text-mid); font-size: 0.9rem; line-height: 1.6;
+      display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .wwt-review-text.expanded { -webkit-line-clamp: unset; display: block; overflow: visible; }
+    .wwt-toggle {
+      background: none; border: none; padding: 4px 0 0;
+      color: var(--orange); font-family: 'Inter', sans-serif;
+      font-size: 0.82rem; font-weight: 700; cursor: pointer;
+    }
+    .wwt-toggle:hover { text-decoration: underline; }
+    /* Supporting thumbnails (open in the page's existing lightbox) */
+    .wwt-thumbs { display: flex; gap: 8px; flex-wrap: wrap; padding: 14px 18px 18px; margin-top: auto; }
+    .wwt-thumb {
+      width: 80px; height: 80px; object-fit: cover;
+      border: 1px solid var(--gray-3); border-radius: 6px; cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .wwt-thumb:hover { transform: scale(1.04); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    @media (max-width: 900px) {
+      .wwt-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
+    }
+  </style>
+
+  <div class="sec-inner">
+    <span class="eyebrow">Reviews</span>
+    <h2 class="sec-title reveal">See What <span class="accent">People Are Saying</span></h2>
+    <div class="wwt-grid reveal">
+
+      <!-- Card 1 — Dawn -->
+      <article class="wwt-card">
+        <div class="wwt-media">
+          <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/DawnMainImage.png" alt="New back slider installed by Window World of Western Massachusetts for Dawn" loading="lazy">
+          <span class="wwt-verified"><span class="ck">&#10003;</span> Verified Purchase</span>
+        </div>
+        <div class="wwt-head">
+          <span class="wwt-avatar" aria-hidden="true">D</span><!-- REPLACE: Dawn profile pic -->
+          <div class="wwt-head-text">
+            <span class="wwt-name">Dawn</span>
+            <span class="wwt-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </div>
+        <div class="wwt-review">
+          <span class="wwt-review-text">So happy! Brennan and team arrived right on time and did a fabulous job installing our new back slider. They were very efficient and friendly, and did a great job from start to finish. Trim work after installation is wonderful, couldn&rsquo;t be happier. They left everything spotless as well, no clean up needed!</span>
+          <button type="button" class="wwt-toggle" onclick="wwtToggle(this)">Show More</button>
+        </div>
+        <div class="wwt-thumbs">
+          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/DawnSupport1.png" onclick="openLightbox(this.src)" alt="Dawn install photo 1" loading="lazy">
+          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/DawnSupport2.png" onclick="openLightbox(this.src)" alt="Dawn install photo 2" loading="lazy">
+          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/Dawnsupport3.png" onclick="openLightbox(this.src)" alt="Dawn install photo 3" loading="lazy">
+        </div>
+      </article>
+
+      <!-- Card 2 — Eileen -->
+      <article class="wwt-card">
+        <div class="wwt-media">
+          <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/EileenMainImage.png" alt="New windows installed by Window World of Western Massachusetts for Eileen" loading="lazy">
+          <span class="wwt-verified"><span class="ck">&#10003;</span> Verified Purchase</span>
+        </div>
+        <div class="wwt-head">
+          <span class="wwt-avatar" aria-hidden="true">E</span><!-- REPLACE: Eileen profile pic -->
+          <div class="wwt-head-text">
+            <span class="wwt-name">Eileen</span>
+            <span class="wwt-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </div>
+        <div class="wwt-review">
+          <span class="wwt-review-text">Windows look great. The workers arrived on time. They answered all of our questions. They cleaned up afterwards. They were very polite. It was a good experience. Thank you Brennan, Kyle and Troy.</span>
+          <button type="button" class="wwt-toggle" onclick="wwtToggle(this)">Show More</button>
+        </div>
+        <div class="wwt-thumbs">
+          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/EileenSupport.png" onclick="openLightbox(this.src)" alt="Eileen install photo 1" loading="lazy">
+          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/EileenSupport2.png" onclick="openLightbox(this.src)" alt="Eileen install photo 2" loading="lazy">
+        </div>
+      </article>
+
+      <!-- Card 3 — Jeremy -->
+      <article class="wwt-card">
+        <div class="wwt-media">
+          <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/JeremyMainImage.png" alt="21 new pocket windows and a patio slider installed by Window World of Western Massachusetts for Jeremy" loading="lazy">
+          <span class="wwt-verified"><span class="ck">&#10003;</span> Verified Purchase</span>
+        </div>
+        <div class="wwt-head">
+          <span class="wwt-avatar" aria-hidden="true">J</span><!-- REPLACE: Jeremy profile pic -->
+          <div class="wwt-head-text">
+            <span class="wwt-name">Jeremy</span>
+            <span class="wwt-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          </div>
+        </div>
+        <div class="wwt-review">
+          <span class="wwt-review-text">Three trucks and several pickups arrived at 7:45 AM. The crew was a model of efficiency &mdash; they tore out the old sashes, made all necessary repairs, and carefully installed and plumbed 21 new pocket windows and a patio slider. The finishing touches were handled with careful, loving attention, filling in every nail hole and cleaning each window inside and out. The foreman even pointed out a few minor factory defects that will be replaced per warranty &mdash; a testament to their honesty. They finished at 7:00 PM, eleven hours later, and cleaned up so thoroughly we wouldn&rsquo;t have known they were there. These guys are perfectionists to the nth degree.</span>
+          <button type="button" class="wwt-toggle" onclick="wwtToggle(this)">Show More</button>
+        </div>
+        <div class="wwt-thumbs">
+          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/JeremySupport1.png" onclick="openLightbox(this.src)" alt="Jeremy install photo 1" loading="lazy">
+          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/JeremySupport2.png" onclick="openLightbox(this.src)" alt="Jeremy install photo 2" loading="lazy">
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <script>
+    // Show More / Show Less toggle (line-clamp based, no libraries)
+    function wwtToggle(btn) {
+      var t = btn.previousElementSibling;
+      var expanded = t.classList.toggle('expanded');
+      btn.textContent = expanded ? 'Show Less' : 'Show More';
+    }
+    // Hide the toggle on reviews that aren't actually truncated (e.g. shorter ones)
+    document.querySelectorAll('#wwt-testimonials .wwt-review').forEach(function (r) {
+      var t = r.querySelector('.wwt-review-text');
+      var btn = r.querySelector('.wwt-toggle');
+      if (t && btn && t.scrollHeight <= t.clientHeight + 2) { btn.style.display = 'none'; }
+    });
+  </script>
+</section>
+
 <!-- FOUNDER / TRUST -->
 <section class="sec sec-gray">
   <div class="sec-inner">
@@ -1079,19 +1229,7 @@
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
-<section class="sec sec-gray">
-  <div class="sec-inner">
-    <span class="eyebrow">Real Western Massachusetts Homeowners</span>
-    <h2 class="sec-title reveal">196 Five-Star Reviews.<br><span class="accent">Here&rsquo;s Why Homeowners Trust Us.</span></h2>
-    <!-- REPLACE WITH LOCAL TESTIMONIALS (names, quotes, and any reviewer cities below are Midwest Window customers) -->
-    <div class="reviews-grid">
-      <div class="review-card reveal"><span class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><p>Weston and the crew were the best &mdash; well organized, knowledgeable, definitely not new to the business. 12 windows in and out in 8 hours, complete and cleaned up. Couldn&rsquo;t ask for better people. 10 star service!!</p><div class="reviewer">&mdash; LeVon M. &middot; Verified Google Review</div></div>
-      <div class="review-card reveal d1"><span class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><p>I almost went with another company that couldn&rsquo;t even do my skylights &mdash; at a higher price. Weston came the next day. I got the whole house done including 3 skylights and paid less than the other quote.</p><div class="reviewer">&mdash; Jana T. &middot; Verified Google Review</div></div>
-      <div class="review-card reveal d2"><span class="r-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span><p>Sam was on time, friendly and really knows his stuff. Isaac came for final measurements &mdash; professional and very friendly. We would HIGHLY recommend Window World to anyone!</p><div class="reviewer">&mdash; Michael C. &middot; Verified Google Review</div></div>
-    </div>
-  </div>
-</section>
+<!-- (Old MWC placeholder testimonials section removed — replaced by the "See What People Are Saying" section right after the New England weather strip) -->
 
 <!-- BEFORE / AFTER -->
 <section class="sec sec-white">
