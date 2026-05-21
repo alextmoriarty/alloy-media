@@ -695,8 +695,9 @@
   body.focus-mode .hero { background: transparent; }
   body.focus-mode .hero::after { display: none; }
 
-  /* Re-layer the form on top of everything, centered. Smooth transform fade. */
-  body.focus-mode .v2-form {
+  /* Re-layer ONLY the active form on top of everything, centered. Any other form hides. */
+  body.focus-mode .v2-form:not(.is-focused) { display: none; }
+  body.focus-mode .v2-form.is-focused {
     position: fixed;
     top: 50%; left: 50%;
     transform: translate(-50%, -50%);
@@ -705,11 +706,16 @@
     max-height: calc(100vh - 60px);
     overflow-y: auto;
     z-index: 10000;
+    visibility: visible;   /* override a hidden wrapper section (the 2nd form) */
+    opacity: 1;
     box-shadow: 0 24px 60px rgba(0,0,0,0.16);
     transition: transform 0.3s ease, box-shadow 0.3s ease, max-width 0.3s ease;
   }
+  /* 2nd form sits in its own (non-.sec) wrapper; hide its chrome via visibility in focus
+     mode so the focused form can override it — opacity:0 would trap the fixed child. */
+  body.focus-mode .form2-section { visibility: hidden; }
   @media (max-width: 600px) {
-    body.focus-mode .v2-form {
+    body.focus-mode .v2-form.is-focused {
       width: calc(100% - 24px);
       max-height: calc(100vh - 56px);
     }
@@ -763,6 +769,68 @@
   @media (max-width: 480px) {
     .sec { padding: 48px 18px; }
     .hero-inner { padding: 12px 18px 32px; }
+  }
+
+  /* ── DUPLICATED LEAD FORM WRAPPER (below testimonials) ── */
+  .form2-section { background: var(--gray-1); padding: 48px 22px; }
+  .form2-inner { max-width: 560px; margin: 0 auto; }
+
+  /* ── PRODUCTS CAROUSEL ── */
+  .products { background: #fff; }
+  .prod-head { text-align: center; }
+  .prod-head h2 {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: clamp(1.7rem, 3.2vw, 2rem); color: var(--navy);
+    line-height: 1.15; margin-bottom: 6px;
+  }
+  .prod-head p { color: var(--text-mid); font-size: 1rem; margin-bottom: 26px; }
+  .prod-carousel { position: relative; }
+  .prod-track {
+    display: flex; gap: 20px; overflow-x: auto;
+    scroll-snap-type: x mandatory; scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch; padding: 4px 2px 8px; scrollbar-width: none;
+  }
+  .prod-track::-webkit-scrollbar { display: none; }
+  .prod-card {
+    flex: 0 0 calc((100% - 40px) / 3);   /* 3 across on desktop (two 20px gaps) */
+    scroll-snap-align: start;
+    background: #fff; border: 1px solid var(--gray-2); border-radius: 12px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .prod-img { background: #f5f7fa; height: 220px; }
+  .prod-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .prod-body { padding: 18px 18px 20px; display: flex; flex-direction: column; flex: 1; }
+  .prod-name { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.18rem; color: var(--navy); margin-bottom: 8px; }
+  .prod-desc { font-size: 0.92rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 18px; }
+  .prod-cta {
+    margin-top: auto; width: 100%; background: #0033A1; color: #fff; border: none; cursor: pointer;
+    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.03em;
+    padding: 13px 16px; border-radius: 8px; transition: background 0.18s;
+  }
+  .prod-cta:hover { background: #00256f; }
+  .prod-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    width: 44px; height: 44px; border-radius: 50%;
+    background: #fff; border: 1px solid var(--gray-3); color: #0033A1;
+    font-size: 1.1rem; line-height: 1; cursor: pointer; z-index: 2;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .prod-arrow:hover { background: var(--gray-1); }
+  .prod-arrow.prev { left: -6px; }
+  .prod-arrow.next { right: -6px; }
+  .prod-arrow[disabled] { opacity: 0.35; cursor: default; }
+  .prod-dots { display: flex; justify-content: center; gap: 8px; margin-top: 22px; }
+  .prod-dots .pdot {
+    width: 9px; height: 9px; border-radius: 50%; background: var(--gray-3);
+    border: none; padding: 0; cursor: pointer; transition: background 0.18s, transform 0.18s;
+  }
+  .prod-dots .pdot.active { background: #0033A1; transform: scale(1.2); }
+  @media (max-width: 900px) { .prod-card { flex-basis: calc((100% - 20px) / 2); } }   /* 2 across */
+  @media (max-width: 600px) {
+    .prod-card { flex-basis: 100%; }                                                    /* 1 across */
+    .prod-arrow { display: none; }                                                       /* swipe instead */
   }
 </style>
 </head>
@@ -835,10 +903,10 @@
       <div id="m2s-step0">
         <p class="m2s-question">Approximately how old is your home?</p>
         <div class="v2-tiles">
-          <button type="button" class="v2-tile" onclick="m2sStartTile('1-5 years')">1&ndash;5 years</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile('5-10 years')">5&ndash;10 years</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile('10-20 years')">10&ndash;20 years</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile('20+ years')">20+ years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'1-5 years')">1&ndash;5 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'5-10 years')">5&ndash;10 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'10-20 years')">10&ndash;20 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'20+ years')">20+ years</button>
         </div>
         <p class="v2-cta-micro" style="margin-top:12px">
           <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
@@ -852,8 +920,8 @@
         <p class="m2s-question">Which state do you live in?</p>
         <div class="v2-tiles">
           <!-- VERIFY SERVICE AREA: Western MA window cos often also serve northern CT; adjust or remove the second tile to match Window World of Western MA's actual coverage -->
-          <button type="button" class="v2-tile" onclick="m2sSelectState('Massachusetts')">Massachusetts</button>
-          <button type="button" class="v2-tile" onclick="m2sSelectState('Connecticut')">Connecticut</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Massachusetts')">Massachusetts</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Connecticut')">Connecticut</button>
         </div>
         <p class="v2-cta-micro" style="margin-top:12px">
           <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
@@ -866,7 +934,7 @@
       <div id="m2s-step1" style="display:none">
         <p class="m2s-question">What&rsquo;s your zip code?</p>
         <input class="m2s-input" type="text" id="m2s-zip" placeholder="01103" maxlength="5" inputmode="numeric">
-        <button class="m2s-btn" onclick="m2sNext()">Continue &rarr;</button>
+        <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
         <p class="v2-cta-micro">
           <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
           <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
@@ -885,7 +953,7 @@
         </div>
         <input class="m2s-input" type="tel" id="m2s-phone" placeholder="(413) 555-0000" inputmode="tel" style="margin-top:10px">
         <input class="m2s-input" type="email" id="m2s-email" placeholder="Email address" style="margin-bottom:4px">
-        <button class="m2s-btn" onclick="m2sSubmit()">Claim My Free Window &rarr;</button>
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Claim My Free Window &rarr;</button>
         <p class="v2-cta-micro">
           <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
           <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
@@ -1127,6 +1195,156 @@
   </script>
 </section>
 
+<!-- DUPLICATED LEAD FORM (below testimonials) — same multi-step form, IDs suffixed with -2 -->
+<section class="form2-section">
+  <div class="form2-inner">
+    <div class="v2-form" id="mobile-form-anchor-2">
+      <div class="v2-progress-dots" id="v2-dots-2">
+        <div class="dot active" data-step="1"></div>
+        <div class="dot" data-step="2"></div>
+        <div class="dot" data-step="3"></div>
+        <div class="dot" data-step="4"></div>
+        <span class="step-text" id="v2-step-text-2">Step 1 of 4</span>
+      </div>
+
+      <div id="m2s-step0-2">
+        <p class="m2s-question">Approximately how old is your home?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'1-5 years')">1&ndash;5 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'5-10 years')">5&ndash;10 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'10-20 years')">10&ndash;20 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'20+ years')">20+ years</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <div id="m2s-step-state-2" style="display:none">
+        <p class="m2s-question">Which state do you live in?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Massachusetts')">Massachusetts</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Connecticut')">Connecticut</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <div id="m2s-step1-2" style="display:none">
+        <p class="m2s-question">What&rsquo;s your zip code?</p>
+        <input class="m2s-input" type="text" id="m2s-zip-2" placeholder="01103" maxlength="5" inputmode="numeric">
+        <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <a href="tel:4134857335" class="v2-call-secondary">Or call <span class="phone-num">413-485-7335</span></a>
+        <p class="m2s-fine">Western Massachusetts only</p>
+      </div>
+
+      <div id="m2s-step2-2" style="display:none">
+        <p class="m2s-question">Just a couple more details:</p>
+        <div class="m2s-row">
+          <input class="m2s-input" type="text" id="m2s-fname-2" placeholder="First name" style="margin-bottom:0">
+          <input class="m2s-input" type="text" id="m2s-lname-2" placeholder="Last name" style="margin-bottom:0">
+        </div>
+        <input class="m2s-input" type="tel" id="m2s-phone-2" placeholder="(413) 555-0000" inputmode="tel" style="margin-top:10px">
+        <input class="m2s-input" type="email" id="m2s-email-2" placeholder="Email address" style="margin-bottom:4px">
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Claim My Free Window &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <a href="tel:4134857335" class="v2-call-secondary">Or call <span class="phone-num">413-485-7335</span></a>
+        <p class="m2s-fine">Western Massachusetts only &middot; No obligation</p>
+      </div>
+
+      <div id="m2s-success-2" style="display:none; text-align:center; padding:8px 0 4px;">
+        <div style="font-size:2.4rem; margin-bottom:10px">&#127881;</div>
+        <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:8px">You&rsquo;re All Set!</p>
+        <p style="font-size:0.88rem; color:var(--text-mid); line-height:1.6">We&rsquo;ll call within the hour.<br>Questions? <a href="tel:4134857335" style="color:var(--orange); font-weight:700">413-485-7335</a></p>
+      </div>
+
+      <div class="v2-pullquote">
+        <p>&ldquo;After disappointing (even traumatizing) experiences with contractors, Window World was an absolute blessing.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; Tricia Carey &middot; Verified Google Review</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS CAROUSEL -->
+<section class="sec products">
+  <div class="sec-inner">
+    <div class="prod-head reveal">
+      <h2>Find the Right Windows for Your Home</h2>
+      <p>Here are some of our most popular choices</p>
+    </div>
+    <div class="prod-carousel reveal">
+      <button class="prod-arrow prev" type="button" aria-label="Previous windows" onclick="prodScroll(-1)">&#10094;</button>
+      <button class="prod-arrow next" type="button" aria-label="More windows" onclick="prodScroll(1)">&#10095;</button>
+      <div class="prod-track" id="prod-track">
+        <div class="prod-card">
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2022-Web-PIXUS-Dinning-DoubleHung-Spring%20(1)%20(1).png" alt="Vinyl double hung window" loading="lazy"></div>
+          <div class="prod-body">
+            <div class="prod-name">Vinyl Double Hung</div>
+            <div class="prod-desc">Top and bottom panels both slide open and tilt inward for easy cleaning from inside.</div>
+            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2022-Web-PIXUS-casement-window%20(1).png" alt="Casement window" loading="lazy"></div>
+          <div class="prod-body">
+            <div class="prod-name">Casement Windows</div>
+            <div class="prod-desc">Opens on a side hinge like a door, letting in a full breeze with one turn of the handle.</div>
+            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2021-Web-PIXUS-3LiteSlider%20(1).png" alt="Sliding window" loading="lazy"></div>
+          <div class="prod-body">
+            <div class="prod-name">Sliding Windows</div>
+            <div class="prod-desc">One panel glides left or right to open, giving you a wide view with no swing space needed.</div>
+            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2022-Web-PIXUS-stairwell-picture%20(1).png" alt="Picture window" loading="lazy"></div>
+          <div class="prod-body">
+            <div class="prod-name">Picture Windows</div>
+            <div class="prod-desc">A large fixed pane that doesn&rsquo;t open, but fills the room with light and frames the outside view.</div>
+            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2022-PIXUS-HomeOffice-Bay-Bow-Spring%20(1).png" alt="Bay and bow window" loading="lazy"></div>
+          <div class="prod-body">
+            <div class="prod-name">Bay &amp; Bow Windows</div>
+            <div class="prod-desc">Extends past your wall to bring in more light and create a natural shelf or seating area inside.</div>
+            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+          </div>
+        </div>
+        <div class="prod-card">
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/Windsor-direct-set-radius-hero%20(1).png" alt="Direct set and radius window" loading="lazy"></div>
+          <div class="prod-body">
+            <div class="prod-name">Direct Set &amp; Radius Windows</div>
+            <div class="prod-desc">Curved or arched windows that fit right in with no pane, adding a distinctive shape to your home.</div>
+            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="prod-dots" id="prod-dots"></div>
+  </div>
+</section>
+
 <!-- WHY-MIDWEST EDUCATIONAL STRIP (moved here, below testimonials) -->
 <section class="why-strip">
   <div class="why-inner">
@@ -1226,8 +1444,6 @@
   // TODO: SET WINDOW WORLD'S OWN LEAD WEBHOOK. Left empty so form submissions do NOT post to
   // Midwest Window's attribution pipeline. sendToRailway() no-ops while this is blank.
   const RAILWAY_WEBHOOK = '';
-  var v2HomeAge = '';
-  var v2State   = '';
 
   document.body.classList.add('js-ready');
 
@@ -1266,10 +1482,10 @@
     };
   }
 
-  function appendAnswers(source) {
+  function appendAnswers(source, age, state) {
     var parts = [];
-    if (v2HomeAge) parts.push('age: ' + v2HomeAge);
-    if (v2State)   parts.push('state: ' + v2State);
+    if (age)   parts.push('age: ' + age);
+    if (state) parts.push('state: ' + state);
     return parts.length ? source + ' (' + parts.join(', ') + ')' : source;
   }
 
@@ -1293,7 +1509,7 @@
           utm_campaign: params.utm_campaign,
           utm_content:  params.utm_content,
           utm_term:     params.utm_term,
-          source:       appendAnswers(data.source || 'LP v2')
+          source:       appendAnswers(data.source || 'LP v2', data.home_age, data.state)
         })
       });
     } catch (err) {
@@ -1329,45 +1545,53 @@
   document.querySelectorAll('.js-year').forEach(el => el.textContent = now.getFullYear());
 
   // 4-step form flow ─────────────────────────────────────────────────────
-  function v2UpdateDots(activeStep) {
-    var dots = document.querySelectorAll('#v2-dots .dot');
-    dots.forEach(function(d) {
+  // ── Multi-step lead form — container-scoped so multiple copies coexist ──
+  // Each form's elements share base IDs; the 2nd form suffixes them with "-2".
+  // Handlers derive their form root from the clicked element and resolve IDs by suffix.
+  function leadRoot(el) { return el.closest('.v2-form'); }
+  function lf(root, baseId) { return document.getElementById(baseId + root.id.replace('mobile-form-anchor', '')); }
+  var activeLeadForm = null;   // the form currently in focus mode
+
+  function v2UpdateDots(root, activeStep) {
+    var wrap = lf(root, 'v2-dots');
+    if (wrap) wrap.querySelectorAll('.dot').forEach(function (d) {
       var s = parseInt(d.dataset.step, 10);
-      d.classList.remove('active','done');
+      d.classList.remove('active', 'done');
       if (s < activeStep) d.classList.add('done');
       else if (s === activeStep) d.classList.add('active');
     });
-    var label = document.getElementById('v2-step-text');
+    var label = lf(root, 'v2-step-text');
     if (label) label.textContent = 'Step ' + activeStep + ' of 4';
   }
 
-  // ── Focus mode (full-screen takeover on first form interaction) ─────
-  var focusEntered = false;
-
-  function enterFocusMode() {
-    if (focusEntered) return;
-    focusEntered = true;
+  // ── Focus mode (full-screen takeover on first interaction with a form) ──
+  function enterFocusMode(root) {
+    if (root._focusEntered) return;
+    root._focusEntered = true;
+    activeLeadForm = root;
+    root.classList.add('is-focused');
     document.body.classList.add('focus-mode');
     updateFocusProgress(1);
   }
 
   function exitFocusMode(e) {
     if (e) e.preventDefault();
-    focusEntered = false;
+    var root = activeLeadForm;
     document.body.classList.remove('focus-mode');
-    // Reset form to step 1 (home-age tile) so a returning visitor starts over
-    document.getElementById('m2s-step0').style.display = 'block';
-    document.getElementById('m2s-step-state').style.display = 'none';
-    document.getElementById('m2s-step1').style.display = 'none';
-    document.getElementById('m2s-step2').style.display = 'none';
-    document.getElementById('m2s-success').style.display = 'none';
-    v2UpdateDots(1);
+    if (!root) return;
+    root._focusEntered = false;
+    root.classList.remove('is-focused');
+    // Reset to step 1 so a returning visitor starts over
+    lf(root, 'm2s-step0').style.display = 'block';
+    lf(root, 'm2s-step-state').style.display = 'none';
+    lf(root, 'm2s-step1').style.display = 'none';
+    lf(root, 'm2s-step2').style.display = 'none';
+    lf(root, 'm2s-success').style.display = 'none';
+    root._homeAge = ''; root._state = '';
+    v2UpdateDots(root, 1);
     updateFocusProgress(1);
-    v2HomeAge = '';
-    v2State   = '';
-    // Same scroll-reset as forward step transitions, so back-navigation
-    // lands the user at the top of the form card (with breathing room).
-    scrollFormToTop();
+    activeLeadForm = null;
+    scrollFormToTop(root);
   }
 
   function updateFocusProgress(step) {
@@ -1376,91 +1600,136 @@
     if (fill) fill.style.width = pct + '%';
   }
 
-  /* Scroll the form card so its TOP is visible with ~16px breathing room.
-     Called on every step transition (1→2, 2→3, and back-navigation to 1).
-     Handles both modes:
-       - Normal mode: form is in normal page flow → page scrolls.
-       - Focus mode: form is position:fixed → page scroll is a no-op, but
-         the form's internal overflow-y:auto may have a non-zero scrollTop
-         from a previous step; resetting that surfaces the form's top.
-     Triggered universally (desktop too); scrollIntoView is a no-op when
-     the element is already in view. */
-  function scrollFormToTop() {
-    var form = document.getElementById('mobile-form-anchor');
-    if (!form) return;
-    form.scrollTop = 0;
-    requestAnimationFrame(function() {
-      form.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      // Let the smooth scroll start, then nudge up 16px for breathing room
-      setTimeout(function() { window.scrollBy(0, -16); }, 60);
+  function scrollFormToTop(root) {
+    if (!root) return;
+    root.scrollTop = 0;
+    requestAnimationFrame(function () {
+      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(function () { window.scrollBy(0, -16); }, 60);
     });
   }
 
-  // Step 1 → 2: home age tile clicked, advance to state-select step
-  function m2sStartTile(age) {
-    v2HomeAge = age;
-    enterFocusMode();                              // first interaction → focus mode
-    document.getElementById('m2s-step0').style.display = 'none';
-    document.getElementById('m2s-step-state').style.display = 'block';
-    v2UpdateDots(2);
+  // Step 1 → 2: home age tile clicked
+  function m2sStartTile(el, age) {
+    var root = leadRoot(el);
+    root._homeAge = age;
+    enterFocusMode(root);
+    lf(root, 'm2s-step0').style.display = 'none';
+    lf(root, 'm2s-step-state').style.display = 'block';
+    v2UpdateDots(root, 2);
     updateFocusProgress(2);
-    scrollFormToTop();
+    scrollFormToTop(root);
   }
 
-  // Step 2 → 3: state tile clicked, advance to zip step
-  function m2sSelectState(state) {
-    v2State = state;
-    document.getElementById('m2s-step-state').style.display = 'none';
-    document.getElementById('m2s-step1').style.display = 'block';
-    v2UpdateDots(3);
+  // Step 2 → 3: state tile clicked
+  function m2sSelectState(el, state) {
+    var root = leadRoot(el);
+    root._state = state;
+    lf(root, 'm2s-step-state').style.display = 'none';
+    lf(root, 'm2s-step1').style.display = 'block';
+    v2UpdateDots(root, 3);
     updateFocusProgress(3);
-    scrollFormToTop();
-    var zipInput = document.getElementById('m2s-zip');
-    if (zipInput) zipInput.focus();
+    scrollFormToTop(root);
+    var zip = lf(root, 'm2s-zip');
+    if (zip) zip.focus();
   }
 
-  // Step 3 → 4: zip submitted, advance to name+phone+email step
-  function m2sNext() {
-    const zip = document.getElementById('m2s-zip').value.trim();
-    if (!zip) { document.getElementById('m2s-zip').focus(); return; }
-    document.getElementById('m2s-step1').style.display = 'none';
-    document.getElementById('m2s-step2').style.display = 'block';
-    v2UpdateDots(4);
+  // Step 3 → 4: zip submitted
+  function m2sNext(el) {
+    var root = leadRoot(el);
+    var zipInput = lf(root, 'm2s-zip');
+    var zip = zipInput.value.trim();
+    if (!zip) { zipInput.focus(); return; }
+    lf(root, 'm2s-step1').style.display = 'none';
+    lf(root, 'm2s-step2').style.display = 'block';
+    v2UpdateDots(root, 4);
     updateFocusProgress(4);
-    scrollFormToTop();
-    document.getElementById('m2s-fname').focus();
+    scrollFormToTop(root);
+    lf(root, 'm2s-fname').focus();
   }
 
-  async function m2sSubmit() {
-    const fname = document.getElementById('m2s-fname').value.trim();
-    const lname = document.getElementById('m2s-lname').value.trim();
-    const zip   = document.getElementById('m2s-zip').value.trim();
-    const email = document.getElementById('m2s-email').value.trim();
-    const phone = document.getElementById('m2s-phone').value.trim();
-    if (!fname) { document.getElementById('m2s-fname').focus(); return; }
-    if (!phone) { document.getElementById('m2s-phone').focus(); return; }
-    if (!email) { document.getElementById('m2s-email').focus(); return; }
+  async function m2sSubmit(el) {
+    var root = leadRoot(el);
+    var fname = lf(root, 'm2s-fname').value.trim();
+    var lname = lf(root, 'm2s-lname').value.trim();
+    var zip   = lf(root, 'm2s-zip').value.trim();
+    var email = lf(root, 'm2s-email').value.trim();
+    var phone = lf(root, 'm2s-phone').value.trim();
+    if (!fname) { lf(root, 'm2s-fname').focus(); return; }
+    if (!phone) { lf(root, 'm2s-phone').focus(); return; }
+    if (!email) { lf(root, 'm2s-email').focus(); return; }
     var data = {
-      first_name: fname,
-      last_name:  lname,
-      email:      email,
-      phone:      phone,
-      zip:        zip,
-      source:     'LP v2 (3-step)'
+      first_name: fname, last_name: lname, email: email, phone: phone, zip: zip,
+      home_age: root._homeAge || '', state: root._state || '',
+      source: 'LP v2 (3-step)'
     };
     await sendToRailway(data);
-    // TODO: point this at Window World of Western Massachusetts's own thank-you page.
-    // Until then, show the in-page success state instead of redirecting to Midwest Window's site.
-    document.getElementById('m2s-step2').style.display = 'none';
-    document.getElementById('m2s-success').style.display = 'block';
-    scrollFormToTop();
+    // TODO: point this at Window World's own thank-you page; for now show in-page success.
+    lf(root, 'm2s-step2').style.display = 'none';
+    lf(root, 'm2s-success').style.display = 'block';
+    scrollFormToTop(root);
   }
 
-  // Anchor scroll helper used by bottom-bar + offer-closer CTA
+  // Product "Get Pricing" → jump the nearest form (the 2nd, just above products) to the contact step
+  function getPricing(el) {
+    var forms = document.querySelectorAll('.v2-form');
+    var root = forms[forms.length - 1];
+    if (!root) return;
+    ['m2s-step0', 'm2s-step-state', 'm2s-step1', 'm2s-success'].forEach(function (b) {
+      var e = lf(root, b); if (e) e.style.display = 'none';
+    });
+    var contact = lf(root, 'm2s-step2'); if (contact) contact.style.display = 'block';
+    v2UpdateDots(root, 4);
+    root.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(function () { var f = lf(root, 'm2s-fname'); if (f) f.focus(); }, 450);
+  }
+
+  // Anchor scroll helper used by bottom-bar + offer-closer CTA (targets the hero form)
   function scrollToForm(e) {
     if (e) e.preventDefault();
-    document.getElementById('mobile-form-anchor').scrollIntoView({behavior:'smooth', block:'start'});
+    var f = document.getElementById('mobile-form-anchor');
+    if (f) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
+
+  // ── Products carousel (vanilla; pages = card-sets-per-view, so dots match cards) ──
+  (function () {
+    var track = document.getElementById('prod-track');
+    var dotsWrap = document.getElementById('prod-dots');
+    if (!track || !dotsWrap) return;
+    var prev = document.querySelector('.prod-arrow.prev');
+    var next = document.querySelector('.prod-arrow.next');
+    var cards = track.querySelectorAll('.prod-card');
+    function metrics() {
+      var style = getComputedStyle(track);
+      var gap = parseFloat(style.columnGap || style.gap) || 0;
+      var step = (cards[0] ? cards[0].offsetWidth : track.clientWidth) + gap;  // one card incl. gap
+      var perView = Math.max(1, Math.round(track.clientWidth / step));
+      var pages = Math.max(1, Math.ceil(cards.length / perView));
+      return { pageWidth: step * perView, pages: pages };
+    }
+    function page(m) { return Math.min(m.pages - 1, Math.round(track.scrollLeft / m.pageWidth)); }
+    function refreshUI() {
+      var m = metrics(), cp = page(m);
+      dotsWrap.querySelectorAll('.pdot').forEach(function (d, i) { d.classList.toggle('active', i === cp); });
+      if (prev) prev.disabled = cp <= 0;
+      if (next) next.disabled = cp >= m.pages - 1;
+    }
+    function buildDots() {
+      var m = metrics();
+      dotsWrap.innerHTML = '';
+      for (var i = 0; i < m.pages; i++) {
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'pdot'; b.setAttribute('aria-label', 'Go to set ' + (i + 1));
+        (function (idx) { b.addEventListener('click', function () { track.scrollTo({ left: idx * metrics().pageWidth, behavior: 'smooth' }); }); })(i);
+        dotsWrap.appendChild(b);
+      }
+      refreshUI();
+    }
+    window.prodScroll = function (dir) { track.scrollBy({ left: dir * metrics().pageWidth, behavior: 'smooth' }); };
+    track.addEventListener('scroll', function () { window.requestAnimationFrame(refreshUI); });
+    var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(buildDots, 150); });
+    buildDots();
+  })();
 
   // Reveal-on-scroll
   const io = new IntersectionObserver(entries => {
