@@ -37,9 +37,6 @@
     --text-lt:    #7A8C9A;
     --green:      #1A9E5C;
     --red:        #D63B2F;
-
-    --strip-h: 42px; /* height of the single orange offer strip — keep in sync with strip padding/font */
-    --header-h: 60px; /* sticky white header height — JS re-measures the exact value at runtime */
   }
   html { scroll-behavior: smooth; }
   body {
@@ -48,7 +45,7 @@
     background: var(--navy);
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
-    padding-top: calc(var(--strip-h) + var(--header-h));   /* fixed offer strip + sticky header (JS re-measures) */
+    padding-top: 0;                /* no fixed top elements anymore — header scrolls with the page */
     padding-bottom: 76px;          /* compensate for fixed bottom mobile bar */
   }
 
@@ -61,10 +58,8 @@
     overflow-x: hidden;
   }
 
-  /* ── STICKY HEADER (logo left, phone CTA right) ── */
+  /* ── HEADER (logo left, phone CTA right) — scrolls with the page, NOT sticky ── */
   .site-header {
-    position: fixed; top: var(--strip-h); left: 0; right: 0;
-    z-index: 999;
     background: #fff;
     border-bottom: 1px solid var(--gray-2);
     box-shadow: 0 1px 10px rgba(0,0,0,0.06);
@@ -87,66 +82,27 @@
   }
   .site-cta:hover { background: var(--orange-dk); }
   .site-cta:active { transform: scale(0.98); }
-  .site-cta-icon { font-size: 1.15rem; line-height: 1; }
   @media (max-width: 600px) {
     .site-header-inner { padding: 7px 14px; }
     .site-logo { height: 32px; }
     .site-cta { font-size: 0.85rem; padding: 9px 15px; gap: 6px; }
   }
 
-  /* ── STICKY TOP STRIP (two lines, flush, no transform = no overlap) ── */
-  .v2-top-strip {
-    position: fixed; top: 0; left: 0; right: 0;
-    z-index: 1000;
-    width: 100%;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
-    /* Both rows share the same horizontal edges; no geometry-shifting animation on either child so they always butt cleanly. */
-  }
-  .v2-strip-trust {
-    background: var(--navy);
-    color: #fff;
-    text-align: center;
-    padding: 5px 14px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.74rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    display: block;
-  }
-  .v2-strip-trust .star { color: #FFD100; }
-
-  /* Flash-of-light sheen on the orange offer line. A translucent gradient
-     sweeps left-to-right under the text every ~3.5s. Doesn't shift the
-     element's geometry, so no overlap/gap with the trust line above. */
-  .v2-strip-offer {
-    background: var(--orange);
-    color: #fff;
-    text-align: center;
-    padding: 8px 14px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.88rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    display: block;
-    position: relative;
-    overflow: hidden;
-  }
-  .v2-strip-offer > * { position: relative; z-index: 1; }
-  .v2-strip-offer::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -70%;
-    width: 55%; height: 100%;
-    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
-    animation: shine 3.5s ease-in-out infinite;
-    pointer-events: none;
-    z-index: 0;
-  }
+  /* ── ATTENTION PULSE (reuses the old offer-bar "shine" sweep; toggled via .pulse-active by JS) ── */
   @keyframes shine {
     0%        { left: -70%; }
     55%, 100% { left: 130%; }
   }
-  .v2-strip-offer strong { color: #fff; }
+  .site-cta.pulse-active, .mb-book.pulse-active { position: relative; overflow: hidden; }
+  .site-cta.pulse-active::before, .mb-book.pulse-active::before {
+    content: '';
+    position: absolute; top: 0; left: -70%;
+    width: 55%; height: 100%;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
+    animation: shine 3.5s ease-in-out infinite;
+    pointer-events: none; z-index: 0;
+  }
+  .site-cta > *, .mb-book > * { position: relative; z-index: 1; }
 
   /* ── HERO ── */
   .hero {
@@ -531,18 +487,7 @@
 
   /* Founder / trust-tiles CSS removed — section deleted (Change 4). */
 
-  /* ── WORK PHOTOS GRID ── */
-  .photos-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 10px; margin-top: 28px;
-  }
-  .photo-item {
-    border-radius: 8px; overflow: hidden; aspect-ratio: 4/3;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
-    transition: transform 0.2s, box-shadow 0.2s; cursor: pointer;
-  }
-  .photo-item:hover { transform: scale(1.02); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
-  .photo-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* (Work-photos-grid CSS removed — "Our Work" section deleted.) */
 
   /* ── HOW IT WORKS ── */
   .steps-row {
@@ -733,7 +678,6 @@
 
   /* Fade out the rest of the page */
   body.focus-mode .site-header,
-  body.focus-mode .v2-top-strip,
   body.focus-mode .hero-photo-wrap,
   body.focus-mode .hero-photo-mobile,
   body.focus-mode .hero-h1,
@@ -799,7 +743,6 @@
     .steps-row { grid-template-columns: 1fr; gap: 28px; }
     .steps-row::before { display: none; }
     .sdiv { display: none; }
-    .photos-grid { grid-template-columns: repeat(2, 1fr); }
     .ba-grid { grid-template-columns: 1fr; }
   }
 
@@ -819,8 +762,6 @@
 
   @media (max-width: 480px) {
     .sec { padding: 48px 18px; }
-    .photos-grid { grid-template-columns: 1fr; }
-    .v2-strip-offer { font-size: 0.82rem; padding: 7px 12px; }
     .hero-inner { padding: 12px 18px 32px; }
   }
 </style>
@@ -834,21 +775,13 @@
 </div>
 <a href="#" class="focus-back" id="focus-back" onclick="exitFocusMode(event)">&larr; Back to page</a>
 
-<!-- STICKY SINGLE-LINE OFFER STRIP -->
-<div class="v2-top-strip">
-  <div class="v2-strip-offer">
-    <strong><span class="js-month-upper">MAY</span> ONLY:</strong> Buy 2, Get 1 FREE &middot; $99/mo, 0% for 18 Mo.
-  </div>
-</div>
-
-<!-- STICKY HEADER (logo left, phone CTA right) -->
+<!-- HEADER (logo left, phone CTA right) -->
 <header class="site-header">
   <div class="site-header-inner">
     <a href="#hero-anchor" class="site-logo-link" aria-label="Window World of Western Massachusetts — home">
       <img class="site-logo" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/Window%20World%20Logo.svg" alt="Window World of Western Massachusetts">
     </a>
     <a href="tel:4134857335" class="site-cta">
-      <span class="site-cta-icon" aria-hidden="true">&#9742;</span>
       <span class="site-cta-text">Call 413-485-7335</span>
     </a>
   </div>
@@ -969,11 +902,10 @@
         <p style="font-size:0.88rem; color:var(--text-mid); line-height:1.6">We&rsquo;ll call within the hour.<br>Questions? <a href="tel:4134857335" style="color:var(--orange); font-weight:700">413-485-7335</a></p>
       </div>
 
-      <!-- Testimonial — moved INSIDE the form card. Persistent across steps. -->
-      <!-- REPLACE WITH LOCAL TESTIMONIALS -->
+      <!-- Testimonial — inside the form card. Persistent across steps. -->
       <div class="v2-pullquote">
-        <p>&ldquo;12 windows in and out in 8 hours, complete and cleaned up. Couldn&rsquo;t ask for better.&rdquo;</p>
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; LeVon M. &middot; Verified Google Review</div>
+        <p>&ldquo;After disappointing (even traumatizing) experiences with contractors, Window World was an absolute blessing.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; Tricia Carey &middot; Verified Google Review</div>
       </div>
     </div>
 
@@ -1207,23 +1139,6 @@
   </div>
 </section>
 
-<!-- OUR WORK -->
-<section class="sec sec-white">
-  <div class="sec-inner">
-    <span class="eyebrow">Our Work</span>
-    <h2 class="sec-title reveal">Real Jobs. Real Western Massachusetts Homes.<br><span class="accent">See the Difference.</span></h2>
-    <!-- REPLACE: Need Window World photos — all 6 below are Midwest Window project photos on MWC's CDN -->
-    <div class="photos-grid reveal">
-      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/new3%20(2).jpg')"><img src="https://assets.midwestwindowcompany.com/new3%20(2).jpg" alt="Sunroom window installation" loading="lazy"></div>
-      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current2%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current2%20(1).jpg" alt="Exterior window replacement stone home" loading="lazy"></div>
-      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current3%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current3%20(1).jpg" alt="Interior arched window installation" loading="lazy"></div>
-      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current4%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current4%20(1).jpg" alt="Bay window replacement" loading="lazy"></div>
-      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current5%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current5%20(1).jpg" alt="Exterior double window brick home" loading="lazy"></div>
-      <div class="photo-item" onclick="openLightbox('https://assets.midwestwindowcompany.com/current6%20(1).jpg')"><img src="https://assets.midwestwindowcompany.com/current6%20(1).jpg" alt="Window installation siding home" loading="lazy"></div>
-    </div>
-  </div>
-</section>
-
 <!-- HOW IT WORKS -->
 <section class="sec sec-navy">
   <div class="sec-inner">
@@ -1299,7 +1214,7 @@
 <!-- STICKY BOTTOM BAR (mobile) & LIGHTBOX outside .mwc-wrap -->
 <div class="mobile-bar">
   <a href="tel:4134857335" class="mb-call">&#128222; 413-485-7335</a>
-  <button class="mb-book" onclick="scrollToForm()">Claim Free Window &rarr;</button>
+  <button class="mb-book" onclick="scrollToForm()"><span>Claim Free Window &rarr;</span></button>
 </div>
 
 <div class="lightbox" id="lightbox" onclick="closeLightbox()">
@@ -1316,19 +1231,26 @@
 
   document.body.classList.add('js-ready');
 
-  // Sticky header sits directly under the fixed offer strip; offset the body by their combined height.
+  // Attention pulse: the header phone button pulses while the header is on-screen;
+  // once the header scrolls out of view, hand the pulse off to the sticky footer CTA.
   (function () {
-    var strip = document.querySelector('.v2-top-strip');
     var header = document.querySelector('.site-header');
-    function syncTopOffsets() {
-      var stripH = strip ? strip.offsetHeight : 0;
-      if (header) header.style.top = stripH + 'px';
-      var headerH = header ? header.offsetHeight : 0;
-      document.body.style.paddingTop = (stripH + headerH) + 'px';
-    }
-    syncTopOffsets();
-    window.addEventListener('resize', syncTopOffsets);
-    window.addEventListener('load', syncTopOffsets);
+    var headerCta = document.querySelector('.site-cta');
+    var footerCta = document.querySelector('.mobile-bar .mb-book');
+    if (!header || !headerCta) return;
+    headerCta.classList.add('pulse-active');   // start on the header CTA
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          headerCta.classList.add('pulse-active');
+          if (footerCta) footerCta.classList.remove('pulse-active');
+        } else {
+          headerCta.classList.remove('pulse-active');
+          if (footerCta) footerCta.classList.add('pulse-active');
+        }
+      });
+    }, { threshold: 0 });
+    io.observe(header);
   })();
 
   function getUrlParams() {
