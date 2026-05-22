@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Window World of Western Massachusetts | Buy 2 Windows, Get 1 Free</title>
-<meta name="description" content="Energy-efficient replacement windows for Western Massachusetts homes. Buy 2 windows, get 1 free — $99/mo, 0% interest for 18 months. Free in-home estimate, installed in one day, backed by a lifetime warranty.">
+<meta name="description" content="Energy-efficient replacement windows for Western Massachusetts homes. Buy 2 windows, get 1 free — $99/mo, 0% interest for 18 months. Free in-home estimate, backed by a lifetime warranty.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -421,10 +421,10 @@
 
   /* ── WHY-MIDWEST EDUCATIONAL STRIP (replaces vanity stats) ── */
   .why-strip {
-    background: #fff;
+    background: var(--gray-1);
     border-bottom: 1px solid var(--gray-2);
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    padding: 36px 22px;
+    padding: 44px 22px;
   }
   .why-inner { max-width: 1040px; margin: 0 auto; }
   .why-eyebrow {
@@ -515,23 +515,7 @@
 
   /* Old MWC testimonials CSS removed — replaced by the #wwt-testimonials section. */
 
-  /* ── BEFORE / AFTER ── */
-  .ba-intro { max-width: 640px; margin-bottom: 32px; }
-  .ba-intro p { font-size: 0.98rem; color: var(--text-mid); line-height: 1.55; margin-top: 8px; }
-  .ba-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .ba-card {
-    border-radius: 10px; overflow: hidden;
-    box-shadow: 0 2px 14px rgba(0,0,0,0.1); border: 1px solid var(--gray-2);
-  }
-  .ba-card img { width: 100%; display: block; }
-  .ba-label {
-    display: flex; align-items: center; gap: 8px;
-    padding: 9px 13px; background: var(--gray-1); border-top: 1px solid var(--gray-2);
-  }
-  .ba-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .ba-dot.before { background: var(--red); }
-  .ba-dot.after { background: var(--green); }
-  .ba-label span { font-size: 0.72rem; font-weight: 600; color: var(--text-mid); letter-spacing: 0.06em; text-transform: uppercase; }
+  /* (Before/After CSS removed — section deleted in Change 6.) */
 
   /* ── OFFER CLOSER (form removed — anchor CTA to hero form) ── */
   .offer-closer {
@@ -713,7 +697,7 @@
   }
   /* 2nd form sits in its own (non-.sec) wrapper; hide its chrome via visibility in focus
      mode so the focused form can override it — opacity:0 would trap the fixed child. */
-  body.focus-mode .form2-section { visibility: hidden; }
+  body.focus-mode .form-zone { visibility: hidden; }
   @media (max-width: 600px) {
     body.focus-mode .v2-form.is-focused {
       width: calc(100% - 24px);
@@ -749,7 +733,6 @@
     .steps-row { grid-template-columns: 1fr; gap: 28px; }
     .steps-row::before { display: none; }
     .sdiv { display: none; }
-    .ba-grid { grid-template-columns: 1fr; }
   }
 
   /* Mobile (≤767px) — hero collapses to: offer strip → photo → form.
@@ -772,18 +755,29 @@
   }
 
   /* ── DUPLICATED LEAD FORM WRAPPER (below testimonials) ── */
-  .form2-section { background: var(--gray-1); padding: 48px 22px; }
-  .form2-inner { max-width: 560px; margin: 0 auto; }
+  /* ── CONVERSION FORM ZONE (forms 2 & 3) — dark gradient "get a quote" bands ── */
+  .form-zone {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--blue-deep) 78%, var(--blue-dark) 100%);
+    padding: 60px 22px;
+  }
+  .form-zone-inner { max-width: 600px; margin: 0 auto; }
+  .form-zone-h {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem); color: #fff;
+    text-align: center; line-height: 1.18; margin-bottom: 26px;
+  }
+  .form-zone-sub { text-align: center; color: rgba(255,255,255,0.82); font-size: 1rem; line-height: 1.5; margin-top: -16px; margin-bottom: 26px; }
+  .form-zone-trust { text-align: center; color: rgba(255,255,255,0.72); font-size: 0.9rem; margin-top: 16px; }
 
   /* ── PRODUCTS CAROUSEL ── */
   .products { background: #fff; }
   .prod-head { text-align: center; }
   .prod-head h2 {
     font-family: 'Oswald', sans-serif; font-weight: 700;
-    font-size: clamp(1.7rem, 3.2vw, 2rem); color: var(--navy);
-    line-height: 1.15; margin-bottom: 6px;
+    font-size: clamp(2rem, 4vw, 2.25rem); color: var(--navy);
+    line-height: 1.12; margin-bottom: 8px;
   }
-  .prod-head p { color: var(--text-mid); font-size: 1rem; margin-bottom: 26px; }
+  .prod-head p { color: var(--text-mid); font-size: 1.05rem; margin-bottom: 34px; }
   .prod-carousel { position: relative; }
   .prod-track {
     display: flex; gap: 20px; overflow-x: auto;
@@ -798,11 +792,11 @@
     box-shadow: 0 2px 14px rgba(0,0,0,0.06);
     display: flex; flex-direction: column; overflow: hidden;
   }
-  .prod-img { background: #f5f7fa; height: 220px; }
+  .prod-img { background: #eef2f8; height: 320px; }
   .prod-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .prod-body { padding: 18px 18px 20px; display: flex; flex-direction: column; flex: 1; }
-  .prod-name { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.18rem; color: var(--navy); margin-bottom: 8px; }
-  .prod-desc { font-size: 0.92rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 18px; }
+  .prod-body { padding: 24px 24px 26px; display: flex; flex-direction: column; flex: 1; }
+  .prod-name { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--navy); margin-bottom: 10px; line-height: 1.15; }
+  .prod-desc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 22px; }
   .prod-cta {
     margin-top: auto; width: 100%; background: #0033A1; color: #fff; border: none; cursor: pointer;
     font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.03em;
@@ -877,7 +871,7 @@
       $99 / Month.
     </h1>
 
-    <p class="hero-sub"><strong>Free in-home estimate. Installed in one day.</strong></p>
+    <p class="hero-sub"><strong>Free in-home estimate. No pressure, no obligation.</strong></p>
 
     <!-- Mobile-only hero photo card — sits between sub-headline (hidden on
          mobile) and the form. Clickable: opens the same image in the
@@ -988,56 +982,38 @@
   </div>
 </section>
 
-<!-- WHY WINDOW WORLD (value props) -->
+<!-- WHY WINDOW WORLD — quick-scan trust bar -->
 <section class="sec sec-navy" id="why-ww">
   <style>
-    .whyww-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 40px; }
-    .whyww-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px; padding: 28px 26px;
-      display: flex; gap: 16px; align-items: flex-start;
+    #why-ww .sec-inner { max-width: 1000px; }
+    .tb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 18px; }
+    .tb-item { text-align: center; }
+    .tb-icon {
+      width: 68px; height: 68px; border-radius: 50%; background: var(--orange);
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 18px;
     }
-    .whyww-icon {
-      flex-shrink: 0; width: 50px; height: 50px; border-radius: 50%;
-      background: var(--orange);
-      display: flex; align-items: center; justify-content: center;
-    }
-    .whyww-icon svg { width: 24px; height: 24px; }
-    .whyww-headline {
-      font-family: 'Oswald', sans-serif; font-weight: 700;
-      font-size: 1.18rem; line-height: 1.25; color: #fff; margin-bottom: 6px;
-    }
-    .whyww-subhead { display: block; font-size: 0.9rem; font-weight: 600; color: var(--orange); margin-bottom: 8px; }
-    .whyww-body { font-size: 0.92rem; line-height: 1.6; color: rgba(255,255,255,0.78); }
-    @media (max-width: 900px) {
-      .whyww-grid { grid-template-columns: 1fr; max-width: 540px; margin-left: auto; margin-right: auto; gap: 16px; }
-    }
+    .tb-icon svg { width: 32px; height: 32px; }
+    .tb-h { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.4rem; color: #fff; line-height: 1.2; margin-bottom: 8px; }
+    .tb-p { font-size: 0.95rem; color: rgba(255,255,255,0.72); line-height: 1.5; }
+    @media (max-width: 760px) { .tb-grid { grid-template-columns: 1fr; gap: 34px; } }
   </style>
   <div class="sec-inner">
-    <h2 class="sec-title reveal" style="text-align:center">Why Window World of Western Massachusetts?</h2>
-    <div class="whyww-grid reveal">
-      <div class="whyww-card">
-        <div class="whyww-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <div>
-          <h3 class="whyww-headline">Installed by Our Own Craftsmen</h3>
-          <span class="whyww-subhead">No subcontractors.</span>
-          <p class="whyww-body">We&rsquo;re not a company that outsources installation. Our team handles every project for greater consistency, quality, and accountability.</p>
-        </div>
+    <h2 class="sec-title reveal" style="text-align:center; margin-bottom:6px">Why Window World of Western Massachusetts?</h2>
+    <div class="tb-grid reveal">
+      <div class="tb-item">
+        <div class="tb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <div class="tb-h">Our Own Craftsmen</div>
+        <div class="tb-p">No subcontractors, ever.</div>
       </div>
-      <div class="whyww-card">
-        <div class="whyww-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <div>
-          <h3 class="whyww-headline">Trusted in Western Massachusetts for Over 15 Years</h3>
-          <p class="whyww-body">We&rsquo;re a local company that built our reputation right here in the community.</p>
-        </div>
+      <div class="tb-item">
+        <div class="tb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="tb-h">15+ Years Trusted Locally</div>
+        <div class="tb-p">Built our reputation right here in the community.</div>
       </div>
-      <div class="whyww-card">
-        <div class="whyww-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
-        <div>
-          <h3 class="whyww-headline">Engineered for Efficiency, in a Style That Fits Your Home</h3>
-          <p class="whyww-body">Our patented glass is available in 9+ unique window styles, so your new windows match your home&rsquo;s architecture and aesthetic.</p>
-        </div>
+      <div class="tb-item">
+        <div class="tb-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="1"/><line x1="12" y1="3" x2="12" y2="21"/><line x1="3" y1="12" x2="21" y2="12"/></svg></div>
+        <div class="tb-h">9+ Window Styles</div>
+        <div class="tb-p">Engineered for efficiency, styled for your home.</div>
       </div>
     </div>
   </div>
@@ -1195,9 +1171,10 @@
   </script>
 </section>
 
-<!-- DUPLICATED LEAD FORM (below testimonials) — same multi-step form, IDs suffixed with -2 -->
-<section class="form2-section">
-  <div class="form2-inner">
+<!-- CONVERSION ZONE — FORM 2 (below testimonials), IDs suffixed with -2 -->
+<section class="form-zone" id="form-zone-2">
+  <div class="form-zone-inner">
+    <h2 class="form-zone-h reveal">Find Out What New Windows Could Cost for Your Home</h2>
     <div class="v2-form" id="mobile-form-anchor-2">
       <div class="v2-progress-dots" id="v2-dots-2">
         <div class="dot active" data-step="1"></div>
@@ -1277,6 +1254,7 @@
         <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; Tricia Carey &middot; Verified Google Review</div>
       </div>
     </div>
+    <p class="form-zone-trust">&#9201; Takes less than 2 minutes</p>
   </div>
 </section>
 
@@ -1350,9 +1328,8 @@
   <div class="why-inner">
     <span class="why-eyebrow">Built for New England Homes</span>
     <h2 class="why-h2">Specifically Engineered for <span class="accent">New England Weather.</span></h2>
-    <!-- REVIEW: generic double/triple-pane diagram, but hosted on Midwest Window's CDN — re-host under Window World's assets -->
-    <div class="why-compare" onclick="openLightbox('https://assets.midwestwindowcompany.com/Double%20Pane%20vs.%20Triple%20Pane.png')" role="button" tabindex="0" aria-label="View larger: double-pane vs. triple-pane comparison">
-      <img src="https://assets.midwestwindowcompany.com/Double%20Pane%20vs.%20Triple%20Pane.png" alt="Double-pane vs. triple-pane window construction comparison" loading="lazy">
+    <div class="why-compare" onclick="openLightbox('https://assets.midwestwindowcompany.com/WindowWorldWesternMA/WindowWorldWeatherGraphic.png')" role="button" tabindex="0" aria-label="View larger: Window World windows engineered for New England weather">
+      <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/WindowWorldWeatherGraphic.png" alt="Window World windows engineered for New England weather" loading="lazy">
     </div>
   </div>
 </section>
@@ -1365,36 +1342,96 @@
     <div class="steps-row">
       <div class="step reveal"><div class="step-num">1</div><h3>Book Free Estimate</h3><p>Fill out the form or call us. We&rsquo;ll schedule a free in-home visit usually within 24 hours.</p></div>
       <div class="step reveal d1"><div class="step-num">2</div><h3>We Measure &amp; Quote</h3><p>Our expert measures every window, walks you through options, and finds a payment plan that fits your budget.</p></div>
-      <div class="step reveal d2"><div class="step-num">3</div><h3>Installed In One Day</h3><p>Our certified crew installs every window in a single day and cleans up before leaving. Done.</p></div>
+      <div class="step reveal d2"><div class="step-num">3</div><h3>Professional Installation</h3><p>Our certified crew installs your new windows and cleans up before leaving. Done.</p></div>
     </div>
   </div>
 </section>
 
-<!-- (Old MWC placeholder testimonials section removed — replaced by the "See What People Are Saying" section right after the New England weather strip) -->
+<!-- CONVERSION ZONE — FORM 3 (after the process), IDs suffixed with -3 -->
+<section class="form-zone" id="form-zone-3">
+  <div class="form-zone-inner">
+    <h2 class="form-zone-h reveal">Ready to See Your Options?</h2>
+    <p class="form-zone-sub reveal">Get a free estimate in under 2 minutes.</p>
+    <div class="v2-form" id="mobile-form-anchor-3">
+      <div class="v2-progress-dots" id="v2-dots-3">
+        <div class="dot active" data-step="1"></div>
+        <div class="dot" data-step="2"></div>
+        <div class="dot" data-step="3"></div>
+        <div class="dot" data-step="4"></div>
+        <span class="step-text" id="v2-step-text-3">Step 1 of 4</span>
+      </div>
 
-<!-- BEFORE / AFTER -->
-<section class="sec sec-white">
-  <div class="sec-inner">
-    <span class="eyebrow">Before &amp; After</span>
-    <h2 class="sec-title reveal">This Is What Old Windows<br><span class="accent">Are Costing Your Home.</span></h2>
-    <div class="ba-intro reveal">
-      <p>Drafts, rot, failed seals, higher energy bills. These are real Western Massachusetts homes &mdash; before and after Window World of Western Massachusetts</p>
+      <div id="m2s-step0-3">
+        <p class="m2s-question">Approximately how old is your home?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'1-5 years')">1&ndash;5 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'5-10 years')">5&ndash;10 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'10-20 years')">10&ndash;20 years</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'20+ years')">20+ years</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <div id="m2s-step-state-3" style="display:none">
+        <p class="m2s-question">Which state do you live in?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Massachusetts')">Massachusetts</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Connecticut')">Connecticut</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <div id="m2s-step1-3" style="display:none">
+        <p class="m2s-question">What&rsquo;s your zip code?</p>
+        <input class="m2s-input" type="text" id="m2s-zip-3" placeholder="01103" maxlength="5" inputmode="numeric">
+        <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <a href="tel:4134857335" class="v2-call-secondary">Or call <span class="phone-num">413-485-7335</span></a>
+        <p class="m2s-fine">Western Massachusetts only</p>
+      </div>
+
+      <div id="m2s-step2-3" style="display:none">
+        <p class="m2s-question">Just a couple more details:</p>
+        <div class="m2s-row">
+          <input class="m2s-input" type="text" id="m2s-fname-3" placeholder="First name" style="margin-bottom:0">
+          <input class="m2s-input" type="text" id="m2s-lname-3" placeholder="Last name" style="margin-bottom:0">
+        </div>
+        <input class="m2s-input" type="tel" id="m2s-phone-3" placeholder="(413) 555-0000" inputmode="tel" style="margin-top:10px">
+        <input class="m2s-input" type="email" id="m2s-email-3" placeholder="Email address" style="margin-bottom:4px">
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Claim My Free Window &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <a href="tel:4134857335" class="v2-call-secondary">Or call <span class="phone-num">413-485-7335</span></a>
+        <p class="m2s-fine">Western Massachusetts only &middot; No obligation</p>
+      </div>
+
+      <div id="m2s-success-3" style="display:none; text-align:center; padding:8px 0 4px;">
+        <div style="font-size:2.4rem; margin-bottom:10px">&#127881;</div>
+        <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:8px">You&rsquo;re All Set!</p>
+        <p style="font-size:0.88rem; color:var(--text-mid); line-height:1.6">We&rsquo;ll call within the hour.<br>Questions? <a href="tel:4134857335" style="color:var(--orange); font-weight:700">413-485-7335</a></p>
+      </div>
+
+      <div class="v2-pullquote">
+        <p>&ldquo;After disappointing (even traumatizing) experiences with contractors, Window World was an absolute blessing.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; Tricia Carey &middot; Verified Google Review</div>
+      </div>
     </div>
-    <!-- REPLACE: Need Window World photos — all 3 before/after images below are Midwest Window projects on MWC's CDN -->
-    <div class="ba-grid reveal">
-      <div class="ba-card" onclick="openLightbox('https://assets.midwestwindowcompany.com/Before%26After_NoWater3.png')">
-        <img src="https://assets.midwestwindowcompany.com/Before%26After_NoWater3.png" alt="Before and after window replacement exterior" loading="lazy">
-        <div class="ba-label"><span class="ba-dot before"></span><span>Before</span>&nbsp;&nbsp;&nbsp;<span class="ba-dot after"></span><span>After</span></div>
-      </div>
-      <div class="ba-card" onclick="openLightbox('https://assets.midwestwindowcompany.com/Before%26After_NoWater.png')">
-        <img src="https://assets.midwestwindowcompany.com/Before%26After_NoWater.png" alt="Before and after rotted window frame replacement" loading="lazy">
-        <div class="ba-label"><span class="ba-dot before"></span><span>Before</span>&nbsp;&nbsp;&nbsp;<span class="ba-dot after"></span><span>After</span></div>
-      </div>
-      <div class="ba-card" onclick="openLightbox('https://assets.midwestwindowcompany.com/Before%26After_NoWater2.png')">
-        <img src="https://assets.midwestwindowcompany.com/Before%26After_NoWater2.png" alt="Before and after full home window replacement" loading="lazy">
-        <div class="ba-label"><span class="ba-dot before"></span><span>Before</span>&nbsp;&nbsp;&nbsp;<span class="ba-dot after"></span><span>After</span></div>
-      </div>
-    </div>
+    <p class="form-zone-trust">&#9201; Takes less than 2 minutes</p>
   </div>
 </section>
 
@@ -1407,7 +1444,7 @@
       <li><span class="ck">&#10003;</span> Buy any 2 windows &mdash; your 3rd is on us</li>
       <li><span class="ck">&#10003;</span> $99/month &mdash; 0% interest for 18 months</li>
       <li><span class="ck">&#10003;</span> Free in-home estimate, zero obligation</li>
-      <li><span class="ck">&#10003;</span> Installed in one day, crew cleans up after</li>
+      <li><span class="ck">&#10003;</span> Professional installation, crew cleans up after</li>
       <li><span class="ck">&#10003;</span> Trusted by 215+ Western Massachusetts homeowners</li>
       <li><span class="ck">&#10003;</span> Backed by lifetime warranty</li>
     </ul>
@@ -1672,9 +1709,11 @@
 
   // Product "Get Pricing" → jump the nearest form (the 2nd, just above products) to the contact step
   function getPricing(el) {
-    var forms = document.querySelectorAll('.v2-form');
-    var root = forms[forms.length - 1];
-    if (!root) return;
+    // Target the form immediately above the products (the "...What New Windows Could Cost" zone).
+    var forms = Array.prototype.slice.call(document.querySelectorAll('.v2-form'));
+    if (!forms.length) return;
+    var before = forms.filter(function (f) { return el.compareDocumentPosition(f) & Node.DOCUMENT_POSITION_PRECEDING; });
+    var root = before.length ? before[before.length - 1] : forms[0];
     ['m2s-step0', 'm2s-step-state', 'm2s-step1', 'm2s-success'].forEach(function (b) {
       var e = lf(root, b); if (e) e.style.display = 'none';
     });
