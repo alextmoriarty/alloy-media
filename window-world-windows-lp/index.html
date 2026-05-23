@@ -1829,5 +1829,81 @@
   }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
 </script>
+
+<!-- ============================================================
+     DESKTOP ENHANCEMENTS — sizing/spacing only, no layout changes.
+     Placed last so it wins the cascade over earlier head + section style rules.
+     Mobile (≤768px) is untouched (all rules are min-width). ============ -->
+<style>
+@media (min-width: 769px) {
+  /* Global: wider content, more breathing room, larger section headings */
+  .sec { padding: 84px 22px; }
+  .sec-inner { max-width: 1200px; }
+  .sec-title { font-size: clamp(2rem, 3.4vw, 2.9rem); }
+
+  /* Hero — bigger headline / sub / benefits (structure unchanged) */
+  .hero-h1 { font-size: clamp(2.7rem, 4.6vw, 3.7rem); }
+  .hero-h1 .orange { font-size: clamp(2.1rem, 3.6vw, 3rem); }
+  .hero-sub { font-size: 1.15rem; }
+  .v2-benefits li { font-size: 1.05rem; }
+
+  /* Multi-step form (all 3 copies) — bigger question, tiles, inputs, button */
+  .m2s-question { font-size: 1.5rem; }
+  .v2-tile { font-size: 1.22rem; padding: 30px 10px; }
+  .m2s-input { font-size: 1.05rem; padding: 15px 16px; }
+  .m2s-btn { font-size: 1.28rem; padding: 18px 24px; }   /* ≈56px tall */
+
+  /* Conversion form zones — wider card, larger heading, more padding */
+  .form-zone { padding: 92px 22px; }
+  .form-zone-inner { max-width: 700px; }
+  .form-zone-h { font-size: clamp(2rem, 3.4vw, 2.5rem); }
+  .form-zone-sub { font-size: 1.1rem; }
+  .form-zone-trust { font-size: 1rem; }
+
+  /* "Why Window World" trust bar — bigger icons/text, wider, more gap */
+  #why-ww .sec-inner { max-width: 1100px; }
+  .tb-grid { gap: 56px; }
+  .tb-icon { width: 76px; height: 76px; }
+  .tb-icon svg { width: 38px; height: 38px; }
+  .tb-h { font-size: 1.6rem; }
+  .tb-p { font-size: 1.05rem; }
+
+  /* Testimonials — bigger cards, image, text, thumbnails, wider section */
+  #wwt-testimonials .sec-inner { max-width: 1200px; }
+  .wwt-grid { gap: 30px; }
+  .wwt-media { height: 380px; }
+  .wwt-name { font-size: 1.15rem; }
+  .wwt-stars { font-size: 1.05rem; }
+  .wwt-review-text { font-size: 1rem; }
+  .wwt-thumb { width: 100px; height: 100px; }
+
+  /* Products — bigger images, names, CTA, arrows, heading */
+  .prod-head h2 { font-size: clamp(2.2rem, 4vw, 2.6rem); }
+  .prod-head p { font-size: 1.1rem; }
+  .prod-img { height: 380px; }
+  .prod-name { font-size: 1.7rem; }
+  .prod-desc { font-size: 1rem; }
+  .prod-cta { font-size: 1.1rem; padding: 16px 18px; }   /* ≈49px tall */
+  .prod-arrow { width: 52px; height: 52px; font-size: 1.3rem; }
+  .prod-arrow.prev { left: -12px; }
+  .prod-arrow.next { right: -12px; }
+
+  /* Weather / engineering diagram — bigger, wider, larger text */
+  .why-strip { padding: 72px 22px; }
+  .why-h2 { font-size: clamp(2rem, 3vw, 2.5rem); }
+  .weather-diagram { max-width: 1000px; padding: 44px 48px; }
+  .wd-imgwrap img { max-height: 500px; }
+  .wd-text h3 { font-size: 1.15rem; }
+  .wd-text p { font-size: 0.98rem; }
+
+  /* Process — bigger subheading */
+  .proc-sub { font-size: 1.1rem; }
+}
+
+/* Hero 2-col already exists at ≥901px — widen it to use more horizontal space (no structure change) */
+@media (min-width: 901px) {
+  .hero-inner { max-width: 1240px; grid-template-columns: 1fr 520px; gap: 56px; }
+}
+</style>
 </body>
 </html>
