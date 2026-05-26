@@ -939,9 +939,8 @@
 
       <!-- Out-of-service-area: shown only when entered zip is not in APPROVED_ZIPS. Stops the flow before step 3. -->
       <div id="m2s-zip-error" style="display:none; text-align:center; padding:14px 4px 6px;">
-        <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:10px">Sorry, we don&rsquo;t currently service your area.</p>
-        <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px">It looks like your zip code is outside our service area right now.</p>
-        <a href="#" onclick="m2sBackToZip(this); return false;" style="color:var(--orange); font-weight:700; text-decoration:none; font-size:0.92rem">&larr; Try a different zip code</a>
+        <p style="font-size:1rem; color:var(--text); line-height:1.55; margin-bottom:18px">Sorry, your zip code is outside of service area. We only service Hampden, Hampshire, Franklin, and Berkshire. If you believe there&rsquo;s a mistake please call us at the number below.</p>
+        <a href="tel:4134857335" class="m2s-btn" style="display:block; text-decoration:none; text-align:center;">413-485-7335</a>
       </div>
 
       <!-- Step 3: name + phone + email (PII collected only after zip qualifier) -->
@@ -1255,9 +1254,8 @@
       </div>
 
       <div id="m2s-zip-error-2" style="display:none; text-align:center; padding:14px 4px 6px;">
-        <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:10px">Sorry, we don&rsquo;t currently service your area.</p>
-        <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px">It looks like your zip code is outside our service area right now.</p>
-        <a href="#" onclick="m2sBackToZip(this); return false;" style="color:var(--orange); font-weight:700; text-decoration:none; font-size:0.92rem">&larr; Try a different zip code</a>
+        <p style="font-size:1rem; color:var(--text); line-height:1.55; margin-bottom:18px">Sorry, your zip code is outside of service area. We only service Hampden, Hampshire, Franklin, and Berkshire. If you believe there&rsquo;s a mistake please call us at the number below.</p>
+        <a href="tel:4134857335" class="m2s-btn" style="display:block; text-decoration:none; text-align:center;">413-485-7335</a>
       </div>
 
       <div id="m2s-step2-2" style="display:none">
@@ -1473,9 +1471,8 @@
       </div>
 
       <div id="m2s-zip-error-3" style="display:none; text-align:center; padding:14px 4px 6px;">
-        <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:10px">Sorry, we don&rsquo;t currently service your area.</p>
-        <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px">It looks like your zip code is outside our service area right now.</p>
-        <a href="#" onclick="m2sBackToZip(this); return false;" style="color:var(--orange); font-weight:700; text-decoration:none; font-size:0.92rem">&larr; Try a different zip code</a>
+        <p style="font-size:1rem; color:var(--text); line-height:1.55; margin-bottom:18px">Sorry, your zip code is outside of service area. We only service Hampden, Hampshire, Franklin, and Berkshire. If you believe there&rsquo;s a mistake please call us at the number below.</p>
+        <a href="tel:4134857335" class="m2s-btn" style="display:block; text-decoration:none; text-align:center;">413-485-7335</a>
       </div>
 
       <div id="m2s-step2-3" style="display:none">
@@ -1707,6 +1704,7 @@
     lf(root, 'm2s-step2').style.display = 'none';
     lf(root, 'm2s-success').style.display = 'none';
     var errReset = lf(root, 'm2s-zip-error'); if (errReset) errReset.style.display = 'none';
+    var pqReset = root.querySelector('.v2-pullquote'); if (pqReset) pqReset.style.display = '';
     root._homeAge = ''; root._state = '';
     v2UpdateDots(root, 1);
     updateFocusProgress(1);
@@ -1763,6 +1761,7 @@
     if (!APPROVED_ZIPS.includes(zip)) {
       lf(root, 'm2s-step1').style.display = 'none';
       lf(root, 'm2s-zip-error').style.display = 'block';
+      var pq = root.querySelector('.v2-pullquote'); if (pq) pq.style.display = 'none';
       scrollFormToTop(root);
       return;
     }
@@ -1772,16 +1771,6 @@
     updateFocusProgress(4);
     scrollFormToTop(root);
     lf(root, 'm2s-fname').focus();
-  }
-
-  // "Try a different zip code" link inside the out-of-area error: clear the field and return to step 1.
-  function m2sBackToZip(el) {
-    var root = leadRoot(el);
-    var errBox = lf(root, 'm2s-zip-error'); if (errBox) errBox.style.display = 'none';
-    var zip = lf(root, 'm2s-zip');
-    if (zip) { zip.value = ''; }
-    lf(root, 'm2s-step1').style.display = 'block';
-    if (zip) zip.focus();
   }
 
   async function m2sSubmit(el) {
