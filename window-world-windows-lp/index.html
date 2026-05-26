@@ -937,6 +937,13 @@
         <p class="m2s-fine">Western Massachusetts only</p>
       </div>
 
+      <!-- Out-of-service-area: shown only when entered zip is not in APPROVED_ZIPS. Stops the flow before step 3. -->
+      <div id="m2s-zip-error" style="display:none; text-align:center; padding:14px 4px 6px;">
+        <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:10px">Sorry, we don&rsquo;t currently service your area.</p>
+        <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px">It looks like your zip code is outside our service area right now.</p>
+        <a href="#" onclick="m2sBackToZip(this); return false;" style="color:var(--orange); font-weight:700; text-decoration:none; font-size:0.92rem">&larr; Try a different zip code</a>
+      </div>
+
       <!-- Step 3: name + phone + email (PII collected only after zip qualifier) -->
       <div id="m2s-step2" style="display:none">
         <p class="m2s-question">Just a couple more details:</p>
@@ -1247,6 +1254,12 @@
         <p class="m2s-fine">Western Massachusetts only</p>
       </div>
 
+      <div id="m2s-zip-error-2" style="display:none; text-align:center; padding:14px 4px 6px;">
+        <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:10px">Sorry, we don&rsquo;t currently service your area.</p>
+        <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px">It looks like your zip code is outside our service area right now.</p>
+        <a href="#" onclick="m2sBackToZip(this); return false;" style="color:var(--orange); font-weight:700; text-decoration:none; font-size:0.92rem">&larr; Try a different zip code</a>
+      </div>
+
       <div id="m2s-step2-2" style="display:none">
         <p class="m2s-question">Just a couple more details:</p>
         <div class="m2s-row">
@@ -1459,6 +1472,12 @@
         <p class="m2s-fine">Western Massachusetts only</p>
       </div>
 
+      <div id="m2s-zip-error-3" style="display:none; text-align:center; padding:14px 4px 6px;">
+        <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--navy); margin-bottom:10px">Sorry, we don&rsquo;t currently service your area.</p>
+        <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px">It looks like your zip code is outside our service area right now.</p>
+        <a href="#" onclick="m2sBackToZip(this); return false;" style="color:var(--orange); font-weight:700; text-decoration:none; font-size:0.92rem">&larr; Try a different zip code</a>
+      </div>
+
       <div id="m2s-step2-3" style="display:none">
         <p class="m2s-question">Just a couple more details:</p>
         <div class="m2s-row">
@@ -1520,6 +1539,30 @@
   // TODO: SET WINDOW WORLD'S OWN LEAD WEBHOOK. Left empty so form submissions do NOT post to
   // Midwest Window's attribution pipeline. sendToRailway() no-ops while this is blank.
   const RAILWAY_WEBHOOK = '';
+
+  // Service-area gate: only these zips advance past step 1 (Hampden/Hampshire/Franklin/Berkshire counties).
+  const APPROVED_ZIPS = [
+    // Hampden County
+    "01085","01040","01109","01020","01089","01108","01104","01013","01056","01028",
+    "01106","01001","01095","01118","01119","01030","01105","01069","01107","01151",
+    "01077","01057","01129","01036","01010","01114","01195","01133","01128","01022",
+    "01050","01521","01103","01034","01080","01081","01071","01011","01008","01029",
+    "01009","01199","01014","01021","01041","01079","01086","01090","01097","01101",
+    "01102","01111","01115","01116","01138","01139","01144","01152",
+    // Hampshire County
+    "01002","01075","01027","01060","01007","01003","01082","01062","01073","01033",
+    "01035","01038","01039","01096","01053","01026","01098","01088","01063","01070",
+    "01032","01012","01084","01066","01243","01004","01059","01061",
+    // Franklin County
+    "01301","01364","01376","01373","01370","01375","01360","01337","01351","01340",
+    "01354","01341","01054","01339","01344","01072","01342","01330","01355","01378",
+    "01349","01379","01367","01350","01338","01380","01346","01302","01347","01093",
+    // Berkshire County
+    "01201","01247","01230","01267","01220","01226","01238","01240","01225","01235",
+    "01223","01257","01237","12168","01266","01245","01254","01258","01270","01236",
+    "01255","01262","01259","01253","01256","01222","01264","01229","01260","01343",
+    "01224","01202","01203","01227","01242","01252","01263","01244"
+  ];
 
   document.body.classList.add('js-ready');
 
@@ -1663,6 +1706,7 @@
     lf(root, 'm2s-step1').style.display = 'none';
     lf(root, 'm2s-step2').style.display = 'none';
     lf(root, 'm2s-success').style.display = 'none';
+    var errReset = lf(root, 'm2s-zip-error'); if (errReset) errReset.style.display = 'none';
     root._homeAge = ''; root._state = '';
     v2UpdateDots(root, 1);
     updateFocusProgress(1);
@@ -1716,12 +1760,28 @@
     var zipInput = lf(root, 'm2s-zip');
     var zip = zipInput.value.trim();
     if (!zip) { zipInput.focus(); return; }
+    if (!APPROVED_ZIPS.includes(zip)) {
+      lf(root, 'm2s-step1').style.display = 'none';
+      lf(root, 'm2s-zip-error').style.display = 'block';
+      scrollFormToTop(root);
+      return;
+    }
     lf(root, 'm2s-step1').style.display = 'none';
     lf(root, 'm2s-step2').style.display = 'block';
     v2UpdateDots(root, 4);
     updateFocusProgress(4);
     scrollFormToTop(root);
     lf(root, 'm2s-fname').focus();
+  }
+
+  // "Try a different zip code" link inside the out-of-area error: clear the field and return to step 1.
+  function m2sBackToZip(el) {
+    var root = leadRoot(el);
+    var errBox = lf(root, 'm2s-zip-error'); if (errBox) errBox.style.display = 'none';
+    var zip = lf(root, 'm2s-zip');
+    if (zip) { zip.value = ''; }
+    lf(root, 'm2s-step1').style.display = 'block';
+    if (zip) zip.focus();
   }
 
   async function m2sSubmit(el) {
