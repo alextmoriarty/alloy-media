@@ -256,16 +256,8 @@
     font-size: 0.92rem;
     color: var(--text);
     line-height: 1.48;
-    margin-bottom: 6px;
+    margin-bottom: 0;
   }
-  .v2-pullquote .by {
-    font-size: 0.68rem;
-    color: var(--text-mid);
-    font-weight: 700;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .v2-pullquote .by .stars { color: #FFB300; margin-right: 6px; letter-spacing: 0.04em; }
 
   /* ── MULTI-STEP FORM (white card, sits on the dark hero) ── */
   .v2-form {
@@ -366,16 +358,6 @@
     transform: scale(0.98);
   }
 
-  /* Tri-microcopy under CTA */
-  .v2-cta-micro {
-    text-align: center;
-    font-size: 0.72rem;
-    color: var(--text-mid);
-    margin-top: 10px;
-    font-style: italic;
-  }
-  .v2-cta-micro .sep { margin: 0 5px; opacity: 0.5; }
-
   /* Co-equal secondary call link */
   .v2-call-secondary {
     display: block;
@@ -397,82 +379,6 @@
     text-align: center; font-size: 0.66rem;
     color: var(--text-lt); margin-top: 8px; line-height: 1.45;
   }
-
-  /* 3-checkmark blended benefits — sits BELOW form as supporting context */
-  .v2-benefits {
-    list-style: none;
-    margin: 18px 0 0;
-  }
-  .v2-benefits li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.94);
-    padding: 6px 0;
-    line-height: 1.4;
-    font-weight: 500;
-  }
-  .v2-benefits .ck {
-    color: var(--green);
-    font-weight: 700;
-    font-size: 1.05rem;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  /* ── WHY-MIDWEST EDUCATIONAL STRIP (replaces vanity stats) ── */
-  .why-strip {
-    background: var(--gray-1);
-    border-bottom: 1px solid var(--gray-2);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    padding: 44px 22px;
-  }
-  .why-inner { max-width: 1040px; margin: 0 auto; }
-  .why-eyebrow {
-    text-align: center;
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
-    text-transform: uppercase; color: var(--blue);
-    margin-bottom: 6px; display: block;
-  }
-  .why-h2 {
-    text-align: center;
-    font-family: 'Oswald', sans-serif;
-    font-size: clamp(1.4rem, 2.6vw, 2rem);
-    font-weight: 700; color: var(--navy); line-height: 1.15;
-    margin-bottom: 22px;
-  }
-  .why-h2 .accent { color: var(--orange); }
-  /* ── NATIVE WEATHER / ENGINEERING DIAGRAM ── */
-  .weather-diagram {
-    max-width: 900px; margin: 28px auto 0;
-    background: #fff; border: 1px solid var(--gray-2); border-radius: 14px;
-    box-shadow: 0 2px 14px rgba(0,0,0,0.05);
-    padding: 36px 40px; display: flex; gap: 32px; align-items: center;
-  }
-  .wd-callouts { flex: 0 0 45%; display: flex; flex-direction: column; gap: 26px; }
-  .wd-callout { display: flex; gap: 14px; align-items: flex-start; }
-  .wd-num {
-    flex: 0 0 36px; width: 36px; height: 36px; border-radius: 50%;
-    background: #002768; color: #fff; font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.05rem;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .wd-text h3 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.05rem; color: var(--navy); margin-bottom: 4px; line-height: 1.25; }
-  .wd-text p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.5; }
-  .wd-image { flex: 1 1 55%; display: flex; align-items: center; justify-content: center; }
-  .wd-imgwrap { position: relative; display: inline-block; }
-  .wd-imgwrap img { display: block; max-height: 480px; width: auto; max-width: 100%; }
-  /* Annotation dots on the window photo, each with a connector line pointing toward the callouts */
-  .wd-dot {
-    position: absolute; width: 14px; height: 14px; border-radius: 50%;
-    background: #002768; border: 3px solid #fff; box-shadow: 0 0 0 1px #002768;
-    transform: translate(-50%, -50%); z-index: 2;
-  }
-  .wd-dot::before {
-    content: ''; position: absolute; top: 50%; right: 50%;
-    width: 90px; height: 2px; background: #002768; z-index: 1;
-  }
-  .wd-dot-1 { top: 15%; left: 45%; }
-  .wd-dot-2 { top: 45%; left: 55%; }
-  .wd-dot-3 { top: 75%; left: 55%; }
 
   /* ── GENERIC SECTION ── */
   .sec { padding: 64px 22px; }
@@ -645,8 +551,6 @@
   body.focus-mode .hero-photo-mobile,
   body.focus-mode .hero-h1,
   body.focus-mode .hero-sub,
-  body.focus-mode .v2-benefits,
-  body.focus-mode .why-strip,
   body.focus-mode .sec,
   body.focus-mode footer,
   body.focus-mode .mobile-bar {
@@ -704,18 +608,10 @@
     .hero-h1 { font-size: 2.7rem; }
     .hero-h1 .orange { font-size: 2.1rem; }
     .v2-pullquote { margin-bottom: 16px; }
-    /* Why-strip slightly tighter on desktop */
-    .why-strip { padding: 44px 22px; }
   }
 
   @media (max-width: 900px) {
     .sdiv { display: none; }
-    /* Weather diagram → single column; image first, callouts below, no connector lines */
-    .weather-diagram { flex-direction: column; padding: 26px 22px; gap: 24px; }
-    .wd-image { order: -1; width: 100%; }
-    .wd-callouts { flex-basis: auto; width: 100%; }
-    .wd-imgwrap img { max-height: 300px; }
-    .wd-dot { display: none; }
   }
 
   /* Mobile process: 3 compact cards side-by-side in one row (no wrap) */
@@ -730,7 +626,6 @@
     .step-num { width: 32px; height: 32px; font-size: 1rem; margin: 0 auto 10px; background: var(--blue); box-shadow: none; }
     .step h3 { font-size: 0.72rem; letter-spacing: 0.02em; margin-bottom: 6px; }
     .step p { font-size: 0.66rem; line-height: 1.35; }
-    .wd-imgwrap img { max-height: 250px; }
   }
 
   /* Mobile (≤767px) — hero collapses to: offer strip → photo → form.
@@ -773,9 +668,8 @@
   .prod-head h2 {
     font-family: 'Oswald', sans-serif; font-weight: 700;
     font-size: clamp(2rem, 4vw, 2.25rem); color: var(--navy);
-    line-height: 1.12; margin-bottom: 8px;
+    line-height: 1.18; margin-bottom: 34px;
   }
-  .prod-head p { color: var(--text-mid); font-size: 1.05rem; margin-bottom: 34px; }
   .prod-carousel { position: relative; }
   .prod-track {
     display: flex; gap: 20px; overflow-x: auto;
@@ -792,15 +686,11 @@
   }
   .prod-img { background: #eef2f8; height: 320px; }
   .prod-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .prod-body { padding: 24px 24px 26px; display: flex; flex-direction: column; flex: 1; }
-  .prod-name { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--navy); margin-bottom: 10px; line-height: 1.15; }
-  .prod-desc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 22px; }
-  .prod-cta {
-    margin-top: auto; width: 100%; background: #002768; color: #fff; border: none; cursor: pointer;
-    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem; letter-spacing: 0.03em;
-    padding: 13px 16px; border-radius: 8px; transition: background 0.18s;
-  }
-  .prod-cta:hover { background: #001A4D; }
+  .prod-body { padding: 22px 22px 24px; display: flex; flex-direction: column; flex: 1; }
+  .prod-name { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.5rem; color: var(--navy); margin-bottom: 10px; line-height: 1.15; text-align: center; }
+  /* Manufacturer logo — pinned to the bottom of the card body so cards align regardless of name length. */
+  .prod-logo-wrap { margin-top: auto; padding: 12px 0 4px; display: flex; align-items: center; justify-content: center; min-height: 56px; }
+  .prod-logo { width: 120px; max-width: 80%; height: auto; max-height: 56px; object-fit: contain; display: block; }
   .prod-arrow {
     position: absolute; top: 50%; transform: translateY(-50%);
     width: 44px; height: 44px; border-radius: 50%;
@@ -858,7 +748,7 @@
     <!-- Desktop-only photo column (left) — hidden on mobile via CSS -->
     <div class="hero-photo-wrap">
       <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/Milgard%20Tuscany%20Series%20replacement%20windows.webp" alt="Milgard Tuscany Series replacement windows by Pinnacle Windows">
-      <div class="hero-photo-caption">Colorado &amp; Nebraska</div>
+      <div class="hero-photo-caption">Recent Project</div>
     </div>
 
     <!-- Content column (right on desktop, full width on mobile) -->
@@ -877,7 +767,7 @@
          hero grid (.hero-photo-wrap). -->
     <div class="hero-photo-mobile" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/Milgard%20Tuscany%20Series%20replacement%20windows.webp')" role="button" tabindex="0" aria-label="View larger: Milgard Tuscany Series replacement windows by Pinnacle Windows">
       <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/Milgard%20Tuscany%20Series%20replacement%20windows.webp" alt="Milgard Tuscany Series replacement windows by Pinnacle Windows">
-      <div class="hero-photo-mobile-badge">Colorado &amp; Nebraska</div>
+      <div class="hero-photo-mobile-badge">Recent Project</div>
     </div>
 
     <!-- MULTI-STEP FORM (visible on all viewports) -->
@@ -899,11 +789,6 @@
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'10-20 years')">10&ndash;20 years</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'20+ years')">20+ years</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <!-- Step 2: state tile -->
@@ -914,11 +799,6 @@
           <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Colorado')">Colorado</button>
           <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Nebraska')">Nebraska</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <!-- Step 2: ZIP CODE (low-friction qualifier — confirms service area before asking for personal contact info) -->
@@ -926,11 +806,6 @@
         <p class="m2s-question">What&rsquo;s your zip code?</p>
         <input class="m2s-input" type="text" id="m2s-zip" placeholder="01103" maxlength="5" inputmode="numeric">
         <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
         <p class="m2s-fine">Colorado &amp; Nebraska only</p>
       </div>
@@ -952,11 +827,6 @@
         <input class="m2s-input" type="tel" id="m2s-phone" placeholder="(413) 555-0000" inputmode="tel" style="margin-top:10px">
         <input class="m2s-input" type="email" id="m2s-email" placeholder="Email address" style="margin-bottom:4px">
         <button class="m2s-btn" onclick="m2sSubmit(this)">Claim My Free Window &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
         <p class="m2s-fine">Colorado &amp; Nebraska only &middot; No obligation</p>
       </div>
@@ -970,17 +840,9 @@
 
       <!-- Testimonial — inside the form card. Persistent across steps. -->
       <div class="v2-pullquote">
-        <p>&ldquo;They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality that you don&rsquo;t get if the work is only fast.&rdquo;</p>
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; George Albert Martel &middot; Verified Google Review</div>
+        <p>&ldquo;They finished removing the old windows and replacing them with new ones in less than 8 hours.&rdquo;</p>
       </div>
     </div>
-
-    <!-- 3-checkmark blended benefit list (supporting context below form) -->
-    <ul class="v2-benefits">
-      <li><span class="ck">&#10003;</span> <strong>Triple-Pane Glass.</strong> Top-rated for Colorado &amp; Nebraska winters.</li>
-      <li><span class="ck">&#10003;</span> <strong>3X the Insulation</strong> of a Standard Window.</li>
-      <li><span class="ck">&#10003;</span> <strong>Backed by Warranty</strong></li>
-    </ul>
 
     </div><!-- /.hero-content -->
   </div>
@@ -1142,16 +1004,16 @@
         </div>
       </article>
 
-      <!-- Card 3 — anonymous verified customer -->
+      <!-- Card 3 — John Noel -->
       <article class="wwt-card">
-        <div class="wwt-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle Windows install — verified customer">
-          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp" alt="Window and patio door install by Pinnacle Windows" loading="lazy">
+        <div class="wwt-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle Windows install — John Noel">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp" alt="Window and patio door install by Pinnacle Windows for John Noel" loading="lazy">
           <span class="wwt-verified"><span class="ck">&#10003;</span> Verified Purchase</span>
         </div>
         <div class="wwt-head">
-          <span class="wwt-avatar" aria-hidden="true">&#10003;</span>
+          <span class="wwt-avatar" aria-hidden="true">J</span>
           <div class="wwt-head-text">
-            <span class="wwt-name">Verified Customer</span>
+            <span class="wwt-name">John Noel</span>
             <span class="wwt-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           </div>
         </div>
@@ -1213,11 +1075,6 @@
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'10-20 years')">10&ndash;20 years</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'20+ years')">20+ years</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <div id="m2s-step-state-2" style="display:none">
@@ -1227,22 +1084,12 @@
           <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Colorado')">Colorado</button>
           <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Nebraska')">Nebraska</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <div id="m2s-step1-2" style="display:none">
         <p class="m2s-question">What&rsquo;s your zip code?</p>
         <input class="m2s-input" type="text" id="m2s-zip-2" placeholder="01103" maxlength="5" inputmode="numeric">
         <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
         <p class="m2s-fine">Colorado &amp; Nebraska only</p>
       </div>
@@ -1262,11 +1109,6 @@
         <input class="m2s-input" type="tel" id="m2s-phone-2" placeholder="(413) 555-0000" inputmode="tel" style="margin-top:10px">
         <input class="m2s-input" type="email" id="m2s-email-2" placeholder="Email address" style="margin-bottom:4px">
         <button class="m2s-btn" onclick="m2sSubmit(this)">Claim My Free Window &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
         <p class="m2s-fine">Colorado &amp; Nebraska only &middot; No obligation</p>
       </div>
@@ -1278,117 +1120,68 @@
       </div>
 
       <div class="v2-pullquote">
-        <p>&ldquo;They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality that you don&rsquo;t get if the work is only fast.&rdquo;</p>
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; George Albert Martel &middot; Verified Google Review</div>
+        <p>&ldquo;They finished removing the old windows and replacing them with new ones in less than 8 hours.&rdquo;</p>
       </div>
     </div>
     <p class="form-zone-trust">&#9201; Takes less than 2 minutes</p>
   </div>
 </section>
 
-<!-- PRODUCTS CAROUSEL -->
+<!-- MANUFACTURER CAROUSEL -->
 <section class="sec products">
   <div class="sec-inner">
     <div class="prod-head reveal">
-      <h2>Pick a Window Style That Matches Your Home</h2>
-      <p>Here are some of our most popular choices</p>
+      <h2>We Work With 30+ Manufacturers to Deliver Top Quality at the Lowest Possible Price</h2>
     </div>
     <div class="prod-carousel reveal">
-      <button class="prod-arrow prev" type="button" aria-label="Previous windows" onclick="prodScroll(-1)">&#10094;</button>
-      <button class="prod-arrow next" type="button" aria-label="More windows" onclick="prodScroll(1)">&#10095;</button>
+      <button class="prod-arrow prev" type="button" aria-label="Previous manufacturer" onclick="prodScroll(-1)">&#10094;</button>
+      <button class="prod-arrow next" type="button" aria-label="Next manufacturer" onclick="prodScroll(1)">&#10095;</button>
       <div class="prod-track" id="prod-track">
         <div class="prod-card">
-          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2022-Web-PIXUS-Dinning-DoubleHung-Spring%20(1)%20(1).png" alt="Vinyl double hung window" loading="lazy"></div>
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/PinnacleWindows/aw09_274.jpg" alt="Renewal by Andersen replacement window install by Pinnacle Windows" loading="lazy"></div>
           <div class="prod-body">
-            <div class="prod-name">Vinyl Double Hung</div>
-            <div class="prod-desc">Top and bottom panels both slide open and tilt inward for easy cleaning from inside.</div>
-            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+            <div class="prod-name">Renewal by Andersen</div>
+            <div class="prod-logo-wrap"><img class="prod-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/andersen-logo.svg" alt="Renewal by Andersen logo" loading="lazy"></div>
           </div>
         </div>
         <div class="prod-card">
-          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2022-Web-PIXUS-casement-window%20(1).png" alt="Casement window" loading="lazy"></div>
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/PinnacleWindows/pella-impervia-fiberglass-bedroom-windows.jpeg" alt="Pella Impervia fiberglass bedroom windows installed by Pinnacle Windows" loading="lazy"></div>
           <div class="prod-body">
-            <div class="prod-name">Casement Windows</div>
-            <div class="prod-desc">Opens on a side hinge like a door, letting in a full breeze with one turn of the handle.</div>
-            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+            <div class="prod-name">Pella</div>
+            <div class="prod-logo-wrap"><img class="prod-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/Pella-We-Offer-Logo.svg" alt="Pella logo" loading="lazy"></div>
           </div>
         </div>
         <div class="prod-card">
-          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2021-Web-PIXUS-3LiteSlider%20(1).png" alt="Sliding window" loading="lazy"></div>
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/PinnacleWindows/Milgard-Trinsic_007.jpg" alt="Milgard Trinsic replacement window install by Pinnacle Windows" loading="lazy"></div>
           <div class="prod-body">
-            <div class="prod-name">Sliding Windows</div>
-            <div class="prod-desc">One panel glides left or right to open, giving you a wide view with no swing space needed.</div>
-            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+            <div class="prod-name">Milgard</div>
+            <div class="prod-logo-wrap"><img class="prod-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/milgard-logo.svg" alt="Milgard logo" loading="lazy"></div>
           </div>
         </div>
         <div class="prod-card">
-          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2022-Web-PIXUS-stairwell-picture%20(1).png" alt="Picture window" loading="lazy"></div>
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/PinnacleWindows/Cascade-02.jpg" alt="Cascade replacement window install by Pinnacle Windows" loading="lazy"></div>
           <div class="prod-body">
-            <div class="prod-name">Picture Windows</div>
-            <div class="prod-desc">A large fixed pane that doesn&rsquo;t open, but fills the room with light and frames the outside view.</div>
-            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+            <div class="prod-name">Cascade</div>
+            <div class="prod-logo-wrap"><img class="prod-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/cascade-logo.svg" alt="Cascade logo" loading="lazy"></div>
           </div>
         </div>
         <div class="prod-card">
-          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/2022-PIXUS-HomeOffice-Bay-Bow-Spring%20(1).png" alt="Bay and bow window" loading="lazy"></div>
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/PinnacleWindows/Weather-Shield-2.jpg" alt="Weather Shield replacement window install by Pinnacle Windows" loading="lazy"></div>
           <div class="prod-body">
-            <div class="prod-name">Bay &amp; Bow Windows</div>
-            <div class="prod-desc">Extends past your wall to bring in more light and create a natural shelf or seating area inside.</div>
-            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+            <div class="prod-name">Weather Shield</div>
+            <div class="prod-logo-wrap"><img class="prod-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/weather-shield-logo.svg" alt="Weather Shield logo" loading="lazy"></div>
           </div>
         </div>
         <div class="prod-card">
-          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/Windsor-direct-set-radius-hero%20(1).png" alt="Direct set and radius window" loading="lazy"></div>
+          <div class="prod-img"><img src="https://assets.midwestwindowcompany.com/PinnacleWindows/943154932.jpg" alt="Jeld-Wen replacement window install by Pinnacle Windows" loading="lazy"></div>
           <div class="prod-body">
-            <div class="prod-name">Direct Set &amp; Radius Windows</div>
-            <div class="prod-desc">Curved or arched windows that fit right in with no pane, adding a distinctive shape to your home.</div>
-            <button class="prod-cta" type="button" onclick="getPricing(this)">Get Pricing &rsaquo;</button>
+            <div class="prod-name">Jeld-Wen</div>
+            <div class="prod-logo-wrap"><img class="prod-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/jeld-wen-logo.svg" alt="Jeld-Wen logo" loading="lazy"></div>
           </div>
         </div>
       </div>
     </div>
     <div class="prod-dots" id="prod-dots"></div>
-  </div>
-</section>
-
-<!-- BUILT FOR NEW ENGLAND WEATHER — native HTML/CSS engineering diagram -->
-<section class="why-strip">
-  <div class="why-inner">
-    <span class="why-eyebrow">Built for Colorado &amp; Nebraska Homes</span>
-    <h2 class="why-h2">Specifically Engineered for <span class="accent">Colorado &amp; Nebraska Weather.</span></h2>
-    <div class="weather-diagram reveal">
-      <div class="wd-callouts">
-        <div class="wd-callout">
-          <div class="wd-num">1</div>
-          <div class="wd-text">
-            <h3>Foam-Enhanced Mainframe</h3>
-            <p>High-density foam inside the frame adds thermal protection, helping reduce heat transfer through the window.</p>
-          </div>
-        </div>
-        <div class="wd-callout">
-          <div class="wd-num">2</div>
-          <div class="wd-text">
-            <h3>Triple-Pane Low-E Glass</h3>
-            <p>Three panes of glass with Low-E coating and insulating gas help keep indoor temperatures more consistent in every season.</p>
-          </div>
-        </div>
-        <div class="wd-callout">
-          <div class="wd-num">3</div>
-          <div class="wd-text">
-            <h3>Weather-Tight Sash Seal</h3>
-            <p>Heavy-duty weatherstripping and interlocking sashes help block drafts, wind, and outside air.</p>
-          </div>
-        </div>
-      </div>
-      <div class="wd-image">
-        <div class="wd-imgwrap">
-          <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/WindowWorldWindowWithNoDots.png" alt="Cross-section of a Pinnacle Windows triple-pane window showing the foam-enhanced frame, Low-E glass, and weather-tight sash seal" loading="lazy">
-          <span class="wd-dot wd-dot-1" aria-hidden="true"></span>
-          <span class="wd-dot wd-dot-2" aria-hidden="true"></span>
-          <span class="wd-dot wd-dot-3" aria-hidden="true"></span>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -1430,11 +1223,6 @@
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'10-20 years')">10&ndash;20 years</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'20+ years')">20+ years</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <div id="m2s-step-state-3" style="display:none">
@@ -1444,22 +1232,12 @@
           <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Colorado')">Colorado</button>
           <button type="button" class="v2-tile" onclick="m2sSelectState(this,'Nebraska')">Nebraska</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <div id="m2s-step1-3" style="display:none">
         <p class="m2s-question">What&rsquo;s your zip code?</p>
         <input class="m2s-input" type="text" id="m2s-zip-3" placeholder="01103" maxlength="5" inputmode="numeric">
         <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
         <p class="m2s-fine">Colorado &amp; Nebraska only</p>
       </div>
@@ -1479,11 +1257,6 @@
         <input class="m2s-input" type="tel" id="m2s-phone-3" placeholder="(413) 555-0000" inputmode="tel" style="margin-top:10px">
         <input class="m2s-input" type="email" id="m2s-email-3" placeholder="Email address" style="margin-bottom:4px">
         <button class="m2s-btn" onclick="m2sSubmit(this)">Claim My Free Window &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; Free Estimate</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
         <p class="m2s-fine">Colorado &amp; Nebraska only &middot; No obligation</p>
       </div>
@@ -1495,8 +1268,7 @@
       </div>
 
       <div class="v2-pullquote">
-        <p>&ldquo;They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality that you don&rsquo;t get if the work is only fast.&rdquo;</p>
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; George Albert Martel &middot; Verified Google Review</div>
+        <p>&ldquo;They finished removing the old windows and replacing them with new ones in less than 8 hours.&rdquo;</p>
       </div>
     </div>
     <p class="form-zone-trust">&#9201; Takes less than 2 minutes</p>
@@ -1805,23 +1577,6 @@
     scrollFormToTop(root);
   }
 
-  // Product "Get Pricing" → open the nearest form (form 2, just above the products) in the
-  // same focused/form-only view the form enters after step 1, landing on the contact step.
-  function getPricing(el) {
-    var forms = Array.prototype.slice.call(document.querySelectorAll('.v2-form'));
-    if (!forms.length) return;
-    var before = forms.filter(function (f) { return el.compareDocumentPosition(f) & Node.DOCUMENT_POSITION_PRECEDING; });
-    var root = before.length ? before[before.length - 1] : forms[0];
-    enterFocusMode(root);                                  // same fullscreen takeover as after step 1
-    ['m2s-step0', 'm2s-step-state', 'm2s-step1', 'm2s-success'].forEach(function (b) {
-      var e = lf(root, b); if (e) e.style.display = 'none';
-    });
-    var contact = lf(root, 'm2s-step2'); if (contact) contact.style.display = 'block';
-    v2UpdateDots(root, 2);                                 // present as step 2 (contact), not step 4
-    updateFocusProgress(2);
-    scrollFormToTop(root);
-    setTimeout(function () { var f = lf(root, 'm2s-fname'); if (f) f.focus(); }, 450);
-  }
 
   // Anchor scroll helper used by bottom-bar + offer-closer CTA (targets the hero form)
   function scrollToForm(e) {
@@ -1904,7 +1659,6 @@
   .hero-h1 { font-size: clamp(2.7rem, 4.6vw, 3.7rem); }
   .hero-h1 .orange { font-size: clamp(2.1rem, 3.6vw, 3rem); }
   .hero-sub { font-size: 1.15rem; }
-  .v2-benefits li { font-size: 1.05rem; }
 
   /* Multi-step form (all 3 copies) — bigger question, tiles, inputs, button */
   .m2s-question { font-size: 1.5rem; }
@@ -1937,22 +1691,12 @@
 
   /* Products — bigger images, names, CTA, arrows, heading */
   .prod-head h2 { font-size: clamp(2.2rem, 4vw, 2.6rem); }
-  .prod-head p { font-size: 1.1rem; }
   .prod-img { height: 380px; }
   .prod-name { font-size: 1.7rem; }
-  .prod-desc { font-size: 1rem; }
-  .prod-cta { font-size: 1.1rem; padding: 16px 18px; }   /* ≈49px tall */
+  .prod-logo { width: 140px; max-height: 64px; }
   .prod-arrow { width: 52px; height: 52px; font-size: 1.3rem; }
   .prod-arrow.prev { left: -12px; }
   .prod-arrow.next { right: -12px; }
-
-  /* Weather / engineering diagram — bigger, wider, larger text */
-  .why-strip { padding: 72px 22px; }
-  .why-h2 { font-size: clamp(2rem, 3vw, 2.5rem); }
-  .weather-diagram { max-width: 1000px; padding: 44px 48px; }
-  .wd-imgwrap img { max-height: 500px; }
-  .wd-text h3 { font-size: 1.15rem; }
-  .wd-text p { font-size: 0.98rem; }
 
   /* Process — bigger subheading */
   .proc-sub { font-size: 1.1rem; }
