@@ -857,7 +857,7 @@
 
     <!-- Desktop-only photo column (left) — hidden on mobile via CSS -->
     <div class="hero-photo-wrap">
-      <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/KitchenWindowForHero.png" alt="Kitchen window installation by Pinnacle Windows &amp; Restoration">
+      <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/Milgard%20Tuscany%20Series%20replacement%20windows.webp" alt="Milgard Tuscany Series replacement windows by Pinnacle Windows">
       <div class="hero-photo-caption">Colorado &amp; Nebraska</div>
     </div>
 
@@ -875,8 +875,8 @@
          lightbox, matching the .photo-item and .why-compare patterns.
          Hidden on desktop where the photo lives in the left column of the
          hero grid (.hero-photo-wrap). -->
-    <div class="hero-photo-mobile" onclick="openLightbox('https://assets.midwestwindowcompany.com/WindowWorldWesternMA/KitchenWindowForHero.png')" role="button" tabindex="0" aria-label="View larger: kitchen window installation by Pinnacle Windows &amp; Restoration">
-      <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/KitchenWindowForHero.png" alt="Kitchen window installation by Pinnacle Windows &amp; Restoration">
+    <div class="hero-photo-mobile" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/Milgard%20Tuscany%20Series%20replacement%20windows.webp')" role="button" tabindex="0" aria-label="View larger: Milgard Tuscany Series replacement windows by Pinnacle Windows">
+      <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/Milgard%20Tuscany%20Series%20replacement%20windows.webp" alt="Milgard Tuscany Series replacement windows by Pinnacle Windows">
       <div class="hero-photo-mobile-badge">Colorado &amp; Nebraska</div>
     </div>
 
@@ -970,8 +970,8 @@
 
       <!-- Testimonial — inside the form card. Persistent across steps. -->
       <div class="v2-pullquote">
-        <p>&ldquo;After disappointing (even traumatizing) experiences with contractors, Pinnacle Windows was an absolute blessing.&rdquo;</p>
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; Tricia Carey &middot; Verified Google Review</div>
+        <p>&ldquo;They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality that you don&rsquo;t get if the work is only fast.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; George Albert Martel &middot; Verified Google Review</div>
       </div>
     </div>
 
@@ -1032,9 +1032,18 @@
       box-shadow: 0 2px 14px rgba(0,0,0,0.06); overflow: hidden;
       display: flex; flex-direction: column;
     }
-    /* Featured image (rounded top via card overflow:hidden) */
-    .wwt-media { position: relative; width: 100%; height: 300px; overflow: hidden; }
-    .wwt-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    /* Featured image (rounded top via card overflow:hidden) — clickable, opens in lightbox */
+    .wwt-media {
+      position: relative; width: 100%; height: 300px; overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.18s ease;
+    }
+    .wwt-media img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.3s ease;
+    }
+    .wwt-media:hover img { transform: scale(1.03); }
+    .wwt-media:focus-visible { outline: 3px solid var(--blue); outline-offset: 2px; }
     .wwt-verified {
       position: absolute; bottom: 10px; right: 10px;
       background: rgba(255,255,255,0.92); color: var(--text);
@@ -1068,18 +1077,12 @@
       font-size: 0.82rem; font-weight: 700; cursor: pointer;
     }
     .wwt-toggle:hover { text-decoration: underline; }
-    /* Supporting thumbnails (open in the page's existing lightbox) */
-    .wwt-thumbs { display: flex; gap: 8px; flex-wrap: wrap; padding: 14px 18px 18px; margin-top: auto; }
-    .wwt-thumb {
-      width: 80px; height: 80px; object-fit: cover;
-      border: 1px solid var(--gray-3); border-radius: 6px; cursor: pointer;
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .wwt-thumb:hover { transform: scale(1.04); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    /* Review block is now the last item in the card; give it bottom padding so card edge isn't flush. */
+    .wwt-review { padding-bottom: 18px; }
     @media (max-width: 900px) {
       .wwt-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; }
     }
-    /* Mobile: collapse Dawn's card behind a "See More Reviews" button (desktop shows all 3) */
+    /* Mobile: collapse the first card behind a "See More Reviews" button (desktop shows all 3) */
     .wwt-more-wrap { display: none; text-align: center; margin-top: 20px; }
     .wwt-more-btn {
       background: var(--orange); color: #fff; border: none; cursor: pointer;
@@ -1101,73 +1104,60 @@
     <h2 class="sec-title reveal">See What Your <span class="accent">Neighbors Are Saying</span></h2>
     <div class="wwt-grid reveal">
 
-      <!-- Card 1 — Dawn (hidden on mobile behind "See More Reviews") -->
+      <!-- Card 1 — Shannon Cauthen (hidden on mobile behind "See More Reviews") -->
       <article class="wwt-card wwt-card--more">
-        <div class="wwt-media">
-          <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/DawnMainImage.png" alt="New back slider installed by Pinnacle Windows &amp; Restoration for Dawn" loading="lazy">
+        <div class="wwt-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review1.png')" role="button" tabindex="0" aria-label="View larger: Pinnacle Windows install — Shannon Cauthen">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review1.png" alt="Window install by Pinnacle Windows for Shannon Cauthen" loading="lazy">
           <span class="wwt-verified"><span class="ck">&#10003;</span> Verified Purchase</span>
         </div>
         <div class="wwt-head">
-          <span class="wwt-avatar" aria-hidden="true">D</span><!-- REPLACE: Dawn profile pic -->
+          <span class="wwt-avatar" aria-hidden="true">S</span>
           <div class="wwt-head-text">
-            <span class="wwt-name">Dawn</span>
+            <span class="wwt-name">Shannon Cauthen</span>
             <span class="wwt-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           </div>
         </div>
         <div class="wwt-review">
-          <span class="wwt-review-text">So happy! Brennan and team arrived right on time and did a fabulous job installing our new back slider. They were very efficient and friendly, and did a great job from start to finish. Trim work after installation is wonderful, couldn&rsquo;t be happier. They left everything spotless as well, no clean up needed!</span>
+          <span class="wwt-review-text">Can&rsquo;t say enough nice things about Kenny our salesman/owner, Victor the field installer with his entire crew and Alyssa their office administrator. They all are very professional! We got our 7 windows replaced from a major hail storm, and they did it in a day. Bing Bang Boom, we had windows that seemed better than the original. Everything came out looking brand new and original to the house. They came in at the contracted price&hellip; no extras or surprises. They are very worth your consideration !!!</span>
           <button type="button" class="wwt-toggle" onclick="wwtToggle(this)">Show More</button>
-        </div>
-        <div class="wwt-thumbs">
-          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/DawnSupport1.png" onclick="openLightbox(this.src)" alt="Dawn install photo 1" loading="lazy">
-          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/DawnSupport2.png" onclick="openLightbox(this.src)" alt="Dawn install photo 2" loading="lazy">
-          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/Dawnsupport3.png" onclick="openLightbox(this.src)" alt="Dawn install photo 3" loading="lazy">
         </div>
       </article>
 
-      <!-- Card 2 — Eileen -->
+      <!-- Card 2 — George Albert Martel -->
       <article class="wwt-card">
-        <div class="wwt-media">
-          <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/EileenMainImage.png" alt="New windows installed by Pinnacle Windows &amp; Restoration for Eileen" loading="lazy">
+        <div class="wwt-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review2.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle Windows install — George Albert Martel">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review2.webp" alt="Window install by Pinnacle Windows for George Albert Martel" loading="lazy">
           <span class="wwt-verified"><span class="ck">&#10003;</span> Verified Purchase</span>
         </div>
         <div class="wwt-head">
-          <span class="wwt-avatar" aria-hidden="true">E</span><!-- REPLACE: Eileen profile pic -->
+          <span class="wwt-avatar" aria-hidden="true">G</span>
           <div class="wwt-head-text">
-            <span class="wwt-name">Eileen</span>
+            <span class="wwt-name">George Albert Martel</span>
             <span class="wwt-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           </div>
         </div>
         <div class="wwt-review">
-          <span class="wwt-review-text">Windows look great. The workers arrived on time. They answered all of our questions. They cleaned up afterwards. They were very polite. It was a good experience. Thank you Brennan, Kyle and Troy.</span>
+          <span class="wwt-review-text">They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality that you don&rsquo;t get if the work is only fast. I recommend Pinnacle to everyone&hellip; oh and the office staff great communications with a smile you can sense over the phone.</span>
           <button type="button" class="wwt-toggle" onclick="wwtToggle(this)">Show More</button>
-        </div>
-        <div class="wwt-thumbs">
-          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/EileenSupport.png" onclick="openLightbox(this.src)" alt="Eileen install photo 1" loading="lazy">
-          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/EileenSupport2.png" onclick="openLightbox(this.src)" alt="Eileen install photo 2" loading="lazy">
         </div>
       </article>
 
-      <!-- Card 3 — Jeremy -->
+      <!-- Card 3 — anonymous verified customer -->
       <article class="wwt-card">
-        <div class="wwt-media">
-          <img src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/JeremyMainImage.png" alt="21 new pocket windows and a patio slider installed by Pinnacle Windows &amp; Restoration for Jeremy" loading="lazy">
+        <div class="wwt-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle Windows install — verified customer">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp" alt="Window and patio door install by Pinnacle Windows" loading="lazy">
           <span class="wwt-verified"><span class="ck">&#10003;</span> Verified Purchase</span>
         </div>
         <div class="wwt-head">
-          <span class="wwt-avatar" aria-hidden="true">J</span><!-- REPLACE: Jeremy profile pic -->
+          <span class="wwt-avatar" aria-hidden="true">&#10003;</span>
           <div class="wwt-head-text">
-            <span class="wwt-name">Jeremy</span>
+            <span class="wwt-name">Verified Customer</span>
             <span class="wwt-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
           </div>
         </div>
         <div class="wwt-review">
-          <span class="wwt-review-text">Three trucks and several pickups arrived at 7:45 AM. The crew was a model of efficiency. They tore out the old sashes, made all necessary repairs, and carefully installed and plumbed 21 new pocket windows and a patio slider. The finishing touches were handled with careful, loving attention, filling in every nail hole and cleaning each window inside and out. The foreman even pointed out a few minor factory defects that will be replaced per warranty, a testament to their honesty. They finished at 7:00 PM, eleven hours later, and cleaned up so thoroughly we wouldn&rsquo;t have known they were there. These guys are perfectionists to the nth degree.</span>
+          <span class="wwt-review-text">I was very pleased with Pinnacle Windows&rsquo; work on my home. The staff was very courteous and professional through the entire process. The crew did an excellent job of replacing my windows and patio door. I am pleased with the products and services Pinnacle provided and I will highly recommend Pinnacle in the future.</span>
           <button type="button" class="wwt-toggle" onclick="wwtToggle(this)">Show More</button>
-        </div>
-        <div class="wwt-thumbs">
-          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/JeremySupport1.png" onclick="openLightbox(this.src)" alt="Jeremy install photo 1" loading="lazy">
-          <img class="wwt-thumb" src="https://assets.midwestwindowcompany.com/WindowWorldWesternMA/JeremySupport2.png" onclick="openLightbox(this.src)" alt="Jeremy install photo 2" loading="lazy">
         </div>
       </article>
 
@@ -1176,7 +1166,7 @@
   </div>
 
   <script>
-    // Mobile: reveal the collapsed Dawn card and hide the button
+    // Mobile: reveal the collapsed first card and hide the button
     function wwtShowMore(btn) {
       document.querySelectorAll('.wwt-card--more').forEach(function (c) { c.classList.add('show'); });
       var wrap = btn.closest('.wwt-more-wrap'); if (wrap) wrap.classList.add('hidden');
@@ -1192,6 +1182,12 @@
       var t = r.querySelector('.wwt-review-text');
       var btn = r.querySelector('.wwt-toggle');
       if (t && btn && t.scrollHeight <= t.clientHeight + 2) { btn.style.display = 'none'; }
+    });
+    // Featured-photo: trigger the onclick lightbox via keyboard for a11y (Enter / Space).
+    document.querySelectorAll('#wwt-testimonials .wwt-media[role="button"]').forEach(function (m) {
+      m.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); m.click(); }
+      });
     });
   </script>
 </section>
@@ -1282,8 +1278,8 @@
       </div>
 
       <div class="v2-pullquote">
-        <p>&ldquo;After disappointing (even traumatizing) experiences with contractors, Pinnacle Windows was an absolute blessing.&rdquo;</p>
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; Tricia Carey &middot; Verified Google Review</div>
+        <p>&ldquo;They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality that you don&rsquo;t get if the work is only fast.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; George Albert Martel &middot; Verified Google Review</div>
       </div>
     </div>
     <p class="form-zone-trust">&#9201; Takes less than 2 minutes</p>
@@ -1499,8 +1495,8 @@
       </div>
 
       <div class="v2-pullquote">
-        <p>&ldquo;After disappointing (even traumatizing) experiences with contractors, Pinnacle Windows was an absolute blessing.&rdquo;</p>
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; Tricia Carey &middot; Verified Google Review</div>
+        <p>&ldquo;They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality that you don&rsquo;t get if the work is only fast.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>&mdash; George Albert Martel &middot; Verified Google Review</div>
       </div>
     </div>
     <p class="form-zone-trust">&#9201; Takes less than 2 minutes</p>
@@ -1931,14 +1927,13 @@
   .tb-h { font-size: 1.6rem; }
   .tb-p { font-size: 1.05rem; }
 
-  /* Testimonials — bigger cards, image, text, thumbnails, wider section */
+  /* Testimonials — bigger cards, image, text, wider section */
   #wwt-testimonials .sec-inner { max-width: 1200px; }
   .wwt-grid { gap: 30px; }
   .wwt-media { height: 380px; }
   .wwt-name { font-size: 1.15rem; }
   .wwt-stars { font-size: 1.05rem; }
   .wwt-review-text { font-size: 1rem; }
-  .wwt-thumb { width: 100px; height: 100px; }
 
   /* Products — bigger images, names, CTA, arrows, heading */
   .prod-head h2 { font-size: clamp(2.2rem, 4vw, 2.6rem); }
