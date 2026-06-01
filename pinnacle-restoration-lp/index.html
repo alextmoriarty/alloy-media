@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Storm Damage Repair | Pinnacle Windows &amp; Restoration</title>
+<meta name="description" content="Hail or wind damage? Pinnacle Windows &amp; Restoration handles emergency board-up, full home restoration, and your insurance claim — most homeowners pay $0 out of pocket beyond their deductible.">
+<!-- REPLACE: Pinnacle Windows favicon -->
+<link rel="icon" type="image/svg+xml" href="https://assets.midwestwindowcompany.com/PinnacleWindows/pinnacle-logo%20(2).svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ANALYTICS REMOVED for this prospect copy. Add Pinnacle's own GTM container + PostHog project here before launch. -->
+<!-- PostHog removed for prospect copy: add Pinnacle's own PostHog project before launch -->
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    /* Pinnacle palette — same mapping as pinnacle-windows-lp so brand stays consistent. */
+    --blue:        #002768;   /* Pinnacle Navy — primary */
+    --blue-dark:   #001E51;   /* darker navy — gradient mid */
+    --blue-deep:   #001640;   /* deepest navy — gradient start */
+    --navy:        #001A4D;   /* deep navy — backgrounds with depth */
+    --bright-blue: #0495FE;   /* Pinnacle Bright Blue — used sparingly for highlights */
+    --red:         #BF0B32;   /* Pinnacle Red — CTAs / urgency / accents */
+    --red-dk:      #A00928;   /* red hover */
+    --green:       #1A9E5C;
+    --white:       #FFFFFF;
+    --gray-1:      #F4F6F8;
+    --gray-2:      #E3E6EA;
+    --gray-3:      #D0D8DF;
+    --text:        #1A2733;
+    --text-mid:    #4A5C6A;
+    --text-lt:     #7A8C9A;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV (sticky, navy) ── */
+  .site-header {
+    background: var(--navy);
+    position: sticky; top: 0; z-index: 90;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.18);
+  }
+  .site-header-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 28px;
+  }
+  .site-logo-link { display: inline-flex; align-items: center; }
+  .site-logo { height: 40px; width: auto; display: block; filter: brightness(0) invert(1); }
+  .site-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red); color: #fff; text-decoration: none;
+    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem;
+    letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
+    padding: 11px 20px; border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(191,11,50,0.36);
+    transition: background 0.18s, transform 0.12s;
+  }
+  .site-cta:hover { background: var(--red-dk); }
+  .site-cta:active { transform: scale(0.98); }
+  .site-cta svg { width: 16px; height: 16px; stroke: #fff; }
+  @media (max-width: 600px) {
+    .site-header-inner { padding: 9px 16px; }
+    .site-logo { height: 32px; }
+    .site-cta { font-size: 0.82rem; padding: 9px 13px; gap: 6px; }
+    .site-cta .site-cta-text { display: none; }   /* phone icon only on tightest viewports */
+    .site-cta svg { width: 18px; height: 18px; }
+  }
+
+  /* ── HERO ── full-bleed storm-damage photo, gradient overlay, content on left */
+  .hero {
+    position: relative;
+    min-height: 620px;
+    overflow: hidden;
+    display: flex; align-items: flex-end;
+    background: var(--navy);
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-image: url('https://assets.midwestwindowcompany.com/PinnacleRestoration/Single%20Story%20Home%20-%20Siding%20%26%20Window%20Damage.png');
+    background-size: cover;
+    background-position: center right;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      100deg,
+      rgba(0,16,48,0.92) 0%,
+      rgba(0,20,60,0.78) 32%,
+      rgba(0,20,60,0.42) 58%,
+      rgba(0,20,60,0.08) 100%
+    );
+    pointer-events: none;
+  }
+  .hero-inner {
+    position: relative; z-index: 1;
+    max-width: 1240px; margin: 0 auto;
+    padding: 64px 28px 80px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 640px);
+  }
+
+  /* Pulse urgency tag */
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--red);
+    border-radius: 100px;
+    padding: 6px 14px 6px 12px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 20px;
+    width: fit-content;
+    box-shadow: 0 2px 12px rgba(191,11,50,0.42);
+  }
+  .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 0 0 rgba(255,255,255,0.7);
+    animation: pulseGlow 1.8s infinite;
+    flex-shrink: 0;
+  }
+  @keyframes pulseGlow {
+    0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
+    70%  { box-shadow: 0 0 0 9px rgba(255,255,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+  }
+
+  .hero h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2.4rem, 5.4vw, 3.8rem);
+    font-weight: 700; line-height: 1.02;
+    color: #fff;
+    letter-spacing: 0.005em;
+    margin-bottom: 14px;
+  }
+  .hero h1 .accent {
+    display: block;
+    color: var(--bright-blue);
+    font-weight: 600;
+    font-size: clamp(1.7rem, 4vw, 2.7rem);
+    margin-top: 4px;
+  }
+  .hero-sub {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    color: rgba(255,255,255,0.88);
+    line-height: 1.6;
+    max-width: 540px;
+    margin-bottom: 28px;
+  }
+  .hero-sub strong { color: #fff; font-weight: 600; }
+
+  .hero-ctas {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 32px;
+  }
+  .btn-red {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--red); color: #fff; border: none;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.08rem; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 16px 26px; border-radius: 4px; cursor: pointer;
+    box-shadow: 0 4px 18px rgba(191,11,50,0.38);
+    transition: background 0.18s, transform 0.12s;
+  }
+  .btn-red:hover  { background: var(--red-dk); }
+  .btn-red:active { transform: scale(0.98); }
+  .btn-red svg    { width: 18px; height: 18px; stroke: #fff; flex-shrink: 0; }
+  .btn-ghost {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+    border: 1.5px solid rgba(255,255,255,0.28);
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.98rem; font-weight: 600; letter-spacing: 0.04em;
+    text-transform: uppercase; text-decoration: none;
+    padding: 14px 22px; border-radius: 4px; cursor: pointer;
+    transition: background 0.18s, border-color 0.18s;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+  .btn-ghost:hover  { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.55); }
+  .btn-ghost svg    { width: 16px; height: 16px; stroke: #fff; flex-shrink: 0; }
+
+  /* Stat strip — three trust signals, sits inline in the hero (NOT hidden on mobile) */
+  .hero-stats {
+    display: flex; flex-wrap: wrap; gap: 28px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+  }
+  .hero-stat { display: flex; flex-direction: column; gap: 2px; }
+  .hero-stat .val {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--bright-blue);
+    line-height: 1;
+  }
+  .hero-stat .lbl {
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(255,255,255,0.62);
+    margin-top: 4px;
+  }
+
+  /* ── BOARD-UP BAND ── dark urgency band right under the hero */
+  .boardup {
+    background: #0d0f12;
+    border-top: 3px solid var(--red);
+    padding: 28px 28px;
+  }
+  .boardup-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 28px; flex-wrap: wrap;
+  }
+  .boardup-left { display: flex; align-items: flex-start; gap: 18px; max-width: 720px; }
+  .boardup-icon {
+    width: 52px; height: 52px; flex-shrink: 0;
+    background: var(--red); border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 14px rgba(191,11,50,0.36);
+  }
+  .boardup-icon svg { width: 26px; height: 26px; stroke: #fff; }
+  .boardup-text h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.18rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.03em;
+    color: #fff;
+    margin-bottom: 4px; line-height: 1.2;
+  }
+  .boardup-text p {
+    font-size: 0.92rem; color: rgba(255,255,255,0.62);
+    line-height: 1.55;
+  }
+  .boardup-text p strong { color: rgba(255,255,255,0.88); font-weight: 600; }
+  .boardup-call {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.6rem; font-weight: 700;
+    color: var(--red);
+    text-decoration: none;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+  }
+  .boardup-call:hover { color: #e8204a; }
+  .boardup-call svg { width: 22px; height: 22px; stroke: currentColor; }
+
+  /* ── GENERIC SECTION SHELL ── */
+  .sec        { padding: 84px 28px; }
+  .sec-inner  { max-width: 1240px; margin: 0 auto; }
+  .sec-gray   { background: var(--gray-1); }
+  .sec-navy   { background: var(--navy); }
+  .eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.74rem; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px; display: block;
+  }
+  .sec-navy .eyebrow { color: rgba(255,255,255,0.55); }
+  .sec-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+    font-weight: 700;
+    color: var(--blue);
+    line-height: 1.1;
+    margin-bottom: 14px;
+    letter-spacing: 0.005em;
+  }
+  .sec-navy .sec-title { color: #fff; }
+  .sec-title .accent { color: var(--red); }
+  .sec-sub {
+    font-size: 1.04rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    max-width: 640px;
+    margin-bottom: 44px;
+  }
+  .sec-navy .sec-sub { color: rgba(255,255,255,0.7); }
+
+  /* ── WHY PINNACLE — three icon tiles on navy ── */
+  .wp-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 36px; margin-top: 6px;
+  }
+  .wp-item { text-align: center; }
+  .wp-icon {
+    width: 70px; height: 70px; border-radius: 50%;
+    background: var(--red);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 18px;
+    box-shadow: 0 8px 24px rgba(191,11,50,0.30);
+  }
+  .wp-icon svg { width: 32px; height: 32px; stroke: #fff; }
+  .wp-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.36rem; font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .wp-desc {
+    font-size: 0.96rem;
+    color: rgba(255,255,255,0.72);
+    line-height: 1.6;
+  }
+  .wp-footnote {
+    color: rgba(255,255,255,0.36);
+    font-size: 0.78rem;
+    margin-top: 32px;
+    text-align: center;
+  }
+
+  /* ── DAMAGE AREAS — 4 SVG-icon cards (no photos, intentionally) ── */
+  .dmg-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 18px; margin-top: 6px;
+  }
+  .dmg-card {
+    background: #fff;
+    border: 1px solid var(--gray-2);
+    border-radius: 10px;
+    padding: 28px 22px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s;
+  }
+  .dmg-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(0,39,104,0.10);
+    border-color: var(--gray-3);
+  }
+  .dmg-icon {
+    width: 56px; height: 56px;
+    background: rgba(0,39,104,0.06);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--blue);
+  }
+  .dmg-icon svg { width: 28px; height: 28px; stroke: currentColor; }
+  .dmg-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.12rem; font-weight: 700;
+    color: var(--blue);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+  }
+  .dmg-desc {
+    font-size: 0.92rem;
+    color: var(--text-mid);
+    line-height: 1.55;
+  }
+
+  /* ── 3-STEP PROCESS ── */
+  .proc-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 8px;
+    position: relative;
+  }
+  .proc-grid::before {
+    content: '';
+    position: absolute; top: 28px;
+    left: calc(16.66% + 32px); right: calc(16.66% + 32px);
+    height: 2px;
+    background: linear-gradient(90deg, var(--red) 0%, var(--bright-blue) 100%);
+    z-index: 0;
+  }
+  .proc-item { text-align: center; padding: 0 22px; position: relative; z-index: 1; }
+  .proc-num {
+    width: 56px; height: 56px; border-radius: 50%;
+    background: var(--red);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.45rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 16px;
+    box-shadow: 0 6px 20px rgba(191,11,50,0.38);
+  }
+  .proc-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.16rem; font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 0.03em;
+    margin-bottom: 10px;
+  }
+  .proc-desc {
+    font-size: 0.92rem;
+    color: rgba(255,255,255,0.66);
+    line-height: 1.6;
+  }
+
+  /* ── INSURANCE SUPPORT — split section, left checklist + CTA, right outcome panel ── */
+  .ins {
+    background: var(--white);
+    overflow: hidden;
+  }
+  .ins-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: grid; grid-template-columns: 1.05fr 0.95fr;
+    gap: 0;
+  }
+  .ins-left  { padding: 84px 56px 84px 28px; display: flex; flex-direction: column; justify-content: center; }
+  .ins-right {
+    background: linear-gradient(155deg, var(--blue-deep) 0%, var(--blue-dark) 50%, var(--blue) 100%);
+    padding: 64px 48px;
+    position: relative;
+    color: #fff;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .ins-right::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 80% 15%, rgba(255,255,255,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse at 10% 90%, rgba(0,0,0,0.18) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .ins-right > * { position: relative; z-index: 1; }
+  .ins-right h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.24rem; font-weight: 700;
+    text-transform: uppercase;
+    color: #fff;
+    letter-spacing: 0.03em;
+    margin-bottom: 18px;
+  }
+  .ins-right h3 .pin {
+    display: inline-block;
+    background: var(--red);
+    color: #fff;
+    font-size: 0.66rem; font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 4px 9px; border-radius: 100px;
+    vertical-align: middle;
+    margin-right: 10px;
+    transform: translateY(-2px);
+  }
+  .ins-outcome {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 10px;
+    padding: 22px;
+    margin-top: 16px;
+  }
+  .ins-outcome-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.12);
+    font-size: 0.92rem;
+  }
+  .ins-outcome-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .ins-outcome-row:first-child { padding-top: 0; }
+  .ins-outcome-row .label { color: rgba(255,255,255,0.72); }
+  .ins-outcome-row .val   { color: #fff; font-family: 'Oswald', sans-serif; font-weight: 700; }
+  .ins-outcome-row .val.accent { color: var(--bright-blue); }
+  .ins-disclaimer {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.74rem;
+    margin-top: 14px;
+    line-height: 1.5;
+  }
+
+  .ins-checklist { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-bottom: 34px; }
+  .ins-checklist li {
+    display: flex; gap: 14px; align-items: flex-start;
+    font-size: 1rem; color: var(--text); line-height: 1.55;
+  }
+  .ins-check {
+    width: 24px; height: 24px; flex-shrink: 0;
+    background: var(--blue);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+  .ins-check svg { width: 12px; height: 12px; stroke: #fff; }
+  .ins-checklist li strong { color: var(--blue); font-weight: 700; }
+
+  /* ── REVIEWS — reuse the production-LP testimonial pattern ── */
+  .rev-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 22px; margin-top: 6px;
+  }
+  .rev-card {
+    background: #fff;
+    border: 1px solid var(--gray-2);
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.05);
+  }
+  .rev-media {
+    position: relative;
+    height: 260px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.18s ease;
+  }
+  .rev-media img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    transition: transform 0.3s ease;
+  }
+  .rev-media:hover img    { transform: scale(1.03); }
+  .rev-media:focus-visible { outline: 3px solid var(--bright-blue); outline-offset: 2px; }
+  .rev-verified {
+    position: absolute; bottom: 10px; right: 10px;
+    background: rgba(255,255,255,0.94); color: var(--text);
+    font-size: 0.66rem; font-weight: 700; letter-spacing: 0.04em;
+    padding: 4px 9px; border-radius: 100px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    display: inline-flex; align-items: center; gap: 4px;
+  }
+  .rev-verified svg { width: 11px; height: 11px; stroke: var(--green); }
+  .rev-head { display: flex; align-items: center; gap: 12px; padding: 16px 18px 0; }
+  .rev-avatar {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border-radius: 50%; background: var(--text-lt); color: #fff;
+    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.05rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .rev-name  { font-weight: 700; color: var(--blue); font-size: 0.96rem; }
+  .rev-stars { color: #FFB300; font-size: 0.9rem; letter-spacing: 0.04em; }
+  .rev-text {
+    padding: 12px 18px 20px;
+    color: var(--text-mid);
+    font-size: 0.94rem;
+    line-height: 1.6;
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+  }
+
+  /* ── FINAL CTA ── */
+  .final {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--blue-deep) 70%, var(--blue-dark) 100%);
+    padding: 88px 28px;
+    text-align: center;
+  }
+  .final-inner { max-width: 720px; margin: 0 auto; }
+  .final h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.8rem, 3.6vw, 2.7rem);
+    font-weight: 700; color: #fff;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    letter-spacing: 0.01em;
+  }
+  .final p {
+    font-size: 1.06rem;
+    color: rgba(255,255,255,0.74);
+    line-height: 1.55;
+    margin: 0 auto 32px;
+    max-width: 540px;
+  }
+  .final .btn-red { font-size: 1.18rem; padding: 18px 30px; margin: 0 auto; }
+  .final-trust {
+    display: flex; justify-content: center; gap: 28px;
+    flex-wrap: wrap;
+    margin-top: 26px;
+  }
+  .final-trust span {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.78rem; font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #07090c;
+    padding: 32px 28px;
+    text-align: center;
+    border-top: 3px solid var(--blue);
+  }
+  .footer-logo {
+    height: 38px;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+    margin-bottom: 12px;
+  }
+  footer p { font-size: 0.78rem; color: rgba(255,255,255,0.42); margin-bottom: 5px; line-height: 1.55; }
+  footer a { color: rgba(255,255,255,0.62); text-decoration: none; }
+  footer a:hover { color: var(--bright-blue); }
+
+  /* ── STICKY MOBILE BAR (≤768px only, after hero scrolls out) ── */
+  .mobile-bar {
+    display: none;
+    position: fixed; left: 0; right: 0; bottom: 0;
+    z-index: 95;
+    background: var(--navy);
+    border-top: 3px solid var(--red);
+    padding: 10px 16px;
+    grid-template-columns: 1fr;
+    gap: 0;
+    box-shadow: 0 -4px 18px rgba(0,0,0,0.32);
+  }
+  .mobile-bar .btn-red {
+    width: 100%;
+    font-size: 1rem;
+    padding: 13px 18px;
+  }
+
+  /* ── REVEAL ON SCROLL ── */
+  .js-ready .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.in { opacity: 1 !important; transform: translateY(0) !important; }
+  .d1 { transition-delay: 0.08s; }
+  .d2 { transition-delay: 0.16s; }
+  .d3 { transition-delay: 0.24s; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
+    padding: 22px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 92vw; max-height: 92vh; border-radius: 8px; object-fit: contain; }
+  .lightbox-close {
+    position: absolute; top: 16px; right: 20px; font-size: 2rem; color: #fff;
+    cursor: pointer; background: none; border: none; line-height: 1;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    .ins-inner { grid-template-columns: 1fr; }
+    .ins-left  { padding: 60px 28px 32px; }
+    .ins-right { padding: 32px 28px 60px; }
+  }
+  @media (max-width: 900px) {
+    .wp-grid  { grid-template-columns: 1fr; gap: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .dmg-grid { grid-template-columns: 1fr 1fr; }
+    .rev-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .proc-grid::before { display: none; }
+    .proc-grid { grid-template-columns: 1fr; gap: 26px; max-width: 480px; margin-left: auto; margin-right: auto; }
+    .proc-item { padding: 0; }
+    .hero { min-height: 560px; }
+    .hero-bg { background-position: 65% center; }
+    .hero-inner { padding: 44px 22px 60px; }
+    .sec { padding: 64px 22px; }
+  }
+  @media (max-width: 768px) {
+    .mobile-bar { display: grid; }
+    body { padding-bottom: 72px; }
+    .boardup-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .boardup-call { font-size: 1.4rem; }
+    .hero-stats { gap: 22px; }
+    .hero-stat .val { font-size: 1.4rem; }
+  }
+  @media (max-width: 600px) {
+    .dmg-grid { grid-template-columns: 1fr; }
+    .hero-ctas .btn-ghost { width: 100%; }
+    .hero-ctas .btn-red   { width: 100%; }
+    .final-trust { gap: 14px 22px; }
+  }
+  @media (max-width: 480px) {
+    .sec { padding: 56px 18px; }
+    .hero-inner { padding: 36px 18px 52px; }
+    .boardup { padding: 24px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="#" class="site-logo-link" aria-label="Pinnacle Windows &amp; Restoration — home">
+      <img class="site-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/pinnacle-logo%20(2).svg" alt="Pinnacle Windows &amp; Restoration">
+    </a>
+    <!-- REPLACE: Pinnacle Windows phone number -->
+    <a href="tel:0000000000" class="site-cta">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      <span class="site-cta-text">Call (000) 000-0000</span>
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero-anchor">
+  <div class="hero-bg" role="img" aria-label="Single-story home with hail damage to siding and windows"></div>
+
+  <div class="hero-inner">
+    <div class="hero-tag"><span class="pulse" aria-hidden="true"></span> Storm Damage &middot; Colorado &amp; Nebraska</div>
+
+    <h1>
+      Your home was hit.
+      <span class="accent">We handle everything.</span>
+    </h1>
+
+    <p class="hero-sub">
+      Windows, roof, siding &mdash; <strong>one call</strong> gets you emergency board-up, a free on-site assessment, and full insurance support so you pay <strong>$0 out of pocket</strong> beyond your deductible.
+    </p>
+
+    <div class="hero-ctas">
+      <!-- REPLACE: Pinnacle Windows phone number -->
+      <a href="tel:0000000000" class="btn-red">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        Call for free assessment
+      </a>
+      <a href="tel:0000000000" class="btn-ghost">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/>
+        </svg>
+        Emergency board-up
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="val">24/7</span><span class="lbl">Emergency response</span></div>
+      <div class="hero-stat"><span class="val">$0</span><span class="lbl">Out of pocket*</span></div>
+      <div class="hero-stat"><span class="val">1</span><span class="lbl">Call. Everything handled.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- BOARD-UP BAND -->
+<section class="boardup">
+  <div class="boardup-inner">
+    <div class="boardup-left">
+      <div class="boardup-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/>
+          <path d="M9 12l2 2 4-4"/>
+        </svg>
+      </div>
+      <div class="boardup-text">
+        <h3>Emergency board-up &mdash; dispatched today</h3>
+        <p>An unsecured window after a storm is <strong>immediate liability</strong>. Rain damage through an exposed opening may not be covered if you didn't act fast. We&rsquo;ll board it up the same day so your claim stays clean.</p>
+      </div>
+    </div>
+    <!-- REPLACE: Pinnacle Windows phone number -->
+    <a href="tel:0000000000" class="boardup-call">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      (000) 000-0000
+    </a>
+  </div>
+</section>
+
+<!-- WHY PINNACLE -->
+<section class="sec sec-navy">
+  <div class="sec-inner">
+    <span class="eyebrow reveal">Why Pinnacle</span>
+    <h2 class="sec-title reveal">One call. We handle <span class="accent">all of it.</span></h2>
+    <p class="sec-sub reveal">You don&rsquo;t need to juggle contractors, adjusters, and paperwork. We coordinate every piece &mdash; from emergency response to final installation.</p>
+
+    <div class="wp-grid">
+      <div class="wp-item reveal">
+        <div class="wp-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="wp-title">We&rsquo;re your GC</div>
+        <div class="wp-desc">Windows, roof, siding, doors &mdash; we manage every trade under one contract. No coordination headaches.</div>
+      </div>
+      <div class="wp-item reveal d1">
+        <div class="wp-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <path d="M9 14l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="wp-title">We fight your claim</div>
+        <div class="wp-desc">We document the damage, meet your adjuster on-site, and push for the full payout you&rsquo;re owed.</div>
+      </div>
+      <div class="wp-item reveal d2">
+        <div class="wp-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div class="wp-title">$0 out of pocket*</div>
+        <div class="wp-desc">In most approved claims, insurance covers our work entirely. You pay only your deductible.</div>
+      </div>
+    </div>
+
+    <p class="wp-footnote">*Subject to your policy terms, coverage, and deductible.</p>
+  </div>
+</section>
+
+<!-- DAMAGE AREAS -->
+<section class="sec sec-gray">
+  <div class="sec-inner">
+    <span class="eyebrow reveal">Full Restoration</span>
+    <h2 class="sec-title reveal">Storm damage doesn&rsquo;t stop at the windows.</h2>
+    <p class="sec-sub reveal">We assess every impacted area of your home and bundle the repairs into one claim &mdash; so nothing gets missed and nothing gets billed twice.</p>
+
+    <div class="dmg-grid">
+      <div class="dmg-card reveal">
+        <div class="dmg-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="1"/>
+            <line x1="12" y1="3" x2="12" y2="21"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <path d="M5 8l4 6M19 7l-4 5M16 18l-3-4"/>
+          </svg>
+        </div>
+        <div class="dmg-title">Windows &amp; glass</div>
+        <div class="dmg-desc">Our core specialty. Same-day assessment, fast install, all common manufacturers and frame types.</div>
+      </div>
+
+      <div class="dmg-card reveal d1">
+        <div class="dmg-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 12L12 4l9 8"/>
+            <path d="M5 11v9h14v-9"/>
+            <line x1="8" y1="13" x2="8" y2="20"/>
+            <line x1="12" y1="13" x2="12" y2="20"/>
+            <line x1="16" y1="13" x2="16" y2="20"/>
+          </svg>
+        </div>
+        <div class="dmg-title">Roofing</div>
+        <div class="dmg-desc">We coordinate vetted roofers and manage them as part of your single claim &mdash; no separate contracts to chase.</div>
+      </div>
+
+      <div class="dmg-card reveal d2">
+        <div class="dmg-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="3" rx="0.5"/>
+            <rect x="3" y="10" width="18" height="3" rx="0.5"/>
+            <rect x="3" y="16" width="18" height="3" rx="0.5"/>
+          </svg>
+        </div>
+        <div class="dmg-title">Siding &amp; gutters</div>
+        <div class="dmg-desc">Hail dents and wind tears get documented and included in the insurance scope, not buried as cosmetic.</div>
+      </div>
+
+      <div class="dmg-card reveal d3">
+        <div class="dmg-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="5" y="3" width="14" height="18" rx="1"/>
+            <circle cx="15" cy="12" r="1"/>
+            <path d="M9 7h6M9 11h6M9 15h3"/>
+          </svg>
+        </div>
+        <div class="dmg-title">Doors &amp; entry</div>
+        <div class="dmg-desc">Storm-damaged entry doors, garage doors, and patio sliders &mdash; assessed for security and weatherization.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3-STEP PROCESS -->
+<section class="sec sec-navy">
+  <div class="sec-inner" style="text-align:center;">
+    <span class="eyebrow reveal">Simple Process</span>
+    <h2 class="sec-title reveal" style="margin-left:auto; margin-right:auto;">From storm call to <span class="accent">restored home.</span></h2>
+    <p class="sec-sub reveal" style="margin-left:auto; margin-right:auto; text-align:center;">Three steps. No paperwork chase. No subcontractor finger-pointing.</p>
+
+    <div class="proc-grid">
+      <div class="proc-item reveal">
+        <div class="proc-num">1</div>
+        <div class="proc-title">Free assessment</div>
+        <div class="proc-desc">We come to you, document every area of damage, and write a clear scope &mdash; at no cost, no obligation.</div>
+      </div>
+      <div class="proc-item reveal d1">
+        <div class="proc-num">2</div>
+        <div class="proc-title">We handle insurance</div>
+        <div class="proc-desc">We meet your adjuster on-site, document the full scope, and push for the highest fair payout on your behalf.</div>
+      </div>
+      <div class="proc-item reveal d2">
+        <div class="proc-num">3</div>
+        <div class="proc-title">Full restoration</div>
+        <div class="proc-desc">We coordinate every trade. Your home gets restored &mdash; and you only ever made one call.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSURANCE SUPPORT (split) -->
+<section class="ins">
+  <div class="ins-inner">
+    <div class="ins-left">
+      <span class="eyebrow reveal">Insurance Support</span>
+      <h2 class="sec-title reveal">Most homeowners don&rsquo;t get <span class="accent">what they&rsquo;re owed.</span></h2>
+      <p class="sec-sub reveal">Insurance carriers have adjusters working for them. We make sure someone&rsquo;s working for you &mdash; before the first estimate gets written.</p>
+
+      <ul class="ins-checklist reveal">
+        <li>
+          <span class="ins-check" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+          </span>
+          <span><strong>On-site with your adjuster</strong> &mdash; so no damage gets missed or minimized.</span>
+        </li>
+        <li>
+          <span class="ins-check" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+          </span>
+          <span><strong>Full documentation</strong> &mdash; photos and reports that support every line item of your claim.</span>
+        </li>
+        <li>
+          <span class="ins-check" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+          </span>
+          <span><strong>Supplement filing</strong> &mdash; if the first offer is light, we know how to push back.</span>
+        </li>
+        <li>
+          <span class="ins-check" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+          </span>
+          <span><strong>Zero paperwork for you</strong> &mdash; we handle the forms, follow-ups, and timelines.</span>
+        </li>
+      </ul>
+
+      <!-- REPLACE: Pinnacle Windows phone number -->
+      <a href="tel:0000000000" class="btn-red" style="max-width:340px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        Get a free claim review
+      </a>
+    </div>
+
+    <div class="ins-right">
+      <h3><span class="pin">Typical Outcome</span></h3>
+      <p style="color:rgba(255,255,255,0.78); line-height:1.55; margin-bottom:8px;">
+        For an approved hail-damage claim, the homeowner&rsquo;s only out-of-pocket cost is typically the deductible on their policy. Here&rsquo;s how it usually breaks down:
+      </p>
+
+      <div class="ins-outcome">
+        <div class="ins-outcome-row">
+          <span class="label">Full scope of damage</span>
+          <span class="val">Covered</span>
+        </div>
+        <div class="ins-outcome-row">
+          <span class="label">Emergency board-up</span>
+          <span class="val">Covered</span>
+        </div>
+        <div class="ins-outcome-row">
+          <span class="label">Materials &amp; labor</span>
+          <span class="val">Covered</span>
+        </div>
+        <div class="ins-outcome-row">
+          <span class="label">You pay</span>
+          <span class="val accent">Deductible only</span>
+        </div>
+      </div>
+
+      <p class="ins-disclaimer">
+        Outcomes depend on your policy terms, deductible, and the carrier&rsquo;s approved scope. We&rsquo;ll walk through your specific coverage at the free assessment.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="sec sec-gray" id="reviews">
+  <div class="sec-inner">
+    <span class="eyebrow reveal">Reviews</span>
+    <h2 class="sec-title reveal">See what your <span class="accent">neighbors are saying.</span></h2>
+
+    <div class="rev-grid">
+      <article class="rev-card reveal">
+        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review1.png')" role="button" tabindex="0" aria-label="View larger: Pinnacle storm-window install for Shannon Cauthen">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review1.png" alt="Hail-replacement window install by Pinnacle for Shannon Cauthen" loading="lazy">
+          <span class="rev-verified">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+            Verified Purchase
+          </span>
+        </div>
+        <div class="rev-head">
+          <span class="rev-avatar" aria-hidden="true">S</span>
+          <div>
+            <div class="rev-name">Shannon Cauthen</div>
+            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+        </div>
+        <p class="rev-text">&ldquo;We got our 7 windows replaced from a major hail storm, and they did it in a day. Everything came out looking brand new and original to the house. They came in at the contracted price&hellip; no extras or surprises.&rdquo;</p>
+      </article>
+
+      <article class="rev-card reveal d1">
+        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review2.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle install for George Albert Martel">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review2.webp" alt="Window install by Pinnacle for George Albert Martel" loading="lazy">
+          <span class="rev-verified">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+            Verified Purchase
+          </span>
+        </div>
+        <div class="rev-head">
+          <span class="rev-avatar" aria-hidden="true">G</span>
+          <div>
+            <div class="rev-name">George Albert Martel</div>
+            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+        </div>
+        <p class="rev-text">&ldquo;They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality you don&rsquo;t get if the work is only fast.&rdquo;</p>
+      </article>
+
+      <article class="rev-card reveal d2">
+        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle install for John Noel">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp" alt="Window and patio-door install by Pinnacle for John Noel" loading="lazy">
+          <span class="rev-verified">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+            Verified Purchase
+          </span>
+        </div>
+        <div class="rev-head">
+          <span class="rev-avatar" aria-hidden="true">J</span>
+          <div>
+            <div class="rev-name">John Noel</div>
+            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+        </div>
+        <p class="rev-text">&ldquo;Very pleased with Pinnacle&rsquo;s work on my home. The crew did an excellent job replacing my windows and patio door. Staff was courteous and professional throughout. I will highly recommend Pinnacle.&rdquo;</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="final-inner">
+    <span class="eyebrow reveal" style="color: rgba(255,255,255,0.42);">Don&rsquo;t Wait</span>
+    <h2 class="reveal">Your home. Restored.</h2>
+    <p class="reveal">One call gets you emergency board-up, a full damage assessment, insurance support, and complete restoration.</p>
+    <!-- REPLACE: Pinnacle Windows phone number -->
+    <a href="tel:0000000000" class="btn-red reveal">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
+      </svg>
+      Call (000) 000-0000
+    </a>
+    <div class="final-trust">
+      <span>Licensed &amp; Insured</span>
+      <span>24/7 Emergency</span>
+      <span>Free Assessment</span>
+      <span>Local Crews</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img class="footer-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/pinnacle-logo%20(2).svg" alt="Pinnacle Windows &amp; Restoration">
+  <!-- UPDATE: Confirm Pinnacle's primary service cities for Colorado & Nebraska -->
+  <p>Serving Colorado &amp; Nebraska &amp; surrounding areas</p>
+  <!-- REPLACE: Pinnacle Windows phone number -->
+  <p><a href="tel:0000000000">(000) 000-0000</a></p>
+  <p style="margin-top:10px">&copy; <span class="js-year">2026</span> Pinnacle Windows &amp; Restoration. All rights reserved.</p>
+</footer>
+
+<!-- STICKY MOBILE BAR -->
+<div class="mobile-bar" id="mobile-bar">
+  <!-- REPLACE: Pinnacle Windows phone number -->
+  <a href="tel:0000000000" class="btn-red">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
+    </svg>
+    Call now &mdash; (000) 000-0000
+  </a>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  document.body.classList.add('js-ready');
+
+  // Reveal-on-scroll
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+
+  // Sticky mobile bar — hide while hero is in view, show after it scrolls out (mobile only via CSS)
+  var bar  = document.getElementById('mobile-bar');
+  var hero = document.getElementById('hero-anchor');
+  if (bar && hero) {
+    bar.style.visibility = 'hidden';
+    var barIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        bar.style.visibility = e.isIntersecting ? 'hidden' : 'visible';
+      });
+    }, { threshold: 0 });
+    barIO.observe(hero);
+  }
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeLightbox(); });
+
+  // Testimonial featured-photo keyboard a11y (Enter / Space)
+  document.querySelectorAll('.rev-media[role="button"]').forEach(function (m) {
+    m.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); m.click(); }
+    });
+  });
+
+  // Footer year
+  var now = new Date();
+  document.querySelectorAll('.js-year').forEach(function (el) { el.textContent = now.getFullYear(); });
+</script>
+
+</body>
+</html>
