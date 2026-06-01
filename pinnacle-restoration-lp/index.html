@@ -113,47 +113,14 @@
     grid-template-columns: minmax(0, 640px);
   }
 
-  /* Pulse urgency tag */
-  .hero-tag {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--red);
-    border-radius: 100px;
-    padding: 6px 14px 6px 12px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.74rem; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: #fff;
-    margin-bottom: 20px;
-    width: fit-content;
-    box-shadow: 0 2px 12px rgba(191,11,50,0.42);
-  }
-  .pulse {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 0 0 0 rgba(255,255,255,0.7);
-    animation: pulseGlow 1.8s infinite;
-    flex-shrink: 0;
-  }
-  @keyframes pulseGlow {
-    0%   { box-shadow: 0 0 0 0 rgba(255,255,255,0.6); }
-    70%  { box-shadow: 0 0 0 9px rgba(255,255,255,0); }
-    100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
-  }
-
   .hero h1 {
     font-family: 'Oswald', sans-serif;
-    font-size: clamp(2.4rem, 5.4vw, 3.8rem);
-    font-weight: 700; line-height: 1.02;
+    font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+    font-weight: 700; line-height: 1.05;
     color: #fff;
     letter-spacing: 0.005em;
-    margin-bottom: 14px;
-  }
-  .hero h1 .accent {
-    display: block;
-    color: var(--bright-blue);
-    font-weight: 600;
-    font-size: clamp(1.7rem, 4vw, 2.7rem);
-    margin-top: 4px;
+    margin-bottom: 16px;
+    max-width: 660px;
   }
   .hero-sub {
     font-size: clamp(1rem, 1.4vw, 1.15rem);
@@ -259,6 +226,142 @@
   }
   .boardup-call:hover { color: #e8204a; }
   .boardup-call svg { width: 22px; height: 22px; stroke: currentColor; }
+  .boardup-photo-wrap {
+    margin-top: 24px;
+    max-width: 1240px;
+    margin-left: auto; margin-right: auto;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.45);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .boardup-photo {
+    display: block; width: 100%; height: 340px;
+    object-fit: cover; object-position: center;
+  }
+  @media (max-width: 768px) {
+    .boardup-photo { height: 220px; }
+    .boardup-photo-wrap { margin-top: 18px; border-radius: 8px; }
+  }
+
+  /* ── QUIZ FORM (storm-damage lead capture; ported from production LP) ── */
+  .form-zone {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--blue-deep) 70%, var(--blue-dark) 100%);
+    padding: 80px 28px;
+    position: relative;
+  }
+  .form-zone-inner { max-width: 600px; margin: 0 auto; }
+  .form-zone-h {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    color: #fff; text-align: center;
+    line-height: 1.18; margin-bottom: 10px;
+    letter-spacing: 0.01em;
+  }
+  .form-zone-sub {
+    text-align: center; color: rgba(255,255,255,0.74);
+    font-size: 1rem; line-height: 1.55; margin-bottom: 28px;
+  }
+  .v2-form {
+    background: #fff; color: var(--text);
+    border-radius: 12px;
+    padding: 22px 22px 20px;
+    box-shadow: 0 20px 48px rgba(0,0,0,0.28);
+    position: relative;
+  }
+  .v2-progress-dots {
+    display: flex; justify-content: center; align-items: center;
+    gap: 8px; margin-bottom: 16px;
+  }
+  .v2-progress-dots .dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--gray-3);
+    transition: background 0.3s, transform 0.3s;
+    position: relative; flex-shrink: 0;
+  }
+  .v2-progress-dots .dot.active { background: var(--red); transform: scale(1.15); }
+  .v2-progress-dots .dot.done   { background: var(--red); }
+  .v2-progress-dots .dot.done::after {
+    content: '\2713';
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 0.7rem; font-weight: 800; line-height: 1;
+  }
+  .v2-progress-dots .step-text {
+    margin-left: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.7rem; font-weight: 700;
+    color: var(--red);
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .m2s-question {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.22rem; font-weight: 700; color: var(--blue);
+    margin-bottom: 14px; line-height: 1.25; text-align: center;
+  }
+  .m2s-input {
+    width: 100%; padding: 13px 14px;
+    border: 1.5px solid var(--gray-3); border-radius: 6px;
+    font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text);
+    background: var(--gray-1); outline: none; margin-bottom: 10px;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .m2s-input:focus { border-color: var(--blue); background: #fff; box-shadow: 0 0 0 3px rgba(0,39,104,0.1); }
+  .m2s-input::placeholder { color: var(--text-lt); }
+  .m2s-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .m2s-btn {
+    width: 100%; background: var(--red); color: #fff; border: none;
+    padding: 15px 20px; font-family: 'Oswald', sans-serif;
+    font-size: 1.16rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    border-radius: 6px; cursor: pointer; margin-top: 4px;
+    box-shadow: 0 4px 18px rgba(191,11,50,0.38);
+    transition: background 0.18s, transform 0.12s;
+  }
+  .m2s-btn:hover  { background: var(--red-dk); }
+  .m2s-btn:active { transform: scale(0.98); }
+  .m2s-btn[disabled] { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+  .v2-tiles {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 10px; margin: 4px 0 0;
+  }
+  .v2-tile {
+    background: var(--gray-1);
+    border: 1.5px solid var(--gray-3);
+    color: var(--blue);
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em;
+    padding: 20px 8px;
+    border-radius: 8px;
+    cursor: pointer; text-align: center;
+    transition: all 0.18s;
+  }
+  .v2-tile:hover { background: #fff; border-color: var(--red); }
+  .v2-tile.selected,
+  .v2-tile:active {
+    background: var(--red);
+    border-color: var(--red);
+    color: #fff;
+    transform: scale(0.98);
+  }
+  .v2-call-secondary {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1.5px solid var(--gray-3);
+    border-radius: 6px;
+    color: var(--blue);
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.92rem; font-weight: 600; letter-spacing: 0.04em;
+    transition: background 0.18s, border-color 0.18s;
+  }
+  .v2-call-secondary:hover { background: var(--gray-1); border-color: var(--text-lt); }
+  .v2-call-secondary .phone-num { color: var(--red); }
+  .m2s-fine {
+    text-align: center; font-size: 0.66rem;
+    color: var(--text-lt); margin-top: 8px; line-height: 1.45;
+  }
 
   /* ── GENERIC SECTION SHELL ── */
   .sec        { padding: 84px 28px; }
@@ -699,30 +802,29 @@
   <div class="hero-bg" role="img" aria-label="Single-story home with hail damage to siding and windows"></div>
 
   <div class="hero-inner">
-    <div class="hero-tag"><span class="pulse" aria-hidden="true"></span> Storm Damage &middot; Colorado &amp; Nebraska</div>
-
-    <h1>
-      Your home was hit.
-      <span class="accent">We handle everything.</span>
-    </h1>
+    <h1>Storm Damage? We&rsquo;ll Board It Up, Fix It, And Help With Insurance.</h1>
 
     <p class="hero-sub">
-      Windows, roof, siding &mdash; <strong>one call</strong> gets you emergency board-up, a free on-site assessment, and full insurance support so you pay <strong>$0 out of pocket</strong> beyond your deductible.
+      Windows, roofing, siding, and emergency board-up handled by <strong>one local restoration team</strong>. Get a free on-site assessment and help through the insurance process, with <strong>$0 out of pocket</strong> beyond your deductible.
     </p>
 
     <div class="hero-ctas">
-      <!-- REPLACE: Pinnacle Windows phone number -->
-      <a href="tel:0000000000" class="btn-red">
+      <a href="#storm-form" class="btn-red" onclick="scrollToForm(event)">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8"  y1="2" x2="8"  y2="6"/>
+          <line x1="3"  y1="10" x2="21" y2="10"/>
+          <polyline points="9 15 11 17 15 13"/>
         </svg>
-        Call for free assessment
+        Schedule Free 16-Point Inspection
       </a>
+      <!-- REPLACE: Pinnacle Windows phone number -->
       <a href="tel:0000000000" class="btn-ghost">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/>
         </svg>
-        Emergency board-up
+        Get Emergency Board-Up
       </a>
     </div>
 
@@ -735,7 +837,7 @@
 </section>
 
 <!-- BOARD-UP BAND -->
-<section class="boardup">
+<section class="boardup" id="boardup">
   <div class="boardup-inner">
     <div class="boardup-left">
       <div class="boardup-icon" aria-hidden="true">
@@ -745,8 +847,8 @@
         </svg>
       </div>
       <div class="boardup-text">
-        <h3>Emergency board-up &mdash; dispatched today</h3>
-        <p>An unsecured window after a storm is <strong>immediate liability</strong>. Rain damage through an exposed opening may not be covered if you didn't act fast. We&rsquo;ll board it up the same day so your claim stays clean.</p>
+        <h3>Emergency board-up. Dispatched today.</h3>
+        <p>An unsecured window after a storm is <strong>immediate liability</strong>. Rain damage through an exposed opening may not be covered if you didn&rsquo;t act fast. We&rsquo;ll board it up the same day so your claim stays clean.</p>
       </div>
     </div>
     <!-- REPLACE: Pinnacle Windows phone number -->
@@ -756,6 +858,90 @@
       </svg>
       (000) 000-0000
     </a>
+  </div>
+  <div class="boardup-photo-wrap">
+    <img class="boardup-photo" src="https://assets.midwestwindowcompany.com/PinnacleRestoration/Single%20Story%20Home%20-%20Boarded%20Up%20Windows.png" alt="Single-story home with boarded-up windows after storm damage — Pinnacle Restoration emergency board-up" loading="lazy">
+  </div>
+</section>
+
+<!-- STORM-DAMAGE LEAD CAPTURE QUIZ -->
+<section class="form-zone" id="storm-form">
+  <div class="form-zone-inner">
+    <h2 class="form-zone-h">Get your free 16-point inspection.</h2>
+    <p class="form-zone-sub">Tell us about the damage. Takes about a minute.</p>
+
+    <div class="v2-form" id="storm-form-card">
+      <div class="v2-progress-dots">
+        <div class="dot active" data-step="1"></div>
+        <div class="dot" data-step="2"></div>
+        <div class="dot" data-step="3"></div>
+        <div class="dot" data-step="4"></div>
+        <span class="step-text" id="storm-step-text">Step 1 of 4</span>
+      </div>
+
+      <!-- Step 1: damage timing (single-select, auto-advance) -->
+      <div id="storm-step1">
+        <p class="m2s-question">How long has it been since your home was damaged?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="stormPickTiming(this,'1-2 days')">1&ndash;2 days</button>
+          <button type="button" class="v2-tile" onclick="stormPickTiming(this,'3-5 days')">3&ndash;5 days</button>
+          <button type="button" class="v2-tile" onclick="stormPickTiming(this,'5-7 days')">5&ndash;7 days</button>
+          <button type="button" class="v2-tile" onclick="stormPickTiming(this,'7+ days')">7+ days</button>
+        </div>
+      </div>
+
+      <!-- Step 2: damage areas (multi-select, manual Continue) -->
+      <div id="storm-step2" style="display:none">
+        <p class="m2s-question">Where is the damage? <span style="display:block; font-size:0.78rem; color:var(--text-mid); font-weight:600; margin-top:4px; letter-spacing:0.02em; text-transform:none;">Select all that apply.</span></p>
+        <div class="v2-tiles" id="storm-damage-tiles">
+          <button type="button" class="v2-tile" data-value="Windows" onclick="stormToggleDamage(this)">Windows</button>
+          <button type="button" class="v2-tile" data-value="Roof"    onclick="stormToggleDamage(this)">Roof</button>
+          <button type="button" class="v2-tile" data-value="Siding"  onclick="stormToggleDamage(this)">Siding</button>
+          <button type="button" class="v2-tile" data-value="Gutters" onclick="stormToggleDamage(this)">Gutters</button>
+        </div>
+        <button class="m2s-btn" id="storm-damage-continue" onclick="stormDamageContinue(this)" disabled>Continue &rarr;</button>
+      </div>
+
+      <!-- Step 3: zip code (service-area gate) -->
+      <div id="storm-step3" style="display:none">
+        <p class="m2s-question">What&rsquo;s your zip code?</p>
+        <input class="m2s-input" type="text" id="storm-zip" placeholder="80205" maxlength="5" inputmode="numeric">
+        <button class="m2s-btn" onclick="stormZipNext(this)">Continue &rarr;</button>
+        <!-- REPLACE: Pinnacle Windows phone number -->
+        <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
+        <p class="m2s-fine">Colorado &amp; Nebraska only</p>
+      </div>
+
+      <!-- Out-of-service-area branch -->
+      <div id="storm-zip-error" style="display:none; text-align:center; padding:14px 4px 6px;">
+        <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--blue); margin-bottom:10px;">Sorry, we don&rsquo;t currently service your area.</p>
+        <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px;">It looks like your zip code is outside our Colorado &amp; Nebraska service area right now.</p>
+        <a href="#" onclick="stormBackToZip(); return false;" style="color:var(--red); font-weight:700; text-decoration:none; font-size:0.92rem;">&larr; Try a different zip code</a>
+      </div>
+
+      <!-- Step 4: contact (collected only after the service-area gate) -->
+      <div id="storm-step4" style="display:none">
+        <p class="m2s-question">Just a couple more details:</p>
+        <div class="m2s-row">
+          <input class="m2s-input" type="text" id="storm-fname" placeholder="First name" style="margin-bottom:0">
+          <input class="m2s-input" type="text" id="storm-lname" placeholder="Last name"  style="margin-bottom:0">
+        </div>
+        <input class="m2s-input" type="tel"   id="storm-phone" placeholder="(303) 555-0000" inputmode="tel" style="margin-top:10px">
+        <input class="m2s-input" type="email" id="storm-email" placeholder="Email address" style="margin-bottom:4px">
+        <button class="m2s-btn" onclick="stormSubmit(this)">Schedule My Free Inspection &rarr;</button>
+        <!-- REPLACE: Pinnacle Windows phone number -->
+        <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
+        <p class="m2s-fine">No obligation &middot; Free 16-point inspection</p>
+      </div>
+
+      <!-- Success -->
+      <div id="storm-success" style="display:none; text-align:center; padding:8px 0 4px;">
+        <div style="font-size:2.4rem; margin-bottom:10px;">&#127881;</div>
+        <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:700; color:var(--blue); margin-bottom:8px;">You&rsquo;re all set!</p>
+        <!-- REPLACE: Pinnacle Windows phone number -->
+        <p style="font-size:0.9rem; color:var(--text-mid); line-height:1.6;">We&rsquo;ll call within the hour to schedule your free 16-point inspection.<br>Questions? <a href="tel:0000000000" style="color:var(--red); font-weight:700;">(000) 000-0000</a></p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1125,6 +1311,141 @@
   // Footer year
   var now = new Date();
   document.querySelectorAll('.js-year').forEach(function (el) { el.textContent = now.getFullYear(); });
+
+  // ── STORM-DAMAGE LEAD CAPTURE QUIZ ──
+  // TODO: Set Pinnacle Restoration's own lead webhook. Left empty so submissions don't post to anyone.
+  var STORM_WEBHOOK = '';
+
+  // TODO: Replace with Pinnacle Windows approved zip codes for Colorado & Nebraska
+  var APPROVED_ZIPS = []; // Temporarily empty — all zips will show "not in service area" until populated
+
+  var stormState = { timing: '', damage: [], zip: '' };
+
+  function $s(id) { return document.getElementById(id); }
+  function stormStepDots(step) {
+    var dots = document.querySelectorAll('#storm-form-card .v2-progress-dots .dot');
+    dots.forEach(function (d) {
+      var s = parseInt(d.dataset.step, 10);
+      d.classList.remove('active', 'done');
+      if (s < step)      d.classList.add('done');
+      else if (s === step) d.classList.add('active');
+    });
+    var lbl = $s('storm-step-text'); if (lbl) lbl.textContent = 'Step ' + step + ' of 4';
+  }
+  function stormShow(stepId) {
+    ['storm-step1', 'storm-step2', 'storm-step3', 'storm-zip-error', 'storm-step4', 'storm-success']
+      .forEach(function (id) { var el = $s(id); if (el) el.style.display = 'none'; });
+    var t = $s(stepId); if (t) t.style.display = 'block';
+    // scroll the form card back to top so the new question is in view
+    var card = $s('storm-form-card');
+    if (card) {
+      card.scrollTop = 0;
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(function () { window.scrollBy(0, -16); }, 60);
+    }
+  }
+
+  // Step 1 → 2 (single-select tile click, auto-advance)
+  function stormPickTiming(el, value) {
+    stormState.timing = value;
+    stormShow('storm-step2');
+    stormStepDots(2);
+  }
+
+  // Step 2: multi-select toggle
+  function stormToggleDamage(el) {
+    var v = el.dataset.value;
+    var i = stormState.damage.indexOf(v);
+    if (i === -1) { stormState.damage.push(v); el.classList.add('selected'); }
+    else          { stormState.damage.splice(i, 1); el.classList.remove('selected'); }
+    var btn = $s('storm-damage-continue');
+    if (btn) btn.disabled = stormState.damage.length === 0;
+  }
+  function stormDamageContinue(btn) {
+    if (stormState.damage.length === 0) return;
+    stormShow('storm-step3');
+    stormStepDots(3);
+    var z = $s('storm-zip'); if (z) z.focus();
+  }
+
+  // Step 3: zip gate
+  function stormZipNext(btn) {
+    var input = $s('storm-zip');
+    var zip = (input ? input.value : '').trim();
+    if (!zip) { if (input) input.focus(); return; }
+    stormState.zip = zip;
+    if (!APPROVED_ZIPS.includes(zip)) {
+      stormShow('storm-zip-error');
+      return;
+    }
+    stormShow('storm-step4');
+    stormStepDots(4);
+    var f = $s('storm-fname'); if (f) f.focus();
+  }
+  function stormBackToZip() {
+    var z = $s('storm-zip'); if (z) z.value = '';
+    stormShow('storm-step3');
+    stormStepDots(3);
+    if (z) z.focus();
+  }
+
+  // Step 4: submit
+  function getUrlParams() {
+    var p = new URLSearchParams(window.location.search);
+    return {
+      gclid:        p.get('gclid') || '',
+      fbclid:       p.get('fbclid') || '',
+      utm_source:   p.get('utm_source') || '',
+      utm_medium:   p.get('utm_medium') || '',
+      utm_campaign: p.get('utm_campaign') || '',
+      utm_content:  p.get('utm_content') || '',
+      utm_term:     p.get('utm_term') || ''
+    };
+  }
+  async function stormSubmit(btn) {
+    var fname = ($s('storm-fname') || {}).value || '';
+    var lname = ($s('storm-lname') || {}).value || '';
+    var phone = ($s('storm-phone') || {}).value || '';
+    var email = ($s('storm-email') || {}).value || '';
+    if (!fname.trim()) { $s('storm-fname').focus(); return; }
+    if (!phone.trim()) { $s('storm-phone').focus(); return; }
+    if (!email.trim()) { $s('storm-email').focus(); return; }
+
+    if (STORM_WEBHOOK) {
+      try {
+        var params = getUrlParams();
+        await fetch(STORM_WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            first_name:   fname.trim(),
+            last_name:    lname.trim(),
+            email:        email.trim(),
+            phone:        phone.trim(),
+            zip:          stormState.zip,
+            damage_age:   stormState.timing,
+            damage_areas: stormState.damage.join(', '),
+            source:       'Pinnacle Restoration LP (storm quiz)',
+            gclid:        params.gclid,
+            fbclid:       params.fbclid,
+            utm_source:   params.utm_source,
+            utm_medium:   params.utm_medium,
+            utm_campaign: params.utm_campaign,
+            utm_content:  params.utm_content,
+            utm_term:     params.utm_term
+          })
+        });
+      } catch (err) { console.error('Storm webhook error:', err); }
+    }
+    stormShow('storm-success');
+  }
+
+  // Anchor scroll from hero CTA
+  function scrollToForm(e) {
+    if (e) e.preventDefault();
+    var f = document.getElementById('storm-form');
+    if (f) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
 </script>
 
 </body>
