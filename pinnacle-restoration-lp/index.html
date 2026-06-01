@@ -916,7 +916,7 @@
       <div id="storm-zip-error" style="display:none; text-align:center; padding:14px 4px 6px;">
         <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--blue); margin-bottom:10px;">Sorry, we don&rsquo;t currently service your area.</p>
         <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px;">It looks like your zip code is outside our Colorado &amp; Nebraska service area right now.</p>
-        <a href="#" onclick="stormBackToZip(); return false;" style="color:var(--red); font-weight:700; text-decoration:none; font-size:0.92rem;">&larr; Try a different zip code</a>
+        <a href="#" onclick="stormBackToZip(this); return false;" style="color:var(--red); font-weight:700; text-decoration:none; font-size:0.92rem;">&larr; Try a different zip code</a>
       </div>
 
       <!-- Step 4: contact (collected only after the service-area gate) -->
@@ -941,6 +941,82 @@
         <!-- REPLACE: Pinnacle Windows phone number -->
         <p style="font-size:0.9rem; color:var(--text-mid); line-height:1.6;">We&rsquo;ll call within the hour to schedule your free 16-point inspection.<br>Questions? <a href="tel:0000000000" style="color:var(--red); font-weight:700;">(000) 000-0000</a></p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSURANCE SUPPORT (split) -->
+<section class="ins">
+  <div class="ins-inner">
+    <div class="ins-left">
+      <span class="eyebrow reveal">Maximize Your Claim</span>
+      <h2 class="sec-title reveal">Most homeowners don&rsquo;t get <span class="accent">what they&rsquo;re owed.</span></h2>
+      <p class="sec-sub reveal">Insurance carriers have adjusters working for them. We make sure someone&rsquo;s working for you, before the first estimate gets written.</p>
+
+      <ul class="ins-checklist reveal">
+        <li>
+          <span class="ins-check" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+          </span>
+          <span><strong>On-site with your adjuster,</strong> so no damage gets missed or minimized.</span>
+        </li>
+        <li>
+          <span class="ins-check" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+          </span>
+          <span><strong>Full documentation,</strong> photos and reports that support every line item of your claim.</span>
+        </li>
+        <li>
+          <span class="ins-check" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+          </span>
+          <span><strong>Supplement filing,</strong> if the first offer is light, we know how to push back.</span>
+        </li>
+        <li>
+          <span class="ins-check" aria-hidden="true">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+          </span>
+          <span><strong>Zero paperwork for you,</strong> we handle the forms, follow-ups, and timelines.</span>
+        </li>
+      </ul>
+
+      <!-- REPLACE: Pinnacle Windows phone number -->
+      <a href="tel:0000000000" class="btn-red" style="max-width:340px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
+        </svg>
+        Get a free claim review
+      </a>
+    </div>
+
+    <div class="ins-right">
+      <h3><span class="pin">Typical Outcome</span></h3>
+      <p style="color:rgba(255,255,255,0.78); line-height:1.55; margin-bottom:8px;">
+        For an approved hail-damage claim, the homeowner&rsquo;s only out-of-pocket cost is typically the deductible on their policy. Here&rsquo;s how it usually breaks down:
+      </p>
+
+      <div class="ins-outcome">
+        <div class="ins-outcome-row">
+          <span class="label">Full scope of damage</span>
+          <span class="val">Covered</span>
+        </div>
+        <div class="ins-outcome-row">
+          <span class="label">Emergency board-up</span>
+          <span class="val">Covered</span>
+        </div>
+        <div class="ins-outcome-row">
+          <span class="label">Materials &amp; labor</span>
+          <span class="val">Covered</span>
+        </div>
+        <div class="ins-outcome-row">
+          <span class="label">You pay</span>
+          <span class="val accent">Deductible only</span>
+        </div>
+      </div>
+
+      <p class="ins-disclaimer">
+        Outcomes depend on your policy terms, deductible, and the carrier&rsquo;s approved scope. We&rsquo;ll walk through your specific coverage at the free assessment.
+      </p>
     </div>
   </div>
 </section>
@@ -986,6 +1062,70 @@
     </div>
 
     <p class="wp-footnote">*Subject to your policy terms, coverage, and deductible.</p>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="sec sec-gray" id="reviews">
+  <div class="sec-inner">
+    <span class="eyebrow reveal">Reviews</span>
+    <h2 class="sec-title reveal">See what your <span class="accent">neighbors are saying.</span></h2>
+
+    <div class="rev-grid">
+      <article class="rev-card reveal">
+        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review1.png')" role="button" tabindex="0" aria-label="View larger: Pinnacle restoration project for Jennifer Malas">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review1.png" alt="Pinnacle Windows &amp; Restoration project for Jennifer Malas" loading="lazy">
+          <span class="rev-verified">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+            Verified Purchase
+          </span>
+        </div>
+        <div class="rev-head">
+          <span class="rev-avatar" aria-hidden="true">J</span>
+          <div>
+            <div class="rev-name">Jennifer Malas</div>
+            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+        </div>
+        <p class="rev-text">&ldquo;Kenny personally took the lead in working with my insurance company, meeting with the adjuster, making multiple calls, and sending countless emails, to ensure the entire scope of damage was covered. He followed through on everything he promised, and thanks to his persistence, my claim was fully approved. He truly made the process easy and stress-free for me. I highly recommend Kenny Kunz and Pinnacle Windows &amp; Restoration. They went above and beyond to restore my home, and I couldn&rsquo;t be happier with the results.&rdquo;</p>
+      </article>
+
+      <article class="rev-card reveal d1">
+        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review2.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle restoration project for Jaden Marshall">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review2.webp" alt="Pinnacle Windows &amp; Restoration project for Jaden Marshall" loading="lazy">
+          <span class="rev-verified">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+            Verified Purchase
+          </span>
+        </div>
+        <div class="rev-head">
+          <span class="rev-avatar" aria-hidden="true">J</span>
+          <div>
+            <div class="rev-name">Jaden Marshall</div>
+            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+        </div>
+        <p class="rev-text">&ldquo;From start to finish, my experience with Pinnacle Windows has been nothing short of exceptional. The team is incredibly knowledgeable, professional, and detail-oriented. Their expertise in working with insurance claims stood out among everything else. The installation process is smooth and efficient, with the crew demonstrating true craftsmanship and care for your home. It&rsquo;s clear this company takes great pride in its work, and their commitment to customer satisfaction is evident in every step of the process. I highly recommend them to anyone looking for top-tier windows and outstanding service!&rdquo;</p>
+      </article>
+
+      <article class="rev-card reveal d2">
+        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle restoration project for Kevin Foster">
+          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp" alt="Pinnacle Windows &amp; Restoration project for Kevin Foster" loading="lazy">
+          <span class="rev-verified">
+            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
+            Verified Purchase
+          </span>
+        </div>
+        <div class="rev-head">
+          <span class="rev-avatar" aria-hidden="true">K</span>
+          <div>
+            <div class="rev-name">Kevin Foster</div>
+            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+        </div>
+        <p class="rev-text">&ldquo;Windows and doors are installed properly and professionally. The crew works hard to get the job done, and doesn&rsquo;t leave any mess. The whole process is very smooth because the claims team at Pinnacle handles everything with the insurance, and keeps up with communication so you&rsquo;re not left wondering what&rsquo;s happening. So many companies do not follow up these days. From the beginning to the end you&rsquo;ll be in good hands with Pinnacle.&rdquo;</p>
+      </article>
+    </div>
   </div>
 </section>
 
@@ -1051,6 +1191,81 @@
   </div>
 </section>
 
+<!-- STORM-DAMAGE LEAD CAPTURE QUIZ — SECOND COPY (post-damage-areas) -->
+<section class="form-zone" id="storm-form-2">
+  <div class="form-zone-inner">
+    <h2 class="form-zone-h">Schedule your free 16-point inspection.</h2>
+    <p class="form-zone-sub">Tell us about the damage. Takes about a minute.</p>
+
+    <div class="v2-form" id="storm-form-card-2">
+      <div class="v2-progress-dots">
+        <div class="dot active" data-step="1"></div>
+        <div class="dot" data-step="2"></div>
+        <div class="dot" data-step="3"></div>
+        <div class="dot" data-step="4"></div>
+        <span class="step-text" id="storm-step-text-2">Step 1 of 4</span>
+      </div>
+
+      <div id="storm-step1-2">
+        <p class="m2s-question">How long has it been since your home was damaged?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="stormPickTiming(this,'1-2 days')">1&ndash;2 days</button>
+          <button type="button" class="v2-tile" onclick="stormPickTiming(this,'3-5 days')">3&ndash;5 days</button>
+          <button type="button" class="v2-tile" onclick="stormPickTiming(this,'5-7 days')">5&ndash;7 days</button>
+          <button type="button" class="v2-tile" onclick="stormPickTiming(this,'7+ days')">7+ days</button>
+        </div>
+      </div>
+
+      <div id="storm-step2-2" style="display:none">
+        <p class="m2s-question">Where is the damage? <span style="display:block; font-size:0.78rem; color:var(--text-mid); font-weight:600; margin-top:4px; letter-spacing:0.02em; text-transform:none;">Select all that apply.</span></p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" data-value="Windows" onclick="stormToggleDamage(this)">Windows</button>
+          <button type="button" class="v2-tile" data-value="Roof"    onclick="stormToggleDamage(this)">Roof</button>
+          <button type="button" class="v2-tile" data-value="Siding"  onclick="stormToggleDamage(this)">Siding</button>
+          <button type="button" class="v2-tile" data-value="Gutters" onclick="stormToggleDamage(this)">Gutters</button>
+        </div>
+        <button class="m2s-btn" id="storm-damage-continue-2" onclick="stormDamageContinue(this)" disabled>Continue &rarr;</button>
+      </div>
+
+      <div id="storm-step3-2" style="display:none">
+        <p class="m2s-question">What&rsquo;s your zip code?</p>
+        <input class="m2s-input" type="text" id="storm-zip-2" placeholder="80205" maxlength="5" inputmode="numeric">
+        <button class="m2s-btn" onclick="stormZipNext(this)">Continue &rarr;</button>
+        <!-- REPLACE: Pinnacle Windows phone number -->
+        <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
+        <p class="m2s-fine">Colorado &amp; Nebraska only</p>
+      </div>
+
+      <div id="storm-zip-error-2" style="display:none; text-align:center; padding:14px 4px 6px;">
+        <p style="font-family:'Oswald',sans-serif; font-size:1.15rem; font-weight:700; color:var(--blue); margin-bottom:10px;">Sorry, we don&rsquo;t currently service your area.</p>
+        <p style="font-size:0.92rem; color:var(--text-mid); line-height:1.55; margin-bottom:16px;">It looks like your zip code is outside our Colorado &amp; Nebraska service area right now.</p>
+        <a href="#" onclick="stormBackToZip(this); return false;" style="color:var(--red); font-weight:700; text-decoration:none; font-size:0.92rem;">&larr; Try a different zip code</a>
+      </div>
+
+      <div id="storm-step4-2" style="display:none">
+        <p class="m2s-question">Just a couple more details:</p>
+        <div class="m2s-row">
+          <input class="m2s-input" type="text" id="storm-fname-2" placeholder="First name" style="margin-bottom:0">
+          <input class="m2s-input" type="text" id="storm-lname-2" placeholder="Last name"  style="margin-bottom:0">
+        </div>
+        <input class="m2s-input" type="tel"   id="storm-phone-2" placeholder="(303) 555-0000" inputmode="tel" style="margin-top:10px">
+        <input class="m2s-input" type="email" id="storm-email-2" placeholder="Email address" style="margin-bottom:4px">
+        <button class="m2s-btn" onclick="stormSubmit(this)">Schedule My Free Inspection &rarr;</button>
+        <!-- REPLACE: Pinnacle Windows phone number -->
+        <a href="tel:0000000000" class="v2-call-secondary">Or call <span class="phone-num">(000) 000-0000</span></a>
+        <p class="m2s-fine">No obligation &middot; Free 16-point inspection</p>
+      </div>
+
+      <div id="storm-success-2" style="display:none; text-align:center; padding:8px 0 4px;">
+        <div style="font-size:2.4rem; margin-bottom:10px;">&#127881;</div>
+        <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:700; color:var(--blue); margin-bottom:8px;">You&rsquo;re all set!</p>
+        <!-- REPLACE: Pinnacle Windows phone number -->
+        <p style="font-size:0.9rem; color:var(--text-mid); line-height:1.6;">We&rsquo;ll call within the hour to schedule your free 16-point inspection.<br>Questions? <a href="tel:0000000000" style="color:var(--red); font-weight:700;">(000) 000-0000</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- 3-STEP PROCESS -->
 <section class="sec sec-navy">
   <div class="sec-inner" style="text-align:center;">
@@ -1074,146 +1289,6 @@
         <div class="proc-title">Full restoration</div>
         <div class="proc-desc">We coordinate every trade. Your home gets restored &mdash; and you only ever made one call.</div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- INSURANCE SUPPORT (split) -->
-<section class="ins">
-  <div class="ins-inner">
-    <div class="ins-left">
-      <span class="eyebrow reveal">Insurance Support</span>
-      <h2 class="sec-title reveal">Most homeowners don&rsquo;t get <span class="accent">what they&rsquo;re owed.</span></h2>
-      <p class="sec-sub reveal">Insurance carriers have adjusters working for them. We make sure someone&rsquo;s working for you &mdash; before the first estimate gets written.</p>
-
-      <ul class="ins-checklist reveal">
-        <li>
-          <span class="ins-check" aria-hidden="true">
-            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
-          </span>
-          <span><strong>On-site with your adjuster</strong> &mdash; so no damage gets missed or minimized.</span>
-        </li>
-        <li>
-          <span class="ins-check" aria-hidden="true">
-            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
-          </span>
-          <span><strong>Full documentation</strong> &mdash; photos and reports that support every line item of your claim.</span>
-        </li>
-        <li>
-          <span class="ins-check" aria-hidden="true">
-            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
-          </span>
-          <span><strong>Supplement filing</strong> &mdash; if the first offer is light, we know how to push back.</span>
-        </li>
-        <li>
-          <span class="ins-check" aria-hidden="true">
-            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
-          </span>
-          <span><strong>Zero paperwork for you</strong> &mdash; we handle the forms, follow-ups, and timelines.</span>
-        </li>
-      </ul>
-
-      <!-- REPLACE: Pinnacle Windows phone number -->
-      <a href="tel:0000000000" class="btn-red" style="max-width:340px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
-        </svg>
-        Get a free claim review
-      </a>
-    </div>
-
-    <div class="ins-right">
-      <h3><span class="pin">Typical Outcome</span></h3>
-      <p style="color:rgba(255,255,255,0.78); line-height:1.55; margin-bottom:8px;">
-        For an approved hail-damage claim, the homeowner&rsquo;s only out-of-pocket cost is typically the deductible on their policy. Here&rsquo;s how it usually breaks down:
-      </p>
-
-      <div class="ins-outcome">
-        <div class="ins-outcome-row">
-          <span class="label">Full scope of damage</span>
-          <span class="val">Covered</span>
-        </div>
-        <div class="ins-outcome-row">
-          <span class="label">Emergency board-up</span>
-          <span class="val">Covered</span>
-        </div>
-        <div class="ins-outcome-row">
-          <span class="label">Materials &amp; labor</span>
-          <span class="val">Covered</span>
-        </div>
-        <div class="ins-outcome-row">
-          <span class="label">You pay</span>
-          <span class="val accent">Deductible only</span>
-        </div>
-      </div>
-
-      <p class="ins-disclaimer">
-        Outcomes depend on your policy terms, deductible, and the carrier&rsquo;s approved scope. We&rsquo;ll walk through your specific coverage at the free assessment.
-      </p>
-    </div>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section class="sec sec-gray" id="reviews">
-  <div class="sec-inner">
-    <span class="eyebrow reveal">Reviews</span>
-    <h2 class="sec-title reveal">See what your <span class="accent">neighbors are saying.</span></h2>
-
-    <div class="rev-grid">
-      <article class="rev-card reveal">
-        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review1.png')" role="button" tabindex="0" aria-label="View larger: Pinnacle storm-window install for Shannon Cauthen">
-          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review1.png" alt="Hail-replacement window install by Pinnacle for Shannon Cauthen" loading="lazy">
-          <span class="rev-verified">
-            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
-            Verified Purchase
-          </span>
-        </div>
-        <div class="rev-head">
-          <span class="rev-avatar" aria-hidden="true">S</span>
-          <div>
-            <div class="rev-name">Shannon Cauthen</div>
-            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-        </div>
-        <p class="rev-text">&ldquo;We got our 7 windows replaced from a major hail storm, and they did it in a day. Everything came out looking brand new and original to the house. They came in at the contracted price&hellip; no extras or surprises.&rdquo;</p>
-      </article>
-
-      <article class="rev-card reveal d1">
-        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review2.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle install for George Albert Martel">
-          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review2.webp" alt="Window install by Pinnacle for George Albert Martel" loading="lazy">
-          <span class="rev-verified">
-            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
-            Verified Purchase
-          </span>
-        </div>
-        <div class="rev-head">
-          <span class="rev-avatar" aria-hidden="true">G</span>
-          <div>
-            <div class="rev-name">George Albert Martel</div>
-            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-        </div>
-        <p class="rev-text">&ldquo;They finished removing the old and replacing with new in less than 8 hours. I use the word efficient rather than fast because of the high quality you don&rsquo;t get if the work is only fast.&rdquo;</p>
-      </article>
-
-      <article class="rev-card reveal d2">
-        <div class="rev-media" onclick="openLightbox('https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp')" role="button" tabindex="0" aria-label="View larger: Pinnacle install for John Noel">
-          <img src="https://assets.midwestwindowcompany.com/PinnacleWindows/review3.webp" alt="Window and patio-door install by Pinnacle for John Noel" loading="lazy">
-          <span class="rev-verified">
-            <svg viewBox="0 0 12 12" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2.5 6 5 8.5 9.5 4"/></svg>
-            Verified Purchase
-          </span>
-        </div>
-        <div class="rev-head">
-          <span class="rev-avatar" aria-hidden="true">J</span>
-          <div>
-            <div class="rev-name">John Noel</div>
-            <div class="rev-stars" aria-label="5 out of 5 stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-        </div>
-        <p class="rev-text">&ldquo;Very pleased with Pinnacle&rsquo;s work on my home. The crew did an excellent job replacing my windows and patio door. Staff was courteous and professional throughout. I will highly recommend Pinnacle.&rdquo;</p>
-      </article>
     </div>
   </div>
 </section>
@@ -1313,79 +1388,92 @@
   document.querySelectorAll('.js-year').forEach(function (el) { el.textContent = now.getFullYear(); });
 
   // ── STORM-DAMAGE LEAD CAPTURE QUIZ ──
+  // Container-scoped so multiple form copies coexist on the page.
+  // Each form's elements share base IDs; the 2nd form suffixes them with "-2".
+  // Handlers derive their form root from the clicked element and resolve IDs by suffix.
+
   // TODO: Set Pinnacle Restoration's own lead webhook. Left empty so submissions don't post to anyone.
   var STORM_WEBHOOK = '';
-
-  // TODO: Replace with Pinnacle Windows approved zip codes for Colorado & Nebraska
+  // TODO: Replace with Pinnacle approved zip codes for Colorado & Nebraska
   var APPROVED_ZIPS = []; // Temporarily empty — all zips will show "not in service area" until populated
 
-  var stormState = { timing: '', damage: [], zip: '' };
+  function stormRoot(el) { return el.closest('.v2-form'); }
+  function stormSuffix(root) { return root.id.replace('storm-form-card', ''); }   // '' for form 1, '-2' for form 2
+  function stormLF(root, baseId) { return document.getElementById(baseId + stormSuffix(root)); }
+  function stormStateFor(root) {
+    if (!root._stormState) root._stormState = { timing: '', damage: [], zip: '' };
+    return root._stormState;
+  }
 
-  function $s(id) { return document.getElementById(id); }
-  function stormStepDots(step) {
-    var dots = document.querySelectorAll('#storm-form-card .v2-progress-dots .dot');
-    dots.forEach(function (d) {
+  function stormDots(root, step) {
+    root.querySelectorAll('.v2-progress-dots .dot').forEach(function (d) {
       var s = parseInt(d.dataset.step, 10);
       d.classList.remove('active', 'done');
       if (s < step)      d.classList.add('done');
       else if (s === step) d.classList.add('active');
     });
-    var lbl = $s('storm-step-text'); if (lbl) lbl.textContent = 'Step ' + step + ' of 4';
+    var lbl = stormLF(root, 'storm-step-text');
+    if (lbl) lbl.textContent = 'Step ' + step + ' of 4';
   }
-  function stormShow(stepId) {
+  function stormShow(root, baseId) {
     ['storm-step1', 'storm-step2', 'storm-step3', 'storm-zip-error', 'storm-step4', 'storm-success']
-      .forEach(function (id) { var el = $s(id); if (el) el.style.display = 'none'; });
-    var t = $s(stepId); if (t) t.style.display = 'block';
-    // scroll the form card back to top so the new question is in view
-    var card = $s('storm-form-card');
-    if (card) {
-      card.scrollTop = 0;
-      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      setTimeout(function () { window.scrollBy(0, -16); }, 60);
-    }
+      .forEach(function (id) { var el = stormLF(root, id); if (el) el.style.display = 'none'; });
+    var t = stormLF(root, baseId);
+    if (t) t.style.display = 'block';
+    root.scrollTop = 0;
+    root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(function () { window.scrollBy(0, -16); }, 60);
   }
 
   // Step 1 → 2 (single-select tile click, auto-advance)
   function stormPickTiming(el, value) {
-    stormState.timing = value;
-    stormShow('storm-step2');
-    stormStepDots(2);
+    var root = stormRoot(el);
+    stormStateFor(root).timing = value;
+    stormShow(root, 'storm-step2');
+    stormDots(root, 2);
   }
 
-  // Step 2: multi-select toggle
+  // Step 2: multi-select toggle + manual Continue
   function stormToggleDamage(el) {
+    var root  = stormRoot(el);
+    var state = stormStateFor(root);
     var v = el.dataset.value;
-    var i = stormState.damage.indexOf(v);
-    if (i === -1) { stormState.damage.push(v); el.classList.add('selected'); }
-    else          { stormState.damage.splice(i, 1); el.classList.remove('selected'); }
-    var btn = $s('storm-damage-continue');
-    if (btn) btn.disabled = stormState.damage.length === 0;
+    var i = state.damage.indexOf(v);
+    if (i === -1) { state.damage.push(v); el.classList.add('selected'); }
+    else          { state.damage.splice(i, 1); el.classList.remove('selected'); }
+    var btn = stormLF(root, 'storm-damage-continue');
+    if (btn) btn.disabled = state.damage.length === 0;
   }
   function stormDamageContinue(btn) {
-    if (stormState.damage.length === 0) return;
-    stormShow('storm-step3');
-    stormStepDots(3);
-    var z = $s('storm-zip'); if (z) z.focus();
+    var root  = stormRoot(btn);
+    var state = stormStateFor(root);
+    if (state.damage.length === 0) return;
+    stormShow(root, 'storm-step3');
+    stormDots(root, 3);
+    var z = stormLF(root, 'storm-zip'); if (z) z.focus();
   }
 
-  // Step 3: zip gate
+  // Step 3: zip service-area gate
   function stormZipNext(btn) {
-    var input = $s('storm-zip');
+    var root  = stormRoot(btn);
+    var state = stormStateFor(root);
+    var input = stormLF(root, 'storm-zip');
     var zip = (input ? input.value : '').trim();
     if (!zip) { if (input) input.focus(); return; }
-    stormState.zip = zip;
+    state.zip = zip;
     if (!APPROVED_ZIPS.includes(zip)) {
-      stormShow('storm-zip-error');
+      stormShow(root, 'storm-zip-error');
       return;
     }
-    stormShow('storm-step4');
-    stormStepDots(4);
-    var f = $s('storm-fname'); if (f) f.focus();
+    stormShow(root, 'storm-step4');
+    stormDots(root, 4);
+    var f = stormLF(root, 'storm-fname'); if (f) f.focus();
   }
-  function stormBackToZip() {
-    var z = $s('storm-zip'); if (z) z.value = '';
-    stormShow('storm-step3');
-    stormStepDots(3);
+  function stormBackToZip(el) {
+    var root = stormRoot(el);
+    var z = stormLF(root, 'storm-zip'); if (z) z.value = '';
+    stormShow(root, 'storm-step3');
+    stormDots(root, 3);
     if (z) z.focus();
   }
 
@@ -1403,13 +1491,15 @@
     };
   }
   async function stormSubmit(btn) {
-    var fname = ($s('storm-fname') || {}).value || '';
-    var lname = ($s('storm-lname') || {}).value || '';
-    var phone = ($s('storm-phone') || {}).value || '';
-    var email = ($s('storm-email') || {}).value || '';
-    if (!fname.trim()) { $s('storm-fname').focus(); return; }
-    if (!phone.trim()) { $s('storm-phone').focus(); return; }
-    if (!email.trim()) { $s('storm-email').focus(); return; }
+    var root  = stormRoot(btn);
+    var state = stormStateFor(root);
+    var fname = (stormLF(root, 'storm-fname') || {}).value || '';
+    var lname = (stormLF(root, 'storm-lname') || {}).value || '';
+    var phone = (stormLF(root, 'storm-phone') || {}).value || '';
+    var email = (stormLF(root, 'storm-email') || {}).value || '';
+    if (!fname.trim()) { stormLF(root, 'storm-fname').focus(); return; }
+    if (!phone.trim()) { stormLF(root, 'storm-phone').focus(); return; }
+    if (!email.trim()) { stormLF(root, 'storm-email').focus(); return; }
 
     if (STORM_WEBHOOK) {
       try {
@@ -1422,10 +1512,10 @@
             last_name:    lname.trim(),
             email:        email.trim(),
             phone:        phone.trim(),
-            zip:          stormState.zip,
-            damage_age:   stormState.timing,
-            damage_areas: stormState.damage.join(', '),
-            source:       'Pinnacle Restoration LP (storm quiz)',
+            zip:          state.zip,
+            damage_age:   state.timing,
+            damage_areas: state.damage.join(', '),
+            source:       'Pinnacle Restoration LP (storm quiz' + (stormSuffix(root) ? ' #2' : '') + ')',
             gclid:        params.gclid,
             fbclid:       params.fbclid,
             utm_source:   params.utm_source,
@@ -1437,10 +1527,10 @@
         });
       } catch (err) { console.error('Storm webhook error:', err); }
     }
-    stormShow('storm-success');
+    stormShow(root, 'storm-success');
   }
 
-  // Anchor scroll from hero CTA
+  // Anchor scroll from hero CTA — always targets form 1 (top-of-page).
   function scrollToForm(e) {
     if (e) e.preventDefault();
     var f = document.getElementById('storm-form');
