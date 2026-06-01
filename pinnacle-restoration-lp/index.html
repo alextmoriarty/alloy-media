@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Storm Damage Repair | Pinnacle Windows &amp; Restoration</title>
-<meta name="description" content="Hail or wind damage? Pinnacle Windows &amp; Restoration handles emergency board-up, full home restoration, and your insurance claim — most homeowners pay $0 out of pocket beyond their deductible.">
+<meta name="description" content="Hail or wind damage? Pinnacle Windows &amp; Restoration handles emergency board-up, full home restoration, and your insurance claim. Most homeowners pay $0 out of pocket beyond their deductible.">
 <!-- REPLACE: Pinnacle Windows favicon -->
 <link rel="icon" type="image/svg+xml" href="https://assets.midwestwindowcompany.com/PinnacleWindows/pinnacle-logo%20(2).svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -18,13 +18,13 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    /* Pinnacle palette — same mapping as pinnacle-windows-lp so brand stays consistent. */
-    --blue:        #002768;   /* Pinnacle Navy — primary */
-    --blue-dark:   #001E51;   /* darker navy — gradient mid */
-    --blue-deep:   #001640;   /* deepest navy — gradient start */
-    --navy:        #001A4D;   /* deep navy — backgrounds with depth */
-    --bright-blue: #0495FE;   /* Pinnacle Bright Blue — used sparingly for highlights */
-    --red:         #BF0B32;   /* Pinnacle Red — CTAs / urgency / accents */
+    /* Pinnacle palette: same mapping as pinnacle-windows-lp so brand stays consistent. */
+    --blue:        #002768;   /* Pinnacle Navy, primary */
+    --blue-dark:   #001E51;   /* darker navy, gradient mid */
+    --blue-deep:   #001640;   /* deepest navy, gradient start */
+    --navy:        #001A4D;   /* deep navy, backgrounds with depth */
+    --bright-blue: #0495FE;   /* Pinnacle Bright Blue, used sparingly for highlights */
+    --red:         #BF0B32;   /* Pinnacle Red, CTAs / urgency / accents */
     --red-dk:      #A00928;   /* red hover */
     --green:       #1A9E5C;
     --white:       #FFFFFF;
@@ -135,6 +135,12 @@
     display: flex; flex-wrap: wrap; gap: 12px;
     margin-bottom: 32px;
   }
+  /* Equal-width hero buttons: both flex-grow:1 with shared basis so they match length on every breakpoint */
+  .hero-ctas .btn-red,
+  .hero-ctas .btn-ghost {
+    flex: 1 1 280px;
+    min-height: 56px;
+  }
   .btn-red {
     display: inline-flex; align-items: center; justify-content: center; gap: 10px;
     background: var(--red); color: #fff; border: none;
@@ -164,7 +170,7 @@
   .btn-ghost:hover  { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.55); }
   .btn-ghost svg    { width: 16px; height: 16px; stroke: #fff; flex-shrink: 0; }
 
-  /* Stat strip — three trust signals, sits inline in the hero (NOT hidden on mobile) */
+  /* Stat strip: three trust signals, sits inline in the hero (NOT hidden on mobile) */
   .hero-stats {
     display: flex; flex-wrap: wrap; gap: 28px;
     padding-top: 22px;
@@ -184,18 +190,23 @@
     margin-top: 4px;
   }
 
-  /* ── BOARD-UP BAND ── dark urgency band right under the hero */
+  /* ── BOARD-UP BAND ── dark urgency band right under the hero, top-down flow */
   .boardup {
     background: #0d0f12;
     border-top: 3px solid var(--red);
-    padding: 28px 28px;
+    padding: 44px 28px 48px;
   }
   .boardup-inner {
-    max-width: 1240px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 28px; flex-wrap: wrap;
+    max-width: 1040px; margin: 0 auto;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 22px;
+    text-align: center;
   }
-  .boardup-left { display: flex; align-items: flex-start; gap: 18px; max-width: 720px; }
+  /* Title row: icon + heading */
+  .boardup-header {
+    display: flex; align-items: center; gap: 14px;
+    flex-wrap: wrap; justify-content: center;
+  }
   .boardup-icon {
     width: 52px; height: 52px; flex-shrink: 0;
     background: var(--red); border-radius: 6px;
@@ -203,45 +214,57 @@
     box-shadow: 0 4px 14px rgba(191,11,50,0.36);
   }
   .boardup-icon svg { width: 26px; height: 26px; stroke: #fff; }
-  .boardup-text h3 {
+  .boardup-header h3 {
     font-family: 'Oswald', sans-serif;
-    font-size: 1.18rem; font-weight: 700;
+    font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+    font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.03em;
     color: #fff;
-    margin-bottom: 4px; line-height: 1.2;
+    line-height: 1.2;
   }
-  .boardup-text p {
-    font-size: 0.92rem; color: rgba(255,255,255,0.62);
-    line-height: 1.55;
-  }
-  .boardup-text p strong { color: rgba(255,255,255,0.88); font-weight: 600; }
-  .boardup-call {
-    display: inline-flex; align-items: center; gap: 10px;
-    font-family: 'Oswald', sans-serif;
-    font-size: 1.6rem; font-weight: 700;
-    color: var(--red);
-    text-decoration: none;
-    white-space: nowrap;
-    letter-spacing: 0.01em;
-  }
-  .boardup-call:hover { color: #e8204a; }
-  .boardup-call svg { width: 22px; height: 22px; stroke: currentColor; }
+  /* Photo strip */
   .boardup-photo-wrap {
-    margin-top: 24px;
-    max-width: 1240px;
-    margin-left: auto; margin-right: auto;
+    width: 100%;
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 12px 32px rgba(0,0,0,0.45);
     border: 1px solid rgba(255,255,255,0.06);
   }
   .boardup-photo {
-    display: block; width: 100%; height: 340px;
+    display: block; width: 100%; height: 360px;
     object-fit: cover; object-position: center;
   }
+  /* Description */
+  .boardup-description {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.65;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .boardup-description strong { color: rgba(255,255,255,0.92); font-weight: 600; }
+  /* Phone-call button CTA: same red-button language as hero primary */
+  .boardup-cta {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--red); color: #fff; border: none;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.16rem; font-weight: 700;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 28px;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(191,11,50,0.38);
+    transition: background 0.18s, transform 0.12s;
+    min-width: 320px;
+  }
+  .boardup-cta:hover  { background: var(--red-dk); }
+  .boardup-cta:active { transform: scale(0.98); }
+  .boardup-cta svg    { width: 20px; height: 20px; stroke: #fff; flex-shrink: 0; }
   @media (max-width: 768px) {
-    .boardup-photo { height: 220px; }
-    .boardup-photo-wrap { margin-top: 18px; border-radius: 8px; }
+    .boardup { padding: 36px 22px 40px; }
+    .boardup-photo { height: 230px; }
+    .boardup-cta { width: 100%; min-width: 0; font-size: 1rem; padding: 14px 20px; }
   }
 
   /* ── QUIZ FORM (storm-damage lead capture; ported from production LP) ── */
@@ -396,7 +419,7 @@
   }
   .sec-navy .sec-sub { color: rgba(255,255,255,0.7); }
 
-  /* ── WHY PINNACLE — three icon tiles on navy ── */
+  /* ── WHY PINNACLE: three icon tiles on navy ── */
   .wp-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 36px; margin-top: 6px;
@@ -431,7 +454,7 @@
     text-align: center;
   }
 
-  /* ── INSURANCE SUPPORT — split section, left checklist + CTA, right outcome panel ── */
+  /* ── INSURANCE SUPPORT: split section, left checklist + CTA, right outcome panel ── */
   .ins {
     background: var(--white);
     overflow: hidden;
@@ -517,7 +540,7 @@
   .ins-check svg { width: 12px; height: 12px; stroke: #fff; }
   .ins-checklist li strong { color: var(--blue); font-weight: 700; }
 
-  /* ── REVIEWS — reuse the production-LP testimonial pattern ── */
+  /* ── REVIEWS: reuse the production-LP testimonial pattern ── */
   .rev-grid {
     display: grid; grid-template-columns: repeat(3, 1fr);
     gap: 22px; margin-top: 6px;
@@ -678,8 +701,6 @@
   @media (max-width: 768px) {
     .mobile-bar { display: grid; }
     body { padding-bottom: 72px; }
-    .boardup-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
-    .boardup-call { font-size: 1.4rem; }
     .hero-stats { gap: 22px; }
     .hero-stat .val { font-size: 1.4rem; }
   }
@@ -700,7 +721,7 @@
 <!-- HEADER -->
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="#" class="site-logo-link" aria-label="Pinnacle Windows &amp; Restoration — home">
+    <a href="#" class="site-logo-link" aria-label="Pinnacle Windows &amp; Restoration, home">
       <img class="site-logo" src="https://assets.midwestwindowcompany.com/PinnacleWindows/pinnacle-logo%20(2).svg" alt="Pinnacle Windows &amp; Restoration">
     </a>
     <!-- REPLACE: Pinnacle Windows phone number -->
@@ -755,28 +776,29 @@
 <!-- BOARD-UP BAND -->
 <section class="boardup" id="boardup">
   <div class="boardup-inner">
-    <div class="boardup-left">
+    <div class="boardup-header">
       <div class="boardup-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M12 2L4 5v6c0 5 3.5 9.5 8 11 4.5-1.5 8-6 8-11V5l-8-3z"/>
           <path d="M9 12l2 2 4-4"/>
         </svg>
       </div>
-      <div class="boardup-text">
-        <h3>Emergency board-up. Dispatched today.</h3>
-        <p>An unsecured window after a storm is <strong>immediate liability</strong>. Rain damage through an exposed opening may not be covered if you didn&rsquo;t act fast. We&rsquo;ll board it up the same day so your claim stays clean.</p>
-      </div>
+      <h3>Emergency board-up. Dispatched today.</h3>
     </div>
+
+    <div class="boardup-photo-wrap">
+      <img class="boardup-photo" src="https://assets.midwestwindowcompany.com/PinnacleRestoration/Single%20Story%20Home%20-%20Boarded%20Up%20Windows.png" alt="Single-story home with boarded-up windows after storm damage, by Pinnacle Restoration" loading="lazy">
+    </div>
+
+    <p class="boardup-description">An unsecured window after a storm is <strong>immediate liability</strong>. Rain damage through an exposed opening may not be covered if you didn&rsquo;t act fast. We&rsquo;ll board it up the same day so your claim stays clean.</p>
+
     <!-- REPLACE: Pinnacle Windows phone number -->
-    <a href="tel:0000000000" class="boardup-call">
+    <a href="tel:0000000000" class="boardup-cta">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
       </svg>
-      (000) 000-0000
+      Call now: (000) 000-0000
     </a>
-  </div>
-  <div class="boardup-photo-wrap">
-    <img class="boardup-photo" src="https://assets.midwestwindowcompany.com/PinnacleRestoration/Single%20Story%20Home%20-%20Boarded%20Up%20Windows.png" alt="Single-story home with boarded-up windows after storm damage — Pinnacle Restoration emergency board-up" loading="lazy">
   </div>
 </section>
 
@@ -942,7 +964,7 @@
   <div class="sec-inner">
     <span class="eyebrow reveal">Why Pinnacle</span>
     <h2 class="sec-title reveal">One call. We handle <span class="accent">all of it.</span></h2>
-    <p class="sec-sub reveal">You don&rsquo;t need to juggle contractors, adjusters, and paperwork. We coordinate every piece &mdash; from emergency response to final installation.</p>
+    <p class="sec-sub reveal">You don&rsquo;t need to juggle contractors, adjusters, and paperwork. We coordinate every piece, from emergency response to final installation.</p>
 
     <div class="wp-grid">
       <div class="wp-item reveal">
@@ -952,7 +974,7 @@
           </svg>
         </div>
         <div class="wp-title">We&rsquo;re your GC</div>
-        <div class="wp-desc">Windows, roof, siding, doors &mdash; we manage every trade under one contract. No coordination headaches.</div>
+        <div class="wp-desc">Windows, roof, siding, doors. We manage every trade under one contract. No coordination headaches.</div>
       </div>
       <div class="wp-item reveal d1">
         <div class="wp-icon" aria-hidden="true">
@@ -1045,7 +1067,7 @@
   </div>
 </section>
 
-<!-- STORM-DAMAGE LEAD CAPTURE QUIZ — SECOND COPY -->
+<!-- STORM-DAMAGE LEAD CAPTURE QUIZ: SECOND COPY -->
 <section class="form-zone" id="storm-form-2">
   <div class="form-zone-inner">
     <h2 class="form-zone-h">Schedule your free 16-point inspection.</h2>
@@ -1159,7 +1181,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.73 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.36 1.85.6 2.81.73A2 2 0 0 1 22 16.92z"/>
     </svg>
-    Call now &mdash; (000) 000-0000
+    Call now: (000) 000-0000
   </a>
 </div>
 
@@ -1178,7 +1200,7 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
 
-  // Sticky mobile bar — hide while hero is in view, show after it scrolls out (mobile only via CSS)
+  // Sticky mobile bar: hide while hero is in view, show after it scrolls out (mobile only via CSS)
   var bar  = document.getElementById('mobile-bar');
   var hero = document.getElementById('hero-anchor');
   if (bar && hero) {
@@ -1222,7 +1244,7 @@
   // TODO: Set Pinnacle Restoration's own lead webhook. Left empty so submissions don't post to anyone.
   var STORM_WEBHOOK = '';
   // TODO: Replace with Pinnacle approved zip codes for Colorado & Nebraska
-  var APPROVED_ZIPS = []; // Temporarily empty — all zips will show "not in service area" until populated
+  var APPROVED_ZIPS = []; // Temporarily empty: all zips will show "not in service area" until populated
 
   function stormRoot(el) { return el.closest('.v2-form'); }
   function stormSuffix(root) { return root.id.replace('storm-form-card', ''); }   // '' for form 1, '-2' for form 2
@@ -1357,7 +1379,7 @@
     stormShow(root, 'storm-success');
   }
 
-  // Anchor scroll from hero CTA — always targets form 1 (top-of-page).
+  // Anchor scroll from hero CTA: always targets form 1 (top-of-page).
   function scrollToForm(e) {
     if (e) e.preventDefault();
     var f = document.getElementById('storm-form');
