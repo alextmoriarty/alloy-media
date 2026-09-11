@@ -1270,7 +1270,7 @@
     letter-spacing: -0.01em;
     margin-bottom: 14px;
   }
-  .vsl-h1 .orange { color: var(--orange); display: block; }
+  .vsl-h1 .orange { color: var(--orange); }   /* inline highlight — see the dark block */
 
   /* "The video answers this" arrow. Sits between the headline and the
      player, points down at it. Animated on the Y axis only — a nudge,
@@ -1355,10 +1355,28 @@
   /* ── SENJA TESTIMONIAL + PERFORMANCE BEFORE/AFTER ──────────────
      Left-aligned per the brief. Two columns on desktop: the quote on
      the left, the old-agency → Alloy numbers on the right.       */
+  /* The video column is a fixed-width card (see .vid-testimonial), so a
+     1fr column left ~170px of dead air between it and the numbers —
+     the "awkward space". The column is now sized to the card and the
+     table takes the remaining width. Centred rather than top-aligned,
+     because the 9:16 video is much taller than four rows of figures
+     and top-alignment hangs the table off the top of a tall column. */
+  /* A 9:16 video is ~530px tall and four rows of figures are ~300px, so
+     the two columns can never match. Centring split the difference and
+     left a hole between the heading and the first row; top-aligning
+     starts them on the same line, which is what the eye wants, and puts
+     the slack at the bottom where the video's own mass fills it. The
+     rows are also given more air, both to close the gap and because
+     cramped rows make a figure look like a spreadsheet rather than a
+     result. */
   .proof-grid {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 44px; align-items: start; margin-top: 30px;
+    display: grid;
+    grid-template-columns: 290px minmax(0, 1fr);
+    gap: 52px; align-items: start; margin-top: 34px;
   }
+  .proof-grid .vid-testimonial { max-width: 290px; }
+  /* Pull the table's header row up level with the top of the video. */
+  .proof-grid .cmp { margin-top: -6px; }
   .senja-slot {
     background: var(--white); border: 1px solid var(--gray-2);
     border-radius: 12px; padding: 26px 26px 22px;
@@ -1383,28 +1401,70 @@
   .senja-by-name { font-weight: 700; color: var(--navy); font-size: 0.98rem; }
   .senja-by-role { font-size: 0.84rem; color: var(--text-lt); }
 
-  /* Before → after performance pair */
-  .perf-lede { font-size: 1rem; line-height: 1.7; color: var(--text-mid); margin-bottom: 20px; }
-  .perf-pair { display: flex; flex-direction: column; gap: 12px; }
-  .perf-card { border-radius: 12px; padding: 20px 22px; border: 1px solid var(--gray-2); }
-  .perf-card--before { background: var(--gray-1); }
-  .perf-card--after  { background: var(--navy); border-color: rgba(46,196,182,0.3); }
-  .perf-label {
-    font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;
+  /* ── BEFORE / AFTER SPEC TABLE ──────────────────────────────────
+     Deliberately not two cards. See the note in the markup.
+     Columns are sized so the two value columns match each other and
+     the metric name takes the slack — that keeps the numbers in a
+     straight vertical line down the table, which is the whole reason
+     to use a table rather than cards. */
+  .cmp {
+    width: 100%;
+    border-collapse: collapse;
+    font-variant-numeric: tabular-nums;
   }
-  .perf-card--before .perf-label { color: var(--text-lt); }
-  .perf-card--after  .perf-label { color: var(--orange); }
-  .perf-rows { display: grid; gap: 10px; }
-  .perf-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
-  .perf-row-k { font-size: 0.88rem; }
-  .perf-card--before .perf-row-k { color: var(--text-mid); }
-  .perf-card--after  .perf-row-k { color: rgba(240,237,230,0.72); }
-  .perf-row-v { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.35rem; white-space: nowrap; }
-  .perf-card--before .perf-row-v { color: var(--text); }
-  .perf-card--after  .perf-row-v { color: var(--orange); }
-  .perf-arrow { text-align: center; color: var(--gold-ink); font-size: 1.4rem; line-height: 1; }
-  .perf-note { font-size: 0.78rem; color: var(--text-lt); margin-top: 14px; font-style: italic; }
+  .cmp th, .cmp td { text-align: left; padding: 22px 8px; }
+  .cmp thead th {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    padding-bottom: 9px;
+    border-bottom: 1px solid var(--gray-3);
+  }
+  .cmp-h-before { color: var(--text-lt); }
+  .cmp-h-after  { color: var(--gold-ink); }
+  .cmp tbody tr + tr th, .cmp tbody tr + tr td { border-top: 1px solid var(--gray-2); }
+
+  /* Metric name: the quiet column. */
+  .cmp tbody th {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem; font-weight: 500;
+    color: var(--text-mid);
+    width: 40%;
+  }
+  /* Figures: Oswald, same face as every other number on the page. */
+  .cmp td {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; font-size: 1.5rem;
+    line-height: 1.1;
+    width: 30%;
+  }
+  .cmp-before { color: var(--text-lt); }
+  /* "Not profitable" is prose, not a figure — it should not be set at
+     display size or it shouts louder than the numbers around it. */
+  .cmp td.cmp-before--text {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.92rem; font-weight: 500;
+    line-height: 1.4;
+  }
+  .cmp-empty { padding: 0; }
+
+  /* The column that matters: teal ink and a tint band running the full
+     height, which is what replaces the "after card" without importing
+     a card. The tint is on the cells, so it stays put when the table
+     reflows on mobile. */
+  .cmp-after, .cmp-h-after {
+    color: var(--gold-ink);
+    background: rgba(46,196,182,0.07);
+    padding-left: 16px; padding-right: 16px;
+  }
+  .cmp thead .cmp-h-after { border-bottom-color: rgba(14,90,82,0.35); }
+
+  /* Visually hidden: header text that only screen readers need. */
+  .cmp-vh {
+    position: absolute; width: 1px; height: 1px;
+    padding: 0; margin: -1px; overflow: hidden;
+    clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
 
   /* ── FOUR PILLARS ──────────────────────────────────────────────
      Numbered cards on the dark ground, same numbering treatment as
@@ -1480,7 +1540,11 @@
 
   /* ── RESPONSIVE (Alloy sections only) ── */
   @media (max-width: 900px) {
-    .proof-grid { grid-template-columns: 1fr; gap: 30px; }
+    .proof-grid { grid-template-columns: 1fr; gap: 34px; justify-items: center; }
+    .proof-grid .cmp { max-width: 460px; }
+    .cmp td { font-size: 1.35rem; }
+    .cmp th, .cmp td { padding: 13px 6px; }
+    .cmp-after, .cmp-h-after { padding-left: 12px; padding-right: 12px; }
     .pillars { grid-template-columns: 1fr; }
     .ad-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     .lp-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
@@ -1612,14 +1676,6 @@
 
   .vsl-h1 { color: #F4F1EC; }
   .vsl-h1 .orange { color: var(--orange); }
-  .vsl-h1-qual {
-    display: block; margin-top: 10px;
-    font-size: 0.58em; font-weight: 500; line-height: 1.32;
-    color: rgba(240,237,230,0.68); letter-spacing: 0;
-  }
-  /* Pushed down and up a size: the caveat line above it is 0.92rem and
-     was sitting 14px away, which made the two supporting lines blur into
-     one grey block under the headline. */
   .vsl-sub {
     max-width: 660px; margin: 26px auto 0; text-align: center;
     font-size: 1.08rem; line-height: 1.6;
@@ -1881,7 +1937,7 @@
            shortened "deeper discounts" that was here briefly.
            ════════════════════════════════════════════════════════ -->
       <h1 class="vsl-h1">
-        Lower your Cost Per Appointment in 10&nbsp;days
+        Lower your <span class="orange">Cost Per Appointment</span> in 10&nbsp;days
       </h1>
 
       <p class="vsl-caveats">
@@ -1889,7 +1945,7 @@
         <span>Without relying on overly aggressive discounts</span>
       </p>
 
-      <p class="vsl-sub">The 7 controllable factors that make Meta leads convert worse &mdash; and how we fix each one.</p>
+      <p class="vsl-sub">The 7 controllable factors that make Meta leads convert worse, and how we fix each one.</p>
 
       <div class="vsl-arrow" aria-hidden="true">
         <span class="chev">&#9662;</span>
@@ -1936,20 +1992,19 @@
       </div>
 
       <!-- ── Step 1 ───────────────────────────────────────────────────────
-           ⚠ PLACEHOLDER QUESTIONS. Alex is supplying the real four in the
-           next round of edits; these exist so the flow, the dots and focus
-           mode are all testable today.
-           The shape is deliberate and worth keeping whatever the wording
-           becomes: qualify BEFORE asking for PII. A visitor who is not a fit
-           never reaches the contact step, and a visitor who is has already
-           invested three clicks by the time they are asked for a number. -->
+           Alex's wording, confirmed 2026-09-11. Steps 2 and 3 are unchanged
+           from the draft at his instruction.
+           The shape is the point and is worth keeping: qualify BEFORE asking
+           for PII. A visitor who is not a fit never reaches the contact step,
+           and one who is has already invested three clicks by the time they
+           are asked for a number. -->
       <div id="m2s-step0">
-        <p class="m2s-question">What do you install?</p>
+        <p class="m2s-question">Which vertical is your business in?</p>
         <div class="v2-tiles">
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bath &amp; Shower')">Bath &amp; Shower</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows &amp; Doors')">Windows &amp; Doors</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom Remodeling')">Bathroom Remodeling</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something Else')">Something Else</button>
         </div>
         <p class="v2-cta-micro" style="margin-top:12px">
           <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
@@ -2007,10 +2062,12 @@
         </div>
         <input class="m2s-input" type="tel" id="m2s-phone" placeholder="(555) 555-0000" inputmode="tel" style="margin-top:10px">
         <input class="m2s-input" type="email" id="m2s-email" placeholder="Work email address" style="margin-bottom:4px">
-        <button class="m2s-btn" onclick="m2sSubmit(this)">Book My Call &rarr;</button>
-        <!-- TODO(legal): Alloy's own consent wording + real Privacy / Terms URLs
-             before this page carries paid traffic. Copied structure only. -->
-        <p class="m2s-consent">By clicking &ldquo;Book My Call&rdquo; I agree to be contacted by Alloy Media at the details provided. Consent is not a condition of purchase; message and data rates may apply. See our <a href="#" rel="nofollow">Privacy Policy</a> and <a href="#" rel="nofollow">Terms</a>.</p>
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Book an Intro Call &rarr;</button>
+        <!-- The click-to-consent paragraph that sat here was removed at Alex's
+             instruction (2026-09-11). Noting what it was doing, since the form
+             still collects a phone number: on the client pages that line is
+             what documents express consent to call and text the number given.
+             Worth a look from Alloy's side before this carries paid traffic. -->
       </div>
 
       <!-- Success (in-page fallback used while THANK_YOU_URL is empty) -->
@@ -2021,13 +2078,16 @@
       </div>
 
       <!-- Testimonial inside the form card, persistent across steps.
-           ⚠ PLACEHOLDER — swap for a real Senja quote from a client who can be
-           named. On a client page this slot kills the cost objection at the
-           moment of handing over a number; here the objection is "will this
-           actually be different from my last agency", so the quote that
-           belongs here is one that answers exactly that. -->
+           On a client page this slot kills the cost objection at the moment of
+           handing over a number. Here the objection is "will this be any
+           different from my last agency", and a first-month revenue figure
+           answers it with an outcome rather than an adjective. -->
       <div class="v2-pullquote">
-        <p>&ldquo;Placeholder &mdash; a two-sentence client quote goes here, verbatim, answering &lsquo;how is this different from the last agency&rsquo;.&rdquo;</p>
+        <p>&ldquo;We generated $100k in revenue on $7,500 in spend in our first month with Alloy Media. The leads have been tremendous.&rdquo;</p>
+        <!-- TODO(copy): attribution. The quote is real; the name under it is
+             not. A named client carries several times the weight of an
+             anonymous one at the exact moment someone is deciding whether to
+             hand over a phone number. -->
         <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
       </div>
     </div>
@@ -2063,45 +2123,36 @@
   </div>
 </section>
 
-<!-- ============ SENJA TESTIMONIAL + PERFORMANCE BEFORE/AFTER ====
-     Left-aligned per the brief. The quote and the numbers are one
-     argument, so they share a row: the client says it, the numbers
-     show it.
-     ⚠ ALL COPY AND EVERY NUMBER BELOW IS PLACEHOLDER — fluffed up to
-     hold the shape, as asked. Nothing here is real and none of it can
-     ship. Swap in the actual Senja quote and the actual before/after.
+<!-- ============ BEFORE & AFTER =================================
+     Figures are Alex's, supplied 2026-09-11, and are real.
+
+     TODO(legal/copy): they carry no client name, date range or spend
+     level. A results table with nothing attached to it is the easiest
+     thing on an agency site to challenge, and naming the client makes
+     it several times more persuasive besides. Get both before this
+     page carries paid traffic.
      ============================================================== -->
 <section class="sec sec-gray" id="proof">
   <div class="sec-inner">
-    <span class="eyebrow">Proof</span>
-    <h2 class="sec-title reveal">What Changed When They <span class="accent">Switched</span></h2>
+    <h2 class="sec-title reveal">Before &amp; After <span class="accent">Alloy Media</span></h2>
 
     <div class="proof-grid reveal">
 
       <!-- ── Video testimonial ───────────────────────────────────────
-           Wired 2026-09-11 to "Elevated Windows & Doors Testimonial"
+           "Elevated Windows & Doors Testimonial"
            (youtube.com/shorts/TCbIhWgwQOc, Alloy Media channel).
 
            A 9:16 Short, so the frame is 9:16 and the poster is YouTube's
            `oardefault.jpg` — the original-aspect thumbnail. The usual
-           hqdefault is a 16:9 crop and would sit letterboxed in a vertical
-           frame, so do not swap it for that one.
-
-           Width is capped at 330px on purpose: a half-column 9:16 player
-           at full width would run ~890px tall and tower over the
-           before/after beside it.
+           hqdefault is a 16:9 crop and would sit letterboxed in a
+           vertical frame, so do not swap it for that one.
 
            Same click-to-load facade as the hero VSL — no player JS until
            someone presses play.
 
-           TODO(copy): the speaker's name. It is not in the video metadata
-           and inventing one on a testimonial is not an option, so the
-           attribution names the company only for now.
-
-           The WRITTEN Senja quote this slot originally held has not been
-           lost — the text-testimonial placeholder still sits inside each
-           form (.v2-pullquote). Put the real Senja quote there, or restore
-           a card here alongside the video, once Alex supplies it. -->
+           TODO(copy): the speaker's name. It is not in the video
+           metadata and inventing one on a testimonial is not an option,
+           so the attribution names the company only. -->
       <div class="vid-testimonial">
         <div class="tvid-frame" id="tvid-frame">
           <button type="button" class="tvid-facade js-video-facade" id="tvid-facade"
@@ -2121,40 +2172,53 @@
         </div>
       </div>
 
-      <!-- ── Before / after performance ───────────────────────────── -->
-      <div>
-        <p class="perf-lede">Most of the accounts we take over are not broken in an interesting way. They are spending into a lookalike audience with four-year-old creative, counting form fills as conversions, and nobody has told the algorithm which of those leads ever signed a contract. Here is what that looks like before and after.</p>
+      <!-- ── The numbers ─────────────────────────────────────────────
+           A real <table>, because this is tabular data: four metrics
+           compared across two states. It gives screen readers the row
+           and column headers for free, which a pair of divs cannot.
 
-        <div class="perf-pair">
-          <div class="perf-card perf-card--before">
-            <div class="perf-label">Before &mdash; previous agency</div>
-            <div class="perf-rows">
-              <div class="perf-row"><span class="perf-row-k">Cost per lead</span><span class="perf-row-v">$XXX</span></div>
-              <div class="perf-row"><span class="perf-row-k">Lead-to-appointment</span><span class="perf-row-v">XX%</span></div>
-              <div class="perf-row"><span class="perf-row-k">Cost per signed job</span><span class="perf-row-v">$X,XXX</span></div>
-              <div class="perf-row"><span class="perf-row-k">New creative per month</span><span class="perf-row-v">0</span></div>
-            </div>
-          </div>
-
-          <div class="perf-arrow" aria-hidden="true">&#8595;</div>
-
-          <div class="perf-card perf-card--after">
-            <div class="perf-label">After &mdash; with Alloy Media</div>
-            <div class="perf-rows">
-              <div class="perf-row"><span class="perf-row-k">Cost per lead</span><span class="perf-row-v">$XXX</span></div>
-              <div class="perf-row"><span class="perf-row-k">Lead-to-appointment</span><span class="perf-row-v">XX%</span></div>
-              <div class="perf-row"><span class="perf-row-k">Cost per signed job</span><span class="perf-row-v">$X,XXX</span></div>
-              <div class="perf-row"><span class="perf-row-k">New creative per month</span><span class="perf-row-v">8&ndash;10</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- TODO(legal): once these are real numbers, this line needs to say
-             which client, over what window, and at what spend. A before/after
-             table with no period attached to it is the single easiest thing
-             on an agency site to pick apart. -->
-        <p class="perf-note">Placeholder figures. Real client, date range and spend level to be named here.</p>
-      </div>
+           It is a SPEC TABLE, not two cards. Two rounded, shadowed
+           "Before"/"After" cards side by side is the single most
+           recognisable AI-landing-page component there is, and it also
+           makes the comparison harder than it needs to be: the reader
+           has to hop between cards to pair up each metric. Rows put the
+           two values for a metric next to each other, which is the
+           whole job. The styling is the page's own vocabulary —
+           hairline rules, Oswald numerals, teal ink for the column that
+           matters — rather than borrowed card chrome. -->
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th scope="col"><span class="cmp-vh">Metric</span></th>
+            <th scope="col" class="cmp-h-before">Before</th>
+            <th scope="col" class="cmp-h-after">After</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Cost per lead</th>
+            <td class="cmp-before">$380</td>
+            <td class="cmp-after">$130</td>
+          </tr>
+          <tr>
+            <th scope="row">Set rate</th>
+            <td class="cmp-before">18%</td>
+            <td class="cmp-after">52%</td>
+          </tr>
+          <tr>
+            <th scope="row">Cost of marketing</th>
+            <td class="cmp-before cmp-before--text">Not profitable</td>
+            <td class="cmp-after">7.5%</td>
+          </tr>
+          <tr>
+            <th scope="row">Revenue</th>
+            <!-- No "before" figure was supplied, and inventing one is not an
+                 option. Empty rather than a dash, which would read as zero. -->
+            <td class="cmp-before cmp-empty"><span class="cmp-vh">Not recorded</span></td>
+            <td class="cmp-after">$101,000</td>
+          </tr>
+        </tbody>
+      </table>
 
     </div>
   </div>
@@ -2175,20 +2239,19 @@
       </div>
 
       <!-- ── Step 1 ───────────────────────────────────────────────────────
-           ⚠ PLACEHOLDER QUESTIONS. Alex is supplying the real four in the
-           next round of edits; these exist so the flow, the dots and focus
-           mode are all testable today.
-           The shape is deliberate and worth keeping whatever the wording
-           becomes: qualify BEFORE asking for PII. A visitor who is not a fit
-           never reaches the contact step, and a visitor who is has already
-           invested three clicks by the time they are asked for a number. -->
+           Alex's wording, confirmed 2026-09-11. Steps 2 and 3 are unchanged
+           from the draft at his instruction.
+           The shape is the point and is worth keeping: qualify BEFORE asking
+           for PII. A visitor who is not a fit never reaches the contact step,
+           and one who is has already invested three clicks by the time they
+           are asked for a number. -->
       <div id="m2s-step0-2">
-        <p class="m2s-question">What do you install?</p>
+        <p class="m2s-question">Which vertical is your business in?</p>
         <div class="v2-tiles">
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bath &amp; Shower')">Bath &amp; Shower</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows &amp; Doors')">Windows &amp; Doors</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom Remodeling')">Bathroom Remodeling</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something Else')">Something Else</button>
         </div>
         <p class="v2-cta-micro" style="margin-top:12px">
           <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
@@ -2246,10 +2309,12 @@
         </div>
         <input class="m2s-input" type="tel" id="m2s-phone-2" placeholder="(555) 555-0000" inputmode="tel" style="margin-top:10px">
         <input class="m2s-input" type="email" id="m2s-email-2" placeholder="Work email address" style="margin-bottom:4px">
-        <button class="m2s-btn" onclick="m2sSubmit(this)">Book My Call &rarr;</button>
-        <!-- TODO(legal): Alloy's own consent wording + real Privacy / Terms URLs
-             before this page carries paid traffic. Copied structure only. -->
-        <p class="m2s-consent">By clicking &ldquo;Book My Call&rdquo; I agree to be contacted by Alloy Media at the details provided. Consent is not a condition of purchase; message and data rates may apply. See our <a href="#" rel="nofollow">Privacy Policy</a> and <a href="#" rel="nofollow">Terms</a>.</p>
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Book an Intro Call &rarr;</button>
+        <!-- The click-to-consent paragraph that sat here was removed at Alex's
+             instruction (2026-09-11). Noting what it was doing, since the form
+             still collects a phone number: on the client pages that line is
+             what documents express consent to call and text the number given.
+             Worth a look from Alloy's side before this carries paid traffic. -->
       </div>
 
       <!-- Success (in-page fallback used while THANK_YOU_URL is empty) -->
@@ -2260,13 +2325,16 @@
       </div>
 
       <!-- Testimonial inside the form card, persistent across steps.
-           ⚠ PLACEHOLDER — swap for a real Senja quote from a client who can be
-           named. On a client page this slot kills the cost objection at the
-           moment of handing over a number; here the objection is "will this
-           actually be different from my last agency", so the quote that
-           belongs here is one that answers exactly that. -->
+           On a client page this slot kills the cost objection at the moment of
+           handing over a number. Here the objection is "will this be any
+           different from my last agency", and a first-month revenue figure
+           answers it with an outcome rather than an adjective. -->
       <div class="v2-pullquote">
-        <p>&ldquo;Placeholder &mdash; a two-sentence client quote goes here, verbatim, answering &lsquo;how is this different from the last agency&rsquo;.&rdquo;</p>
+        <p>&ldquo;We generated $100k in revenue on $7,500 in spend in our first month with Alloy Media. The leads have been tremendous.&rdquo;</p>
+        <!-- TODO(copy): attribution. The quote is real; the name under it is
+             not. A named client carries several times the weight of an
+             anonymous one at the exact moment someone is deciding whether to
+             hand over a phone number. -->
         <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
       </div>
     </div>
@@ -2537,20 +2605,19 @@
       </div>
 
       <!-- ── Step 1 ───────────────────────────────────────────────────────
-           ⚠ PLACEHOLDER QUESTIONS. Alex is supplying the real four in the
-           next round of edits; these exist so the flow, the dots and focus
-           mode are all testable today.
-           The shape is deliberate and worth keeping whatever the wording
-           becomes: qualify BEFORE asking for PII. A visitor who is not a fit
-           never reaches the contact step, and a visitor who is has already
-           invested three clicks by the time they are asked for a number. -->
+           Alex's wording, confirmed 2026-09-11. Steps 2 and 3 are unchanged
+           from the draft at his instruction.
+           The shape is the point and is worth keeping: qualify BEFORE asking
+           for PII. A visitor who is not a fit never reaches the contact step,
+           and one who is has already invested three clicks by the time they
+           are asked for a number. -->
       <div id="m2s-step0-3">
-        <p class="m2s-question">What do you install?</p>
+        <p class="m2s-question">Which vertical is your business in?</p>
         <div class="v2-tiles">
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bath &amp; Shower')">Bath &amp; Shower</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows &amp; Doors')">Windows &amp; Doors</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom Remodeling')">Bathroom Remodeling</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something Else')">Something Else</button>
         </div>
         <p class="v2-cta-micro" style="margin-top:12px">
           <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
@@ -2608,10 +2675,12 @@
         </div>
         <input class="m2s-input" type="tel" id="m2s-phone-3" placeholder="(555) 555-0000" inputmode="tel" style="margin-top:10px">
         <input class="m2s-input" type="email" id="m2s-email-3" placeholder="Work email address" style="margin-bottom:4px">
-        <button class="m2s-btn" onclick="m2sSubmit(this)">Book My Call &rarr;</button>
-        <!-- TODO(legal): Alloy's own consent wording + real Privacy / Terms URLs
-             before this page carries paid traffic. Copied structure only. -->
-        <p class="m2s-consent">By clicking &ldquo;Book My Call&rdquo; I agree to be contacted by Alloy Media at the details provided. Consent is not a condition of purchase; message and data rates may apply. See our <a href="#" rel="nofollow">Privacy Policy</a> and <a href="#" rel="nofollow">Terms</a>.</p>
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Book an Intro Call &rarr;</button>
+        <!-- The click-to-consent paragraph that sat here was removed at Alex's
+             instruction (2026-09-11). Noting what it was doing, since the form
+             still collects a phone number: on the client pages that line is
+             what documents express consent to call and text the number given.
+             Worth a look from Alloy's side before this carries paid traffic. -->
       </div>
 
       <!-- Success (in-page fallback used while THANK_YOU_URL is empty) -->
@@ -2622,13 +2691,16 @@
       </div>
 
       <!-- Testimonial inside the form card, persistent across steps.
-           ⚠ PLACEHOLDER — swap for a real Senja quote from a client who can be
-           named. On a client page this slot kills the cost objection at the
-           moment of handing over a number; here the objection is "will this
-           actually be different from my last agency", so the quote that
-           belongs here is one that answers exactly that. -->
+           On a client page this slot kills the cost objection at the moment of
+           handing over a number. Here the objection is "will this be any
+           different from my last agency", and a first-month revenue figure
+           answers it with an outcome rather than an adjective. -->
       <div class="v2-pullquote">
-        <p>&ldquo;Placeholder &mdash; a two-sentence client quote goes here, verbatim, answering &lsquo;how is this different from the last agency&rsquo;.&rdquo;</p>
+        <p>&ldquo;We generated $100k in revenue on $7,500 in spend in our first month with Alloy Media. The leads have been tremendous.&rdquo;</p>
+        <!-- TODO(copy): attribution. The quote is real; the name under it is
+             not. A named client carries several times the weight of an
+             anonymous one at the exact moment someone is deciding whether to
+             hand over a phone number. -->
         <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
       </div>
     </div>
