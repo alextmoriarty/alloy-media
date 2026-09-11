@@ -1617,10 +1617,13 @@
     font-size: 0.58em; font-weight: 500; line-height: 1.32;
     color: rgba(240,237,230,0.68); letter-spacing: 0;
   }
+  /* Pushed down and up a size: the caveat line above it is 0.92rem and
+     was sitting 14px away, which made the two supporting lines blur into
+     one grey block under the headline. */
   .vsl-sub {
-    max-width: 680px; margin: 14px auto 0; text-align: center;
-    font-size: 1.02rem; line-height: 1.62;
-    color: rgba(240,237,230,0.7);
+    max-width: 660px; margin: 26px auto 0; text-align: center;
+    font-size: 1.08rem; line-height: 1.6;
+    color: rgba(240,237,230,0.78);
   }
   .vsl-arrow { color: var(--orange); margin-top: 18px; }
   .vsl-frame {
@@ -1630,26 +1633,55 @@
   .v2-benefits li { color: rgba(240,237,230,0.92); }
   .v2-benefits .ck { color: var(--orange); }
 
-  /* ── Hero promise chips: the two "withouts" ──────────────────────
+  /* ── Hero caveat line: the two "withouts" ───────────────────────
      These carry copy that used to be a trailing clause on the
-     headline. As a clause it had to be READ; as two chips it is
-     scanned, which is the whole reason the hero got shorter without
-     losing anything. */
-  .vsl-chips {
-    display: flex; flex-wrap: wrap; justify-content: center;
-    gap: 8px; margin: 16px auto 0;
+     headline. As a clause it had to be READ; split in two it is
+     scanned, which is what let the hero get shorter without losing
+     anything.
+
+     WHY NOT PILLS. The first version set these as rounded chips.
+     They worked, but a row of rounded pills under a headline is the
+     house style of every AI-assisted landing page built in the last
+     two years, and anyone in this industry clocks it instantly.
+     This is the same split done with a printer's convention instead:
+     two clauses divided by a hairline rule. It is what a masthead or
+     a spec line has always done, it uses the page's existing hairline
+     token rather than inventing chrome, and it reads as typography
+     rather than as components.
+     The rule is a pseudo-element on the second clause, so the markup
+     stays two spans and the divider can never end up orphaned at the
+     start or end of a wrapped row. */
+  .vsl-caveats {
+    display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: center;
+    gap: 0 38px;                 /* wide enough for the rule to sit in air */
+    margin: 18px auto 0;
+    max-width: 700px;
   }
-  .vsl-chip {
-    display: inline-flex; align-items: center; gap: 7px;
-    background: rgba(46,196,182,0.08);
-    border: 1px solid var(--hair-2);
-    border-radius: 100px;
-    padding: 7px 15px 7px 12px;
-    font-size: 0.86rem; font-weight: 500;
-    color: rgba(240,237,230,0.88);
-    letter-spacing: 0.01em;
+  .vsl-caveats span {
+    position: relative;
+    font-size: 0.92rem; font-weight: 400;
+    color: rgba(240,237,230,0.7);
+    letter-spacing: 0.005em;
+    white-space: nowrap;
   }
-  .vsl-chip .x { color: var(--orange); font-weight: 700; font-size: 0.95rem; line-height: 1; }
+  /* CENTRED IN THE GAP — half the gap, not the whole of it. At -38px the
+     rule butted straight up against the end of the previous clause and
+     read as a stray tick rather than a divider. */
+  .vsl-caveats span + span::before {
+    content: '';
+    position: absolute; left: -19px; top: 50%;
+    transform: translateY(-50%);
+    width: 1px; height: 17px;
+    background: var(--hair-2);
+  }
+  /* Stacked, the vertical rule would be pointing the wrong way, so it
+     goes and the gap does the separating instead. */
+  @media (max-width: 620px) {
+    .vsl-caveats { flex-direction: column; gap: 5px; }
+    .vsl-caveats span { white-space: normal; }
+    .vsl-caveats span + span::before { display: none; }
+  }
 
   /* ── Form zones ── */
   .form-zone {
@@ -1844,17 +1876,18 @@
            Same meaning, ~185 characters instead of ~270, and the
            promise now lands on its own. All of it is still Alex's
            wording, just redistributed.
-           TODO(copy): Alex to confirm "deeper discounts" as the short
-           form of "overly aggressive discounts".
+           The second caveat keeps Alex's full "overly aggressive
+           discounts" — confirmed 2026-09-11 as better than the
+           shortened "deeper discounts" that was here briefly.
            ════════════════════════════════════════════════════════ -->
       <h1 class="vsl-h1">
         Lower your Cost Per Appointment in 10&nbsp;days
       </h1>
 
-      <div class="vsl-chips">
-        <span class="vsl-chip"><span class="x" aria-hidden="true">&times;</span>Without sacrificing lead volume</span>
-        <span class="vsl-chip"><span class="x" aria-hidden="true">&times;</span>Without deeper discounts</span>
-      </div>
+      <p class="vsl-caveats">
+        <span>Without sacrificing lead volume</span>
+        <span>Without relying on overly aggressive discounts</span>
+      </p>
 
       <p class="vsl-sub">The 7 controllable factors that make Meta leads convert worse &mdash; and how we fix each one.</p>
 
