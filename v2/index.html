@@ -1352,25 +1352,6 @@
     letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-lt);
     margin-bottom: 26px;
   }
-  .logos-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    gap: 26px 34px; align-items: center;
-  }
-  .logos-grid img {
-    max-width: 100%; height: 52px; object-fit: contain;
-    filter: grayscale(1); opacity: 0.62;
-    transition: filter 0.2s ease, opacity 0.2s ease;
-  }
-  .logos-grid img:hover { filter: grayscale(0); opacity: 1; }
-  /* Placeholder tile — delete each one as a real logo lands. */
-  .logo-ph {
-    height: 52px; border: 1px dashed var(--gray-3); border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--text-lt); font-size: 0.72rem; letter-spacing: 0.06em;
-    text-transform: uppercase; background: var(--gray-1);
-  }
-
   /* ── SENJA TESTIMONIAL + PERFORMANCE BEFORE/AFTER ──────────────
      Left-aligned per the brief. Two columns on desktop: the quote on
      the left, the old-agency → Alloy numbers on the right.       */
@@ -1505,7 +1486,6 @@
     .lp-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
   }
   @media (max-width: 520px) {
-    .logos-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
   }
 
   /* ── Focus mode: hide the Alloy-only chrome too ────────────────
@@ -1582,121 +1562,228 @@
     .vid-testimonial { margin-left: auto; margin-right: auto; }
   }
 
+
   /* ═══════════════════════════════════════════════════════════════
-     LIGHT THEME (2026-09-11)
+     DARK, REFINED (2026-09-11, replacing the light experiment)
 
-     The fork arrived dark-heavy — dark hero, dark form zones, dark
-     pillars, dark attribution, dark footer — which is the client
-     template's lineage, not a decision anyone made for Alloy. Alex
-     asked to lean light, so the ground is flipped here rather than by
-     editing the inherited CSS above: keeping the overrides in one
-     block means the dark original is still intact and one deletion
-     puts it back.
+     Going light cost the page its premium feel, so the dark ground is
+     back — but rebuilt rather than simply reverted, because the
+     original dark was not Alloy's.
 
-     Rhythm, top to bottom. No two adjacent sections share a ground:
-       hero          tinted light     logos         white
-       proof         gray             form-zone 2   teal wash
-       lead-quality  white            pillars       gray
-       creative      white            landing-pages gray
-       attribution   NAVY  <- the one dark section, deliberately
-       form-zone 3   teal wash        faq           white
-       footer        navy
+     WHAT WAS WRONG BEFORE. The inherited hero ramp was
+     #000000 -> #071003 -> #0E2306: a GREEN black, inherited from
+     Fisher, whose brand is green. Under Alloy's teal accent that green
+     undertone read as slightly muddy and slightly off-brand — a teal
+     highlight sitting on a green-black ground. It is subtle and it is
+     the reason the dark never looked as sharp as it should have.
 
-     Attribution stays dark on purpose: it is the "custom
-     infrastructure" moment, its diagram was drawn for a dark ground,
-     and one dark band stops an all-light page going flat.
+     WHAT IT IS NOW. A teal-black ramp built from the values Alloy's
+     own live site already uses (#131311 / #191816 / #201F1C /
+     #0D1E1C), so the ground and the accent finally belong to the same
+     family. Pure #000 is avoided everywhere: it flattens on OLED and
+     kills the sense of depth. Plus the things that actually read as
+     "premium" rather than just "dark" — hairline teal borders instead
+     of hard edges, a single soft light source in the hero, and raised
+     surfaces that are lifted with translucency rather than a
+     different flat fill.
      ═══════════════════════════════════════════════════════════════ */
+  :root {
+    --ink-0:    #0B0B0A;   /* deepest — logo wall, footer */
+    --ink-1:    #131311;   /* base dark (matches the live site's --bg) */
+    --ink-2:    #191816;   /* raised */
+    --ink-teal: #0D1E1C;   /* teal-tinted dark, the ramp's warm end */
+    --ink-teal-2: #103029; /* brighter teal-dark for gradient stops */
+    --hair:     rgba(46,196,182,0.14);  /* hairline rule */
+    --hair-2:   rgba(46,196,182,0.22);  /* hairline, more present */
+  }
 
-  /* Body ground: was --navy, which would flash dark on overscroll and
-     behind any gap now that the hero is light. */
-  body { background: var(--gray-1); }
+  body { background: var(--ink-1); }
 
-  /* ── Hero ── */
+  /* ── Hero: one soft light source, top right ── */
   .hero {
-    background: linear-gradient(168deg, #FFFFFF 0%, #F7F9F8 48%, #E9F4F2 100%);
-    border-bottom: 1px solid var(--gray-2);
+    background: linear-gradient(163deg, var(--ink-0) 0%, var(--ink-1) 38%, var(--ink-teal) 100%);
+    border-bottom: 1px solid var(--hair);
   }
   .hero::after {
     background:
-      radial-gradient(ellipse at 85% 12%, rgba(46,196,182,0.13) 0%, transparent 52%),
-      radial-gradient(ellipse at 5% 88%, rgba(14,90,82,0.06) 0%, transparent 55%);
+      radial-gradient(ellipse 60% 50% at 78% 8%, rgba(46,196,182,0.13) 0%, transparent 62%),
+      radial-gradient(ellipse 70% 60% at 12% 96%, rgba(0,0,0,0.34) 0%, transparent 60%);
   }
 
-  .vsl-eyebrow {
-    display: block; text-align: center;
-    font-family: 'Inter', sans-serif;
-    font-size: 0.8rem; font-weight: 700;
-    letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--gold-ink);
-    margin-bottom: 14px;
-  }
-  .vsl-h1 { color: var(--navy); }
-  .vsl-h1 .orange { color: var(--gold-ink); }
+  .vsl-h1 { color: #F4F1EC; }
+  .vsl-h1 .orange { color: var(--orange); }
   .vsl-h1-qual {
-    display: block;
-    margin-top: 10px;
-    font-size: 0.58em;
-    font-weight: 500;
-    line-height: 1.32;
-    color: var(--text-mid);
-    letter-spacing: 0;
+    display: block; margin-top: 10px;
+    font-size: 0.58em; font-weight: 500; line-height: 1.32;
+    color: rgba(240,237,230,0.68); letter-spacing: 0;
   }
   .vsl-sub {
-    max-width: 720px; margin: 14px auto 0;
-    text-align: center;
+    max-width: 680px; margin: 14px auto 0; text-align: center;
     font-size: 1.02rem; line-height: 1.62;
-    color: var(--text-mid);
+    color: rgba(240,237,230,0.7);
   }
-  .vsl-arrow { color: var(--gold-ink); margin-top: 16px; }
-  .vsl-frame { border-color: rgba(14,90,82,0.18); box-shadow: 0 16px 44px rgba(0,0,0,0.17); }
-  .vsl-caption { color: var(--text-lt); }
+  .vsl-arrow { color: var(--orange); margin-top: 18px; }
+  .vsl-frame {
+    border-color: var(--hair-2);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.03);
+  }
+  .v2-benefits li { color: rgba(240,237,230,0.92); }
+  .v2-benefits .ck { color: var(--orange); }
 
-  /* Hero trust line sat on a dark ground; on light it needs dark ink. */
-  .v2-benefits li { color: var(--text); }
-  .v2-benefits .ck { color: var(--gold-ink); }
+  /* ── Hero promise chips: the two "withouts" ──────────────────────
+     These carry copy that used to be a trailing clause on the
+     headline. As a clause it had to be READ; as two chips it is
+     scanned, which is the whole reason the hero got shorter without
+     losing anything. */
+  .vsl-chips {
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 8px; margin: 16px auto 0;
+  }
+  .vsl-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(46,196,182,0.08);
+    border: 1px solid var(--hair-2);
+    border-radius: 100px;
+    padding: 7px 15px 7px 12px;
+    font-size: 0.86rem; font-weight: 500;
+    color: rgba(240,237,230,0.88);
+    letter-spacing: 0.01em;
+  }
+  .vsl-chip .x { color: var(--orange); font-weight: 700; font-size: 0.95rem; line-height: 1; }
 
-  /* ── Form zones: a soft teal wash, distinct from both white and gray ── */
+  /* ── Form zones ── */
   .form-zone {
-    background: linear-gradient(165deg, #EDF6F4 0%, #F4F6F5 60%, #E9F3F1 100%);
-    border-top: 1px solid var(--gray-2);
-    border-bottom: 1px solid var(--gray-2);
+    background: linear-gradient(158deg, var(--ink-1) 0%, var(--ink-teal) 72%, var(--ink-teal-2) 100%);
+    border-top: 1px solid var(--hair);
+    border-bottom: 1px solid var(--hair);
   }
-  .form-zone-h { color: var(--navy); }
-  .form-zone-sub { color: var(--text-mid); }
-  .form-zone-trust { color: var(--text-lt); }
+  .form-zone-h { color: #F4F1EC; }
+  .form-zone-sub { color: rgba(240,237,230,0.74); }
+  .form-zone-trust { color: rgba(240,237,230,0.64); }
 
-  /* ── Pillars: cards were built for a navy ground, now on gray ── */
+  /* ── Pillars: raised translucent surfaces, not flat fills ── */
+  .sec-navy { background: var(--ink-1); }
+  #pillars { background: linear-gradient(180deg, var(--ink-1) 0%, var(--ink-teal) 100%); }
   .pillar {
-    background: var(--white);
-    border: 1px solid var(--gray-2);
-    box-shadow: 0 2px 14px rgba(0,0,0,0.05);
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--hair);
+    box-shadow: none;
   }
-  .pillar-n { color: var(--gold-ink); }
-  .pillar-h { color: var(--navy); }
-  .pillar-p { color: var(--text-mid); }
+  .pillar-n { color: var(--orange); }
+  .pillar-h { color: #F4F1EC; }
+  .pillar-p { color: rgba(240,237,230,0.72); }
 
-  /* ── Muted-text contrast on the new light grounds ──────────────
-     --text-lt was #7C7C7C, inherited. Against the template's own
-     light grounds that is 4.17:1 on white and 3.79:1 on gray-1 —
-     both under 4.5 for text this size, and it is used for every
-     piece of fine print on the page (logo kicker, captions, the
-     perf note, the form trust line). It mattered less when half the
-     page was dark; now that almost none of it is, it is the single
-     most-read failing colour on the site.
+  #attribution { background: linear-gradient(180deg, var(--ink-teal) 0%, var(--ink-1) 100%); }
+  footer { background: var(--ink-0); border-top: 1px solid var(--hair); }
 
-     #6B6B6B clears 4.5 on all three light grounds with margin:
-       on white #FFFFFF .... 5.33:1  ✅
-       on gray  #F4F4F2 .... 4.84:1  ✅
-       on wash  #EDF6F4 .... 4.84:1  ✅
-     Fixed at the variable rather than per-rule, so every inherited
-     rule that uses it is corrected at once. It only ever darkens. */
-  :root { --text-lt: #6B6B6B; }
+  /* ═══════════════════════════════════════════════════════════════
+     CLIENT LOGO WALL
 
-  /* The trust line under each form was white-on-dark before the theme
-     flip. Even with --text-lt corrected it is the smallest type on a
-     tinted ground, so it takes --text-mid (7.56:1) rather than sitting
-     at the 4.5 floor. */
-  .form-zone-trust { color: var(--text-mid); }
+     Five marks from five brands with nothing in common. Dropped in
+     raw they look wonky for two separate reasons, and both had to be
+     fixed — one in the assets, one here.
+
+     1. COLOUR. Blue, green, navy, black. Any arrangement of those
+        reads as a jumble rather than a set. Every mark is therefore
+        knocked to a flat white silhouette with
+        `brightness(0) invert(1)` and carried at 72% opacity, which is
+        the standard treatment for a logo wall on a dark ground: the
+        eye reads "five clients", not five competing brand palettes.
+        It is also why this band is dark. On a light band the same
+        normalisation needs `multiply` blending, which is fragile
+        against any mark that has its own light background.
+
+     2. SIZE. Aspect ratios run 1.88:1 (Fisher) to 5.42:1 (Pinnacle),
+        nearly 3x. At a uniform HEIGHT — the obvious approach —
+        Pinnacle renders 163px wide against Fisher's 90px and simply
+        looks louder, which is a design accident, not a statement
+        about the client. Heights are therefore set per mark to
+        roughly EQUAL OPTICAL AREA (h proportional to 1/sqrt(ratio)),
+        so no logo shouts over its neighbours:
+
+          fisher   1.88:1 -> 48px      mwc      1.92:1 -> 48px
+          nbt      3.11:1 -> 38px      ewd      3.78:1 -> 36px
+          pinnacle 5.42:1 -> 30px
+
+     THE ASSETS were repaired before they got here, because CSS cannot
+     fix either problem:
+       · Fisher's was a JPG on a solid #F2F2F2 field — no transparency
+         at all, so it would have rendered as a bright white BOX once
+         inverted. The field was keyed out to alpha, and the low-alpha
+         JPEG noise left behind was floored to zero so it would not
+         show as specks against the dark.
+       · EWD's was a 500x500 square whose artwork occupied only
+         420x111 of it. Height-constrained, the visible mark would
+         have come out less than half the size of the others. All four
+         rasters are now trimmed to their true content box.
+     Cleaned files live in v2/logos/ — relative paths, which work
+     locally and on Cloudflare Pages. The originals on
+     assets.alloymedia.io are untouched.
+     TODO(assets): upload the cleaned versions to the CDN if we want
+     the repo convention back.
+     ═══════════════════════════════════════════════════════════════ */
+  .logos-strip {
+    background: var(--ink-0);
+    border-bottom: 1px solid var(--hair);
+    padding: 40px 22px 44px;
+  }
+  .logos-kicker { color: rgba(240,237,230,0.42); }
+  .logos-row {
+    display: flex; flex-wrap: wrap;
+    align-items: center; justify-content: center;
+    gap: 30px 52px;
+    margin-top: 26px;
+  }
+  .logos-row img {
+    display: block; width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.72;
+    transition: opacity 0.2s ease;
+  }
+  .logos-row img:hover { opacity: 1; }
+  /* ── Fisher is the exception, twice over ───────────────────────
+     1. FILTER. `brightness(0) invert(1)` makes a SILHOUETTE, which is
+        fine for the other four — they are sparse wordmarks, ~16%
+        opaque, so the letterforms survive being flattened to one
+        colour. Fisher's mark is a dense illustration: 81% opaque,
+        green fill inside heavy black keylines. Flattened, the letters
+        merge with their own outlines and it renders as an unreadable
+        white blob. Luminance inversion instead — black keylines go to
+        white, the green fill to mid-grey — so the internal contrast
+        that makes it legible is preserved. The brightness lift pulls
+        it up to sit with the pure-white wordmarks beside it.
+     2. HEIGHT. At 81% coverage it carries far more ink than its
+        neighbours, so equal AREA would still read as louder. Dropped
+        to 42px for equal optical weight.
+     If a flat single-colour Fisher mark ever turns up, delete both
+     rules and it joins the others. */
+  /* Selector carries `.logos-row img` so it outranks the shared
+     filter rule above, which is (0,1,1) — a bare .logo-fisher is
+     (0,1,0) and loses, silently keeping the silhouette. */
+  .logos-row img.logo-fisher { height: 42px; filter: grayscale(1) invert(1) brightness(1.12); }
+  .logo-mwc      { height: 48px; }
+  .logo-nbt      { height: 38px; }
+  .logo-ewd      { height: 36px; }
+  .logo-pinnacle { height: 30px; }
+
+  @media (max-width: 700px) {
+    .logos-row { gap: 24px 34px; }
+    .logo-fisher, .logo-mwc { height: 38px; }
+    .logo-nbt { height: 30px; }
+    .logo-ewd { height: 29px; }
+    .logo-pinnacle { height: 24px; }
+  }
+
+  /* ── Inherited ID rules that outrank the section classes ────────
+     The client template paints its bare `.sec` sections white with
+     per-ID rules (#faq, #warranty-note, #materials, #before-after).
+     An ID is (1,0,0) and beats `.sec-gray` at (0,1,0), so #faq was
+     coming out white no matter what class the markup carried — a
+     silent override that would bite again on any section reusing one
+     of those ids. The other three point at Fisher sections that do
+     not exist here, so they are inert; only #faq collides.
+     Re-asserted at the same specificity, later in the cascade. */
+  #faq { background: var(--gray-1); }
 </style>
 </head>
 <body>
@@ -1735,29 +1822,42 @@
   <div class="hero-inner">
     <div class="hero-content">
 
-      <!-- Headline copy is Alex's, verbatim (2026-09-11), laid out on the
-           reference he supplied: small eyebrow, big bold headline, one
-           supporting line, then the video.
+      <!-- ════════════════════════════════════════════════════════
+           HERO COPY.
 
-           The headline is split into TWO spans on purpose. It is a
-           promise-plus-caveat sentence ("do X without giving up Y"), and
-           set at one size the caveat competes with the promise and the
-           whole thing reads as a wall. The promise carries full size and
-           weight; the "without…" clause drops to ~0.58em and lighter, so
-           the claim lands first and the qualifier still gets read. Both
-           halves are Alex's words, unedited. -->
-      <span class="vsl-eyebrow">Step 1: Watch the breakdown</span>
+           The eyebrow is gone — Alex did not want the "Step 1" device
+           from the reference page.
 
+           On LENGTH. The previous version put ~270 characters above
+           the video: a headline carrying a promise AND two caveats,
+           then a 151-character supporting line. The problem was never
+           the display, it was that a headline was being asked to hold
+           three ideas at once. Split by job instead:
+
+             · the H1 carries the PROMISE, and nothing else
+             · the two "withouts" become chips — scanned, not read
+             · the supporting line drops the words the page already
+               says for itself ("This video breaks down" is redundant
+               with a video sitting directly beneath it, and "than
+               other lead sources" is implied by "convert worse")
+
+           Same meaning, ~185 characters instead of ~270, and the
+           promise now lands on its own. All of it is still Alex's
+           wording, just redistributed.
+           TODO(copy): Alex to confirm "deeper discounts" as the short
+           form of "overly aggressive discounts".
+           ════════════════════════════════════════════════════════ -->
       <h1 class="vsl-h1">
         Lower your Cost Per Appointment in 10&nbsp;days
-        <span class="vsl-h1-qual">without sacrificing lead volume or relying on overly aggressive discounts.</span>
       </h1>
 
-      <p class="vsl-sub">This video breaks down the 7 controllable factors that cause Meta leads to convert worse than other lead sources, and how Alloy Media addresses each one.</p>
+      <div class="vsl-chips">
+        <span class="vsl-chip"><span class="x" aria-hidden="true">&times;</span>Without sacrificing lead volume</span>
+        <span class="vsl-chip"><span class="x" aria-hidden="true">&times;</span>Without deeper discounts</span>
+      </div>
 
-      <!-- The arrow keeps its chevron but has lost its label: the line above
-           now says the video does the explaining, so the old "Both answered
-           in the video" text was saying it twice. -->
+      <p class="vsl-sub">The 7 controllable factors that make Meta leads convert worse &mdash; and how we fix each one.</p>
+
       <div class="vsl-arrow" aria-hidden="true">
         <span class="chev">&#9662;</span>
       </div>
@@ -1911,20 +2011,21 @@
 </section>
 
 <!-- ============ CLIENT LOGOS ====================================
-     TODO(assets): Alex is loading the real marks into Cloudflare. They
-     belong at assets.alloymedia.io/AlloyMedia/clients/<name>.svg — SVG
-     or transparent PNG, since .logos-grid greyscales them and a JPEG's
-     white box will show. Delete one .logo-ph per logo added.
+     Five real client marks, supplied 2026-09-11. Normalisation —
+     white silhouettes at equal optical area — and the asset repairs
+     behind it are documented on .logos-strip in the stylesheet.
+     Order runs widest-to-narrowest so the row settles visually rather
+     than stepping down; it carries no ranking.
      ============================================================== -->
 <section class="logos-strip">
   <div class="logos-inner">
     <p class="logos-kicker">Running paid media for</p>
-    <div class="logos-grid reveal">
-      <div class="logo-ph">Logo 1</div>
-      <div class="logo-ph">Logo 2</div>
-      <div class="logo-ph">Logo 3</div>
-      <div class="logo-ph">Logo 4</div>
-      <div class="logo-ph">Logo 5</div>
+    <div class="logos-row reveal">
+      <img class="logo-pinnacle" src="logos/pinnacle.svg" alt="Pinnacle Windows &amp; Restoration" loading="lazy">
+      <img class="logo-ewd" src="logos/ewd.png" alt="Elevated Windows &amp; Doors" loading="lazy">
+      <img class="logo-nbt" src="logos/nbt.png" alt="New Bath Today" loading="lazy">
+      <img class="logo-mwc" src="logos/mwc.png" alt="Midwest Window Company" loading="lazy">
+      <img class="logo-fisher" src="logos/fisher.png" alt="Fisher Construction" loading="lazy">
     </div>
   </div>
 </section>
@@ -2164,7 +2265,7 @@
      what Alloy actually does (creative / offer / landing page /
      measurement), but they are mine, not Alex's. TODO(copy).
      ============================================================== -->
-<section class="sec sec-gray" id="pillars">
+<section class="sec sec-navy" id="pillars">
   <div class="sec-inner">
     <span class="eyebrow">The Framework</span>
     <h2 class="sec-title reveal">Four Pillars to <span class="accent">Meta Ads That Work</span></h2>
@@ -2203,7 +2304,7 @@
      cells are stubbed; add or remove cards freely, the grid reflows.
      Put them at assets.alloymedia.io/AlloyMedia/ads/.
      ============================================================== -->
-<section class="sec sec-white" id="creative">
+<section class="sec sec-gray" id="creative">
   <div class="sec-inner">
     <span class="eyebrow">Creative</span>
     <h2 class="sec-title reveal">Our Approach to <span class="accent">Creative</span></h2>
@@ -2231,7 +2332,7 @@
      captures at ~1200px wide look best in the 3:4 window; .lp-shot anchors
      them to the top so the hero is what shows.
      ============================================================== -->
-<section class="sec sec-gray" id="landing-pages">
+<section class="sec sec-white" id="landing-pages">
   <div class="sec-inner">
     <span class="eyebrow">Landing Pages</span>
     <h2 class="sec-title reveal">Our Approach to <span class="accent">Landing Pages</span></h2>
@@ -2510,7 +2611,7 @@
      first, accordion markup identical), not the wording. Alex is
      supplying the real set. TODO(copy).
      ============================================================== -->
-<section class="sec sec-white" id="faq">
+<section class="sec sec-gray" id="faq">
   <div class="sec-inner">
     <span class="eyebrow">FAQ</span>
     <h2 class="sec-title reveal" style="text-align:center">Your Questions, <span class="accent">Answered</span></h2>
