@@ -1581,6 +1581,122 @@
     /* Centre the capped-width card once the proof grid is one column. */
     .vid-testimonial { margin-left: auto; margin-right: auto; }
   }
+
+  /* ═══════════════════════════════════════════════════════════════
+     LIGHT THEME (2026-09-11)
+
+     The fork arrived dark-heavy — dark hero, dark form zones, dark
+     pillars, dark attribution, dark footer — which is the client
+     template's lineage, not a decision anyone made for Alloy. Alex
+     asked to lean light, so the ground is flipped here rather than by
+     editing the inherited CSS above: keeping the overrides in one
+     block means the dark original is still intact and one deletion
+     puts it back.
+
+     Rhythm, top to bottom. No two adjacent sections share a ground:
+       hero          tinted light     logos         white
+       proof         gray             form-zone 2   teal wash
+       lead-quality  white            pillars       gray
+       creative      white            landing-pages gray
+       attribution   NAVY  <- the one dark section, deliberately
+       form-zone 3   teal wash        faq           white
+       footer        navy
+
+     Attribution stays dark on purpose: it is the "custom
+     infrastructure" moment, its diagram was drawn for a dark ground,
+     and one dark band stops an all-light page going flat.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* Body ground: was --navy, which would flash dark on overscroll and
+     behind any gap now that the hero is light. */
+  body { background: var(--gray-1); }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(168deg, #FFFFFF 0%, #F7F9F8 48%, #E9F4F2 100%);
+    border-bottom: 1px solid var(--gray-2);
+  }
+  .hero::after {
+    background:
+      radial-gradient(ellipse at 85% 12%, rgba(46,196,182,0.13) 0%, transparent 52%),
+      radial-gradient(ellipse at 5% 88%, rgba(14,90,82,0.06) 0%, transparent 55%);
+  }
+
+  .vsl-eyebrow {
+    display: block; text-align: center;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold-ink);
+    margin-bottom: 14px;
+  }
+  .vsl-h1 { color: var(--navy); }
+  .vsl-h1 .orange { color: var(--gold-ink); }
+  .vsl-h1-qual {
+    display: block;
+    margin-top: 10px;
+    font-size: 0.58em;
+    font-weight: 500;
+    line-height: 1.32;
+    color: var(--text-mid);
+    letter-spacing: 0;
+  }
+  .vsl-sub {
+    max-width: 720px; margin: 14px auto 0;
+    text-align: center;
+    font-size: 1.02rem; line-height: 1.62;
+    color: var(--text-mid);
+  }
+  .vsl-arrow { color: var(--gold-ink); margin-top: 16px; }
+  .vsl-frame { border-color: rgba(14,90,82,0.18); box-shadow: 0 16px 44px rgba(0,0,0,0.17); }
+  .vsl-caption { color: var(--text-lt); }
+
+  /* Hero trust line sat on a dark ground; on light it needs dark ink. */
+  .v2-benefits li { color: var(--text); }
+  .v2-benefits .ck { color: var(--gold-ink); }
+
+  /* ── Form zones: a soft teal wash, distinct from both white and gray ── */
+  .form-zone {
+    background: linear-gradient(165deg, #EDF6F4 0%, #F4F6F5 60%, #E9F3F1 100%);
+    border-top: 1px solid var(--gray-2);
+    border-bottom: 1px solid var(--gray-2);
+  }
+  .form-zone-h { color: var(--navy); }
+  .form-zone-sub { color: var(--text-mid); }
+  .form-zone-trust { color: var(--text-lt); }
+
+  /* ── Pillars: cards were built for a navy ground, now on gray ── */
+  .pillar {
+    background: var(--white);
+    border: 1px solid var(--gray-2);
+    box-shadow: 0 2px 14px rgba(0,0,0,0.05);
+  }
+  .pillar-n { color: var(--gold-ink); }
+  .pillar-h { color: var(--navy); }
+  .pillar-p { color: var(--text-mid); }
+
+  /* ── Muted-text contrast on the new light grounds ──────────────
+     --text-lt was #7C7C7C, inherited. Against the template's own
+     light grounds that is 4.17:1 on white and 3.79:1 on gray-1 —
+     both under 4.5 for text this size, and it is used for every
+     piece of fine print on the page (logo kicker, captions, the
+     perf note, the form trust line). It mattered less when half the
+     page was dark; now that almost none of it is, it is the single
+     most-read failing colour on the site.
+
+     #6B6B6B clears 4.5 on all three light grounds with margin:
+       on white #FFFFFF .... 5.33:1  ✅
+       on gray  #F4F4F2 .... 4.84:1  ✅
+       on wash  #EDF6F4 .... 4.84:1  ✅
+     Fixed at the variable rather than per-rule, so every inherited
+     rule that uses it is corrected at once. It only ever darkens. */
+  :root { --text-lt: #6B6B6B; }
+
+  /* The trust line under each form was white-on-dark before the theme
+     flip. Even with --text-lt corrected it is the smallest type on a
+     tinted ground, so it takes --text-mid (7.56:1) rather than sitting
+     at the 4.5 floor. */
+  .form-zone-trust { color: var(--text-mid); }
 </style>
 </head>
 <body>
@@ -1619,13 +1735,30 @@
   <div class="hero-inner">
     <div class="hero-content">
 
+      <!-- Headline copy is Alex's, verbatim (2026-09-11), laid out on the
+           reference he supplied: small eyebrow, big bold headline, one
+           supporting line, then the video.
+
+           The headline is split into TWO spans on purpose. It is a
+           promise-plus-caveat sentence ("do X without giving up Y"), and
+           set at one size the caveat competes with the promise and the
+           whole thing reads as a wall. The promise carries full size and
+           weight; the "without…" clause drops to ~0.58em and lighter, so
+           the claim lands first and the qualifier still gets read. Both
+           halves are Alex's words, unedited. -->
+      <span class="vsl-eyebrow">Step 1: Watch the breakdown</span>
+
       <h1 class="vsl-h1">
-        What&rsquo;s unique about Alloy Media?
-        <span class="orange">Why work with Alloy right now?</span>
+        Lower your Cost Per Appointment in 10&nbsp;days
+        <span class="vsl-h1-qual">without sacrificing lead volume or relying on overly aggressive discounts.</span>
       </h1>
 
+      <p class="vsl-sub">This video breaks down the 7 controllable factors that cause Meta leads to convert worse than other lead sources, and how Alloy Media addresses each one.</p>
+
+      <!-- The arrow keeps its chevron but has lost its label: the line above
+           now says the video does the explaining, so the old "Both answered
+           in the video" text was saying it twice. -->
       <div class="vsl-arrow" aria-hidden="true">
-        <span>Both answered in the video</span>
         <span class="chev">&#9662;</span>
       </div>
 
@@ -1658,7 +1791,6 @@
           <span class="vsl-facade-label">Watch the intro</span>
         </button>
       </div>
-      <p class="vsl-caption">No pitch deck. Just how we run the ads and what it costs.</p>
 
 
     <div class="v2-form" id="mobile-form-anchor">
@@ -2032,7 +2164,7 @@
      what Alloy actually does (creative / offer / landing page /
      measurement), but they are mine, not Alex's. TODO(copy).
      ============================================================== -->
-<section class="sec sec-navy" id="pillars">
+<section class="sec sec-gray" id="pillars">
   <div class="sec-inner">
     <span class="eyebrow">The Framework</span>
     <h2 class="sec-title reveal">Four Pillars to <span class="accent">Meta Ads That Work</span></h2>
@@ -2071,7 +2203,7 @@
      cells are stubbed; add or remove cards freely, the grid reflows.
      Put them at assets.alloymedia.io/AlloyMedia/ads/.
      ============================================================== -->
-<section class="sec sec-gray" id="creative">
+<section class="sec sec-white" id="creative">
   <div class="sec-inner">
     <span class="eyebrow">Creative</span>
     <h2 class="sec-title reveal">Our Approach to <span class="accent">Creative</span></h2>
@@ -2099,7 +2231,7 @@
      captures at ~1200px wide look best in the 3:4 window; .lp-shot anchors
      them to the top so the hero is what shows.
      ============================================================== -->
-<section class="sec sec-white" id="landing-pages">
+<section class="sec sec-gray" id="landing-pages">
   <div class="sec-inner">
     <span class="eyebrow">Landing Pages</span>
     <h2 class="sec-title reveal">Our Approach to <span class="accent">Landing Pages</span></h2>
@@ -2378,7 +2510,7 @@
      first, accordion markup identical), not the wording. Alex is
      supplying the real set. TODO(copy).
      ============================================================== -->
-<section class="sec sec-gray" id="faq">
+<section class="sec sec-white" id="faq">
   <div class="sec-inner">
     <span class="eyebrow">FAQ</span>
     <h2 class="sec-title reveal" style="text-align:center">Your Questions, <span class="accent">Answered</span></h2>
