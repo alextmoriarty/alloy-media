@@ -1,0 +1,2881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alloy Media | Meta Ads for Home Improvement</title>
+<meta name="description" content="Alloy Media runs Meta and Google ads for home improvement contractors — creative, landing pages, and the attribution layer that ties signed jobs back to the ad that produced them.">
+<link rel="icon" type="image/png" href="../logo.png">
+<link rel="apple-touch-icon" href="../logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ════════════════════════════════════════════════════════════════
+     ALLOY MEDIA — site rebuild (v2), 2026-09-11.
+
+     WHAT THIS IS. A fork of the client LP template (MWC v3 → Elevated →
+     Fisher lineage) applied to Alloy's own site. Same design system, same
+     text presentation, same multi-step form engine with focus mode — the
+     SECTIONS are different, per Alex's brief.
+
+     THIS IS NOT THE LIVE SITE. alloymedia.io still serves /index.html at
+     the repo root. This builds at /v2/ so it can be reviewed against the
+     live page before anything is swapped. Nothing here touches the root.
+
+     FORK RULE (observed): Fisher's GTM container, PostHog, lead webhook,
+     thank-you redirect, ZIP gate and phone number were REMOVED, not
+     commented out. A fork carrying the source client's GTM sends this
+     traffic into that client's analytics.
+     TODO(analytics): add Alloy's own GTM container here before this
+     replaces the root page.
+     ════════════════════════════════════════════════════════════════ -->
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    /* ═══════════════════════════════════════════════════════════
+       ALLOY MEDIA — brand palette.
+       Brand: Teal #2EC4B6 · near-black #131311 · off-white #F0EDE6,
+       carried over from the live root page so the rebuild still reads
+       as Alloy and not as a client.
+
+       CONTRAST RULE — READ BEFORE CHANGING ANYTHING:
+       Alloy teal is a BRIGHT mid tone. It fails as text on white.
+         white on #2EC4B6 ............ 2.17:1  ❌ never
+         #131311 on #2EC4B6 .......... 8.58:1  ✅ every teal button/badge
+         #2EC4B6 on #131311 .......... 8.58:1  ✅ accents inside .sec-navy
+         #2EC4B6 as TEXT on white .... 2.17:1  ❌ use --gold-ink instead
+         --gold-ink #0E5A52 on white . 8.07:1  ✅ accent text on light
+         white on --blue #0E5A52 ..... 8.07:1  ✅ deep-teal solid buttons
+       So: teal is a BACKGROUND for near-black text, or an ACCENT on
+       near-black. Never white-on-teal, never teal text on white.
+
+       Var names (--blue/--orange/--navy/--gold-ink) are inherited from
+       the MWC v3 → Elevated → Fisher lineage and deliberately KEPT so
+       this fork stays diffable against its base. --blue* is now a teal
+       ramp, --orange is Alloy teal, --navy is Alloy near-black.
+       ═══════════════════════════════════════════════════════════ */
+    --blue:       #0E5A52;   /* deep teal — solid buttons w/ WHITE text (8.07:1) */
+    --blue-dark:  #0A423C;   /* deeper teal — hero gradient mid */
+    --blue-deep:  #131311;   /* Alloy near-black — hero gradient start */
+    --navy:       #131311;   /* near-black — dark section bg + TEXT ON TEAL (8.58:1) */
+    --navy-2:     #191816;
+    --orange:     #2EC4B6;   /* Alloy Teal — CTA/accent bg. NEAR-BLACK TEXT ONLY. */
+    --orange-dk:  #26A99D;   /* darker teal — hover/active */
+    --gold-ink:   #0E5A52;   /* accent TEXT on white/light bg (8.07:1 on #FFF) */
+    --white:      #FFFFFF;
+    --gray-1:     #F4F4F2;
+    --gray-2:     #E7E7E3;
+    --gray-3:     #D9DCE3;
+    --text:       #252525;
+    --text-mid:   #4E4E4E;
+    --text-lt:    #7C7C7C;
+    --green:      #0E5A52;
+    --red:        #D63B2F;
+  }
+  /* ═══════════════════════════════════════════════════════════════
+     EVERYTHING FROM HERE TO THE "ALLOY-ONLY SECTIONS" MARKER IS THE
+     CLIENT TEMPLATE'S CSS, CARRIED OVER UNMODIFIED.
+
+     Two things to know before editing in here:
+
+     1. The COMMENTS still describe the client page this came from
+        (Fisher Construction, and the MWC v3 -> Elevated lineage behind
+        it). They are kept verbatim so this file still diffs cleanly
+        against the client pages. Where a comment says "Fisher's logo"
+        or "the roof shots", it is describing why the RULE is shaped the
+        way it is - not something on this page.
+
+     2. Several blocks in here are UNUSED by the current Alloy sections
+        and are kept on purpose, because the next rounds of this brief
+        need them: .ba-* (before/after wipe slider), .sign-*, .mat-*,
+        .pair-*, .note-*, .vs-*, .fin-* and .proc-*. If a round lands
+        that clearly will not use them, delete them then.
+
+     The Alloy-specific CSS starts further down, under its own banner.
+     ═══════════════════════════════════════════════════════════════ */
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    background: var(--navy);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    padding-top: 0;                /* no fixed top elements anymore - header scrolls with the page */
+    padding-bottom: 76px;          /* compensate for fixed bottom mobile bar */
+  }
+
+  /* ── GHL ESCAPE ── */
+  .mwc-wrap {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow-x: hidden;
+  }
+
+  /* ── HEADER (logo left, phone CTA right) - scrolls with the page, NOT sticky ── */
+  .site-header {
+    background: #fff;
+    border-bottom: 1px solid var(--gray-2);
+    box-shadow: 0 1px 10px rgba(0,0,0,0.06);
+  }
+  .site-header-inner {
+    max-width: 1240px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 28px;
+  }
+  .site-logo-link { display: inline-flex; align-items: center; }
+  .site-logo {
+    /* Fisher's logo is a SQUARE jpg (512x512) with the artwork roughly centered
+       and a light #F2F2F2 field around it. Elevated's fixed-width cover-crop
+       hack is removed here — applied to a square mark it would slice the
+       wordmark off. Plain height, natural aspect.
+       TODO(assets): get a tightly-cropped horizontal PNG/SVG with a
+       transparent background. The square JPG's grey field is visible against
+       the white header, and it can't sit on the dark footer at all. */
+    height: 62px; width: auto;
+    display: block;
+  }
+  .site-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--orange); color: var(--navy); text-decoration: none;
+    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1rem;
+    letter-spacing: 0.02em; white-space: nowrap;
+    padding: 10px 20px; border-radius: 100px;
+    box-shadow: 0 3px 12px rgba(30,142,4,0.40);
+    transition: background 0.18s, transform 0.12s;
+  }
+  .site-cta:hover { background: var(--orange-dk); }
+  .site-cta:active { transform: scale(0.98); }
+  @media (max-width: 600px) {
+    .site-header-inner { padding: 5px 16px; }
+    .site-logo { height: 46px; width: auto; }
+    .site-cta { font-size: 0.85rem; padding: 9px 16px; gap: 6px; }
+  }
+
+  /* ── ATTENTION PULSE (reuses the old offer-bar "shine" sweep; toggled via .pulse-active by JS) ── */
+  @keyframes shine {
+    0%        { left: -70%; }
+    55%, 100% { left: 130%; }
+  }
+  .site-cta.pulse-active, .mb-book.pulse-active { position: relative; overflow: hidden; }
+  .site-cta.pulse-active::before, .mb-book.pulse-active::before {
+    content: '';
+    position: absolute; top: 0; left: -70%;
+    width: 55%; height: 100%;
+    background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.55) 50%, transparent 100%);
+    animation: shine 3.5s ease-in-out infinite;
+    pointer-events: none; z-index: 0;
+  }
+  .site-cta > *, .mb-book > * { position: relative; z-index: 1; }
+
+  /* ── HERO ── */
+  .hero {
+    /* Anchor the gradient in MWC navy so the hero feels rich + cohesive with the dark sections above/below; ramp into MWC blue for the bright accent corner. */
+    background: linear-gradient(155deg, #000000 0%, #071003 55%, #0E2306 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse at 85% 15%, rgba(255,255,255,0.08) 0%, transparent 45%),
+      radial-gradient(ellipse at 5% 85%, rgba(0,0,0,0.22) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  /* Hero layout - single column on mobile, 2-col with photo on desktop */
+  .hero-inner {
+    max-width: 560px; margin: 0 auto;
+    padding: 14px 22px 36px;
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+  }
+  .hero-content { display: flex; flex-direction: column; }
+
+  /* Photo column - hidden on mobile, visible 2-col on desktop */
+  .hero-photo-wrap {
+    display: none;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 48px rgba(0,0,0,0.32);
+    align-self: stretch;
+    min-height: 100%;
+  }
+  .hero-photo-wrap img {
+    width: 100%; height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center;
+  }
+  /* Subtle bottom-shadow gradient inside the photo so any text overlaid here reads */
+  .hero-photo-wrap::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.18) 100%);
+    pointer-events: none;
+  }
+
+  /* Mobile-only hero photo card - sits between sub-headline and form.
+     Inset 20px from each viewport edge with rounded corners + drop shadow.
+     Hidden on desktop where the photo lives in the left column of the
+     hero grid. */
+  .hero-photo-mobile {
+    display: none;
+    position: relative;
+    width: calc(100vw - 40px);                       /* 20px from each viewport edge */
+    margin-left: calc(-50vw + 50% + 20px);           /* centered, breaks out of hero-inner padding */
+    margin-right: 0;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    height: 180px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .hero-photo-mobile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+  }
+  .hero-photo-mobile:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+  }
+  .hero-photo-mobile img {
+    width: 100%; height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center top;
+  }
+
+  /* Geo line above H1 */
+  .v2-geo-pill {
+    display: inline-block;
+    background: rgba(255,255,255,0.10);
+    border: 1px solid rgba(255,255,255,0.28);
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 10px;
+    width: fit-content;
+  }
+
+  .hero-h1 {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(2.1rem, 6vw, 3.2rem);
+    font-weight: 700; color: #fff; line-height: 1.04;
+    margin-bottom: 6px; letter-spacing: 0.01em;
+  }
+  .hero-h1 .orange { color: var(--orange); display: block; font-size: clamp(1.7rem, 5vw, 2.5rem); font-weight: 700; text-shadow: 0 1px 10px rgba(30,142,4,0.35); }
+  /* Mobile-only offer line — hidden by default so desktop keeps the H1 as the
+     single offer statement. Turned on in the ≤767px block below. */
+  .hero-offer-mobile { display: none; }
+
+  .hero-sub {
+    font-size: 0.98rem; color: rgba(255,255,255,0.86);
+    margin: 8px 0 16px; line-height: 1.5;
+  }
+  .hero-sub strong { color: #fff; font-weight: 600; }
+
+  /* Testimonial - now inside the white form card, styled as a subtle inset
+     so it reads as part of the form's voice rather than competing with it. */
+  .v2-pullquote {
+    background: var(--gray-1);
+    border-left: 5px solid var(--orange);
+    padding: 12px 14px;
+    margin: 14px 0 0;
+    border-radius: 0 6px 6px 0;
+  }
+  .v2-pullquote p {
+    font-family: 'Source Serif 4', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.48;
+    margin-bottom: 6px;
+  }
+  .v2-pullquote .by {
+    font-size: 0.68rem;
+    color: var(--text-mid);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .v2-pullquote .by .stars { color: #FFB300; margin-right: 6px; letter-spacing: 0.04em; }
+
+  /* ── MULTI-STEP FORM (white card, sits on the dark hero) ── */
+  .v2-form {
+    background: #fff;
+    color: var(--text);
+    border-radius: 14px;
+    padding: 22px 22px 20px;
+    /* Stronger drop + subtle ring so the white form pops off the navy/blue hero gradient - CRO move, form is the conversion goal */
+    box-shadow: 0 24px 56px rgba(0,0,0,0.30), 0 0 0 1px rgba(255,255,255,0.05);
+    position: relative;
+  }
+
+  /* Every photograph on the page opens in the lightbox on click */
+  .hero-photo-wrap,
+  .wwt-media,
+  .mat,
+  .pair,
+  .sign-media { cursor: pointer; }
+  .hero-photo-wrap img,
+  .wwt-media img { transition: transform 0.3s ease; }
+  .hero-photo-wrap:hover img,
+  .wwt-media:hover img { transform: scale(1.03); }
+  .hero-photo-wrap:focus-visible,
+  .wwt-media:focus-visible,
+  .mat:focus-visible,
+  .pair:focus-visible,
+  .sign-media:focus-visible { outline: 3px solid var(--orange); outline-offset: 3px; }
+
+  .v2-progress-dots {
+    display: flex; justify-content: center; align-items: center;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+  .v2-progress-dots .dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--gray-3);
+    transition: background 0.3s, transform 0.3s;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .v2-progress-dots .dot.active {
+    background: var(--orange);
+    transform: scale(1.15);
+    box-shadow: 0 0 0 4px rgba(30,142,4,0.20);
+  }
+  .v2-progress-dots .dot.done { background: var(--orange); }
+  .v2-progress-dots .dot.done::after {
+    content: '\2713';
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--navy);
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+  .v2-progress-dots .step-text {
+    margin-left: 8px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--gold-ink);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .m2s-question {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.18rem; font-weight: 700; color: var(--navy);
+    margin-bottom: 14px; line-height: 1.25; text-align: center;
+  }
+  .m2s-input {
+    width: 100%; padding: 13px 14px;
+    border: 1.5px solid var(--gray-3); border-radius: 6px;
+    font-family: 'Inter', sans-serif; font-size: 1rem; color: var(--text);
+    background: var(--gray-1); outline: none; margin-bottom: 10px;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .m2s-input:focus { border-color: var(--blue); background: #fff; box-shadow: 0 0 0 3px rgba(30,142,4,0.1); }
+  .m2s-input::placeholder { color: var(--text-lt); }
+  .m2s-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .m2s-btn {
+    width: 100%; background: var(--orange); color: var(--navy); border: none;
+    padding: 15px 20px; font-family: 'Oswald', sans-serif;
+    font-size: 1.18rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    border-radius: 6px; cursor: pointer; margin-top: 4px;
+    box-shadow: 0 6px 22px rgba(30,142,4,0.50), 0 0 0 1px rgba(30,142,4,0.18);
+    transition: background 0.18s, transform 0.12s, box-shadow 0.18s;
+  }
+  .m2s-btn:hover { background: var(--orange-dk); box-shadow: 0 8px 26px rgba(30,142,4,0.58); }
+  .m2s-btn:active { background: var(--orange-dk); transform: scale(0.98); }
+
+  /* Tile grid for window count - light on white card */
+  .v2-tiles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 4px 0 0;
+  }
+  /* ── IMAGE PLACEHOLDERS (v1 mockup) ──────────────────────────────────
+     Every photo slot on this page is a placeholder. Deliberately hatched and
+     labelled rather than borrowed from another client's CDN folder: Elevated
+     shipped with MWC's product shots served out of /MWC/, which breaks the
+     moment that folder is tidied. Fisher's own assets go in
+     assets.alloymedia.io/FisherConstruction/ and replace these one for one. */
+  .ph {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    background: repeating-linear-gradient(45deg, #E7E7E3 0 12px, #DCDCD8 12px 24px);
+    border: 1px dashed var(--text-lt);
+    color: var(--text-mid);
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 16px; line-height: 1.5;
+  }
+
+  /* ── "DON'T IGNORE THE SIGNS" ────────────────────────────────────────
+     Roofing-specific and the biggest structural gap in the windows template.
+     Windows is a want; a roof is a question — "do I actually need one?"
+
+     Photo + title only, four across in ONE ROW on desktop. This is a trigger,
+     not an explainer: the visitor should scan all four in a second and think
+     "that's my roof". Descriptions were removed for exactly that reason — they
+     slowed the scan down and pushed the fourth card off the row.
+
+     The four photos have different aspect ratios (0.80, 1.33, 1.33, 1.50), so
+     the media box is a FIXED height with object-fit:cover. Without it the
+     cards would sit at four different heights and stagger the row. */
+  .signs-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 30px; }
+  .sign {
+    background: #fff; border: 1px solid var(--gray-2);
+    border-radius: 12px; overflow: hidden;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    display: flex; flex-direction: column;
+  }
+  .sign-media { position: relative; width: 100%; height: 170px; overflow: hidden; cursor: pointer; background: var(--gray-2); }
+  .sign-media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.35s ease; }
+  .sign:hover .sign-media img { transform: scale(1.04); }
+  .sign-body { padding: 16px 18px 20px; border-left: 4px solid var(--orange); flex: 1; }
+  .sign-n {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--orange); color: var(--navy);
+    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+  .sign-h { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.12rem; color: var(--navy); line-height: 1.25; }
+  .signs-foot { text-align: center; margin-top: 30px; }
+  /* Two-up before the titles start wrapping badly, never a single column —
+     with no body copy a one-column stack is just a tall list of photos. */
+  @media (max-width: 900px) { .signs-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; } }
+  @media (max-width: 600px) { .sign-media { height: 130px; } .sign-h { font-size: 1rem; } }
+
+  /* ── BEFORE / AFTER WIPE SLIDER ──
+     Ported from clients/elevated-windows/.../elevated-windows-lp/doors/.
+     Layer order is doing real work:
+       .ba-base (after photo)        z0
+       .ba-tag--after                z1  ← covered when the before photo wipes
+       .ba-clip (before photo + tag) z2     fully across, so a label can never
+       .ba-handle                    z3     sit over the wrong photo.
+       .ba-range (transparent input) z4
+     The divider is a real <input type="range">, not custom pointer maths, so
+     keyboard, screen readers and touch work for free. touch-action:pan-y keeps
+     vertical page scrolling alive while horizontal drags move the divider.
+
+     THE PAIR MUST STAY MATCHED. Fisher's two shots are the same house from the
+     same drone position at 1537x1023 each, which is why the wipe reads as one
+     scene. Re-crop or re-shoot one without the other and the effect collapses. */
+  #before-after { background: #fff; border-bottom: 1px solid var(--gray-2); }
+  .ba {
+    position: relative;
+    max-width: 760px; margin: 26px auto 0;
+    aspect-ratio: 3 / 2;                 /* matches the 1537x1023 source */
+    border-radius: 14px; overflow: hidden;
+    box-shadow: 0 6px 28px rgba(0,0,0,0.16);
+    background: var(--gray-2);
+    --ba: 50%;
+    user-select: none; -webkit-user-select: none;
+  }
+  .ba img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+    pointer-events: none;
+  }
+  .ba-clip { position: absolute; inset: 0; z-index: 2; clip-path: inset(0 calc(100% - var(--ba)) 0 0); }
+  .ba-tag {
+    position: absolute; top: 12px; z-index: 1;
+    background: rgba(0,0,0,0.82); color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 12px; border-radius: 100px;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    pointer-events: none;
+  }
+  .ba-tag--before { left: 12px; }
+  .ba-tag--after  { right: 12px; }
+  .ba-handle {
+    position: absolute; top: 0; bottom: 0; z-index: 3;
+    left: var(--ba); transform: translateX(-50%);
+    width: 3px; background: var(--white);
+    box-shadow: 0 0 10px rgba(0,0,0,0.35);
+    pointer-events: none;
+  }
+  .ba-knob {
+    position: absolute; top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--white); color: var(--navy);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.32);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Oswald', sans-serif; font-size: 1.05rem; font-weight: 700;
+  }
+  .ba-range {
+    position: absolute; inset: 0; z-index: 4;
+    width: 100%; height: 100%; margin: 0;
+    -webkit-appearance: none; appearance: none;
+    background: transparent; cursor: ew-resize;
+    touch-action: pan-y;
+  }
+  .ba-range:focus { outline: none; }
+  .ba-range:focus-visible ~ .ba-handle .ba-knob { outline: 3px solid var(--orange); outline-offset: 3px; }
+  .ba-range::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 46px; height: 520px; background: transparent; border: none; cursor: ew-resize;
+  }
+  .ba-range::-moz-range-thumb { width: 46px; height: 520px; background: transparent; border: none; cursor: ew-resize; }
+  .ba-range::-moz-range-track { background: transparent; }
+
+  /* ── SPEC BULLETS (under the before/after slider) ──
+     Three columns on desktop so all six sit in two tidy rows directly under the
+     slider; one column on mobile. Left-aligned inside a centered block — a
+     center-aligned list of six ragged lines is hard to scan. */
+  .spec-list {
+    list-style: none;
+    max-width: 720px; margin: 30px auto 0;
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 14px 34px;
+  }
+  .spec-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 1rem; line-height: 1.45; color: var(--text);
+    font-weight: 600;
+  }
+  .spec-ck {
+    flex-shrink: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; margin-top: 1px;
+    border-radius: 50%;
+    background: var(--orange); color: var(--navy);   /* black on green, 4.93:1 */
+    font-size: 0.72rem; font-weight: 800;
+  }
+  /* The label is wrapped in its own span so an inline qualifier like
+     "(select options)" flows INSIDE the label instead of becoming a second
+     flex item and stranding itself in its own column. */
+  .spec-list li > span:last-child { flex: 1; }
+  .spec-qual { font-weight: 500; color: var(--text-lt); white-space: nowrap; }
+  .spec-foot {
+    max-width: 720px; margin: 20px auto 0;
+    font-size: 0.78rem; line-height: 1.5; color: var(--text-lt);
+    text-align: center;
+  }
+  @media (max-width: 560px) { .spec-list { grid-template-columns: 1fr; gap: 10px; } }
+
+  /* ── FOUNDER'S NOTE ──
+     Reads as the continuation of the warranty argument the spec bullets start,
+     so it shares the same white ground and sits immediately below. Photo left,
+     letter right on desktop; photo on top when stacked. */
+  #warranty-note { background: #fff; }
+  .note-wrap {
+    max-width: 1040px; margin: 0 auto;
+    display: grid; grid-template-columns: 340px 1fr; gap: 40px;
+    align-items: start;
+  }
+  .note-figure { position: static; }
+  .note-figure img {
+    /* The source is a 1000x1807 portrait (1:1.81). At width:100%/height:auto in
+       a 340px column that renders ~614px tall — a narrow ribbon running the
+       full height of the warranty copy beside it. Cropping to 3:4 in CSS with
+       object-fit (the same technique as the hero photo) brings it to ~453px and
+       keeps his face and the Fisher polo logo in frame. `top` rather than
+       `center` because the crop has to take its bite out of the bottom of the
+       frame — his belt and thighs — never off the top of his head. */
+    width: 100%; display: block;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    object-position: center top;
+    border-radius: 12px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.14);
+  }
+  .note-h {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: clamp(1.5rem, 3vw, 2.1rem); line-height: 1.18;
+    color: var(--navy); margin-bottom: 20px;
+  }
+  .note-h .accent { color: var(--gold-ink); }
+  .note-body p {
+    font-size: 1rem; line-height: 1.7; color: var(--text-mid);
+    margin-bottom: 16px;
+  }
+  .note-body strong { color: var(--text); }
+  .note-lede { font-size: 1.06rem; }
+
+  /* ── THE CONTRAST BLOCK ──
+     The warranty differentiator IS a comparison, so it is shown as one rather
+     than described in prose. Two columns, three lines each: the whole argument
+     is readable at a glance instead of over seven paragraphs.
+     The "them" column is deliberately muted and the crosses are grey, not red —
+     the point is to look even-handed, not to attack other contractors. */
+  .vs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin: 24px 0;
+  }
+  .vs-col { border-radius: 10px; padding: 18px 20px 20px; }
+  .vs-col--them { background: var(--gray-1); border: 1px solid var(--gray-3); }
+  .vs-col--us   { background: #F2F8F0; border: 1px solid #C6E0BD; }
+  .vs-h {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .vs-col--them .vs-h { color: var(--text-lt); }
+  .vs-col--us   .vs-h { color: var(--gold-ink); }
+  .vs-col ul { list-style: none; margin: 0; }
+  .vs-col li {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 0.92rem; line-height: 1.5;
+    padding: 6px 0;
+  }
+  .vs-col--them li { color: var(--text-lt); }
+  .vs-col--us   li { color: var(--text); font-weight: 500; }
+  .vs-x, .vs-ck {
+    flex-shrink: 0; width: 18px; height: 18px; margin-top: 2px;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 0.68rem; font-weight: 800; line-height: 1;
+  }
+  /* Label wrapped in its own span so an inline <em>/<strong> stays part of the
+     label rather than becoming a sibling flex item and breaking the alignment. */
+  .vs-col li > span:last-child { flex: 1; }
+  .vs-x  { background: var(--gray-3); color: #6E6E6E; }
+  .vs-ck { background: var(--orange); color: var(--navy); }   /* black on green, 4.93:1 */
+  @media (max-width: 700px) { .vs { grid-template-columns: 1fr; gap: 12px; } }
+
+  .note-quote {
+    margin: 26px 0 0;
+    border-left: 4px solid var(--orange);
+    background: var(--gray-1);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 22px;
+  }
+  .note-quote p {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.06rem; line-height: 1.6; color: var(--text);
+    margin-bottom: 14px;
+  }
+  .note-by {
+    font-size: 0.9rem; color: var(--text-mid); line-height: 1.5;
+  }
+  .note-by strong { display: block; font-family: 'Oswald', sans-serif; font-size: 1.05rem; color: var(--navy); letter-spacing: 0.02em; }
+  @media (max-width: 860px) {
+    .note-wrap { grid-template-columns: 1fr; gap: 26px; }
+    .note-figure { max-width: 420px; }
+  }
+
+  /* ── FINANCING BAND ── */
+  .fin { background: var(--navy); color: #fff; padding: 64px 22px; text-align: center; }
+  .fin-inner { max-width: 820px; margin: 0 auto; }
+  .fin h2 { font-family: 'Oswald', sans-serif; font-size: clamp(1.7rem, 4.4vw, 2.4rem); line-height: 1.15; margin-bottom: 14px; }
+  .fin h2 .accent { color: var(--orange); }
+  .fin p { color: rgba(255,255,255,0.78); font-size: 1rem; line-height: 1.6; max-width: 620px; margin: 0 auto 26px; }
+  .fin-pills { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-bottom: 28px; }
+  .fin-pill {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 100px; padding: 9px 18px;
+    font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 0.92rem;
+    letter-spacing: 0.03em; color: #fff;
+  }
+
+  /* ── FAQ (accordion, no libraries) ──
+     A bare .sec has no background of its own and falls through to
+     body{background:var(--navy)} — black. The base template never had a plain
+     .sec, so this only surfaced when the FAQ was added: dark text on black. */
+  #faq { background: #fff; }
+  .faq-list { max-width: 820px; margin: 30px auto 0; }
+  .faq-item { border-bottom: 1px solid var(--gray-3); }
+  .faq-q {
+    width: 100%; background: none; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    text-align: left; padding: 20px 4px;
+    font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1.12rem;
+    color: var(--navy); line-height: 1.35;
+  }
+  .faq-q::after { content: '+'; font-size: 1.5rem; color: var(--gold-ink); flex-shrink: 0; line-height: 1; }
+  .faq-item.open .faq-q::after { content: '\2212'; }
+  .faq-a { display: none; padding: 0 4px 22px; font-size: 0.95rem; color: var(--text-mid); line-height: 1.68; }
+  .faq-item.open .faq-a { display: block; }
+  .faq-a ul { margin: 10px 0 0 18px; }
+  .faq-a li { margin-bottom: 5px; }
+
+  /* TCPA consent under the submit button — deliberately small and grey, but
+     never hidden: it has to be legible to be consent. 0.68rem on #7C7C7C. */
+  .m2s-consent {
+    font-size: 0.68rem; line-height: 1.45; color: var(--text-lt);
+    text-align: left; margin: 10px 2px 0;
+  }
+  .m2s-consent a { color: var(--text-mid); text-decoration: underline; }
+  /* Text-only button styled as a link (out-of-area "try another zip") */
+  .v2-linkbtn {
+    background: none; border: none; cursor: pointer; width: 100%;
+    margin-top: 12px; padding: 4px; font-family: 'Inter', sans-serif;
+    font-size: 0.9rem; font-weight: 600; color: var(--gold-ink);
+  }
+  .v2-linkbtn:hover { text-decoration: underline; }
+  /* 5th tile ("Not sure" / "Somewhere else") spans both columns of the 2-col grid */
+  .v2-tile--wide { grid-column: 1 / -1; }
+  .v2-tile {
+    background: var(--gray-1);
+    border: 1.5px solid var(--gray-3);
+    color: var(--navy);
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.12rem; font-weight: 700; letter-spacing: 0.04em;
+    padding: 22px 8px;
+    border-radius: 8px;
+    cursor: pointer; text-align: center;
+    transition: all 0.18s;
+  }
+  .v2-tile:hover, .v2-tile:active {
+    background: var(--orange);
+    border-color: var(--orange);
+    color: var(--navy);
+    transform: scale(0.98);
+  }
+
+  /* Tri-microcopy under CTA */
+  .v2-cta-micro {
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-mid);
+    margin-top: 10px;
+    font-style: italic;
+  }
+  .v2-cta-micro .sep { margin: 0 5px; opacity: 0.5; }
+
+  /* Co-equal secondary call link */
+  .v2-call-secondary {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1.5px solid var(--gray-3);
+    border-radius: 6px;
+    color: var(--navy);
+    text-decoration: none;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.92rem; font-weight: 600; letter-spacing: 0.04em;
+    transition: background 0.18s, border-color 0.18s;
+  }
+  .v2-call-secondary:hover { background: var(--gray-1); border-color: var(--text-lt); }
+  .v2-call-secondary .phone-num { color: var(--gold-ink); }   /* on white form bg */
+
+  .m2s-fine {
+    text-align: center; font-size: 0.66rem;
+    color: var(--text-lt); margin-top: 8px; line-height: 1.45;
+  }
+
+  /* 3-checkmark blended benefits - sits BELOW form as supporting context */
+  .v2-benefits {
+    list-style: none;
+    margin: 18px 0 0;
+  }
+  .v2-benefits li {
+    display: flex; align-items: flex-start; gap: 10px;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.94);
+    padding: 6px 0;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+  .v2-benefits .ck {
+    /* NOT --green (#166602): that is the dark ink meant for LIGHT backgrounds,
+       and on the near-black hero it reads 2.33:1 — invisible. --orange is the
+       brand green, 4.93:1 on black. */
+    color: var(--orange);
+    font-weight: 700;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── WHY-IDAHO EDUCATIONAL STRIP (replaces vanity stats) ── */
+  .why-strip {
+    background: var(--gray-1);
+    border-bottom: 1px solid var(--gray-2);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    padding: 44px 22px;
+  }
+  .why-inner { max-width: 1040px; margin: 0 auto; }
+  .why-eyebrow {
+    text-align: center;
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 6px; display: block;
+  }
+  .why-h2 {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.4rem, 2.6vw, 2rem);
+    font-weight: 700; color: var(--navy); line-height: 1.15;
+    margin-bottom: 22px;
+  }
+  .why-h2 .accent { color: var(--gold-ink); }   /* .why-strip bg is --gray-1 */
+  /* Supporting line under the section headline. Capped well short of
+     .why-inner's 1040px so it stays a readable measure on desktop and does
+     not run edge-to-edge; on mobile the padding on .why-strip carries it. */
+  .why-sub {
+    text-align: center;
+    max-width: 620px; margin: -12px auto 0;
+    font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+    line-height: 1.6; color: var(--text-mid);
+  }
+  /* ── NATIVE WEATHER / ENGINEERING DIAGRAM ── */
+
+
+  /* ── GENERIC SECTION ── */
+  .sec { padding: 64px 22px; }
+  .sec-gray { background: var(--gray-1); }
+  .sec-white { background: var(--white); }
+  .sec-navy { background: var(--navy); }
+  .sec-inner { max-width: 1040px; margin: 0 auto; }
+  .eyebrow {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--blue); margin-bottom: 8px; display: block;
+  }
+  .sec-navy .eyebrow { color: var(--orange); }
+  .sec-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: clamp(1.7rem, 3.2vw, 2.5rem); font-weight: 700;
+    color: var(--navy); line-height: 1.1; margin-bottom: 12px; letter-spacing: 0.01em;
+  }
+  .sec-navy .sec-title { color: #fff; }
+  .sec-title .accent { color: var(--gold-ink); }              /* default: light sections */
+  .sec-navy .sec-title .accent { color: var(--orange); }      /* on navy, gold reads at 11.65:1 */
+
+  /* Founder / trust-tiles CSS removed - section deleted (Change 4). */
+
+  /* (Work-photos-grid CSS removed - "Our Work" section deleted.) */
+
+  /* ── HOW IT WORKS ── */
+  .steps-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; margin-top: 40px; position: relative;
+  }
+  .steps-row::before {
+    content: ''; position: absolute; top: 24px;
+    left: calc(16.66% + 28px); right: calc(16.66% + 28px);
+    height: 2px; background: linear-gradient(90deg, var(--orange), var(--blue)); z-index: 0;
+  }
+  .step { text-align: center; padding: 0 22px; position: relative; z-index: 1; }
+  .step-num {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: var(--orange); color: var(--navy);
+    font-family: 'Oswald', sans-serif; font-size: 1.35rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 14px; box-shadow: 0 4px 16px rgba(30,142,4,0.38);
+  }
+  .step h3 {
+    font-family: 'Oswald', sans-serif; font-size: 1rem; font-weight: 600;
+    color: #fff; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .step p { font-size: 0.85rem; color: rgba(255,255,255,0.65); line-height: 1.55; }
+  /* Centered process header + subheading */
+  .proc-head { text-align: center; }
+  .proc-head .sec-title { text-transform: uppercase; margin-bottom: 6px; }
+  .proc-sub { color: rgba(255,255,255,0.75); font-size: 1rem; }
+
+  /* Old MWC testimonials CSS removed - replaced by the #wwt-testimonials section. */
+
+  /* (Before/After CSS removed - section deleted in Change 6.) */
+
+  /* (Offer-closer CSS removed - section deleted in Change 9.) */
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--navy); padding: 32px 22px; text-align: center;
+    border-top: 3px solid var(--blue);
+  }
+  .footer-logo { height: 40px; mix-blend-mode: screen; filter: brightness(1.5); margin-bottom: 12px; }
+  footer p { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-bottom: 5px; line-height: 1.55; }
+  footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+  footer a:hover { color: var(--orange); }
+
+  /* ── STICKY MOBILE BAR ── */
+  .mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    z-index: 9998;
+    background: var(--navy);
+    border-top: 3px solid var(--orange);
+    padding: 9px 14px;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    box-shadow: 0 -4px 18px rgba(0,0,0,0.25);
+  }
+  .mb-call {
+    background: transparent; border: 2px solid rgba(255,255,255,0.25); color: #fff;
+    text-decoration: none; text-align: center; padding: 11px 8px; border-radius: 6px;
+    font-family: 'Oswald', sans-serif; font-size: 0.95rem; font-weight: 600;
+    display: flex; align-items: center; justify-content: center; gap: 6px; letter-spacing: 0.04em;
+  }
+  .mb-book {
+    background: var(--orange); color: var(--navy); border: none; text-align: center;
+    padding: 11px 8px; border-radius: 6px; font-family: 'Oswald', sans-serif;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer; letter-spacing: 0.06em;
+    text-transform: uppercase;
+    box-shadow: 0 3px 14px rgba(30,142,4,0.45);
+  }
+  .mb-book:active { background: var(--orange-dk); }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none; position: fixed; inset: 0; z-index: 9999;
+    background: rgba(0,0,0,0.92); align-items: center; justify-content: center;
+    padding: 22px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 8px; object-fit: contain; }
+  .lightbox-close {
+    position: absolute; top: 16px; right: 20px; font-size: 2rem; color: #fff;
+    cursor: pointer; background: none; border: none; line-height: 1;
+  }
+
+  /* ── REVEAL ANIMATIONS ── */
+  .js-ready .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .reveal.in { opacity: 1 !important; transform: translateY(0) !important; }
+  .d1 { transition-delay: 0.08s; }
+  .d2 { transition-delay: 0.16s; }
+
+  /* ── FOCUS MODE ── Triggered on first user interaction with form.
+     Fades out surrounding page chrome, repositions the form to center of
+     viewport on a warm neutral background. */
+  .focus-progress {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: rgba(0,0,0,0.08);
+    z-index: 10001;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  .focus-progress .focus-progress-fill {
+    height: 100%;
+    background: var(--orange);
+    width: 33%;
+    transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .focus-back {
+    position: fixed; top: 12px; left: 14px;
+    z-index: 10002;
+    display: inline-flex; align-items: center; gap: 4px;
+    color: var(--text-mid);
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    background: rgba(255,255,255,0.85);
+    padding: 6px 12px; border-radius: 6px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(0,0,0,0.06);
+    opacity: 0; visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease, background 0.18s;
+  }
+  .focus-back:hover { background: #fff; color: var(--navy); }
+
+  /* Activate */
+  body.focus-mode {
+    overflow: hidden;
+    background: #F2F2F2;
+  }
+  /* .mwc-wrap has transform:translateX which creates a containing block
+     for position:fixed descendants - neutralize the transform in focus
+     mode so the form is positioned relative to the viewport. The wrap's
+     content is opacity:0 in focus mode, so the layout shift is invisible. */
+  body.focus-mode .mwc-wrap { transform: none; left: 0; width: 100%; }
+  body.focus-mode .focus-progress,
+  body.focus-mode .focus-back {
+    opacity: 1; visibility: visible; pointer-events: auto;
+  }
+
+  /* Fade out the rest of the page */
+  body.focus-mode .site-header,
+  body.focus-mode .hero-photo-wrap,
+  body.focus-mode .hero-photo-mobile,
+  body.focus-mode .hero-h1,
+  body.focus-mode .hero-sub,
+  body.focus-mode .v2-benefits,
+  body.focus-mode .why-strip,
+  body.focus-mode .sec,
+  body.focus-mode footer,
+  body.focus-mode .mobile-bar {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+  }
+  body.focus-mode .hero { background: transparent; }
+  body.focus-mode .hero::after { display: none; }
+
+  /* Re-layer ONLY the active form on top of everything, centered. Any other form hides. */
+  body.focus-mode .v2-form:not(.is-focused) { display: none; }
+  body.focus-mode .v2-form.is-focused {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 560px;
+    width: calc(100% - 32px);
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    z-index: 10000;
+    visibility: visible;   /* override a hidden wrapper section (the 2nd form) */
+    opacity: 1;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.16);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, max-width 0.3s ease;
+  }
+  /* 2nd form sits in its own (non-.sec) wrapper; hide its chrome via visibility in focus
+     mode so the focused form can override it - opacity:0 would trap the fixed child. */
+  body.focus-mode .form-zone { visibility: hidden; }
+  @media (max-width: 600px) {
+    body.focus-mode .v2-form.is-focused {
+      width: calc(100% - 24px);
+      max-height: calc(100vh - 56px);
+    }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (min-width: 901px) {
+    /* Desktop: 2-col hero - photo on left (flex), content on right (~480px) */
+    .hero-inner {
+      max-width: 1140px;
+      padding: 28px 32px 56px;
+      display: grid;
+      grid-template-columns: 1fr 480px;
+      gap: 44px;
+      align-items: stretch;
+    }
+    /* The photo column is align-self:stretch, so it grows to whatever height
+       the content column is. Fisher's content column is taller than the base
+       template's (a three-line H1 and three trust checks against Elevated's
+       one), which stretched the photo to 822px — past the fold on a 900px
+       viewport, so the bottom of the house was cut off by the browser edge
+       rather than framed. Capping it keeps the whole photo inside the hero
+       with the gradient showing beneath, which is what Elevated does at 677px.
+       align-self:start stops the capped box from being pinned to the row
+       height it no longer fills. */
+    .hero-photo-wrap {
+      display: block;
+      /* min-height:100% on the base rule beats any cap (min always wins in the
+         CSS cascade), so it has to be released here or the height below is
+         inert. With it released the box would otherwise collapse to the photo's
+         intrinsic 400px, so the height is set explicitly and object-fit:cover
+         crops to fill — the same way Elevated's stretches past its intrinsic
+         height. 700px keeps the whole photo above a 900px fold while still
+         filling most of the column. */
+      min-height: 0;
+      height: 700px;
+      align-self: start;
+    }
+    .hero-content { justify-content: center; }
+    .v2-form { padding: 22px 24px 22px; }
+    .m2s-question { font-size: 1.28rem; }
+    .v2-tile { padding: 26px 8px; font-size: 1.15rem; }
+    .m2s-btn { font-size: 1.2rem; padding: 16px 22px; }
+    .hero-h1 { font-size: 2.7rem; }
+    .hero-h1 .orange { font-size: 2.1rem; }
+    .v2-pullquote { margin-bottom: 16px; }
+    /* Why-strip slightly tighter on desktop */
+    .why-strip { padding: 44px 22px; }
+  }
+
+  @media (max-width: 900px) {
+    .sdiv { display: none; }
+    /* Weather diagram → image-only, full width */
+  }
+
+  /* Mobile process: 3 compact cards side-by-side in one row (no wrap) */
+  @media (max-width: 768px) {
+    .steps-row { display: flex; flex-direction: row; flex-wrap: nowrap; gap: 8px; margin-top: 26px; }
+    .steps-row::before { display: none; }
+    .step {
+      flex: 1 1 0; min-width: 0; padding: 16px 8px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+    }
+    .step-num { width: 32px; height: 32px; font-size: 1rem; margin: 0 auto 10px; background: var(--blue); box-shadow: none; }
+    .step h3 { font-size: 0.72rem; letter-spacing: 0.02em; margin-bottom: 6px; }
+    .step p { font-size: 0.66rem; line-height: 1.35; }
+  }
+
+  /* Mobile (≤767px) - hero collapses to: offer strip → photo → form.
+     H1 + sub-head are hidden so the photo carries the visual weight. */
+  @media (max-width: 767px) {
+    .hero-h1 { display: none; }
+    .hero-sub { display: none; }
+    .v2-form { padding: 20px; }
+
+    /* The offer line replaces the hidden H1. Kept to ~58px so the form's first
+       question stays exactly where it was — the 60px trimmed off the photo
+       below pays for it, making this net-neutral on fold position. */
+    .hero-offer-mobile {
+      display: block;
+      text-align: center;
+      font-family: 'Oswald', sans-serif;
+      line-height: 1.2;
+      padding: 9px 12px;
+      margin: 2px 0 0;
+      border-top: 1px solid rgba(255,255,255,0.14);
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+    }
+    .hero-offer-mobile strong {
+      display: block;
+      font-size: 1.34rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: var(--orange);          /* gold on navy = 11.65:1 */
+    }
+    .hero-offer-mobile span {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.90);
+      margin-top: 3px;
+    }
+
+    .hero-photo-mobile {
+      display: block;
+      height: 240px;            /* was 300px — 60px funds the offer line above */
+      margin-top: 12px;
+      margin-bottom: 16px;      /* gap to form card */
+    }
+  }
+
+  @media (max-width: 480px) {
+    .sec { padding: 48px 18px; }
+    .hero-inner { padding: 12px 18px 32px; }
+  }
+
+  /* ── DUPLICATED LEAD FORM WRAPPER (below testimonials) ── */
+  /* ── CONVERSION FORM ZONE (forms 2 & 3) - dark gradient "get a quote" bands ── */
+  .form-zone {
+    background: linear-gradient(160deg, var(--navy) 0%, var(--blue-deep) 78%, var(--blue-dark) 100%);
+    padding: 60px 22px;
+  }
+  .form-zone-inner { max-width: 600px; margin: 0 auto; }
+  .form-zone-h {
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem); color: #fff;
+    text-align: center; line-height: 1.18; margin-bottom: 26px;
+  }
+  .form-zone-sub { text-align: center; color: rgba(255,255,255,0.82); font-size: 1rem; line-height: 1.5; margin-top: -16px; margin-bottom: 26px; }
+  .form-zone-trust { text-align: center; color: rgba(255,255,255,0.72); font-size: 0.9rem; margin-top: 16px; }
+
+  /* ── METAL & ASPHALT ──
+     A bare .sec has no background and falls through to body{--navy}, so it
+     needs an explicit one. */
+  #materials { background: #fff; }
+  .mat-sub {
+    max-width: 640px; margin: 12px auto 0; text-align: center;
+    font-size: 1rem; line-height: 1.6; color: var(--text-mid);
+  }
+  .mat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 34px; }
+  .mat {
+    margin: 0; background: #fff; border: 1px solid var(--gray-2);
+    border-radius: 12px; overflow: hidden; cursor: pointer;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+    display: flex; flex-direction: column;
+  }
+  .mat img { width: 100%; height: 260px; object-fit: cover; display: block; transition: transform 0.35s ease; }
+  .mat:hover img { transform: scale(1.04); }
+  .mat figcaption { padding: 20px 22px 24px; }
+  .mat-name {
+    display: block; font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: 1.35rem; color: var(--navy); margin-bottom: 8px;
+  }
+  .mat-desc { display: block; font-size: 0.94rem; line-height: 1.6; color: var(--text-mid); }
+
+  /* ── STYLES — the close-up / finished-roof pairs ──
+     The swatch is INSET on the roof photo rather than beside it, so the sample
+     and the real thing read as one object. Bottom-left, clear of the rooflines
+     in all four shots. */
+  .pair-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 34px; }
+  .pair {
+    position: relative; margin: 0; overflow: hidden;
+    border-radius: 12px; cursor: pointer;
+    box-shadow: 0 3px 18px rgba(0,0,0,0.12);
+    background: var(--gray-2);
+  }
+  .pair-roof { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; transition: transform 0.4s ease; }
+  .pair:hover .pair-roof { transform: scale(1.04); }
+  .pair-close {
+    position: absolute; left: 14px; bottom: 14px;
+    width: 92px; height: 92px; object-fit: cover;
+    border-radius: 10px; border: 3px solid #fff;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.34);
+  }
+  .pair-name {
+    position: absolute; left: 118px; bottom: 14px;
+    background: rgba(0,0,0,0.78); color: #fff;
+    font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: 0.9rem; letter-spacing: 0.04em;
+    padding: 7px 14px; border-radius: 100px;
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  }
+  .pair-foot {
+    margin-top: 24px; text-align: center;
+    font-size: 0.82rem; line-height: 1.6; color: var(--text-lt);
+  }
+  @media (max-width: 860px) {
+    .mat-grid { grid-template-columns: 1fr; gap: 18px; }
+    .pair-grid { grid-template-columns: 1fr; gap: 18px; max-width: 480px; margin-left: auto; margin-right: auto; }
+  }
+  @media (max-width: 480px) {
+    .pair-close { width: 72px; height: 72px; left: 10px; bottom: 10px; }
+    .pair-name { left: 92px; bottom: 10px; font-size: 0.8rem; padding: 6px 11px; }
+  }
+
+
+  /* ═══════════════════════════════════════════════════════════════
+     ALLOY-ONLY SECTIONS
+     Everything above this line is the client template, unmodified.
+     Everything below is new for Alloy's own site and has no client
+     counterpart: the VSL hero, the logo wall, the agency-vs-Alloy
+     performance block, the four pillars, and the creative / LP
+     preview galleries.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* ── VSL HERO ──────────────────────────────────────────────────
+     The hero is single-column here, not the client template's
+     photo-left / form-right split: the video IS the hero asset and
+     it needs the full measure, with the form stacked underneath it
+     (Alex's brief: "right below VSL insert a form").            */
+  .hero--vsl .hero-inner {
+    display: block;
+    max-width: 900px;
+  }
+  .hero--vsl .hero-content { max-width: none; }
+
+  .vsl-h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.85rem, 5.4vw, 2.6rem);
+    line-height: 1.14;
+    color: #fff;
+    text-align: center;
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+  .vsl-h1 .orange { color: var(--orange); display: block; }
+
+  /* "The video answers this" arrow. Sits between the headline and the
+     player, points down at it. Animated on the Y axis only — a nudge,
+     not a bounce. Honours prefers-reduced-motion below. */
+  .vsl-arrow {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    margin: 0 auto 14px;
+    color: var(--orange);
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-style: italic;
+    font-size: 0.98rem;
+  }
+  .vsl-arrow .chev {
+    font-size: 1.5rem; line-height: 1;
+    animation: vslNudge 1.8s ease-in-out infinite;
+  }
+  @keyframes vslNudge {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(6px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .vsl-arrow .chev { animation: none; }
+  }
+
+  /* Player shell. 16:9 via aspect-ratio, teal edge so it reads as the
+     focal object against the dark hero. The inner .vsl-facade is a
+     click-to-load poster — see the TODO in the markup. */
+  .vsl-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border: 1px solid rgba(46,196,182,0.34);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+  }
+  .vsl-frame iframe, .vsl-frame video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; border: 0; display: block;
+  }
+  .vsl-facade {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 14px;
+    cursor: pointer; border: 0; width: 100%;
+    background: linear-gradient(150deg, #1b1a17 0%, #0E2A27 60%, #103a35 100%);
+    color: #fff; font-family: 'Inter', sans-serif;
+  }
+  .vsl-play {
+    width: 74px; height: 74px; border-radius: 50%;
+    background: var(--orange); color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.7rem; padding-left: 6px;
+    box-shadow: 0 6px 24px rgba(46,196,182,0.4);
+    transition: transform 0.18s ease;
+  }
+  .vsl-facade:hover .vsl-play { transform: scale(1.07); }
+  .vsl-facade-label {
+    font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase;
+    color: rgba(255,255,255,0.72); font-weight: 600;
+  }
+  .vsl-facade-note {
+    font-size: 0.78rem; color: rgba(255,255,255,0.45); max-width: 320px;
+    text-align: center; line-height: 1.5;
+  }
+  .vsl-caption {
+    text-align: center; color: rgba(240,237,230,0.6);
+    font-size: 0.85rem; margin-top: 12px;
+  }
+
+  /* ── CLIENT LOGO WALL ──────────────────────────────────────────
+     Greyscale at rest, full colour on hover — standard for a logo
+     strip where the marks fight each other for attention.       */
+  .logos-strip { background: var(--white); padding: 44px 22px 52px; }
+  .logos-inner { max-width: 1100px; margin: 0 auto; text-align: center; }
+  .logos-kicker {
+    font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-lt);
+    margin-bottom: 26px;
+  }
+  .logos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 26px 34px; align-items: center;
+  }
+  .logos-grid img {
+    max-width: 100%; height: 52px; object-fit: contain;
+    filter: grayscale(1); opacity: 0.62;
+    transition: filter 0.2s ease, opacity 0.2s ease;
+  }
+  .logos-grid img:hover { filter: grayscale(0); opacity: 1; }
+  /* Placeholder tile — delete each one as a real logo lands. */
+  .logo-ph {
+    height: 52px; border: 1px dashed var(--gray-3); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-lt); font-size: 0.72rem; letter-spacing: 0.06em;
+    text-transform: uppercase; background: var(--gray-1);
+  }
+
+  /* ── SENJA TESTIMONIAL + PERFORMANCE BEFORE/AFTER ──────────────
+     Left-aligned per the brief. Two columns on desktop: the quote on
+     the left, the old-agency → Alloy numbers on the right.       */
+  .proof-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 44px; align-items: start; margin-top: 30px;
+  }
+  .senja-slot {
+    background: var(--white); border: 1px solid var(--gray-2);
+    border-radius: 12px; padding: 26px 26px 22px;
+    box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+  }
+  .senja-stars { color: #FFB800; font-size: 1.05rem; letter-spacing: 0.05em; margin-bottom: 12px; }
+  .senja-quote {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.12rem; line-height: 1.62; color: var(--text);
+  }
+  .senja-quote p + p { margin-top: 13px; }
+  .senja-by {
+    margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--gray-2);
+    display: flex; align-items: center; gap: 12px;
+  }
+  .senja-avatar {
+    width: 44px; height: 44px; border-radius: 50%; flex-shrink: 0;
+    background: var(--blue); color: #fff;
+    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.1rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .senja-by-name { font-weight: 700; color: var(--navy); font-size: 0.98rem; }
+  .senja-by-role { font-size: 0.84rem; color: var(--text-lt); }
+
+  /* Before → after performance pair */
+  .perf-lede { font-size: 1rem; line-height: 1.7; color: var(--text-mid); margin-bottom: 20px; }
+  .perf-pair { display: flex; flex-direction: column; gap: 12px; }
+  .perf-card { border-radius: 12px; padding: 20px 22px; border: 1px solid var(--gray-2); }
+  .perf-card--before { background: var(--gray-1); }
+  .perf-card--after  { background: var(--navy); border-color: rgba(46,196,182,0.3); }
+  .perf-label {
+    font-family: 'Inter', sans-serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px;
+  }
+  .perf-card--before .perf-label { color: var(--text-lt); }
+  .perf-card--after  .perf-label { color: var(--orange); }
+  .perf-rows { display: grid; gap: 10px; }
+  .perf-row { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; }
+  .perf-row-k { font-size: 0.88rem; }
+  .perf-card--before .perf-row-k { color: var(--text-mid); }
+  .perf-card--after  .perf-row-k { color: rgba(240,237,230,0.72); }
+  .perf-row-v { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 1.35rem; white-space: nowrap; }
+  .perf-card--before .perf-row-v { color: var(--text); }
+  .perf-card--after  .perf-row-v { color: var(--orange); }
+  .perf-arrow { text-align: center; color: var(--gold-ink); font-size: 1.4rem; line-height: 1; }
+  .perf-note { font-size: 0.78rem; color: var(--text-lt); margin-top: 14px; font-style: italic; }
+
+  /* ── FOUR PILLARS ──────────────────────────────────────────────
+     Numbered cards on the dark ground, same numbering treatment as
+     the live root page's services grid.                          */
+  .pillars { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 34px; }
+  .pillar {
+    background: rgba(255,255,255,0.035);
+    border: 1px solid rgba(46,196,182,0.22);
+    border-radius: 12px; padding: 26px 24px 24px;
+  }
+  .pillar-n {
+    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 0.92rem;
+    color: var(--orange); letter-spacing: 0.1em; margin-bottom: 10px;
+  }
+  .pillar-h {
+    font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1.28rem;
+    color: #fff; margin-bottom: 9px; line-height: 1.25;
+  }
+  .pillar-p { font-size: 0.94rem; line-height: 1.68; color: rgba(240,237,230,0.72); }
+
+  /* ── CREATIVE / LANDING-PAGE PREVIEW GALLERIES ─────────────────
+     Visual-first, the way client pages are. Ad previews are 9:16
+     (that is the format they run in); LP previews are portrait
+     browser shots.                                               */
+  .prev-blurb {
+    max-width: 760px; font-size: 1rem; line-height: 1.72;
+    color: var(--text-mid); margin-bottom: 8px;
+  }
+  .prev-blurb + .prev-blurb { margin-top: 12px; }
+  .ad-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 18px; margin-top: 30px;
+  }
+  .ad-card {
+    position: relative; aspect-ratio: 9 / 16; border-radius: 12px;
+    overflow: hidden; background: var(--gray-1);
+    border: 1px solid var(--gray-2); cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+  }
+  .ad-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.16); }
+  .ad-card img, .ad-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .ad-tag {
+    position: absolute; left: 10px; top: 10px; z-index: 2;
+    background: var(--orange); color: var(--navy);
+    font-size: 0.64rem; font-weight: 800; letter-spacing: 0.07em;
+    text-transform: uppercase; padding: 4px 9px; border-radius: 100px;
+  }
+  .lp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 30px; }
+  .lp-card {
+    border-radius: 12px; overflow: hidden; background: var(--white);
+    border: 1px solid var(--gray-2); box-shadow: 0 2px 14px rgba(0,0,0,0.06);
+    cursor: pointer; transition: transform 0.16s ease, box-shadow 0.16s ease;
+  }
+  .lp-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.14); }
+  .lp-shot { aspect-ratio: 3 / 4; overflow: hidden; background: var(--gray-1); }
+  .lp-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .lp-cap { padding: 13px 16px 15px; }
+  .lp-cap-h { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1rem; color: var(--navy); }
+  .lp-cap-p { font-size: 0.82rem; color: var(--text-lt); margin-top: 3px; }
+
+  /* Shared placeholder tile for both galleries. Every one of these is a
+     slot Alex is supplying an asset for — they are meant to look
+     unfinished so none of them ships by accident. */
+  .asset-ph {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 6px; text-align: center; padding: 14px;
+    background: repeating-linear-gradient(45deg, #EFEFEC 0 10px, #E7E7E3 10px 20px);
+    color: var(--text-lt); font-size: 0.74rem; line-height: 1.45;
+  }
+  .asset-ph strong { display: block; color: var(--text-mid); font-size: 0.8rem; }
+  .lp-shot .asset-ph { position: static; height: 100%; }
+
+  /* ── RESPONSIVE (Alloy sections only) ── */
+  @media (max-width: 900px) {
+    .proof-grid { grid-template-columns: 1fr; gap: 30px; }
+    .pillars { grid-template-columns: 1fr; }
+    .ad-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .lp-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
+  }
+  @media (max-width: 520px) {
+    .logos-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  }
+
+  /* ── Focus mode: hide the Alloy-only chrome too ────────────────
+     The template's focus-mode rule names the elements IT knows about
+     (.hero-h1, .hero-sub, .hero-photo-wrap, .v2-benefits, .sec, footer,
+     .mobile-bar). The VSL block and the logo strip are new here and are
+     not .sec, so without this they stay lit behind the focused form. */
+  body.focus-mode .vsl-h1,
+  body.focus-mode .vsl-arrow,
+  body.focus-mode .vsl-frame,
+  body.focus-mode .vsl-caption,
+  body.focus-mode .logos-strip {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+  }
+
+  /* Single-button sticky bar (no phone line on Alloy's own site). */
+  .mobile-bar--single { grid-template-columns: 1fr; }
+  .mobile-bar--single .mb-book { width: 100%; }
+</style>
+</head>
+<body>
+<!-- TODO(analytics): Alloy's GTM <noscript> iframe goes here, matching the
+     container added in <head>. Fisher's was removed with the fork. -->
+
+<!-- FOCUS MODE UI (hidden until the visitor starts filling a form) -->
+<div class="focus-progress" id="focus-progress" aria-hidden="true">
+  <div class="focus-progress-fill" id="focus-progress-fill"></div>
+</div>
+<a href="#" class="focus-back" id="focus-back" onclick="exitFocusMode(event)">&larr; Back to page</a>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="#hero-anchor" class="site-logo-link" aria-label="Alloy Media home">
+      <img class="site-logo" src="../logo.png" alt="Alloy Media">
+    </a>
+    <a href="#hero-anchor" class="site-cta" onclick="scrollToForm(event)">
+      <span class="site-cta-text">Book a Call</span>
+    </a>
+  </div>
+</header>
+
+<!-- MAIN CONTENT WRAPPER -->
+<div class="mwc-wrap">
+
+<!-- ============ HERO: VSL + FORM ================================
+     Brief: headline question, video that answers it, form directly
+     underneath. The client template's photo-left/form-right hero is
+     replaced by a single centred column (.hero--vsl) because the video
+     needs the full measure and the form has to sit under it, not
+     beside it.
+     ============================================================== -->
+<section class="hero hero--vsl" id="hero-anchor">
+  <div class="hero-inner">
+    <div class="hero-content">
+
+      <h1 class="vsl-h1">
+        What&rsquo;s unique about Alloy Media?
+        <span class="orange">Why work with Alloy right now?</span>
+      </h1>
+
+      <div class="vsl-arrow" aria-hidden="true">
+        <span>Both answered in the video</span>
+        <span class="chev">&#9662;</span>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════════════
+           VSL SLOT.
+
+           This is a FACADE, not an embed: a poster with a play button
+           that swaps itself for the real player on click. Nothing from
+           the video host loads until someone presses play, so the host's
+           script never sits in the critical path of a page that is about
+           to carry paid traffic. It is host-agnostic on purpose.
+
+           TO WIRE IT UP — set ONE of these on the button below:
+             data-embed="https://www.youtube-nocookie.com/embed/VIDEO_ID?autoplay=1&rel=0&modestbranding=1"
+             data-embed="https://player.vimeo.com/video/VIDEO_ID?autoplay=1"
+             data-embed="https://fast.wistia.net/embed/iframe/VIDEO_ID?autoPlay=true"
+           …or data-file="video.mp4" to self-host it, which skips the
+           iframe entirely and plays it inline.
+           Then drop a poster image in as the button's background.
+           TODO(assets): record the VSL + export a poster frame.
+           ═══════════════════════════════════════════════════════════ -->
+      <div class="vsl-frame" id="vsl-frame">
+        <button type="button" class="vsl-facade" id="vsl-facade"
+                data-embed=""
+                data-file=""
+                aria-label="Play: what's unique about Alloy Media">
+          <span class="vsl-play" aria-hidden="true">&#9654;</span>
+          <span class="vsl-facade-label">Watch &mdash; 4 min</span>
+          <span class="vsl-facade-note">Placeholder. Set data-embed (YouTube / Vimeo / Wistia) or data-file on this button and the real player loads on click.</span>
+        </button>
+      </div>
+      <p class="vsl-caption">No pitch deck. Just how we run the ads and what it costs.</p>
+
+
+    <div class="v2-form" id="mobile-form-anchor">
+      <div class="v2-progress-dots" id="v2-dots">
+        <div class="dot active" data-step="1"></div>
+        <div class="dot" data-step="2"></div>
+        <div class="dot" data-step="3"></div>
+        <div class="dot" data-step="4"></div>
+        <span class="step-text" id="v2-step-text">Step 1 of 4</span>
+      </div>
+
+      <!-- ── Step 1 ───────────────────────────────────────────────────────
+           ⚠ PLACEHOLDER QUESTIONS. Alex is supplying the real four in the
+           next round of edits; these exist so the flow, the dots and focus
+           mode are all testable today.
+           The shape is deliberate and worth keeping whatever the wording
+           becomes: qualify BEFORE asking for PII. A visitor who is not a fit
+           never reaches the contact step, and a visitor who is has already
+           invested three clicks by the time they are asked for a number. -->
+      <div id="m2s-step0">
+        <p class="m2s-question">What do you install?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bath &amp; Shower')">Bath &amp; Shower</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <!-- ── Step 2: spend ────────────────────────────────────────────────
+           This is the qualifier. It reuses the template's region step and its
+           out-of-area branch verbatim — "Under $5k / month" routes to the
+           soft-decline screen the same way "Somewhere else" did on Fisher.
+           Sending an unqualified visitor to a straight answer beats taking
+           the lead and declining by email a week later. -->
+      <div id="m2s-step-state" style="display:none">
+        <p class="m2s-question">What are you spending on ads each month?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'Under $5k')">Under $5k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$5k&ndash;$15k')">$5k&ndash;$15k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$15k&ndash;$50k')">$15k&ndash;$50k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$50k+')">$50k+</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <!-- ── Step 3: website (was the ZIP gate on client pages) ──────────── -->
+      <div id="m2s-step1" style="display:none">
+        <p class="m2s-question">What&rsquo;s your company website?</p>
+        <input class="m2s-input" type="text" id="m2s-q3" placeholder="yourcompany.com" inputmode="url">
+        <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <p class="m2s-fine">We look at your current ads before the call, so it isn&rsquo;t a discovery call spent on discovery.</p>
+      </div>
+
+      <!-- Soft decline: reached from "Under $5k" at step 2. -->
+      <div id="m2s-zip-error" style="display:none; text-align:center; padding:14px 4px 6px;">
+        <p style="font-size:1rem; color:var(--text); line-height:1.55; margin-bottom:14px">Below about $5k a month, you are better off putting the money into the ads than into an agency fee. We would rather tell you that now than six weeks in. If your spend is about to step up, get in touch and we&rsquo;ll talk then.</p>
+        <button type="button" class="v2-linkbtn" onclick="m2sBackToZip(this)">&larr; Change my answer</button>
+      </div>
+
+      <!-- ── Step 4: contact (PII only after the first three answers) ── -->
+      <div id="m2s-step2" style="display:none">
+        <p class="m2s-question">Where should we send the breakdown?</p>
+        <div class="m2s-row">
+          <input class="m2s-input" type="text" id="m2s-fname" placeholder="First name" style="margin-bottom:0">
+          <input class="m2s-input" type="text" id="m2s-lname" placeholder="Last name" style="margin-bottom:0">
+        </div>
+        <input class="m2s-input" type="tel" id="m2s-phone" placeholder="(555) 555-0000" inputmode="tel" style="margin-top:10px">
+        <input class="m2s-input" type="email" id="m2s-email" placeholder="Work email address" style="margin-bottom:4px">
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Book My Call &rarr;</button>
+        <!-- TODO(legal): Alloy's own consent wording + real Privacy / Terms URLs
+             before this page carries paid traffic. Copied structure only. -->
+        <p class="m2s-consent">By clicking &ldquo;Book My Call&rdquo; I agree to be contacted by Alloy Media at the details provided. Consent is not a condition of purchase; message and data rates may apply. See our <a href="#" rel="nofollow">Privacy Policy</a> and <a href="#" rel="nofollow">Terms</a>.</p>
+      </div>
+
+      <!-- Success (in-page fallback used while THANK_YOU_URL is empty) -->
+      <div id="m2s-success" style="display:none; text-align:center; padding:8px 0 4px;">
+        <div style="font-size:2.4rem; margin-bottom:10px">&#127881;</div>
+        <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:8px">You&rsquo;re All Set!</p>
+        <p style="font-size:0.88rem; color:var(--text-mid); line-height:1.6">We&rsquo;ll be in touch within one business day.</p>
+      </div>
+
+      <!-- Testimonial inside the form card, persistent across steps.
+           ⚠ PLACEHOLDER — swap for a real Senja quote from a client who can be
+           named. On a client page this slot kills the cost objection at the
+           moment of handing over a number; here the objection is "will this
+           actually be different from my last agency", so the quote that
+           belongs here is one that answers exactly that. -->
+      <div class="v2-pullquote">
+        <p>&ldquo;Placeholder &mdash; a two-sentence client quote goes here, verbatim, answering &lsquo;how is this different from the last agency&rsquo;.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
+      </div>
+    </div>
+
+      <!-- Trust line under the hero form, same slot the client pages use. -->
+      <ul class="v2-benefits">
+        <li><span class="ck">&#10003;</span> <strong>Home Improvement Only</strong></li>
+        <li><span class="ck">&#10003;</span> <strong>Creative Published Twice a Month</strong></li>
+        <li><span class="ck">&#10003;</span> <strong>Tracking Down to the Signed Job</strong></li>
+      </ul>
+
+    </div><!-- /.hero-content -->
+  </div>
+</section>
+
+<!-- ============ CLIENT LOGOS ====================================
+     TODO(assets): Alex is loading the real marks into Cloudflare. They
+     belong at assets.alloymedia.io/AlloyMedia/clients/<name>.svg — SVG
+     or transparent PNG, since .logos-grid greyscales them and a JPEG's
+     white box will show. Delete one .logo-ph per logo added.
+     ============================================================== -->
+<section class="logos-strip">
+  <div class="logos-inner">
+    <p class="logos-kicker">Running paid media for</p>
+    <div class="logos-grid reveal">
+      <div class="logo-ph">Logo 1</div>
+      <div class="logo-ph">Logo 2</div>
+      <div class="logo-ph">Logo 3</div>
+      <div class="logo-ph">Logo 4</div>
+      <div class="logo-ph">Logo 5</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SENJA TESTIMONIAL + PERFORMANCE BEFORE/AFTER ====
+     Left-aligned per the brief. The quote and the numbers are one
+     argument, so they share a row: the client says it, the numbers
+     show it.
+     ⚠ ALL COPY AND EVERY NUMBER BELOW IS PLACEHOLDER — fluffed up to
+     hold the shape, as asked. Nothing here is real and none of it can
+     ship. Swap in the actual Senja quote and the actual before/after.
+     ============================================================== -->
+<section class="sec sec-gray" id="proof">
+  <div class="sec-inner">
+    <span class="eyebrow">Proof</span>
+    <h2 class="sec-title reveal">What Changed When They <span class="accent">Switched</span></h2>
+
+    <div class="proof-grid reveal">
+
+      <!-- ── Senja slot ──────────────────────────────────────────────
+           Senja gives you two options and they are not equivalent:
+             1. Their embed script (a <div class="senja-embed" data-id="…">
+                plus one <script src="https://widget.senja.io/widget/…">).
+                Live-updating, but it is third-party JS above the fold on a
+                paid-traffic page, and the widget renders in Senja's styling,
+                not this template's.
+             2. Paste the text. Static, styled like the rest of the page,
+                zero network cost.
+           This slot is built for (2). If you want the live widget instead,
+           drop the embed div in place of .senja-quote and keep the card.
+           TODO(copy): real quote + attribution from Senja. -->
+      <div class="senja-slot">
+        <div class="senja-stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="senja-quote">
+          <p>&ldquo;Placeholder. Two or three sentences from the client, in their own words, about what the last agency was doing and what changed. The strongest version of this quote names the thing they were told was impossible and then says it happened.&rdquo;</p>
+          <p>&ldquo;A second paragraph carries the specific: the number that moved, or the month it turned.&rdquo;</p>
+        </div>
+        <div class="senja-by">
+          <div class="senja-avatar" aria-hidden="true">C</div>
+          <div>
+            <div class="senja-by-name">Client Name</div>
+            <div class="senja-by-role">Owner &middot; Company &middot; via Senja</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Before / after performance ───────────────────────────── -->
+      <div>
+        <p class="perf-lede">Most of the accounts we take over are not broken in an interesting way. They are spending into a lookalike audience with four-year-old creative, counting form fills as conversions, and nobody has told the algorithm which of those leads ever signed a contract. Here is what that looks like before and after.</p>
+
+        <div class="perf-pair">
+          <div class="perf-card perf-card--before">
+            <div class="perf-label">Before &mdash; previous agency</div>
+            <div class="perf-rows">
+              <div class="perf-row"><span class="perf-row-k">Cost per lead</span><span class="perf-row-v">$XXX</span></div>
+              <div class="perf-row"><span class="perf-row-k">Lead-to-appointment</span><span class="perf-row-v">XX%</span></div>
+              <div class="perf-row"><span class="perf-row-k">Cost per signed job</span><span class="perf-row-v">$X,XXX</span></div>
+              <div class="perf-row"><span class="perf-row-k">New creative per month</span><span class="perf-row-v">0</span></div>
+            </div>
+          </div>
+
+          <div class="perf-arrow" aria-hidden="true">&#8595;</div>
+
+          <div class="perf-card perf-card--after">
+            <div class="perf-label">After &mdash; with Alloy Media</div>
+            <div class="perf-rows">
+              <div class="perf-row"><span class="perf-row-k">Cost per lead</span><span class="perf-row-v">$XXX</span></div>
+              <div class="perf-row"><span class="perf-row-k">Lead-to-appointment</span><span class="perf-row-v">XX%</span></div>
+              <div class="perf-row"><span class="perf-row-k">Cost per signed job</span><span class="perf-row-v">$X,XXX</span></div>
+              <div class="perf-row"><span class="perf-row-k">New creative per month</span><span class="perf-row-v">8&ndash;10</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TODO(legal): once these are real numbers, this line needs to say
+             which client, over what window, and at what spend. A before/after
+             table with no period attached to it is the single easiest thing
+             on an agency site to pick apart. -->
+        <p class="perf-note">Placeholder figures. Real client, date range and spend level to be named here.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORM ZONE 2 ===================================== -->
+<section class="form-zone" id="form-zone-2">
+  <div class="form-zone-inner">
+    <h2 class="form-zone-h">See what your account looks like with the tracking turned on.</h2>
+    <p class="form-zone-sub">Four questions, about sixty seconds.</p>
+    <div class="v2-form" id="mobile-form-anchor-2">
+      <div class="v2-progress-dots" id="v2-dots-2">
+        <div class="dot active" data-step="1"></div>
+        <div class="dot" data-step="2"></div>
+        <div class="dot" data-step="3"></div>
+        <div class="dot" data-step="4"></div>
+        <span class="step-text" id="v2-step-text-2">Step 1 of 4</span>
+      </div>
+
+      <!-- ── Step 1 ───────────────────────────────────────────────────────
+           ⚠ PLACEHOLDER QUESTIONS. Alex is supplying the real four in the
+           next round of edits; these exist so the flow, the dots and focus
+           mode are all testable today.
+           The shape is deliberate and worth keeping whatever the wording
+           becomes: qualify BEFORE asking for PII. A visitor who is not a fit
+           never reaches the contact step, and a visitor who is has already
+           invested three clicks by the time they are asked for a number. -->
+      <div id="m2s-step0-2">
+        <p class="m2s-question">What do you install?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bath &amp; Shower')">Bath &amp; Shower</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <!-- ── Step 2: spend ────────────────────────────────────────────────
+           This is the qualifier. It reuses the template's region step and its
+           out-of-area branch verbatim — "Under $5k / month" routes to the
+           soft-decline screen the same way "Somewhere else" did on Fisher.
+           Sending an unqualified visitor to a straight answer beats taking
+           the lead and declining by email a week later. -->
+      <div id="m2s-step-state-2" style="display:none">
+        <p class="m2s-question">What are you spending on ads each month?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'Under $5k')">Under $5k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$5k&ndash;$15k')">$5k&ndash;$15k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$15k&ndash;$50k')">$15k&ndash;$50k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$50k+')">$50k+</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <!-- ── Step 3: website (was the ZIP gate on client pages) ──────────── -->
+      <div id="m2s-step1-2" style="display:none">
+        <p class="m2s-question">What&rsquo;s your company website?</p>
+        <input class="m2s-input" type="text" id="m2s-q3-2" placeholder="yourcompany.com" inputmode="url">
+        <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <p class="m2s-fine">We look at your current ads before the call, so it isn&rsquo;t a discovery call spent on discovery.</p>
+      </div>
+
+      <!-- Soft decline: reached from "Under $5k" at step 2. -->
+      <div id="m2s-zip-error-2" style="display:none; text-align:center; padding:14px 4px 6px;">
+        <p style="font-size:1rem; color:var(--text); line-height:1.55; margin-bottom:14px">Below about $5k a month, you are better off putting the money into the ads than into an agency fee. We would rather tell you that now than six weeks in. If your spend is about to step up, get in touch and we&rsquo;ll talk then.</p>
+        <button type="button" class="v2-linkbtn" onclick="m2sBackToZip(this)">&larr; Change my answer</button>
+      </div>
+
+      <!-- ── Step 4: contact (PII only after the first three answers) ── -->
+      <div id="m2s-step2-2" style="display:none">
+        <p class="m2s-question">Where should we send the breakdown?</p>
+        <div class="m2s-row">
+          <input class="m2s-input" type="text" id="m2s-fname-2" placeholder="First name" style="margin-bottom:0">
+          <input class="m2s-input" type="text" id="m2s-lname-2" placeholder="Last name" style="margin-bottom:0">
+        </div>
+        <input class="m2s-input" type="tel" id="m2s-phone-2" placeholder="(555) 555-0000" inputmode="tel" style="margin-top:10px">
+        <input class="m2s-input" type="email" id="m2s-email-2" placeholder="Work email address" style="margin-bottom:4px">
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Book My Call &rarr;</button>
+        <!-- TODO(legal): Alloy's own consent wording + real Privacy / Terms URLs
+             before this page carries paid traffic. Copied structure only. -->
+        <p class="m2s-consent">By clicking &ldquo;Book My Call&rdquo; I agree to be contacted by Alloy Media at the details provided. Consent is not a condition of purchase; message and data rates may apply. See our <a href="#" rel="nofollow">Privacy Policy</a> and <a href="#" rel="nofollow">Terms</a>.</p>
+      </div>
+
+      <!-- Success (in-page fallback used while THANK_YOU_URL is empty) -->
+      <div id="m2s-success-2" style="display:none; text-align:center; padding:8px 0 4px;">
+        <div style="font-size:2.4rem; margin-bottom:10px">&#127881;</div>
+        <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:8px">You&rsquo;re All Set!</p>
+        <p style="font-size:0.88rem; color:var(--text-mid); line-height:1.6">We&rsquo;ll be in touch within one business day.</p>
+      </div>
+
+      <!-- Testimonial inside the form card, persistent across steps.
+           ⚠ PLACEHOLDER — swap for a real Senja quote from a client who can be
+           named. On a client page this slot kills the cost objection at the
+           moment of handing over a number; here the objection is "will this
+           actually be different from my last agency", so the quote that
+           belongs here is one that answers exactly that. -->
+      <div class="v2-pullquote">
+        <p>&ldquo;Placeholder &mdash; a two-sentence client quote goes here, verbatim, answering &lsquo;how is this different from the last agency&rsquo;.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
+      </div>
+    </div>
+
+    <p class="form-zone-trust">We look at your ad account before the call, not on it.</p>
+  </div>
+</section>
+
+<!-- ============ WHY OUR META LEADS ARE HIGHER QUALITY ===========
+     ⚠ PLACEHOLDER COPY throughout — the argument is right, the proof
+     is not attached yet. TODO(copy): Alex to supply the real version.
+     ============================================================== -->
+<!-- .sec is transparent in the template; the client pages paint their bare
+     .sec sections white with a per-ID rule. Using the template's own
+     .sec-white class instead, so a new section never lands dark-on-dark. -->
+<section class="sec sec-white" id="lead-quality">
+  <div class="sec-inner">
+    <span class="eyebrow">Lead Quality</span>
+    <h2 class="sec-title reveal">The Reason Our Meta Leads Are <span class="accent">Higher Quality</span></h2>
+
+    <p class="prev-blurb reveal">Every agency optimises for the conversion event it can see. For almost all of them that event is the form fill, so Meta learns to find people who fill in forms &mdash; which is not the same population as people who buy a $14,000 bathroom.</p>
+    <p class="prev-blurb reveal">We send the platform the event further down the funnel. When a lead becomes an appointment, and again when it becomes a signed contract, that outcome goes back to Meta attached to the exact ad, creative and angle that produced it. The algorithm stops optimising toward form fills and starts optimising toward contracts.</p>
+    <p class="prev-blurb reveal">It is not a targeting trick and it is not a better audience. It is the feedback loop being pointed at the thing you actually get paid for &mdash; and it compounds, because every month of closed-won data makes the next month's targeting sharper.</p>
+  </div>
+</section>
+
+<!-- ============ FOUR PILLARS ====================================
+     ⚠ PLACEHOLDER COPY. The four headings are a reasonable framing of
+     what Alloy actually does (creative / offer / landing page /
+     measurement), but they are mine, not Alex's. TODO(copy).
+     ============================================================== -->
+<section class="sec sec-navy" id="pillars">
+  <div class="sec-inner">
+    <span class="eyebrow">The Framework</span>
+    <h2 class="sec-title reveal">Four Pillars to <span class="accent">Meta Ads That Work</span></h2>
+
+    <div class="pillars reveal">
+      <div class="pillar">
+        <div class="pillar-n">01</div>
+        <div class="pillar-h">Creative volume, not creative luck</div>
+        <p class="pillar-p">One ad that works is an accident. A library of angles tested on a schedule is a system. We publish new creative twice a month so there is always a challenger in market before the current winner fatigues.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">02</div>
+        <div class="pillar-h">An offer a stranger can say yes to</div>
+        <p class="pillar-p">Most home improvement ads ask for a $12,000 decision from someone who has known the company for nine seconds. The offer has to be sized to the temperature of the traffic, or the cost per lead is the least of the problems.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">03</div>
+        <div class="pillar-h">A landing page that sells</div>
+        <p class="pillar-p">The click is half the job. A page that only collects a phone number hands your sales team a list of people who are still deciding. A page that educates and sells hands them people who have already decided.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">04</div>
+        <div class="pillar-h">Measurement that reaches the contract</div>
+        <p class="pillar-p">If the only thing you can measure is the form fill, the only thing you can optimise is the form fill. We connect the CRM so the signed job is the number on the report &mdash; and the number the algorithm learns from.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUR APPROACH TO CREATIVE =======================
+     Visual-first, the way the client pages are: short blurb, then the
+     work. The ads carry the argument.
+     TODO(assets): Alex is pulling the ad previews. Each .ad-card takes
+     EITHER a poster <img> (cheapest, opens the full ad in the lightbox
+     on click) OR a muted autoplay <video loop playsinline>. Eight 9:16
+     cells are stubbed; add or remove cards freely, the grid reflows.
+     Put them at assets.alloymedia.io/AlloyMedia/ads/.
+     ============================================================== -->
+<section class="sec sec-gray" id="creative">
+  <div class="sec-inner">
+    <span class="eyebrow">Creative</span>
+    <h2 class="sec-title reveal">Our Approach to <span class="accent">Creative</span></h2>
+
+    <p class="prev-blurb reveal">Most home improvement creative is interchangeable &mdash; the same stock kitchen, the same offer card, the same format every competitor in the market is already running. It does not fail because it is ugly. It fails because it is invisible.</p>
+    <p class="prev-blurb reveal">We test across a structured library of angles, publish new creative twice a month, and use AI-assisted production to move at that pace without the quality falling off. Then we feed transcripts of every live video ad into our Creative Analysis agent, so the next round is built on what actually held attention rather than on what the team liked.</p>
+
+    <div class="ad-grid reveal">
+      <!-- Repeat/remove .ad-card as needed. Keep the .ad-tag: labelling the
+           angle is what turns a wall of ads into an argument about method. -->
+      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Testimonial</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
+      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Before / After</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
+      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Founder</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
+      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Geo Callout</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
+      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Education</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
+      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Rebate</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
+      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Comparison</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
+      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Timelapse</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ OUR APPROACH TO LANDING PAGES ===================
+     TODO(assets): three portrait screenshots of real client LPs. Full-page
+     captures at ~1200px wide look best in the 3:4 window; .lp-shot anchors
+     them to the top so the hero is what shows.
+     ============================================================== -->
+<section class="sec sec-white" id="landing-pages">
+  <div class="sec-inner">
+    <span class="eyebrow">Landing Pages</span>
+    <h2 class="sec-title reveal">Our Approach to <span class="accent">Landing Pages</span></h2>
+
+    <p class="prev-blurb reveal">A page that exists to collect a contact detail is a page that hands your sales team a list of strangers. We build pages that do the selling the ad started: what the product is, what it costs to run, what the warranty actually covers, who else nearby bought one.</p>
+    <p class="prev-blurb reveal">The form is multi-step and it qualifies before it asks for anything personal, so the leads that arrive have already answered the three questions your closer would have opened with. Fewer form fills, materially better ones. <em>You are looking at the template right now.</em></p>
+
+    <div class="lp-grid reveal">
+      <div class="lp-card" role="button" tabindex="0">
+        <div class="lp-shot"><div class="asset-ph"><strong>LP screenshot</strong>portrait, full-page</div></div>
+        <div class="lp-cap"><div class="lp-cap-h">Client One</div><div class="lp-cap-p">Windows &middot; replacement</div></div>
+      </div>
+      <div class="lp-card" role="button" tabindex="0">
+        <div class="lp-shot"><div class="asset-ph"><strong>LP screenshot</strong>portrait, full-page</div></div>
+        <div class="lp-cap"><div class="lp-cap-h">Client Two</div><div class="lp-cap-p">Bath &amp; shower remodel</div></div>
+      </div>
+      <div class="lp-card" role="button" tabindex="0">
+        <div class="lp-shot"><div class="asset-ph"><strong>LP screenshot</strong>portrait, full-page</div></div>
+        <div class="lp-cap"><div class="lp-cap-h">Client Three</div><div class="lp-cap-p">Roofing &middot; storm restoration</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONVERSION TRACKING & OFFLINE DATA ==============
+     Ported from the live root page (#attribution) essentially verbatim,
+     per the brief — copy and diagram both. The only change is the
+     palette: the diagram's CSS was written against the old page's
+     variable names, so those names are re-declared locally on this
+     section and mapped onto the template's palette. That keeps the
+     ported rules working unmodified and contains the legacy names to
+     this one section.
+     TODO(design): if this reads as a sore thumb next to the rest of the
+     page, Alex has screenshots to replace the ASCII-ish diagram with.
+     ============================================================== -->
+<section class="sec sec-navy" id="attribution">
+  <style>
+    /* Legacy variable names from the old site, scoped to this section only. */
+    #attribution {
+      --teal:       #2EC4B6;
+      --border:     rgba(46,196,182,0.13);
+      --bg-lt:      #201F1C;
+      --bg-teal:    #0D1E1C;
+      --muted:      #8A8880;
+      --off-white:  #F0EDE6;
+    }
+    #attribution .attr-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 3.4rem; align-items: center; margin-top: 30px; }
+    #attribution .attr-copy p { font-size: 0.95rem; color: rgba(240,237,230,0.72); line-height: 1.8; margin-bottom: 1rem; }
+    #attribution .attr-copy p strong { color: #fff; font-weight: 600; }
+    #attribution .attr-copy p em { color: var(--teal); font-style: normal; }
+    #attribution .verticals { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.6rem; }
+    #attribution .vertical-tag { font-size: 0.64rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); border: 1px solid var(--border); padding: 0.45rem 0.9rem; }
+    #attribution .attr-diagram { background: var(--bg-teal); border: 1px solid var(--border); padding: 2rem 1.5rem; }
+    #attribution .diag-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
+    #attribution .diag-col { display: flex; flex-direction: column; gap: 0.7rem; }
+    #attribution .diag-node { background: var(--bg-lt); border: 1px solid var(--border); padding: 0.55rem 0.8rem; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; color: var(--off-white); text-align: center; white-space: nowrap; }
+    #attribution .diag-node.platform { border-color: rgba(46,196,182,0.3); }
+    #attribution .diag-node.crm { border-color: rgba(46,196,182,0.2); }
+    #attribution .diag-node.core { background: rgba(46,196,182,0.1); border: 1px solid var(--teal); padding: 1rem 1.2rem; font-size: 0.75rem; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
+    #attribution .diag-node.platform::before { content:''; display:inline-block; width:5px; height:5px; background:var(--teal); border-radius:50%; margin-right:6px; vertical-align:middle; animation:nodePulse 2s ease-in-out infinite; }
+    @keyframes nodePulse { 0%,100%{opacity:0.4;transform:scale(0.8)} 50%{opacity:1;transform:scale(1.2)} }
+    #attribution .diag-node.platform:nth-child(2)::before { animation-delay:0.5s; }
+    #attribution .diag-node.platform:nth-child(3)::before { animation-delay:1s; }
+    #attribution .diag-arrows { display:flex; flex-direction:column; align-items:center; gap:0.4rem; flex-shrink:0; }
+    #attribution .diag-arrow-track { position:relative; width:40px; height:2px; background:var(--border); }
+    #attribution .diag-arrow-track::after { content:''; position:absolute; top:50%; left:-6px; width:6px; height:6px; background:var(--teal); border-radius:50%; transform:translateY(-50%); animation:packetFlow 2.4s ease-in-out infinite; }
+    @keyframes packetFlow { 0%{left:-6px;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{left:calc(100% + 6px);opacity:0} }
+    #attribution .diag-arrow-track.reverse::after { animation:packetFlowReverse 2.4s ease-in-out infinite; }
+    @keyframes packetFlowReverse { 0%{left:calc(100% + 6px);opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{left:-6px;opacity:0} }
+    #attribution .diag-arrow-track:nth-child(1)::after { animation-delay:0s; }
+    #attribution .diag-arrow-track:nth-child(2)::after { animation-delay:0.6s; }
+    #attribution .diag-arrow-track:nth-child(3)::after { animation-delay:1.2s; }
+    #attribution .diag-arrow-track.reverse:nth-child(1)::after { animation-delay:0.3s; }
+    #attribution .diag-arrow-track.reverse:nth-child(2)::after { animation-delay:0.9s; }
+    #attribution .diag-arrow-track.reverse:nth-child(3)::after { animation-delay:1.5s; }
+    #attribution .diag-arrow-track::before { content:''; position:absolute; right:-5px; top:50%; transform:translateY(-50%); border-left:5px solid rgba(46,196,182,0.35); border-top:4px solid transparent; border-bottom:4px solid transparent; }
+    #attribution .diag-arrow-track.reverse::before { right:auto; left:-5px; border-left:none; border-right:5px solid rgba(46,196,182,0.35); }
+    #attribution .diag-analysis { margin-top:1.2rem; padding:0.7rem 1rem; border:1px dashed rgba(46,196,182,0.25); font-size:0.63rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; text-align:center; position:relative; }
+    #attribution .diag-analysis::before { content:''; position:absolute; top:-1.2rem; left:50%; width:1px; height:1.2rem; background:var(--border); }
+    #attribution .diag-analysis > span { color:var(--teal); animation:blink 1.4s step-end infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    #attribution .diag-ids { margin-top:0.6rem; display:flex; gap:0.4rem; justify-content:center; flex-wrap:wrap; }
+    #attribution .diag-id-pill { font-size:0.58rem; font-family:monospace; background:rgba(46,196,182,0.08); border:1px solid rgba(46,196,182,0.2); color:var(--teal); padding:0.2rem 0.5rem; border-radius:2px; animation:pillFade 3s ease-in-out infinite; }
+    #attribution .diag-id-pill:nth-child(2) { animation-delay:1s; }
+    #attribution .diag-id-pill:nth-child(3) { animation-delay:2s; }
+    @keyframes pillFade { 0%,100%{opacity:0.4} 50%{opacity:1} }
+    #attribution .diag-label { font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); opacity:0.6; margin-top:0.4rem; }
+    @media (prefers-reduced-motion: reduce) {
+      #attribution .diag-node.platform::before,
+      #attribution .diag-arrow-track::after,
+      #attribution .diag-analysis > span,
+      #attribution .diag-id-pill { animation: none; }
+    }
+    @media (max-width: 900px) {
+      #attribution .attr-inner { grid-template-columns: 1fr; gap: 2.2rem; }
+      #attribution .diag-row { flex-direction: column; gap: 0.9rem; }
+      #attribution .diag-arrows { flex-direction: row; }
+      #attribution .diag-arrow-track { width: 2px; height: 28px; }
+      #attribution .diag-arrow-track::after,
+      #attribution .diag-arrow-track::before { display: none; }
+    }
+  </style>
+  <div class="sec-inner">
+    <span class="eyebrow">Alloy&rsquo;s Custom Infrastructure</span>
+    <h2 class="sec-title reveal">The CRMs That Run This Industry <span class="accent">Weren&rsquo;t Built for Marketing</span></h2>
+    <div class="attr-inner">
+      <div class="attr-copy reveal">
+        <p><strong>MarketSharp. Lead Perfection. ServiceTitan.</strong> Out of the box, they tell you how many leads came in. They do not tell you which ad, which creative, or which angle drove the ones that actually closed.</p>
+        <p>We built the infrastructure that does. Every lead that enters your CRM is tied to the specific campaign and creative that generated it. That data goes back to Meta and Google as offline conversion signals, teaching the platforms to find more of the buyers who sign, not just the ones who submit forms.</p>
+        <p>It compounds over time. The longer the system runs, the better the targeting gets. And then we compound the value further by feeding transcripts of all live video ads to our Creative Analysis agent. <em>We can walk you through exactly how it works on a call. It is pretty cool stuff.</em></p>
+        <div class="verticals">
+          <span class="vertical-tag">Windows</span>
+          <span class="vertical-tag">Water Filtration</span>
+          <span class="vertical-tag">Bathroom Remodeling</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="attr-diagram">
+          <div class="diag-row">
+            <div class="diag-col">
+              <div class="diag-node platform">Meta Ads API</div>
+              <div class="diag-node platform">Google Ads API</div>
+              <div class="diag-node platform">Platform Metrics</div>
+            </div>
+            <div class="diag-arrows">
+              <div class="diag-arrow-track"></div>
+              <div class="diag-arrow-track"></div>
+              <div class="diag-arrow-track"></div>
+            </div>
+            <div class="diag-node core">Alloy<br>Attribution<br>Layer</div>
+            <div class="diag-arrows">
+              <div class="diag-arrow-track reverse"></div>
+              <div class="diag-arrow-track reverse"></div>
+              <div class="diag-arrow-track reverse"></div>
+            </div>
+            <div class="diag-col">
+              <div class="diag-node crm">MarketSharp</div>
+              <div class="diag-node crm">Lead Perfection</div>
+              <div class="diag-node crm">ServiceTitan</div>
+            </div>
+          </div>
+          <div class="diag-analysis">
+            Creative Performance Analysis <span>|</span>
+            <div class="diag-ids">
+              <span class="diag-id-pill">GCLID</span>
+              <span class="diag-id-pill">FBLID</span>
+              <span class="diag-id-pill">creative_id</span>
+            </div>
+            <div class="diag-label">Closed revenue fed back to targeting algorithm</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FORM ZONE 3 ===================================== -->
+<section class="form-zone" id="form-zone-3">
+  <div class="form-zone-inner">
+    <h2 class="form-zone-h">Find out whether we&rsquo;re a fit.</h2>
+    <p class="form-zone-sub">Four questions. If we are not the right agency for you, the form will say so.</p>
+    <div class="v2-form" id="mobile-form-anchor-3">
+      <div class="v2-progress-dots" id="v2-dots-3">
+        <div class="dot active" data-step="1"></div>
+        <div class="dot" data-step="2"></div>
+        <div class="dot" data-step="3"></div>
+        <div class="dot" data-step="4"></div>
+        <span class="step-text" id="v2-step-text-3">Step 1 of 4</span>
+      </div>
+
+      <!-- ── Step 1 ───────────────────────────────────────────────────────
+           ⚠ PLACEHOLDER QUESTIONS. Alex is supplying the real four in the
+           next round of edits; these exist so the flow, the dots and focus
+           mode are all testable today.
+           The shape is deliberate and worth keeping whatever the wording
+           becomes: qualify BEFORE asking for PII. A visitor who is not a fit
+           never reaches the contact step, and a visitor who is has already
+           invested three clicks by the time they are asked for a number. -->
+      <div id="m2s-step0-3">
+        <p class="m2s-question">What do you install?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bath &amp; Shower')">Bath &amp; Shower</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <!-- ── Step 2: spend ────────────────────────────────────────────────
+           This is the qualifier. It reuses the template's region step and its
+           out-of-area branch verbatim — "Under $5k / month" routes to the
+           soft-decline screen the same way "Somewhere else" did on Fisher.
+           Sending an unqualified visitor to a straight answer beats taking
+           the lead and declining by email a week later. -->
+      <div id="m2s-step-state-3" style="display:none">
+        <p class="m2s-question">What are you spending on ads each month?</p>
+        <div class="v2-tiles">
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'Under $5k')">Under $5k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$5k&ndash;$15k')">$5k&ndash;$15k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$15k&ndash;$50k')">$15k&ndash;$50k</button>
+          <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$50k+')">$50k+</button>
+        </div>
+        <p class="v2-cta-micro" style="margin-top:12px">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+      </div>
+
+      <!-- ── Step 3: website (was the ZIP gate on client pages) ──────────── -->
+      <div id="m2s-step1-3" style="display:none">
+        <p class="m2s-question">What&rsquo;s your company website?</p>
+        <input class="m2s-input" type="text" id="m2s-q3-3" placeholder="yourcompany.com" inputmode="url">
+        <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
+        <p class="v2-cta-micro">
+          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
+          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
+          <span>&#10003; Takes 60 Seconds</span>
+        </p>
+        <p class="m2s-fine">We look at your current ads before the call, so it isn&rsquo;t a discovery call spent on discovery.</p>
+      </div>
+
+      <!-- Soft decline: reached from "Under $5k" at step 2. -->
+      <div id="m2s-zip-error-3" style="display:none; text-align:center; padding:14px 4px 6px;">
+        <p style="font-size:1rem; color:var(--text); line-height:1.55; margin-bottom:14px">Below about $5k a month, you are better off putting the money into the ads than into an agency fee. We would rather tell you that now than six weeks in. If your spend is about to step up, get in touch and we&rsquo;ll talk then.</p>
+        <button type="button" class="v2-linkbtn" onclick="m2sBackToZip(this)">&larr; Change my answer</button>
+      </div>
+
+      <!-- ── Step 4: contact (PII only after the first three answers) ── -->
+      <div id="m2s-step2-3" style="display:none">
+        <p class="m2s-question">Where should we send the breakdown?</p>
+        <div class="m2s-row">
+          <input class="m2s-input" type="text" id="m2s-fname-3" placeholder="First name" style="margin-bottom:0">
+          <input class="m2s-input" type="text" id="m2s-lname-3" placeholder="Last name" style="margin-bottom:0">
+        </div>
+        <input class="m2s-input" type="tel" id="m2s-phone-3" placeholder="(555) 555-0000" inputmode="tel" style="margin-top:10px">
+        <input class="m2s-input" type="email" id="m2s-email-3" placeholder="Work email address" style="margin-bottom:4px">
+        <button class="m2s-btn" onclick="m2sSubmit(this)">Book My Call &rarr;</button>
+        <!-- TODO(legal): Alloy's own consent wording + real Privacy / Terms URLs
+             before this page carries paid traffic. Copied structure only. -->
+        <p class="m2s-consent">By clicking &ldquo;Book My Call&rdquo; I agree to be contacted by Alloy Media at the details provided. Consent is not a condition of purchase; message and data rates may apply. See our <a href="#" rel="nofollow">Privacy Policy</a> and <a href="#" rel="nofollow">Terms</a>.</p>
+      </div>
+
+      <!-- Success (in-page fallback used while THANK_YOU_URL is empty) -->
+      <div id="m2s-success-3" style="display:none; text-align:center; padding:8px 0 4px;">
+        <div style="font-size:2.4rem; margin-bottom:10px">&#127881;</div>
+        <p style="font-family:'Oswald',sans-serif; font-size:1.4rem; font-weight:700; color:var(--navy); margin-bottom:8px">You&rsquo;re All Set!</p>
+        <p style="font-size:0.88rem; color:var(--text-mid); line-height:1.6">We&rsquo;ll be in touch within one business day.</p>
+      </div>
+
+      <!-- Testimonial inside the form card, persistent across steps.
+           ⚠ PLACEHOLDER — swap for a real Senja quote from a client who can be
+           named. On a client page this slot kills the cost objection at the
+           moment of handing over a number; here the objection is "will this
+           actually be different from my last agency", so the quote that
+           belongs here is one that answers exactly that. -->
+      <div class="v2-pullquote">
+        <p>&ldquo;Placeholder &mdash; a two-sentence client quote goes here, verbatim, answering &lsquo;how is this different from the last agency&rsquo;.&rdquo;</p>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
+      </div>
+    </div>
+
+    <p class="form-zone-trust">No pitch deck &middot; No obligation &middot; Takes 60 seconds</p>
+  </div>
+</section>
+
+<!-- ============ FAQ ============================================
+     ⚠ PLACEHOLDER QUESTIONS. The brief says to use Fisher's FAQ as the
+     template — Fisher's are about roof age and hail, so what is carried
+     over here is the PATTERN (seven questions, the objection-shaped ones
+     first, accordion markup identical), not the wording. Alex is
+     supplying the real set. TODO(copy).
+     ============================================================== -->
+<section class="sec sec-gray" id="faq">
+  <div class="sec-inner">
+    <span class="eyebrow">FAQ</span>
+    <h2 class="sec-title reveal" style="text-align:center">Your Questions, <span class="accent">Answered</span></h2>
+    <div class="faq-list reveal">
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" onclick="faqToggle(this)">What does it cost to work with Alloy?</button>
+        <div class="faq-a">
+          <p>Placeholder. This is the first question everyone has and burying it costs more leads than answering it ever will. A range and what it depends on belongs here.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" onclick="faqToggle(this)">How long before we see results?</button>
+        <div class="faq-a">
+          <p>Placeholder. Worth splitting into two honest answers: when the ads start producing leads, and the longer window before the offline conversion data has taught the algorithm enough to change what the leads are worth.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" onclick="faqToggle(this)">Do we have to use your landing pages?</button>
+        <div class="faq-a">
+          <p>Placeholder.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" onclick="faqToggle(this)">Who owns the ad account, the creative and the data?</button>
+        <div class="faq-a">
+          <p>Placeholder. A real objection for anyone who has been burned by an agency that held the account hostage on the way out.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" onclick="faqToggle(this)">Will this work with our CRM?</button>
+        <div class="faq-a">
+          <p>Placeholder. MarketSharp, Lead Perfection, ServiceTitan and JobNimbus are already wired; anything else is a scoping question.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" onclick="faqToggle(this)">Do you work with competitors in our market?</button>
+        <div class="faq-a">
+          <p>Placeholder.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button type="button" class="faq-q" onclick="faqToggle(this)">What is the contract length?</button>
+        <div class="faq-a">
+          <p>Placeholder.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <script>
+    // Accordion. Click-to-open, click-again-to-close, one at a time.
+    function faqToggle(btn) {
+      var item = btn.parentElement;
+      var wasOpen = item.classList.contains('open');
+      item.parentElement.querySelectorAll('.faq-item.open').forEach(function (o) { o.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    }
+  </script>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <img src="../logo.png" alt="Alloy Media" class="footer-logo">
+  <p>Paid media for home improvement.</p>
+  <p><a href="mailto:alex@alloymedia.io">alex@alloymedia.io</a></p>
+  <p style="margin-top:10px">&copy; <span class="js-year">2026</span> Alloy Media. All rights reserved.</p>
+</footer>
+
+</div><!-- end .mwc-wrap -->
+
+<!-- STICKY BOTTOM BAR (mobile) & LIGHTBOX outside .mwc-wrap -->
+<!-- The client template's bar is a 2-up: phone call on the left, CTA on the
+     right. Alloy takes enquiries through the form rather than a tracked phone
+     line, so there is one button and the grid is collapsed to a single column
+     via .mobile-bar--single. Restore the 2-up if a phone number is ever added.
+     Note this bar shows on DESKTOP too (inherited behaviour) — it is the only
+     persistent CTA once the hero scrolls away. -->
+<div class="mobile-bar mobile-bar--single">
+  <button class="mb-book" onclick="scrollToForm()"><span>Book a Call &rarr;</span></button>
+</div>
+
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // ═══════════════════════════════════════════════════════════════════
+  //  LEAD DELIVERY — Alloy Media (own site)
+  //
+  //  NOT WIRED. LEAD_WEBHOOK is empty, so a submitted form logs its payload
+  //  to the console and shows the in-page success screen. Nothing is
+  //  delivered anywhere. That is deliberate for a page that is not live yet:
+  //  a half-wired endpoint that silently drops leads is worse than one that
+  //  obviously does nothing.
+  //
+  //  FORK RULE (observed): Fisher's fisher-pipeline webhook, its
+  //  LeadPerfection credentials, its thank-you page and its ZIP gate were all
+  //  REMOVED, not commented out. A fork that keeps any of them posts Alloy's
+  //  leads into a client's CRM.
+  //
+  //  TO WIRE IT UP: stand up an endpoint that accepts this JSON payload and
+  //  set LEAD_WEBHOOK. Set THANK_YOU_URL too if conversions should be tracked
+  //  on a separate URL (that is where GTM would fire the conversion), or
+  //  leave it empty to keep the in-page success screen.
+  // ═══════════════════════════════════════════════════════════════════
+  const LEAD_WEBHOOK = '';                 // TODO(pipeline): Alloy's own endpoint
+  const THANK_YOU_URL = '';                // empty → in-page success screen
+  const PRODUCT = 'Agency Enquiry';        // which page the lead came from
+
+  // The client template gated step 3 on a service-area ZIP list. An agency has
+  // no service area, so that gate is GONE and step 3 is a website field. The
+  // #m2s-zip-error screen it used to feed is kept and repurposed: it is now the
+  // soft-decline shown when someone answers "Under $5k" at step 2. The element
+  // and handler names are unchanged so this file still diffs cleanly against
+  // the client pages it came from.
+
+  document.body.classList.add('js-ready');
+  function getUrlParams() {
+    var p = new URLSearchParams(window.location.search);
+    return {
+      gclid:        p.get('gclid') || '',
+      fbclid:       p.get('fbclid') || '',
+      utm_source:   p.get('utm_source') || '',
+      utm_medium:   p.get('utm_medium') || '',
+      utm_campaign: p.get('utm_campaign') || '',
+      utm_content:  p.get('utm_content') || '',
+      utm_term:     p.get('utm_term') || '',
+      placement:    p.get('placement') || p.get('utm_placement') || p.get('ad_placement') || ''
+    };
+  }
+
+  function appendAnswers(source, trade, spend) {
+    var parts = [];
+    if (trade) parts.push('trade: ' + trade);
+    if (spend)  parts.push('spend: ' + spend);
+    return parts.length ? source + ' (' + parts.join(', ') + ')' : source;
+  }
+
+  // Hand the lead off. Returns true if it was actually delivered.
+  // With LEAD_WEBHOOK empty (today) it logs the payload so the flow is testable
+  // locally, and returns false — nothing is silently swallowed.
+  async function sendToPipeline(data) {
+    var params = getUrlParams();
+    var payload = {
+      first_name:   data.first_name || '',
+      last_name:    data.last_name || '',
+      email:        data.email || '',
+      phone:        data.phone || '',
+      website:      data.website || '',
+      gclid:        params.gclid,
+      fbclid:       params.fbclid,
+      utm_source:   params.utm_source,
+      utm_medium:   params.utm_medium,
+      utm_campaign: params.utm_campaign,
+      utm_content:  params.utm_content,
+      utm_term:     params.utm_term,
+      placement:    params.placement,
+      product:      PRODUCT,
+      spend:        data.spend || '',
+      trade:        data.trade || '',
+      source:       appendAnswers(data.source || 'Alloy Media Site', data.trade, data.spend)
+    };
+    if (!LEAD_WEBHOOK) {
+      console.warn('[Alloy Media] No LEAD_WEBHOOK configured. Lead NOT delivered. Payload:', payload);
+      return false;
+    }
+    try {
+      await fetch(LEAD_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      return true;
+    } catch (err) {
+      console.error('Pipeline webhook error:', err);
+      return false;
+    }
+  }
+
+  // Attention pulse: the header phone button pulses while the header is on-screen;
+  // once the header scrolls out of view, hand the pulse off to the sticky footer CTA.
+  (function () {
+    var header = document.querySelector('.site-header');
+    var headerCta = document.querySelector('.site-cta');
+    var footerCta = document.querySelector('.mobile-bar .mb-book');
+    if (!header || !headerCta) return;
+    headerCta.classList.add('pulse-active');   // start on the header CTA
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          headerCta.classList.add('pulse-active');
+          if (footerCta) footerCta.classList.remove('pulse-active');
+        } else {
+          headerCta.classList.remove('pulse-active');
+          if (footerCta) footerCta.classList.add('pulse-active');
+        }
+      });
+    }, { threshold: 0 });
+    io.observe(header);
+  })();
+
+  // Sticky bottom bar - hidden until hero scrolls out of view. Shows on
+  // every viewport (mobile + desktop) since the v2 desktop layout has no
+  // sticky nav of its own; this is the only persistent CTA after scroll.
+  const mobileBar = document.querySelector('.mobile-bar');
+  const heroSection = document.getElementById('hero-anchor');
+  if (mobileBar && heroSection) {
+    mobileBar.style.display = 'none';
+    const barObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        mobileBar.style.display = e.isIntersecting ? 'none' : 'grid';
+      });
+    }, { threshold: 0 });
+    barObserver.observe(heroSection);
+  }
+
+  // Dynamic month/year - drives the sticky strip + offer fine print
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const now = new Date();
+  const monthLabel = monthNames[now.getMonth()].toUpperCase();
+  const monthTitle = monthNames[now.getMonth()];
+  const end = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+  document.querySelectorAll('.js-month').forEach(el => el.textContent = monthTitle);
+  document.querySelectorAll('.js-month-upper').forEach(el => el.textContent = monthLabel);
+  document.querySelectorAll('.js-month-end').forEach(el => el.textContent = end.getDate());
+  document.querySelectorAll('.js-year').forEach(el => el.textContent = now.getFullYear());
+
+  // 4-step form flow ─────────────────────────────────────────────────────
+  // ── Multi-step lead form - container-scoped so multiple copies coexist ──
+  // Each form's elements share base IDs; the 2nd form suffixes them with "-2".
+  // Handlers derive their form root from the clicked element and resolve IDs by suffix.
+  function leadRoot(el) { return el.closest('.v2-form'); }
+  function lf(root, baseId) { return document.getElementById(baseId + root.id.replace('mobile-form-anchor', '')); }
+  var activeLeadForm = null;   // the form currently in focus mode
+
+  function v2UpdateDots(root, activeStep) {
+    var wrap = lf(root, 'v2-dots');
+    if (wrap) wrap.querySelectorAll('.dot').forEach(function (d) {
+      var s = parseInt(d.dataset.step, 10);
+      d.classList.remove('active', 'done');
+      if (s < activeStep) d.classList.add('done');
+      else if (s === activeStep) d.classList.add('active');
+    });
+    var label = lf(root, 'v2-step-text');
+    if (label) label.textContent = 'Step ' + activeStep + ' of 4';
+  }
+
+  // ── Focus mode (full-screen takeover on first interaction with a form) ──
+  function enterFocusMode(root) {
+    if (root._focusEntered) return;
+    root._focusEntered = true;
+    activeLeadForm = root;
+    root.classList.add('is-focused');
+    document.body.classList.add('focus-mode');
+    updateFocusProgress(1);
+  }
+
+  function exitFocusMode(e) {
+    if (e) e.preventDefault();
+    var root = activeLeadForm;
+    document.body.classList.remove('focus-mode');
+    if (!root) return;
+    root._focusEntered = false;
+    root.classList.remove('is-focused');
+    // Reset to step 1 so a returning visitor starts over
+    lf(root, 'm2s-step0').style.display = 'block';
+    ['m2s-step-state', 'm2s-step1', 'm2s-step2', 'm2s-success',
+     'm2s-zip-error'].forEach(function (b) {
+      var e = lf(root, b); if (e) e.style.display = 'none';
+    });
+    var pqReset = root.querySelector('.v2-pullquote'); if (pqReset) pqReset.style.display = '';
+    root._trade = ''; root._spend = '';
+    v2UpdateDots(root, 1);
+    updateFocusProgress(1);
+    activeLeadForm = null;
+    scrollFormToTop(root);
+  }
+
+  function updateFocusProgress(step) {
+    var pct = step * 25;                       // 4 steps -> 25/50/75/100
+    var fill = document.getElementById('focus-progress-fill');
+    if (fill) fill.style.width = pct + '%';
+  }
+
+  function scrollFormToTop(root) {
+    if (!root) return;
+    root.scrollTop = 0;
+    requestAnimationFrame(function () {
+      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(function () { window.scrollBy(0, -16); }, 60);
+    });
+  }
+
+  // Step 1 → 2: trade tile clicked
+  function m2sStartTile(el, trade) {
+    var root = leadRoot(el);
+    root._trade = trade;
+    enterFocusMode(root);
+    lf(root, 'm2s-step0').style.display = 'none';
+    lf(root, 'm2s-step-state').style.display = 'block';
+    v2UpdateDots(root, 2);
+    updateFocusProgress(2);
+    scrollFormToTop(root);
+  }
+
+  // Step 2 → 3: spend tile clicked. "Under $5k" is an explicit soft decline —
+  // it never reaches the contact step, the same way "Somewhere else" was an
+  // out-of-area exit on the client pages this came from. Handler name kept so
+  // this still diffs cleanly against them.
+  function m2sSelectRegion(el, spend) {
+    var root = leadRoot(el);
+    root._spend = spend;
+    lf(root, 'm2s-step-state').style.display = 'none';
+    if (spend === 'Under $5k') {
+      lf(root, 'm2s-zip-error').style.display = 'block';
+      var pqR = root.querySelector('.v2-pullquote'); if (pqR) pqR.style.display = 'none';
+      scrollFormToTop(root);
+      return;
+    }
+    lf(root, 'm2s-step1').style.display = 'block';
+    v2UpdateDots(root, 3);
+    updateFocusProgress(3);
+    scrollFormToTop(root);
+    var site = lf(root, 'm2s-q3');
+    if (site) site.focus();
+  }
+
+  // Step 3 → 4: website submitted.
+  // The client template gated this step on APPROVED_ZIPS. There is no service
+  // area to gate on here, so the only check is that the field is filled in —
+  // the disqualifying answer on this page is the spend tile at step 2.
+  function m2sNext(el) {
+    var root = leadRoot(el);
+    var siteInput = lf(root, 'm2s-q3');
+    var site = siteInput.value.trim();
+    clearFieldError(siteInput);
+    if (!site) { showFieldError(siteInput, 'Enter your company website.'); return; }
+    lf(root, 'm2s-step1').style.display = 'none';
+    lf(root, 'm2s-step2').style.display = 'block';
+    v2UpdateDots(root, 4);
+    updateFocusProgress(4);
+    scrollFormToTop(root);
+    lf(root, 'm2s-fname').focus();
+  }
+
+  // "Change my answer" inside the soft-decline screen.
+  // On the client pages the decline came from the ZIP step, so this returned to
+  // step 3. Here it is the SPEND tile at step 2 that declines, so it returns
+  // there instead — sending someone back to the website field would leave them
+  // staring at a step they already passed. Handler name kept for diffability.
+  function m2sBackToZip(el) {
+    var root = leadRoot(el);
+    var errBox = lf(root, 'm2s-zip-error'); if (errBox) errBox.style.display = 'none';
+    var site = lf(root, 'm2s-q3');
+    if (site) { site.value = ''; clearFieldError(site); }
+    lf(root, 'm2s-step-state').style.display = 'block';
+    var pq = root.querySelector('.v2-pullquote'); if (pq) pq.style.display = '';
+    root._spend = '';
+    v2UpdateDots(root, 2);
+    updateFocusProgress(2);
+    scrollFormToTop(root);
+  }
+
+  // ── Field-format validation (email, phone) ────────────────────────────
+  // Ported from clients/pinnacle-windows/.../pinnacle-windows-lp (commit 205fc10).
+  // MWC v3 — and therefore Elevated, and therefore this fork's base — ships
+  // NO format validation at all, so "asdf" sails through as an email and the
+  // conversion fires on a junk lead. Blocks submission and lets the visitor
+  // fix one field at a time.
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test((v || '').trim()); }
+  function phoneDigits(v) { return (v || '').replace(/\D/g, ''); }
+  function isValidPhone(v) {
+    var d = phoneDigits(v);
+    return d.length === 10 || (d.length === 11 && d.charAt(0) === '1');
+  }
+
+  function showFieldError(input, message) {
+    if (!input) return;
+    input.style.borderColor = '#d93025';
+    var err = input._errEl;
+    if (!err) {
+      err = document.createElement('div');
+      err.className = 'm2s-field-error';
+      err.setAttribute('role', 'alert');
+      err.style.cssText = 'color:#d93025;font-size:0.82rem;line-height:1.3;margin:4px 2px 8px;text-align:left;';
+      input.insertAdjacentElement('afterend', err);
+      input._errEl = err;
+      input.addEventListener('input', function () { clearFieldError(input); });
+    }
+    err.textContent = message;
+    err.style.display = 'block';
+    input.focus();
+  }
+  function clearFieldError(input) {
+    if (!input || !input._errEl) return;
+    input.style.borderColor = '';
+    input._errEl.textContent = '';
+    input._errEl.style.display = 'none';
+  }
+
+  async function m2sSubmit(el) {
+    var root = leadRoot(el);
+    var fnameEl = lf(root, 'm2s-fname'), lnameEl = lf(root, 'm2s-lname');
+    var emailEl = lf(root, 'm2s-email'), phoneEl = lf(root, 'm2s-phone');
+    var fname = fnameEl.value.trim();
+    var lname = lnameEl.value.trim();
+    var site  = lf(root, 'm2s-q3').value.trim();
+    var email = emailEl.value.trim();
+    var phone = phoneEl.value.trim();
+    clearFieldError(fnameEl); clearFieldError(phoneEl); clearFieldError(emailEl);
+    if (!fname) { showFieldError(fnameEl, 'Please enter your first name.'); return; }
+    if (!isValidPhone(phone)) { showFieldError(phoneEl, 'Enter a valid 10-digit phone number.'); return; }
+    if (!isValidEmail(email)) { showFieldError(emailEl, 'Enter a valid email address (e.g. name@example.com).'); return; }
+    var data = {
+      first_name: fname, last_name: lname, email: email, phone: phone, website: site,
+      trade: root._trade || '', spend: root._spend || '',
+      source: 'Alloy Media'
+    };
+    // One destination only. sendToPipeline() is awaited, so by the time it
+    // resolves the lead has either been handed off or logged as undelivered.
+    var handed = await sendToPipeline(data);
+    if (THANK_YOU_URL) {
+      // The thank-you page is where the conversion is tracked (GTM fires on its
+      // URL), so go there whether or not the hand-off succeeded. A pipeline
+      // outage must not trap the visitor on the form — the lead is logged to
+      // console in that case and `handed` comes back false.
+      window.location.href = THANK_YOU_URL;
+      return;
+    }
+    // Fallback when no thank-you page is configured.
+    lf(root, 'm2s-step2').style.display = 'none';
+    lf(root, 'm2s-success').style.display = 'block';
+    scrollFormToTop(root);
+  }
+
+  // Anchor scroll helper used by bottom-bar + offer-closer CTA (targets the hero form)
+  function scrollToForm(e) {
+    if (e) e.preventDefault();
+    var f = document.getElementById('mobile-form-anchor');
+    if (f) f.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Reveal-on-scroll
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // Lightbox
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+
+  // Before/after wipe: the range input is the single source of truth for the
+  // divider position; everything visual keys off the --ba custom property.
+  function baMove(input) {
+    var ba = input.closest('.ba');
+    if (ba) ba.style.setProperty('--ba', input.value + '%');
+  }
+
+  // Enter / Space activates click on any role="button" photo container (hero photo, testimonial main photos, product carousel cards, weather diagram).
+  document.querySelectorAll('.hero-photo-wrap[role="button"], .hero-photo-mobile[role="button"], .wwt-media[role="button"], .mat[role="button"], .pair[role="button"], .sign-media[role="button"]').forEach(el => {
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+    });
+  });
+
+  // ── VSL facade ────────────────────────────────────────────────────────
+  // Click swaps the poster for the real player. Nothing from the video host
+  // is requested until then, so an unplayed VSL costs the page nothing.
+  // Reads data-embed (iframe URL: YouTube / Vimeo / Wistia) or data-file
+  // (a self-hosted mp4). With neither set it stays a placeholder and says so.
+  (function () {
+    var facade = document.getElementById('vsl-facade');
+    if (!facade) return;
+    facade.addEventListener('click', function () {
+      var embed = facade.getAttribute('data-embed');
+      var file  = facade.getAttribute('data-file');
+      var frame = document.getElementById('vsl-frame');
+      if (embed) {
+        var f = document.createElement('iframe');
+        f.src = embed;
+        f.title = "What's unique about Alloy Media";
+        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen';
+        f.setAttribute('allowfullscreen', '');
+        frame.replaceChild(f, facade);
+      } else if (file) {
+        var v = document.createElement('video');
+        v.src = file; v.controls = true; v.autoplay = true; v.playsInline = true;
+        frame.replaceChild(v, facade);
+      } else {
+        console.warn('[Alloy Media] VSL not configured: set data-embed or data-file on #vsl-facade.');
+      }
+    });
+  })();
+
+</script>
+
+<style>
+@media (min-width: 769px) {
+  /* Global: wider content, more breathing room, larger section headings */
+  .sec { padding: 84px 22px; }
+  .sec-inner { max-width: 1200px; }
+  .sec-title { font-size: clamp(2rem, 3.4vw, 2.9rem); }
+
+  /* Hero - bigger headline / sub / benefits (structure unchanged) */
+  .hero-h1 { font-size: clamp(2.7rem, 4.6vw, 3.7rem); }
+  .hero-h1 .orange { font-size: clamp(2.1rem, 3.6vw, 3rem); }
+  .hero-sub { font-size: 1.15rem; }
+  .v2-benefits li { font-size: 1.05rem; }
+
+  /* Multi-step form (all 3 copies) - bigger question, tiles, inputs, button */
+  .m2s-question { font-size: 1.5rem; }
+  .v2-tile { font-size: 1.22rem; padding: 30px 10px; }
+  .m2s-input { font-size: 1.05rem; padding: 15px 16px; }
+  .m2s-btn { font-size: 1.28rem; padding: 18px 24px; }   /* ≈56px tall */
+
+  /* Conversion form zones - wider card, larger heading, more padding */
+  .form-zone { padding: 92px 22px; }
+  .form-zone-inner { max-width: 700px; }
+  .form-zone-h { font-size: clamp(2rem, 3.4vw, 2.5rem); }
+  .form-zone-sub { font-size: 1.1rem; }
+  .form-zone-trust { font-size: 1rem; }
+
+  /* Roof-signs cards - slightly taller photos on desktop, still one row of 4 */
+  .sign-media { height: 190px; }
+  .sign-h { font-size: 1.2rem; }
+  /* Before/after slider - a little wider where there's room */
+  .ba { max-width: 860px; }
+
+  /* Testimonials - bigger cards, image, text, thumbnails, wider section */
+  #wwt-testimonials .sec-inner { max-width: 1200px; }
+  .wwt-grid { gap: 30px; }
+  .wwt-media { height: 380px; }
+  .wwt-name { font-size: 1.15rem; }
+  .wwt-stars { font-size: 1.05rem; }
+  .wwt-review-text { font-size: 1rem; }
+  .wwt-thumb { width: 100px; height: 100px; }
+
+
+  /* Weather / engineering diagram - image displayed large and prominent */
+  .why-strip { padding: 72px 22px; }
+  .why-h2 { font-size: clamp(2rem, 3vw, 2.5rem); }
+
+  /* Process - bigger subheading */
+  .proc-sub { font-size: 1.1rem; }
+}
+
+/* Hero 2-col already exists at ≥901px - widen it to use more horizontal space (no structure change) */
+@media (min-width: 901px) {
+  .hero-inner { max-width: 1240px; grid-template-columns: 1fr 520px; gap: 56px; }
+}
+</style>
+</body>
+</html>
