@@ -1527,6 +1527,60 @@
   /* Single-button sticky bar (no phone line on Alloy's own site). */
   .mobile-bar--single { grid-template-columns: 1fr; }
   .mobile-bar--single .mb-book { width: 100%; }
+
+  /* ── VIDEO FACADE POSTERS ──────────────────────────────────────
+     Both facades (hero VSL and the testimonial Short) paint their
+     poster as a background-image set from data-poster by the script.
+     The gradient stays underneath as the fallback ground, so a poster
+     that 404s degrades to the original look rather than to nothing.
+     The scrim keeps the play button and label legible over a bright
+     frame — without it a light thumbnail swallows both.             */
+  .vsl-facade, .tvid-facade {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .vsl-facade::before, .tvid-facade::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.55) 100%);
+    pointer-events: none;
+  }
+  .vsl-facade > *, .tvid-facade > * { position: relative; z-index: 1; }
+
+  /* ── TESTIMONIAL SHORT (9:16) ──────────────────────────────────
+     Capped narrow on purpose — see the note in the markup.         */
+  .vid-testimonial { max-width: 330px; }
+  .tvid-frame {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    background: #000;
+    border: 1px solid var(--gray-2);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 26px rgba(0,0,0,0.16);
+  }
+  .tvid-frame iframe, .tvid-frame video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; border: 0; display: block;
+  }
+  .tvid-facade {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; border: 0; cursor: pointer;
+    background-color: #14201E;
+  }
+  .tvid-facade:hover .vsl-play { transform: scale(1.07); }
+  .tvid-by {
+    display: flex; align-items: center; gap: 12px;
+    margin-top: 14px;
+  }
+
+  @media (max-width: 900px) {
+    /* Centre the capped-width card once the proof grid is one column. */
+    .vid-testimonial { margin-left: auto; margin-right: auto; }
+  }
 </style>
 </head>
 <body>
@@ -1576,31 +1630,32 @@
       </div>
 
       <!-- ═══════════════════════════════════════════════════════════
-           VSL SLOT.
+           VSL SLOT — wired 2026-09-11 to "Alloy Media Intro"
+           (youtu.be/nplyCc81fEU, Alloy Media channel).
 
-           This is a FACADE, not an embed: a poster with a play button
-           that swaps itself for the real player on click. Nothing from
-           the video host loads until someone presses play, so the host's
-           script never sits in the critical path of a page that is about
-           to carry paid traffic. It is host-agnostic on purpose.
+           ⚠ This is the UN-EDITED intro video, dropped in so the hero can
+           be seen with a real player in it. It is not the finished VSL and
+           the "4 min" label below is a guess — swap both when the real one
+           is recorded.
 
-           TO WIRE IT UP — set ONE of these on the button below:
-             data-embed="https://www.youtube-nocookie.com/embed/VIDEO_ID?autoplay=1&rel=0&modestbranding=1"
-             data-embed="https://player.vimeo.com/video/VIDEO_ID?autoplay=1"
-             data-embed="https://fast.wistia.net/embed/iframe/VIDEO_ID?autoPlay=true"
-           …or data-file="video.mp4" to self-host it, which skips the
-           iframe entirely and plays it inline.
-           Then drop a poster image in as the button's background.
-           TODO(assets): record the VSL + export a poster frame.
+           It is a FACADE, not a live embed: the poster is YouTube's own
+           thumbnail and nothing from the player loads until someone clicks.
+           That keeps the host's script off the critical path of a page
+           about to carry paid traffic. Host-agnostic — to swap video or
+           host, change data-embed (and the poster) and nothing else:
+             YouTube  https://www.youtube-nocookie.com/embed/ID?autoplay=1&rel=0
+             Vimeo    https://player.vimeo.com/video/ID?autoplay=1
+             Wistia   https://fast.wistia.net/embed/iframe/ID?autoPlay=true
+           …or set data-file="video.mp4" to self-host and skip the iframe.
            ═══════════════════════════════════════════════════════════ -->
       <div class="vsl-frame" id="vsl-frame">
-        <button type="button" class="vsl-facade" id="vsl-facade"
-                data-embed=""
-                data-file=""
-                aria-label="Play: what's unique about Alloy Media">
+        <button type="button" class="vsl-facade js-video-facade" id="vsl-facade"
+                data-embed="https://www.youtube-nocookie.com/embed/nplyCc81fEU?autoplay=1&amp;rel=0&amp;modestbranding=1"
+                data-poster="https://i.ytimg.com/vi/nplyCc81fEU/maxresdefault.jpg"
+                data-poster-fallback="https://i.ytimg.com/vi/nplyCc81fEU/hqdefault.jpg"
+                aria-label="Play: what&rsquo;s unique about Alloy Media">
           <span class="vsl-play" aria-hidden="true">&#9654;</span>
-          <span class="vsl-facade-label">Watch &mdash; 4 min</span>
-          <span class="vsl-facade-note">Placeholder. Set data-embed (YouTube / Vimeo / Wistia) or data-file on this button and the real player loads on click.</span>
+          <span class="vsl-facade-label">Watch the intro</span>
         </button>
       </div>
       <p class="vsl-caption">No pitch deck. Just how we run the ads and what it costs.</p>
@@ -1757,29 +1812,45 @@
 
     <div class="proof-grid reveal">
 
-      <!-- ── Senja slot ──────────────────────────────────────────────
-           Senja gives you two options and they are not equivalent:
-             1. Their embed script (a <div class="senja-embed" data-id="…">
-                plus one <script src="https://widget.senja.io/widget/…">).
-                Live-updating, but it is third-party JS above the fold on a
-                paid-traffic page, and the widget renders in Senja's styling,
-                not this template's.
-             2. Paste the text. Static, styled like the rest of the page,
-                zero network cost.
-           This slot is built for (2). If you want the live widget instead,
-           drop the embed div in place of .senja-quote and keep the card.
-           TODO(copy): real quote + attribution from Senja. -->
-      <div class="senja-slot">
-        <div class="senja-stars" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="senja-quote">
-          <p>&ldquo;Placeholder. Two or three sentences from the client, in their own words, about what the last agency was doing and what changed. The strongest version of this quote names the thing they were told was impossible and then says it happened.&rdquo;</p>
-          <p>&ldquo;A second paragraph carries the specific: the number that moved, or the month it turned.&rdquo;</p>
+      <!-- ── Video testimonial ───────────────────────────────────────
+           Wired 2026-09-11 to "Elevated Windows & Doors Testimonial"
+           (youtube.com/shorts/TCbIhWgwQOc, Alloy Media channel).
+
+           A 9:16 Short, so the frame is 9:16 and the poster is YouTube's
+           `oardefault.jpg` — the original-aspect thumbnail. The usual
+           hqdefault is a 16:9 crop and would sit letterboxed in a vertical
+           frame, so do not swap it for that one.
+
+           Width is capped at 330px on purpose: a half-column 9:16 player
+           at full width would run ~890px tall and tower over the
+           before/after beside it.
+
+           Same click-to-load facade as the hero VSL — no player JS until
+           someone presses play.
+
+           TODO(copy): the speaker's name. It is not in the video metadata
+           and inventing one on a testimonial is not an option, so the
+           attribution names the company only for now.
+
+           The WRITTEN Senja quote this slot originally held has not been
+           lost — the text-testimonial placeholder still sits inside each
+           form (.v2-pullquote). Put the real Senja quote there, or restore
+           a card here alongside the video, once Alex supplies it. -->
+      <div class="vid-testimonial">
+        <div class="tvid-frame" id="tvid-frame">
+          <button type="button" class="tvid-facade js-video-facade" id="tvid-facade"
+                  data-embed="https://www.youtube-nocookie.com/embed/TCbIhWgwQOc?autoplay=1&amp;rel=0&amp;modestbranding=1"
+                  data-poster="https://i.ytimg.com/vi/TCbIhWgwQOc/oardefault.jpg"
+                  data-poster-fallback="https://i.ytimg.com/vi/TCbIhWgwQOc/hqdefault.jpg"
+                  aria-label="Play the Elevated Windows &amp; Doors testimonial">
+            <span class="vsl-play" aria-hidden="true">&#9654;</span>
+          </button>
         </div>
-        <div class="senja-by">
-          <div class="senja-avatar" aria-hidden="true">C</div>
+        <div class="tvid-by">
+          <div class="senja-avatar" aria-hidden="true">E</div>
           <div>
-            <div class="senja-by-name">Client Name</div>
-            <div class="senja-by-role">Owner &middot; Company &middot; via Senja</div>
+            <div class="senja-by-name">Elevated Windows &amp; Doors</div>
+            <div class="senja-by-role">Alloy Media client</div>
           </div>
         </div>
       </div>
@@ -2791,32 +2862,61 @@
     });
   });
 
-  // ── VSL facade ────────────────────────────────────────────────────────
+  // ── Video facades (hero VSL + testimonial Short) ──────────────────────
   // Click swaps the poster for the real player. Nothing from the video host
-  // is requested until then, so an unplayed VSL costs the page nothing.
-  // Reads data-embed (iframe URL: YouTube / Vimeo / Wistia) or data-file
-  // (a self-hosted mp4). With neither set it stays a placeholder and says so.
+  // is requested until then, apart from the poster image itself — so an
+  // unplayed video costs one JPEG instead of the host's whole player bundle.
+  //
+  // Each facade declares its own source, so adding another video anywhere on
+  // the page is markup-only: give it .js-video-facade inside a positioned
+  // frame, plus data-embed (an iframe URL: YouTube / Vimeo / Wistia) or
+  // data-file (a self-hosted mp4), and optionally data-poster.
   (function () {
-    var facade = document.getElementById('vsl-facade');
-    if (!facade) return;
-    facade.addEventListener('click', function () {
-      var embed = facade.getAttribute('data-embed');
-      var file  = facade.getAttribute('data-file');
-      var frame = document.getElementById('vsl-frame');
-      if (embed) {
-        var f = document.createElement('iframe');
-        f.src = embed;
-        f.title = "What's unique about Alloy Media";
-        f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen';
-        f.setAttribute('allowfullscreen', '');
-        frame.replaceChild(f, facade);
-      } else if (file) {
-        var v = document.createElement('video');
-        v.src = file; v.controls = true; v.autoplay = true; v.playsInline = true;
-        frame.replaceChild(v, facade);
-      } else {
-        console.warn('[Alloy Media] VSL not configured: set data-embed or data-file on #vsl-facade.');
+    var facades = document.querySelectorAll('.js-video-facade');
+    if (!facades.length) return;
+
+    facades.forEach(function (facade) {
+      // Poster. data-poster-fallback covers maxresdefault, which YouTube
+      // does not generate for every upload and which 404s silently when it
+      // is missing; hqdefault always exists.
+      var poster = facade.getAttribute('data-poster');
+      var fallback = facade.getAttribute('data-poster-fallback');
+      if (poster) {
+        var probe = new Image();
+        probe.onload = function () {
+          // A YouTube placeholder thumbnail comes back 120x90. Treat that as
+          // "no poster" and try the fallback rather than painting a grey box.
+          if (probe.naturalWidth <= 120 && fallback) {
+            facade.style.backgroundImage = 'url("' + fallback + '")';
+          } else {
+            facade.style.backgroundImage = 'url("' + poster + '")';
+          }
+        };
+        probe.onerror = function () {
+          if (fallback) facade.style.backgroundImage = 'url("' + fallback + '")';
+        };
+        probe.src = poster;
       }
+
+      facade.addEventListener('click', function () {
+        var embed = facade.getAttribute('data-embed');
+        var file  = facade.getAttribute('data-file');
+        var frame = facade.parentElement;
+        if (embed) {
+          var f = document.createElement('iframe');
+          f.src = embed;
+          f.title = facade.getAttribute('aria-label') || 'Video';
+          f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; picture-in-picture; fullscreen';
+          f.setAttribute('allowfullscreen', '');
+          frame.replaceChild(f, facade);
+        } else if (file) {
+          var v = document.createElement('video');
+          v.src = file; v.controls = true; v.autoplay = true; v.playsInline = true;
+          frame.replaceChild(v, facade);
+        } else {
+          console.warn('[Alloy Media] Video facade not configured: set data-embed or data-file.', facade);
+        }
+      });
     });
   })();
 
