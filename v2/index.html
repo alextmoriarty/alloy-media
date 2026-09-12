@@ -1989,6 +1989,199 @@
      since the cards carry real artwork rather than placeholder hatching. */
   .ad-card { margin: 0; }
   .ad-grid { margin-top: 26px; }
+
+  /* ═══════════════════════════════════════════════════════════════
+     CLOSED-LOOP INTEGRATION DIAGRAM
+
+     Sits on a LIGHT card inside the dark section. That was a choice:
+     the brief asked for a white ground, and the section is the one
+     dark band on the page. Inverting the card rather than the section
+     keeps the page rhythm and makes the diagram the brightest object
+     on the screen — which is what you want for the one graphic
+     carrying the differentiator.
+
+     Accents are Alloy teal, not the blue the brief suggested. A blue
+     diagram would be the only blue thing on the site.
+
+     Everything is a div. No canvas, no library, no background image:
+     the labels are real text, so they stay selectable, translatable
+     and legible to a screen reader in source order — which is also
+     the order of the story being told.
+
+     TO EDIT LATER: all colour lives in the six --loop-* tokens below,
+     and every label is plain text in the markup.
+     ═══════════════════════════════════════════════════════════════ */
+  .loop {
+    --loop-card:   #FBFCFC;   /* card ground */
+    --loop-node:   #FFFFFF;   /* node fill */
+    --loop-edge:   #DCE3E1;   /* node border */
+    --loop-ink:    #131311;   /* node label */
+    --loop-sub:    #6B6B6B;   /* node subtext */
+    --loop-line:   #2EC4B6;   /* arrows + return path */
+    --loop-deep:   #0E5A52;   /* accent ink on light */
+
+    background: var(--loop-card);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 18px;
+    padding: 36px 30px 28px;
+    margin-top: 34px;
+    box-shadow: 0 22px 60px rgba(0,0,0,0.35);
+  }
+
+  /* ── Forward journey ── */
+  .loop-flow {
+    display: flex; align-items: stretch; justify-content: center;
+    flex-wrap: nowrap; gap: 0;
+  }
+  .loop-node {
+    flex: 1 1 0; min-width: 0;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 4px;
+    background: var(--loop-node);
+    border: 1.5px solid var(--loop-edge);
+    border-radius: 12px;
+    padding: 16px 12px;
+    text-align: center;
+  }
+  .loop-k {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600; font-size: 0.94rem;
+    letter-spacing: 0.02em; line-height: 1.2;
+    color: var(--loop-ink);
+  }
+  .loop-s {
+    font-size: 0.71rem; line-height: 1.35;
+    color: var(--loop-sub);
+  }
+  /* The join is the differentiator, so it is the only filled node. */
+  .loop-node--hero {
+    background: var(--loop-line);
+    border-color: var(--loop-line);
+    box-shadow: 0 6px 20px rgba(46,196,182,0.35);
+  }
+  .loop-node--hero .loop-k { color: var(--loop-ink); font-weight: 700; }
+  .loop-node--hero .loop-s { color: rgba(19,19,17,0.72); }
+
+  .loop-node--crm { flex: 1.5 1 0; gap: 9px; }
+  .loop-stages {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 5px;
+  }
+  .loop-stage {
+    font-size: 0.72rem; font-weight: 600;
+    color: var(--loop-deep);
+    background: rgba(46,196,182,0.10);
+    border-radius: 100px; padding: 3px 9px;
+    white-space: nowrap;
+  }
+  .loop-stage--win { background: rgba(46,196,182,0.26); }
+  .loop-stage-sep { color: var(--loop-line); font-size: 0.85rem; line-height: 1; }
+
+  /* One chevron reused everywhere; CSS rotates it for the mobile stack. */
+  .loop-arrow {
+    flex: 0 0 34px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--loop-line);
+  }
+  .loop-arrow svg { width: 21px; height: 21px; display: block; }
+  .loop-arrow--muted { color: #B9C3C1; }
+
+  /* ── Return path: down from the CRM, back along the bottom, up into
+     Meta Ads. A three-sided box does it with no SVG. ── */
+  .loop-return {
+    position: relative;
+    margin: 0 30px;
+    height: 62px;
+    border: 2px solid var(--loop-line);
+    border-top: 0;
+    border-radius: 0 0 16px 16px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .loop-return::before {          /* arrowhead entering Meta Ads */
+    content: '';
+    position: absolute; left: -6px; top: -9px;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 10px solid var(--loop-line);
+  }
+  .loop-return-inner {
+    display: flex; flex-direction: column; align-items: center; gap: 1px;
+    background: var(--loop-card);
+    padding: 0 16px;
+    text-align: center;
+  }
+  .loop-return-k {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700; font-size: 0.86rem;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--loop-deep);
+  }
+  .loop-return-s { font-size: 0.72rem; color: var(--loop-sub); }
+
+  /* ── Secondary path ── */
+  .loop-aside {
+    display: flex; align-items: stretch; justify-content: center;
+    max-width: 560px; margin: 26px auto 0;
+    padding-top: 22px;
+    border-top: 1px dashed var(--loop-edge);
+  }
+  .loop-aside .loop-node { padding: 11px 12px; }
+  .loop-aside .loop-k { font-size: 0.82rem; font-weight: 500; font-family: 'Inter', sans-serif; }
+  .loop-node--muted { background: #F2F5F4; border-style: dashed; }
+  .loop-node--muted .loop-k { color: var(--loop-sub); }
+  .loop-node--excluded { border-color: #E3B4AE; background: #FDF4F3; }
+  .loop-node--excluded .loop-k { color: #A8362A; }
+
+  .loop-caption {
+    margin-top: 22px; text-align: center;
+    font-size: 0.86rem; font-style: italic;
+    color: var(--loop-sub);
+  }
+
+  /* ── Copy above the diagram ── */
+  .attr-copy { columns: 2; column-gap: 46px; margin-top: 26px; }
+  .attr-copy p {
+    font-size: 0.97rem; line-height: 1.75;
+    color: rgba(240,237,230,0.74);
+    break-inside: avoid;
+  }
+  .attr-copy p + p { margin-top: 14px; }
+  .attr-copy strong { color: #fff; font-weight: 600; }
+  .attr-bonus {
+    max-width: 720px; margin-top: 22px; padding-left: 14px;
+    border-left: 2px solid var(--orange);
+    font-size: 0.94rem; line-height: 1.65;
+    color: rgba(240,237,230,0.68);
+  }
+  .attr-bonus strong { color: var(--orange); font-weight: 700; }
+
+  /* ── Responsive ─────────────────────────────────────────────────
+     Five nodes will not sit side by side on a phone, so below 900px
+     the whole thing becomes one vertical column and the chevrons
+     rotate to point down. The return path cannot be a U-shape in a
+     column, so it becomes a labelled bar with an up arrow — same
+     meaning, no pretzel. */
+  @media (max-width: 900px) {
+    .loop { padding: 26px 18px 22px; }
+    .loop-flow { flex-direction: column; align-items: stretch; }
+    .loop-node, .loop-node--crm { flex: 0 0 auto; }
+    .loop-arrow { flex: 0 0 30px; transform: rotate(90deg); }
+
+    .loop-return {
+      margin: 10px 0 0; height: auto;
+      border: 2px solid var(--loop-line);
+      border-radius: 12px;
+      padding: 12px 14px;
+    }
+    .loop-return::before { left: 50%; margin-left: -7px; top: -10px; }
+    .loop-return-inner { padding: 0; }
+
+    .loop-aside { flex-direction: column; align-items: stretch; }
+    .loop-aside .loop-arrow { transform: rotate(90deg); }
+
+    .attr-copy { columns: 1; }
+  }
 </style>
 </head>
 <body>
@@ -2334,8 +2527,7 @@
 <!-- ============ FORM ZONE 2 ===================================== -->
 <section class="form-zone" id="form-zone-2">
   <div class="form-zone-inner">
-    <h2 class="form-zone-h">See what your account looks like with the tracking turned on.</h2>
-    <p class="form-zone-sub">Four questions, about sixty seconds.</p>
+    <h2 class="form-zone-h">Can we lower your cost per appointment?</h2>
     <div class="v2-form" id="mobile-form-anchor-2">
       <div class="v2-progress-dots" id="v2-dots-2">
         <div class="dot active" data-step="1"></div>
@@ -2431,7 +2623,7 @@
       </div>
     </div>
 
-    <p class="form-zone-trust">We look at your ad account before the call, not on it.</p>
+    <p class="form-zone-trust">See if we&rsquo;re a fit</p>
   </div>
 </section>
 
@@ -2467,35 +2659,27 @@
 
     <div class="ad-grid reveal">
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/testimonial.webp')" aria-label="View larger: Testimonial ad">
-        <span class="ad-tag">Testimonial</span>
         <img src="ads/testimonial.webp" alt="Testimonial ad creative: A real customer on camera, unscripted" loading="lazy" width="720" height="1280">
       </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/beforeafter.webp')" aria-label="View larger: Before / After ad">
-        <span class="ad-tag">Before / After</span>
         <img src="ads/beforeafter.webp" alt="Before / After ad creative: The install, start to finish" loading="lazy" width="720" height="1280">
       </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/founder.webp')" aria-label="View larger: Founder ad">
-        <span class="ad-tag">Founder</span>
         <img src="ads/founder.webp" alt="Founder ad creative: The owner making the case himself" loading="lazy" width="720" height="1280">
       </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/geo.webp')" aria-label="View larger: Geo Callout ad">
-        <span class="ad-tag">Geo Callout</span>
         <img src="ads/geo.webp" alt="Geo Callout ad creative: Named for the town it runs in" loading="lazy" width="720" height="1280">
       </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/education.webp')" aria-label="View larger: Education ad">
-        <span class="ad-tag">Education</span>
         <img src="ads/education.webp" alt="Education ad creative: Answering the question they arrived with" loading="lazy" width="720" height="1280">
       </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/product.webp')" aria-label="View larger: Product Feature ad">
-        <span class="ad-tag">Product Feature</span>
         <img src="ads/product.webp" alt="Product Feature ad creative: One feature, shown not claimed" loading="lazy" width="720" height="1280">
       </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/comparison.webp')" aria-label="View larger: Comparison ad">
-        <span class="ad-tag">Comparison</span>
         <img src="ads/comparison.webp" alt="Comparison ad creative: This product against the alternative" loading="lazy" width="720" height="1280">
       </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/promotion.webp')" aria-label="View larger: Promotion ad">
-        <span class="ad-tag">Promotion</span>
         <img src="ads/promotion.webp" alt="Promotion ad creative: The offer, stated plainly" loading="lazy" width="720" height="1280">
       </figure>
     </div>
@@ -2558,24 +2742,6 @@
   </div>
 </section>
 
-<!-- ============ WHY OUR META LEADS ARE HIGHER QUALITY ===========
-     ⚠ PLACEHOLDER COPY throughout — the argument is right, the proof
-     is not attached yet. TODO(copy): Alex to supply the real version.
-     ============================================================== -->
-<!-- .sec is transparent in the template; the client pages paint their bare
-     .sec sections white with a per-ID rule. Using the template's own
-     .sec-white class instead, so a new section never lands dark-on-dark. -->
-<section class="sec sec-white" id="lead-quality">
-  <div class="sec-inner">
-    <span class="eyebrow">Lead Quality</span>
-    <h2 class="sec-title reveal">The Reason Our Meta Leads Are <span class="accent">Higher Quality</span></h2>
-
-    <p class="prev-blurb reveal">Every agency optimises for the conversion event it can see. For almost all of them that event is the form fill, so Meta learns to find people who fill in forms &mdash; which is not the same population as people who buy a $14,000 bathroom.</p>
-    <p class="prev-blurb reveal">We send the platform the event further down the funnel. When a lead becomes an appointment, and again when it becomes a signed contract, that outcome goes back to Meta attached to the exact ad, creative and angle that produced it. The algorithm stops optimising toward form fills and starts optimising toward contracts.</p>
-    <p class="prev-blurb reveal">It is not a targeting trick and it is not a better audience. It is the feedback loop being pointed at the thing you actually get paid for &mdash; and it compounds, because every month of closed-won data makes the next month's targeting sharper.</p>
-  </div>
-</section>
-
 <!-- ============ FOUR PILLARS ====================================
      ⚠ PLACEHOLDER COPY. The four headings are a reasonable framing of
      what Alloy actually does (creative / offer / landing page /
@@ -2610,135 +2776,109 @@
     </div>
   </div>
 </section>
+<!-- ============ CLOSED-LOOP INTEGRATION ========================
+     Rebuilt 2026-09-12: new heading, new copy, new diagram.
 
-<!-- ============ CONVERSION TRACKING & OFFLINE DATA ==============
-     Ported from the live root page (#attribution) essentially verbatim,
-     per the brief — copy and diagram both. The only change is the
-     palette: the diagram's CSS was written against the old page's
-     variable names, so those names are re-declared locally on this
-     section and mapped onto the template's palette. That keeps the
-     ported rules working unmodified and contains the legacy names to
-     this one section.
-     TODO(design): if this reads as a sore thumb next to the rest of the
-     page, Alex has screenshots to replace the ASCII-ish diagram with.
+     The old diagram showed platforms and CRMs either side of an
+     "attribution layer" with packets flowing both ways. It looked
+     technical but it argued the wrong thing — it read as "offline
+     conversions", which every agency claims. The point Alex wants made
+     is narrower and harder to copy: the WEB-side identifiers and the
+     CRM-side outcomes live in different systems, and Alloy is what
+     joins them. So the diagram is now a single left-to-right journey
+     with a return path, and the join is the one highlighted node.
+
+     PALETTE NOTE. The supplied brief asked for a white background with
+     blue accents. Kept the light ground — it makes the diagram the
+     brightest object on the page, which is right for the section that
+     carries the differentiator — but the accents are Alloy teal, not
+     blue. A blue diagram would be the only blue thing on the site.
      ============================================================== -->
 <section class="sec sec-navy" id="attribution">
-  <style>
-    /* Legacy variable names from the old site, scoped to this section only. */
-    #attribution {
-      --teal:       #2EC4B6;
-      --border:     rgba(46,196,182,0.13);
-      --bg-lt:      #201F1C;
-      --bg-teal:    #0D1E1C;
-      --muted:      #8A8880;
-      --off-white:  #F0EDE6;
-    }
-    #attribution .attr-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 3.4rem; align-items: center; margin-top: 30px; }
-    #attribution .attr-copy p { font-size: 0.95rem; color: rgba(240,237,230,0.72); line-height: 1.8; margin-bottom: 1rem; }
-    #attribution .attr-copy p strong { color: #fff; font-weight: 600; }
-    #attribution .attr-copy p em { color: var(--teal); font-style: normal; }
-    #attribution .verticals { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.6rem; }
-    #attribution .vertical-tag { font-size: 0.64rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); border: 1px solid var(--border); padding: 0.45rem 0.9rem; }
-    #attribution .attr-diagram { background: var(--bg-teal); border: 1px solid var(--border); padding: 2rem 1.5rem; }
-    #attribution .diag-row { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-    #attribution .diag-col { display: flex; flex-direction: column; gap: 0.7rem; }
-    #attribution .diag-node { background: var(--bg-lt); border: 1px solid var(--border); padding: 0.55rem 0.8rem; font-size: 0.68rem; font-weight: 500; letter-spacing: 0.08em; color: var(--off-white); text-align: center; white-space: nowrap; }
-    #attribution .diag-node.platform { border-color: rgba(46,196,182,0.3); }
-    #attribution .diag-node.crm { border-color: rgba(46,196,182,0.2); }
-    #attribution .diag-node.core { background: rgba(46,196,182,0.1); border: 1px solid var(--teal); padding: 1rem 1.2rem; font-size: 0.75rem; color: var(--teal); letter-spacing: 0.1em; text-transform: uppercase; flex-shrink: 0; }
-    #attribution .diag-node.platform::before { content:''; display:inline-block; width:5px; height:5px; background:var(--teal); border-radius:50%; margin-right:6px; vertical-align:middle; animation:nodePulse 2s ease-in-out infinite; }
-    @keyframes nodePulse { 0%,100%{opacity:0.4;transform:scale(0.8)} 50%{opacity:1;transform:scale(1.2)} }
-    #attribution .diag-node.platform:nth-child(2)::before { animation-delay:0.5s; }
-    #attribution .diag-node.platform:nth-child(3)::before { animation-delay:1s; }
-    #attribution .diag-arrows { display:flex; flex-direction:column; align-items:center; gap:0.4rem; flex-shrink:0; }
-    #attribution .diag-arrow-track { position:relative; width:40px; height:2px; background:var(--border); }
-    #attribution .diag-arrow-track::after { content:''; position:absolute; top:50%; left:-6px; width:6px; height:6px; background:var(--teal); border-radius:50%; transform:translateY(-50%); animation:packetFlow 2.4s ease-in-out infinite; }
-    @keyframes packetFlow { 0%{left:-6px;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{left:calc(100% + 6px);opacity:0} }
-    #attribution .diag-arrow-track.reverse::after { animation:packetFlowReverse 2.4s ease-in-out infinite; }
-    @keyframes packetFlowReverse { 0%{left:calc(100% + 6px);opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{left:-6px;opacity:0} }
-    #attribution .diag-arrow-track:nth-child(1)::after { animation-delay:0s; }
-    #attribution .diag-arrow-track:nth-child(2)::after { animation-delay:0.6s; }
-    #attribution .diag-arrow-track:nth-child(3)::after { animation-delay:1.2s; }
-    #attribution .diag-arrow-track.reverse:nth-child(1)::after { animation-delay:0.3s; }
-    #attribution .diag-arrow-track.reverse:nth-child(2)::after { animation-delay:0.9s; }
-    #attribution .diag-arrow-track.reverse:nth-child(3)::after { animation-delay:1.5s; }
-    #attribution .diag-arrow-track::before { content:''; position:absolute; right:-5px; top:50%; transform:translateY(-50%); border-left:5px solid rgba(46,196,182,0.35); border-top:4px solid transparent; border-bottom:4px solid transparent; }
-    #attribution .diag-arrow-track.reverse::before { right:auto; left:-5px; border-left:none; border-right:5px solid rgba(46,196,182,0.35); }
-    #attribution .diag-analysis { margin-top:1.2rem; padding:0.7rem 1rem; border:1px dashed rgba(46,196,182,0.25); font-size:0.63rem; color:var(--muted); letter-spacing:0.1em; text-transform:uppercase; text-align:center; position:relative; }
-    #attribution .diag-analysis::before { content:''; position:absolute; top:-1.2rem; left:50%; width:1px; height:1.2rem; background:var(--border); }
-    #attribution .diag-analysis > span { color:var(--teal); animation:blink 1.4s step-end infinite; }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    #attribution .diag-ids { margin-top:0.6rem; display:flex; gap:0.4rem; justify-content:center; flex-wrap:wrap; }
-    #attribution .diag-id-pill { font-size:0.58rem; font-family:monospace; background:rgba(46,196,182,0.08); border:1px solid rgba(46,196,182,0.2); color:var(--teal); padding:0.2rem 0.5rem; border-radius:2px; animation:pillFade 3s ease-in-out infinite; }
-    #attribution .diag-id-pill:nth-child(2) { animation-delay:1s; }
-    #attribution .diag-id-pill:nth-child(3) { animation-delay:2s; }
-    @keyframes pillFade { 0%,100%{opacity:0.4} 50%{opacity:1} }
-    #attribution .diag-label { font-size:0.58rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--muted); opacity:0.6; margin-top:0.4rem; }
-    @media (prefers-reduced-motion: reduce) {
-      #attribution .diag-node.platform::before,
-      #attribution .diag-arrow-track::after,
-      #attribution .diag-analysis > span,
-      #attribution .diag-id-pill { animation: none; }
-    }
-    @media (max-width: 900px) {
-      #attribution .attr-inner { grid-template-columns: 1fr; gap: 2.2rem; }
-      #attribution .diag-row { flex-direction: column; gap: 0.9rem; }
-      #attribution .diag-arrows { flex-direction: row; }
-      #attribution .diag-arrow-track { width: 2px; height: 28px; }
-      #attribution .diag-arrow-track::after,
-      #attribution .diag-arrow-track::before { display: none; }
-    }
-  </style>
   <div class="sec-inner">
     <span class="eyebrow">Alloy&rsquo;s Custom Infrastructure</span>
-    <h2 class="sec-title reveal">The CRMs That Run This Industry <span class="accent">Weren&rsquo;t Built for Marketing</span></h2>
-    <div class="attr-inner">
-      <div class="attr-copy reveal">
-        <p><strong>MarketSharp. Lead Perfection. ServiceTitan.</strong> Out of the box, they tell you how many leads came in. They do not tell you which ad, which creative, or which angle drove the ones that actually closed.</p>
-        <p>We built the infrastructure that does. Every lead that enters your CRM is tied to the specific campaign and creative that generated it. That data goes back to Meta and Google as offline conversion signals, teaching the platforms to find more of the buyers who sign, not just the ones who submit forms.</p>
-        <p>It compounds over time. The longer the system runs, the better the targeting gets. And then we compound the value further by feeding transcripts of all live video ads to our Creative Analysis agent. <em>We can walk you through exactly how it works on a call. It is pretty cool stuff.</em></p>
-        <div class="verticals">
-          <span class="vertical-tag">Windows</span>
-          <span class="vertical-tag">Water Filtration</span>
-          <span class="vertical-tag">Bathroom Remodeling</span>
+    <h2 class="sec-title reveal">Our custom integration turns every appointment and sale into <span class="accent">smarter targeting</span></h2>
+
+    <div class="attr-copy reveal">
+      <p>Meta lead gen campaigns work best when Meta can see which leads actually become appointments and sales. That feedback teaches the algorithm what a valuable lead looks like, so it can find more people like them.</p>
+      <p>Most campaigns never create that feedback loop because home-service CRMs like <strong>MarketSharp</strong>, <strong>Lead Perfection</strong>, and <strong>ServiceTitan</strong> weren&rsquo;t built to pass digital marketing data and downstream sales outcomes back to Meta. Out of the box, the web data and CRM data live in separate systems.</p>
+      <p>We built the integration that connects them. Every appointment and sale becomes another signal Meta can learn from, so targeting gets smarter over time.</p>
+    </div>
+
+    <p class="attr-bonus reveal"><strong>Bonus:</strong> we can also exclude leads from your other sources, reducing the chances you pay Meta to reach people already in your database.</p>
+
+    <!-- ── The loop ────────────────────────────────────────────────
+         One forward journey, one return path, one side path. Every
+         node is a plain div — no canvas, no library — so the labels
+         are real text: selectable, translatable, searchable, and
+         readable by a screen reader in source order, which is also
+         the order of the story.
+         The arrows are a single inline SVG chevron reused throughout
+         and rotated with CSS, so the horizontal desktop flow becomes a
+         vertical mobile flow without a second set of markup. -->
+    <div class="loop reveal">
+
+      <div class="loop-flow">
+        <div class="loop-node">
+          <span class="loop-k">Meta Ads</span>
+        </div>
+
+        <span class="loop-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+
+        <div class="loop-node">
+          <span class="loop-k">Landing Page / Form</span>
+        </div>
+
+        <span class="loop-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+
+        <div class="loop-node">
+          <span class="loop-k">Web Data</span>
+          <span class="loop-s">click + browser + form data</span>
+        </div>
+
+        <span class="loop-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+
+        <!-- The one node that is the actual differentiator, so the one
+             node that is filled rather than outlined. -->
+        <div class="loop-node loop-node--hero">
+          <span class="loop-k">Alloy Integration</span>
+          <span class="loop-s">connects web + CRM data</span>
+        </div>
+
+        <span class="loop-arrow loop-arrow--both" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 7 3 12l5 5M16 7l5 5-5 5M3 12h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+
+        <div class="loop-node loop-node--crm">
+          <span class="loop-k">CRM</span>
+          <div class="loop-stages">
+            <span class="loop-stage">Lead</span>
+            <span class="loop-stage-sep" aria-hidden="true">&rsaquo;</span>
+            <span class="loop-stage">Appointment</span>
+            <span class="loop-stage-sep" aria-hidden="true">&rsaquo;</span>
+            <span class="loop-stage loop-stage--win">Sale</span>
+          </div>
         </div>
       </div>
-      <div class="reveal">
-        <div class="attr-diagram">
-          <div class="diag-row">
-            <div class="diag-col">
-              <div class="diag-node platform">Meta Ads API</div>
-              <div class="diag-node platform">Google Ads API</div>
-              <div class="diag-node platform">Platform Metrics</div>
-            </div>
-            <div class="diag-arrows">
-              <div class="diag-arrow-track"></div>
-              <div class="diag-arrow-track"></div>
-              <div class="diag-arrow-track"></div>
-            </div>
-            <div class="diag-node core">Alloy<br>Attribution<br>Layer</div>
-            <div class="diag-arrows">
-              <div class="diag-arrow-track reverse"></div>
-              <div class="diag-arrow-track reverse"></div>
-              <div class="diag-arrow-track reverse"></div>
-            </div>
-            <div class="diag-col">
-              <div class="diag-node crm">MarketSharp</div>
-              <div class="diag-node crm">Lead Perfection</div>
-              <div class="diag-node crm">ServiceTitan</div>
-            </div>
-          </div>
-          <div class="diag-analysis">
-            Creative Performance Analysis <span>|</span>
-            <div class="diag-ids">
-              <span class="diag-id-pill">GCLID</span>
-              <span class="diag-id-pill">FBLID</span>
-              <span class="diag-id-pill">creative_id</span>
-            </div>
-            <div class="diag-label">Closed revenue fed back to targeting algorithm</div>
-          </div>
+
+      <!-- Return path. Drawn as a three-sided box under the flow: down
+           from the CRM, back along the bottom, up into Meta Ads. -->
+      <div class="loop-return">
+        <span class="loop-return-inner">
+          <span class="loop-return-k">Better Optimization Signals</span>
+          <span class="loop-return-s">appointments &amp; sales sent back to Meta</span>
+        </span>
+      </div>
+
+      <div class="loop-aside">
+        <div class="loop-node loop-node--muted">
+          <span class="loop-k">Existing CRM Leads</span>
+        </div>
+        <span class="loop-arrow loop-arrow--muted" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0-5-5m5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <div class="loop-node loop-node--excluded">
+          <span class="loop-k">Excluded from Targeting</span>
         </div>
       </div>
+
+      <p class="loop-caption">Most home-service CRMs stop at the lead. Alloy closes the loop.</p>
     </div>
   </div>
 </section>
