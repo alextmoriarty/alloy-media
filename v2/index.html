@@ -1714,6 +1714,8 @@
     margin: 18px auto 0;
     max-width: 700px;
   }
+  /* Default (wide): the rule-divided pair shows, the parenthetical hides. */
+  .vsl-caveat-inline { display: none; }
   .vsl-caveats span {
     position: relative;
     font-size: 0.92rem; font-weight: 400;
@@ -1733,9 +1735,28 @@
   }
   /* Stacked, the vertical rule would be pointing the wrong way, so it
      goes and the gap does the separating instead. */
+  /* Narrow: swap to the parenthetical. Stacking the pair produced two
+     orphaned fragments reading as a broken list; an aside in running
+     text needs no divider and wraps like the sentence it is. */
   @media (max-width: 620px) {
-    .vsl-caveats { flex-direction: column; gap: 5px; }
-    .vsl-caveats span { white-space: normal; }
+    .vsl-caveats { display: block; margin-top: 14px; }
+    .vsl-caveats .vsl-caveat-pair { display: none; }
+    /* Selector carries `.vsl-caveats` so it outranks `.vsl-caveats span`
+       (0,1,1), which sets white-space:nowrap for the desktop pair. A bare
+       .vsl-caveat-inline is (0,1,0) and loses — the parenthetical then ran
+       off the right edge as one unwrapped line instead of wrapping, and
+       html{overflow-x:hidden} clipped it silently rather than producing a
+       scrollbar, so a document-width check could not see it. */
+    .vsl-caveats .vsl-caveat-inline {
+      display: block;
+      white-space: normal;
+      max-width: 34ch; margin: 0 auto;
+      font-size: 0.9rem; line-height: 1.5;
+      color: rgba(240,237,230,0.62);
+    }
+    /* The divider is drawn by `span + span::before`, and the parenthetical
+       is also a following sibling — so it inherited a rule meant for the
+       pair and grew a teal tick down its left side. */
     .vsl-caveats span + span::before { display: none; }
   }
 
@@ -1872,6 +1893,63 @@
      not exist here, so they are inert; only #faq collides.
      Re-asserted at the same specificity, later in the cascade. */
   #faq { background: var(--gray-1); }
+
+  /* ═══════════════════════════════════════════════════════════════
+     BATCH 2026-09-12
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* ── Air between the VSL and the form ───────────────────────────
+     They were touching, which read as one undifferentiated slab and
+     gave the eye nowhere to rest between finishing the video and
+     starting the form. They are two separate invitations and should
+     look like it. Deliberately generous: the form no longer has to
+     clear the fold on a phone — showing a slice of it below the video
+     is better than cramming the whole thing up against it. */
+  .hero--vsl .v2-form { margin-top: 44px; }
+  @media (max-width: 620px) {
+    .hero--vsl .v2-form { margin-top: 30px; }
+  }
+
+  /* ── Equal-size answer tiles ────────────────────────────────────
+     "Bathroom Remodeling" wrapped to two lines while its neighbours sat
+     on one, so that tile grew and the 2x2 block went lopsided. The
+     labels are shorter now, but a min-height and centred content mean
+     the grid stays square whatever wording lands here later. */
+  .v2-tiles { align-items: stretch; }
+  .v2-tile {
+    display: flex; align-items: center; justify-content: center;
+    min-height: 72px;
+  }
+  @media (min-width: 769px) {
+    .v2-tile { min-height: 88px; }
+  }
+
+  /* ── Ian's portrait ── */
+  .tvid-avatar {
+    width: 52px; height: 52px; flex-shrink: 0;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--gray-3);
+  }
+
+  /* ── Practical aside under a section blurb ──────────────────────
+     Set apart from the paragraph above with a teal rule rather than
+     being folded into it: it answers the objection that paragraph
+     provokes, but it is housekeeping, not argument, and inline it
+     blunted the claim it follows. */
+  .prev-aside {
+    max-width: 620px;
+    margin-top: 14px;
+    padding-left: 14px;
+    border-left: 2px solid var(--orange);
+    font-size: 0.94rem; line-height: 1.6;
+    color: var(--text-lt);
+  }
+
+  /* Ads are <figure> now; the grid gets a little more room to breathe
+     since the cards carry real artwork rather than placeholder hatching. */
+  .ad-card { margin: 0; }
+  .ad-grid { margin-top: 26px; }
 </style>
 </head>
 <body>
@@ -1940,9 +2018,18 @@
         Lower your <span class="orange">Cost Per Appointment</span> in 10&nbsp;days
       </h1>
 
+      <!-- Two renderings of the same caveat, one shown at a time.
+           Wide, the rule-divided pair works and Alex likes it. Narrow, it
+           stacked into two orphaned fragments that read as a broken list.
+           Below 620px it becomes Alex's single parenthetical instead — a
+           genuine aside in running text, which is what it is, and which
+           needs no divider to hold it together.
+           Only one is ever in the accessibility tree: the other is
+           display:none, so nothing is announced twice. -->
       <p class="vsl-caveats">
-        <span>Without sacrificing lead volume</span>
-        <span>Without relying on overly aggressive discounts</span>
+        <span class="vsl-caveat-pair">Without sacrificing lead volume</span>
+        <span class="vsl-caveat-pair">Without relying on overly aggressive discounts</span>
+        <span class="vsl-caveat-inline">(without sacrificing lead volume or relying on overly aggressive discounts)</span>
       </p>
 
       <p class="vsl-sub">The 7 controllable factors that make Meta leads convert worse, and how we fix each one.</p>
@@ -2001,16 +2088,11 @@
       <div id="m2s-step0">
         <p class="m2s-question">Which vertical is your business in?</p>
         <div class="v2-tiles">
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows &amp; Doors')">Windows &amp; Doors</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom Remodeling')">Bathroom Remodeling</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom')">Bathroom</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something Else')">Something Else</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <!-- ── Step 2: spend ────────────────────────────────────────────────
@@ -2027,11 +2109,6 @@
           <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$15k&ndash;$50k')">$15k&ndash;$50k</button>
           <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$50k+')">$50k+</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <!-- ── Step 3: website (was the ZIP gate on client pages) ──────────── -->
@@ -2039,11 +2116,6 @@
         <p class="m2s-question">What&rsquo;s your company website?</p>
         <input class="m2s-input" type="text" id="m2s-q3" placeholder="yourcompany.com" inputmode="url">
         <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <p class="m2s-fine">We look at your current ads before the call, so it isn&rsquo;t a discovery call spent on discovery.</p>
       </div>
 
@@ -2112,7 +2184,7 @@
      ============================================================== -->
 <section class="logos-strip">
   <div class="logos-inner">
-    <p class="logos-kicker">Running paid media for</p>
+    <p class="logos-kicker">Running paid media for 7, 8, and 9 figure remodeling businesses</p>
     <div class="logos-row reveal">
       <img class="logo-pinnacle" src="logos/pinnacle.svg" alt="Pinnacle Windows &amp; Restoration" loading="lazy">
       <img class="logo-ewd" src="logos/ewd.png" alt="Elevated Windows &amp; Doors" loading="lazy">
@@ -2150,9 +2222,7 @@
            Same click-to-load facade as the hero VSL — no player JS until
            someone presses play.
 
-           TODO(copy): the speaker's name. It is not in the video
-           metadata and inventing one on a testimonial is not an option,
-           so the attribution names the company only. -->
+           Speaker identified 2026-09-12: Ian McPherson, owner. -->
       <div class="vid-testimonial">
         <div class="tvid-frame" id="tvid-frame">
           <button type="button" class="tvid-facade js-video-facade" id="tvid-facade"
@@ -2163,11 +2233,16 @@
             <span class="vsl-play" aria-hidden="true">&#9654;</span>
           </button>
         </div>
+        <!-- Portrait supplied 2026-09-12. The source is a full-length shot
+             in the Elevated showroom; it is cropped square to head-and-
+             shoulders here, because at avatar size a full-length figure is
+             a person-shaped smudge. Cropped in the asset rather than with
+             object-position, so the file is 9KB instead of 2MB. -->
         <div class="tvid-by">
-          <div class="senja-avatar" aria-hidden="true">E</div>
+          <img class="tvid-avatar" src="img/ian.webp" alt="Ian McPherson, owner of Elevated Windows &amp; Doors" loading="lazy" width="240" height="240">
           <div>
-            <div class="senja-by-name">Elevated Windows &amp; Doors</div>
-            <div class="senja-by-role">Alloy Media client</div>
+            <div class="senja-by-name">Ian McPherson</div>
+            <div class="senja-by-role">Owner, Elevated Windows &amp; Doors</div>
           </div>
         </div>
       </div>
@@ -2248,16 +2323,11 @@
       <div id="m2s-step0-2">
         <p class="m2s-question">Which vertical is your business in?</p>
         <div class="v2-tiles">
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows &amp; Doors')">Windows &amp; Doors</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom Remodeling')">Bathroom Remodeling</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom')">Bathroom</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something Else')">Something Else</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <!-- ── Step 2: spend ────────────────────────────────────────────────
@@ -2274,11 +2344,6 @@
           <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$15k&ndash;$50k')">$15k&ndash;$50k</button>
           <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$50k+')">$50k+</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <!-- ── Step 3: website (was the ZIP gate on client pages) ──────────── -->
@@ -2286,11 +2351,6 @@
         <p class="m2s-question">What&rsquo;s your company website?</p>
         <input class="m2s-input" type="text" id="m2s-q3-2" placeholder="yourcompany.com" inputmode="url">
         <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <p class="m2s-fine">We look at your current ads before the call, so it isn&rsquo;t a discovery call spent on discovery.</p>
       </div>
 
@@ -2343,6 +2403,73 @@
   </div>
 </section>
 
+<!-- ============ CREATIVE =======================================
+     Moved directly under the first conversion form (2026-09-12). It is
+     the strongest section on the page and it was sitting seven screens
+     down, behind three blocks of prose; a visitor who did not fill the
+     hero form had to scroll past the entire argument to reach the only
+     part that shows the work.
+
+     Eight real ads, supplied 2026-09-12. Sources were 1.3-2.2MB PNGs
+     (16.7MB for the set, which would have been the whole page budget
+     several times over). Re-encoded to 720px WebP at q82 — 0.46MB for
+     all eight, visually identical at the size they render.
+     Originals remain on assets.alloymedia.io untouched.
+
+     Each opens full-size in the page's existing lightbox. The angle tag
+     is doing real work: it turns a wall of ads into the argument that
+     there is a METHOD behind them, which is the point of the section.
+     ============================================================== -->
+<section class="sec sec-gray" id="creative">
+  <div class="sec-inner">
+    <span class="eyebrow">Creative</span>
+    <h2 class="sec-title reveal">The Reason Our Creative <span class="accent">Drives Results</span></h2>
+
+    <p class="prev-blurb reveal">Rather than relying on the same offers, generic scripts, and stock assets, we test a range of angles with authentic, people-first video.</p>
+
+    <!-- Kept out of the main paragraph on purpose. It answers the
+         objection the paragraph above provokes ("we are not doing that"),
+         but it is a practical aside, not part of the argument — inline it
+         blunted the claim it follows. -->
+    <p class="prev-aside reveal">If your team doesn&rsquo;t want to be on camera, we can source talent to deliver the scripts.</p>
+
+    <div class="ad-grid reveal">
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/testimonial.webp')" aria-label="View larger: Testimonial ad">
+        <span class="ad-tag">Testimonial</span>
+        <img src="ads/testimonial.webp" alt="Testimonial ad creative: A real customer on camera, unscripted" loading="lazy" width="720" height="1280">
+      </figure>
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/beforeafter.webp')" aria-label="View larger: Before / After ad">
+        <span class="ad-tag">Before / After</span>
+        <img src="ads/beforeafter.webp" alt="Before / After ad creative: The install, start to finish" loading="lazy" width="720" height="1280">
+      </figure>
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/founder.webp')" aria-label="View larger: Founder ad">
+        <span class="ad-tag">Founder</span>
+        <img src="ads/founder.webp" alt="Founder ad creative: The owner making the case himself" loading="lazy" width="720" height="1280">
+      </figure>
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/geo.webp')" aria-label="View larger: Geo Callout ad">
+        <span class="ad-tag">Geo Callout</span>
+        <img src="ads/geo.webp" alt="Geo Callout ad creative: Named for the town it runs in" loading="lazy" width="720" height="1280">
+      </figure>
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/education.webp')" aria-label="View larger: Education ad">
+        <span class="ad-tag">Education</span>
+        <img src="ads/education.webp" alt="Education ad creative: Answering the question they arrived with" loading="lazy" width="720" height="1280">
+      </figure>
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/comparison.webp')" aria-label="View larger: Comparison ad">
+        <span class="ad-tag">Comparison</span>
+        <img src="ads/comparison.webp" alt="Comparison ad creative: This product against the alternative" loading="lazy" width="720" height="1280">
+      </figure>
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/product.webp')" aria-label="View larger: Product Feature ad">
+        <span class="ad-tag">Product Feature</span>
+        <img src="ads/product.webp" alt="Product Feature ad creative: One feature, shown not claimed" loading="lazy" width="720" height="1280">
+      </figure>
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/promotion.webp')" aria-label="View larger: Promotion ad">
+        <span class="ad-tag">Promotion</span>
+        <img src="ads/promotion.webp" alt="Promotion ad creative: The offer, stated plainly" loading="lazy" width="720" height="1280">
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ============ WHY OUR META LEADS ARE HIGHER QUALITY ===========
      ⚠ PLACEHOLDER COPY throughout — the argument is right, the proof
      is not attached yet. TODO(copy): Alex to supply the real version.
@@ -2392,38 +2519,6 @@
         <div class="pillar-h">Measurement that reaches the contract</div>
         <p class="pillar-p">If the only thing you can measure is the form fill, the only thing you can optimise is the form fill. We connect the CRM so the signed job is the number on the report &mdash; and the number the algorithm learns from.</p>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ OUR APPROACH TO CREATIVE =======================
-     Visual-first, the way the client pages are: short blurb, then the
-     work. The ads carry the argument.
-     TODO(assets): Alex is pulling the ad previews. Each .ad-card takes
-     EITHER a poster <img> (cheapest, opens the full ad in the lightbox
-     on click) OR a muted autoplay <video loop playsinline>. Eight 9:16
-     cells are stubbed; add or remove cards freely, the grid reflows.
-     Put them at assets.alloymedia.io/AlloyMedia/ads/.
-     ============================================================== -->
-<section class="sec sec-gray" id="creative">
-  <div class="sec-inner">
-    <span class="eyebrow">Creative</span>
-    <h2 class="sec-title reveal">Our Approach to <span class="accent">Creative</span></h2>
-
-    <p class="prev-blurb reveal">Most home improvement creative is interchangeable &mdash; the same stock kitchen, the same offer card, the same format every competitor in the market is already running. It does not fail because it is ugly. It fails because it is invisible.</p>
-    <p class="prev-blurb reveal">We test across a structured library of angles, publish new creative twice a month, and use AI-assisted production to move at that pace without the quality falling off. Then we feed transcripts of every live video ad into our Creative Analysis agent, so the next round is built on what actually held attention rather than on what the team liked.</p>
-
-    <div class="ad-grid reveal">
-      <!-- Repeat/remove .ad-card as needed. Keep the .ad-tag: labelling the
-           angle is what turns a wall of ads into an argument about method. -->
-      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Testimonial</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
-      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Before / After</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
-      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Founder</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
-      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Geo Callout</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
-      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Education</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
-      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Rebate</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
-      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Comparison</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
-      <div class="ad-card" role="button" tabindex="0"><span class="ad-tag">Timelapse</span><div class="asset-ph"><strong>Ad preview</strong>9:16 video or poster</div></div>
     </div>
   </div>
 </section>
@@ -2614,16 +2709,11 @@
       <div id="m2s-step0-3">
         <p class="m2s-question">Which vertical is your business in?</p>
         <div class="v2-tiles">
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows &amp; Doors')">Windows &amp; Doors</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom Remodeling')">Bathroom Remodeling</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Windows')">Windows</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Bathroom')">Bathroom</button>
           <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Roofing')">Roofing</button>
-          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something Else')">Something Else</button>
+          <button type="button" class="v2-tile" onclick="m2sStartTile(this,'Something else')">Something else</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <!-- ── Step 2: spend ────────────────────────────────────────────────
@@ -2640,11 +2730,6 @@
           <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$15k&ndash;$50k')">$15k&ndash;$50k</button>
           <button type="button" class="v2-tile" onclick="m2sSelectRegion(this,'$50k+')">$50k+</button>
         </div>
-        <p class="v2-cta-micro" style="margin-top:12px">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
       </div>
 
       <!-- ── Step 3: website (was the ZIP gate on client pages) ──────────── -->
@@ -2652,11 +2737,6 @@
         <p class="m2s-question">What&rsquo;s your company website?</p>
         <input class="m2s-input" type="text" id="m2s-q3-3" placeholder="yourcompany.com" inputmode="url">
         <button class="m2s-btn" onclick="m2sNext(this)">Continue &rarr;</button>
-        <p class="v2-cta-micro">
-          <span>&#10003; No Pitch Deck</span><span class="sep">&middot;</span>
-          <span>&#10003; No Obligation</span><span class="sep">&middot;</span>
-          <span>&#10003; Takes 60 Seconds</span>
-        </p>
         <p class="m2s-fine">We look at your current ads before the call, so it isn&rsquo;t a discovery call spent on discovery.</p>
       </div>
 
