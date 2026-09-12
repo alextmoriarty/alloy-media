@@ -1494,90 +1494,6 @@
     color: var(--text-mid); margin-bottom: 8px;
   }
   .prev-blurb + .prev-blurb { margin-top: 12px; }
-  .ad-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr);
-    gap: 18px; margin-top: 30px;
-  }
-  .ad-card {
-    position: relative; aspect-ratio: 9 / 16; border-radius: 12px;
-    overflow: hidden; background: var(--gray-1);
-    border: 1px solid var(--gray-2); cursor: pointer;
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
-  }
-  .ad-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.16); }
-  .ad-card img, .ad-card video { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .ad-tag {
-    position: absolute; left: 10px; top: 10px; z-index: 2;
-    background: var(--orange); color: var(--navy);
-    font-size: 0.64rem; font-weight: 800; letter-spacing: 0.07em;
-    text-transform: uppercase; padding: 4px 9px; border-radius: 100px;
-  }
-  /* ── LANDING PAGE STEP STRIP ────────────────────────────────────
-     Five phone screens read across as the sequence a visitor actually
-     travels down the page, so they get numbers and sit in one row.
-     Replaces the earlier 3-up card grid, which could not hold five and
-     whose 3:4 window would have cropped the bottom 40% off a 1206x2622
-     phone capture. The frame matches the screenshots' own ratio
-     instead, so nothing is cut. */
-  .lp-steps {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 26px 20px;
-    margin-top: 30px;
-  }
-  .lp-step { margin: 0; cursor: pointer; }
-  .lp-step-n {
-    display: block;
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.82rem; font-weight: 700;
-    letter-spacing: 0.12em;
-    color: var(--gold-ink);
-    margin-bottom: 9px;
-  }
-  .lp-shot {
-    display: block; position: relative;
-    aspect-ratio: 480 / 982;      /* the capture's own ratio — no cropping */
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--gray-1);
-    border: 1px solid var(--gray-3);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
-    transition: transform 0.16s ease, box-shadow 0.16s ease;
-  }
-  .lp-step:hover .lp-shot {
-    transform: translateY(-3px);
-    box-shadow: 0 14px 32px rgba(0,0,0,0.16);
-  }
-  .lp-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .lp-cap {
-    margin-top: 11px;
-    font-size: 0.86rem; line-height: 1.45;
-    font-weight: 500;
-    color: var(--text-mid);
-  }
-
-  @media (max-width: 1000px) {
-    .lp-steps { grid-template-columns: repeat(3, 1fr); gap: 26px 18px; }
-  }
-  @media (max-width: 620px) {
-    .lp-steps { grid-template-columns: repeat(2, 1fr); gap: 22px 14px; }
-    .lp-cap { font-size: 0.8rem; }
-  }
-
-  /* Shared placeholder tile for both galleries. Every one of these is a
-     slot Alex is supplying an asset for — they are meant to look
-     unfinished so none of them ships by accident. */
-  .asset-ph {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 6px; text-align: center; padding: 14px;
-    background: repeating-linear-gradient(45deg, #EFEFEC 0 10px, #E7E7E3 10px 20px);
-    color: var(--text-lt); font-size: 0.74rem; line-height: 1.45;
-  }
-  .asset-ph strong { display: block; color: var(--text-mid); font-size: 0.8rem; }
-  .lp-shot .asset-ph { position: static; height: 100%; }
-
-  /* ── RESPONSIVE (Alloy sections only) ── */
   @media (max-width: 900px) {
     .proof-grid { grid-template-columns: 1fr; gap: 34px; justify-items: center; }
     .proof-grid .cmp { max-width: 460px; }
@@ -1585,7 +1501,6 @@
     .cmp th, .cmp td { padding: 13px 6px; }
     .cmp-after, .cmp-h-after { padding-left: 12px; padding-right: 12px; }
     .pillars { grid-template-columns: 1fr; }
-    .ad-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
     .lp-grid { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; }
   }
   @media (max-width: 520px) {
@@ -1988,7 +1903,6 @@
   /* Ads are <figure> now; the grid gets a little more room to breathe
      since the cards carry real artwork rather than placeholder hatching. */
   .ad-card { margin: 0; }
-  .ad-grid { margin-top: 26px; }
 
   /* ═══════════════════════════════════════════════════════════════
      CLOSED-LOOP INTEGRATION DIAGRAM
@@ -2181,6 +2095,194 @@
     .loop-aside .loop-arrow { transform: rotate(90deg); }
 
     .attr-copy { columns: 1; }
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     BATCH 2026-09-12 (b) — GOLD, THE AD RAIL, THE LP STEPPER
+
+     THE PROBLEM BEING FIXED. From the hero down to the before/after
+     table the page carries exactly one focal object per section, which
+     is why it scans. The creative and landing-page sections broke that
+     rule hard: eight dense ads in a 4x2 wall, then five illegible
+     phone screenshots in a row. Thirteen competing images in two
+     consecutive sections. Both are now single-focus like everything
+     above them — one rail, one screen.
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* ── GOLD ────────────────────────────────────────────────────────
+     Sampled from the logo's copper gradient (#D5915C dominant, range
+     #985423 -> #C9AF99). Its luminance sits within 1.21 of the teal,
+     so the two must never do the same job or they fight: TEAL stays
+     interactive and positive (buttons, arrows, the "after" column,
+     the hero highlight); GOLD is editorial only — the small labels and
+     numerals that set a premium tone without asking to be clicked.
+     Deliberately NOT used in the hero, which is working as it is. */
+  :root {
+    --gold:      #D5915C;   /* on dark — 7.12:1 on #131311 */
+    --gold-lt:   #E2A97A;   /* on dark, brighter — 9.03:1 */
+    --gold-deep: #8A4C1F;   /* on light — 6.70:1 on white, 6.08 on gray */
+  }
+  .eyebrow { color: var(--gold-deep); }
+  .sec-navy .eyebrow { color: var(--gold); }
+  .logos-kicker { color: rgba(226,169,122,0.55); }
+  .prev-aside { border-left-color: var(--gold-deep); }
+  .attr-bonus { border-left-color: var(--gold); }
+  .attr-bonus strong { color: var(--gold); }
+
+  /* ── LEDE ────────────────────────────────────────────────────────
+     The argument sentence in a section whose evidence is visual. At
+     body size it was being scrolled past on the way to the pictures. */
+  .lede {
+    max-width: 730px;
+    margin-top: 6px;
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.62;
+    color: var(--text);
+  }
+  .sec-navy .lede { color: rgba(240,237,230,0.82); }
+
+  /* ── AD RAIL ─────────────────────────────────────────────────────
+     Four visible, eight in the row, arrows and native scroll for the
+     rest. Scroll-snap so it always lands on a whole ad rather than
+     halfway through one. */
+  .rail-wrap { position: relative; margin-top: 30px; }
+  .rail {
+    display: flex; gap: 18px;
+    overflow-x: auto;
+    /* PROXIMITY, not mandatory. With `mandatory` the browser cancels a
+       programmatic smooth scroll outright — the arrows fired, the rail
+       did not move, and scrollLeft read 0 as if nothing had happened.
+       Proximity still lands on whole cards when a scroll ends near one,
+       and it will not trap a drag mid-row either. */
+    /* PROXIMITY rather than mandatory: it still lands on whole cards
+       when a scroll ends near one, without trapping a drag mid-row.
+       Smoothing is left to the arrows' scrollBy call. */
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    padding-bottom: 4px;
+  }
+  .rail::-webkit-scrollbar { display: none; }
+  .rail:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; border-radius: 14px; }
+  .rail-item {
+    flex: 0 0 calc((100% - 54px) / 4);
+    margin: 0;
+    scroll-snap-align: start;
+    aspect-ratio: 9 / 16;
+    border-radius: 12px; overflow: hidden;
+    background: var(--gray-2);
+    border: 1px solid var(--gray-2);
+    cursor: pointer;
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+  }
+  .rail-item:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.16); }
+  .rail-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .rail-btn {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    z-index: 3;
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--white); color: var(--navy);
+    border: 1px solid var(--gray-3);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.16);
+    cursor: pointer;
+    transition: background 0.16s, color 0.16s, opacity 0.16s;
+  }
+  .rail-btn svg { width: 20px; height: 20px; }
+  .rail-btn:hover { background: var(--orange); color: var(--navy); border-color: var(--orange); }
+  .rail-btn--prev { left: -20px; }
+  .rail-btn--next { right: -20px; }
+  /* Hidden rather than greyed at the ends of the row — a dead control is
+     noise in a section whose whole problem was noise. */
+  .rail-btn[hidden] { display: none; }
+
+  /* ── LP STEPPER ──────────────────────────────────────────────────
+     Numbered list drives one screen. The number, the sentence and the
+     screenshot are one object now instead of a caption under a
+     thumbnail. */
+  /* Top-aligned, not centred. The phone is ~590px and five steps are
+     ~330px, so centring dropped a 240px hole between the lede and step
+     01 while the screen beside it started level with the lede — the
+     same dead space that had to be fixed in the before/after block.
+     Starting both at the same line puts the slack at the bottom, where
+     the phone's own mass fills it. */
+  .stepper {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 288px;
+    gap: 56px;
+    align-items: start;
+    margin-top: 34px;
+  }
+  /* Pull step 01 up level with the top of the screen. */
+  .stepper-list { margin-top: -14px; }
+  .stepper-list ol { list-style: none; margin: 0; padding: 0; }
+  .step {
+    display: flex; align-items: baseline; gap: 16px;
+    width: 100%; text-align: left;
+    background: none; border: 0;
+    border-left: 2px solid var(--gray-2);
+    padding: 15px 16px;
+    cursor: pointer;
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .step-n {
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--text-lt);
+    transition: color 0.18s;
+    flex: 0 0 auto;
+  }
+  .step-t {
+    font-size: 1rem; line-height: 1.45;
+    color: var(--text-mid);
+    transition: color 0.18s;
+  }
+  .step:hover { background: var(--gray-1); }
+  .step.is-active {
+    border-left-color: var(--gold-deep);
+    background: var(--gray-1);
+  }
+  .step.is-active .step-n { color: var(--gold-deep); }
+  .step.is-active .step-t { color: var(--navy); font-weight: 500; }
+  .step:focus-visible { outline: 2px solid var(--orange); outline-offset: -2px; }
+  .stepper-hint {
+    margin-top: 16px; padding-left: 18px;
+    font-size: 0.82rem; font-style: italic; color: var(--text-lt);
+  }
+
+  .stage-frame {
+    position: relative;
+    aspect-ratio: 480 / 982;
+    border-radius: 16px; overflow: hidden;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-3);
+    box-shadow: 0 18px 44px rgba(0,0,0,0.16);
+  }
+  .stage-shot {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover;
+    opacity: 0; transition: opacity 0.28s ease;
+  }
+  .stage-shot.is-active { opacity: 1; }
+
+  @media (max-width: 900px) {
+    .rail-item { flex: 0 0 calc((100% - 18px) / 2); }
+    .rail-btn--prev { left: -8px; }
+    .rail-btn--next { right: -8px; }
+    .stepper { grid-template-columns: 1fr; gap: 28px; }
+    /* width:100% + justify-self, NOT margin:0 auto. Auto margins on a
+       GRID item absorb the free space and switch it to shrink-to-fit —
+       and .stage-frame's only children are absolutely positioned, so
+       its content width is zero. The phone preview collapsed to 2px. */
+    .stepper-stage { width: 100%; max-width: 260px; justify-self: center; }
+    .stepper-hint { display: none; }
+  }
+  @media (max-width: 560px) {
+    .rail-item { flex: 0 0 calc((100% - 12px) / 2); }
+    .rail { gap: 12px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stage-shot { transition: none; }
   }
 </style>
 </head>
@@ -2628,154 +2730,144 @@
 </section>
 
 <!-- ============ CREATIVE =======================================
-     Moved directly under the first conversion form (2026-09-12). It is
-     the strongest section on the page and it was sitting seven screens
-     down, behind three blocks of prose; a visitor who did not fill the
-     hero form had to scroll past the entire argument to reach the only
-     part that shows the work.
+     Simplified 2026-09-12. This section and the one after it were the
+     point where the page stopped being scannable: a 4x2 wall of eight
+     dense ads, each with its own burned-in headline and face, all
+     competing at once. Every other section on the page carries ONE
+     focal object; these carried eight.
 
-     Eight real ads, supplied 2026-09-12. Sources were 1.3-2.2MB PNGs
-     (16.7MB for the set, which would have been the whole page budget
-     several times over). Re-encoded to 720px WebP at q82 — 0.46MB for
-     all eight, visually identical at the size they render.
-     Originals remain on assets.alloymedia.io untouched.
+     Now one horizontal rail. Four ads visible at a time, the rest a
+     scroll or an arrow away. Same eight ads, a quarter of the
+     simultaneous noise, and the row reads as a single band like every
+     other section. The scroll affordance also implies "there are more
+     of these", which a fixed grid of eight cannot.
 
-     Each opens full-size in the page's existing lightbox. The angle tag
-     is doing real work: it turns a wall of ads into the argument that
-     there is a METHOD behind them, which is the point of the section.
+     Angle tags stayed deleted — the work carries itself.
      ============================================================== -->
 <section class="sec sec-gray" id="creative">
   <div class="sec-inner">
     <span class="eyebrow">Creative</span>
     <h2 class="sec-title reveal">The Reason Our Creative <span class="accent">Drives Results</span></h2>
 
-    <p class="prev-blurb reveal">Rather than relying on the same offers, generic scripts, and stock assets, we test a range of angles with authentic, people-first video.</p>
+    <!-- Promoted to a lede: this sentence is the argument, the ads are
+         only the evidence, and at body size it was being skipped. -->
+    <p class="lede reveal">Rather than relying on the same offers, generic scripts, and stock assets, we test a range of angles with authentic, people-first video.</p>
 
-    <!-- Kept out of the main paragraph on purpose. It answers the
-         objection the paragraph above provokes ("we are not doing that"),
-         but it is a practical aside, not part of the argument — inline it
-         blunted the claim it follows. -->
     <p class="prev-aside reveal">If your team doesn&rsquo;t want to be on camera, we can source talent to deliver the scripts.</p>
 
-    <div class="ad-grid reveal">
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/testimonial.webp')" aria-label="View larger: Testimonial ad">
-        <img src="ads/testimonial.webp" alt="Testimonial ad creative: A real customer on camera, unscripted" loading="lazy" width="720" height="1280">
-      </figure>
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/beforeafter.webp')" aria-label="View larger: Before / After ad">
-        <img src="ads/beforeafter.webp" alt="Before / After ad creative: The install, start to finish" loading="lazy" width="720" height="1280">
-      </figure>
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/founder.webp')" aria-label="View larger: Founder ad">
-        <img src="ads/founder.webp" alt="Founder ad creative: The owner making the case himself" loading="lazy" width="720" height="1280">
-      </figure>
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/geo.webp')" aria-label="View larger: Geo Callout ad">
-        <img src="ads/geo.webp" alt="Geo Callout ad creative: Named for the town it runs in" loading="lazy" width="720" height="1280">
-      </figure>
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/education.webp')" aria-label="View larger: Education ad">
-        <img src="ads/education.webp" alt="Education ad creative: Answering the question they arrived with" loading="lazy" width="720" height="1280">
-      </figure>
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/product.webp')" aria-label="View larger: Product Feature ad">
-        <img src="ads/product.webp" alt="Product Feature ad creative: One feature, shown not claimed" loading="lazy" width="720" height="1280">
-      </figure>
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/comparison.webp')" aria-label="View larger: Comparison ad">
-        <img src="ads/comparison.webp" alt="Comparison ad creative: This product against the alternative" loading="lazy" width="720" height="1280">
-      </figure>
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/promotion.webp')" aria-label="View larger: Promotion ad">
-        <img src="ads/promotion.webp" alt="Promotion ad creative: The offer, stated plainly" loading="lazy" width="720" height="1280">
-      </figure>
+    <div class="rail-wrap reveal">
+      <button type="button" class="rail-btn rail-btn--prev" aria-label="Previous ads" data-rail="ad-rail" data-dir="-1">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="rail" id="ad-rail" tabindex="0" role="group" aria-label="Ad creative examples, scrollable">
+        <figure class="rail-item" role="button" tabindex="0" onclick="openLightbox('ads/testimonial.webp')" aria-label="View larger: A customer telling her own story">
+          <img src="ads/testimonial.webp" alt="A customer telling her own story" loading="lazy" width="720" height="1280">
+        </figure>
+        <figure class="rail-item" role="button" tabindex="0" onclick="openLightbox('ads/beforeafter.webp')" aria-label="View larger: A shower replaced in a single day">
+          <img src="ads/beforeafter.webp" alt="A shower replaced in a single day" loading="lazy" width="720" height="1280">
+        </figure>
+        <figure class="rail-item" role="button" tabindex="0" onclick="openLightbox('ads/founder.webp')" aria-label="View larger: The owner making the case himself">
+          <img src="ads/founder.webp" alt="The owner making the case himself" loading="lazy" width="720" height="1280">
+        </figure>
+        <figure class="rail-item" role="button" tabindex="0" onclick="openLightbox('ads/geo.webp')" aria-label="View larger: An offer named for the town it runs in">
+          <img src="ads/geo.webp" alt="An offer named for the town it runs in" loading="lazy" width="720" height="1280">
+        </figure>
+        <figure class="rail-item" role="button" tabindex="0" onclick="openLightbox('ads/education.webp')" aria-label="View larger: A former salesman explaining the markup">
+          <img src="ads/education.webp" alt="A former salesman explaining the markup" loading="lazy" width="720" height="1280">
+        </figure>
+        <figure class="rail-item" role="button" tabindex="0" onclick="openLightbox('ads/product.webp')" aria-label="View larger: One product feature, shown not claimed">
+          <img src="ads/product.webp" alt="One product feature, shown not claimed" loading="lazy" width="720" height="1280">
+        </figure>
+        <figure class="rail-item" role="button" tabindex="0" onclick="openLightbox('ads/comparison.webp')" aria-label="View larger: This product against the alternative">
+          <img src="ads/comparison.webp" alt="This product against the alternative" loading="lazy" width="720" height="1280">
+        </figure>
+        <figure class="rail-item" role="button" tabindex="0" onclick="openLightbox('ads/promotion.webp')" aria-label="View larger: The offer, stated plainly">
+          <img src="ads/promotion.webp" alt="The offer, stated plainly" loading="lazy" width="720" height="1280">
+        </figure>
+      </div>
+      <button type="button" class="rail-btn rail-btn--next" aria-label="More ads" data-rail="ad-rail" data-dir="1">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
     </div>
   </div>
 </section>
 
 <!-- ============ LANDING PAGES =================================
-     Sits directly under the creative, so the two "here is the work"
-     sections run back to back: the ad earns the click, the page earns
-     the appointment.
+     Simplified 2026-09-12, same problem as the creative section: five
+     dense phone screenshots side by side, each one illegible at that
+     size, five things competing where every other section has one.
 
-     Five real screens from a live client page (Fisher), captured on a
-     phone. The iOS status bar was cropped out of each — device noise
-     that says nothing about the page — but the Safari bar at the
-     bottom is deliberately KEPT: the real client domain in it is what
-     makes these read as shipped work rather than mockups.
+     Now a stepper. The five captions become a numbered list you read
+     down, and ONE large screen shows whichever step is selected. That
+     also does what Alex asked for directly — the number, the sentence
+     and the screen are now the same object instead of a caption
+     floating under a thumbnail.
 
-     Sources were 1.5-3.8MB PNGs, 11.9MB for the set. Re-encoded to
-     480px WebP q80: 0.24MB for all five. Originals untouched on the
-     CDN.
-
-     Numbered, because the five are a SEQUENCE — the argument a page
-     makes on the way down. Unnumbered they would read as five
-     unrelated features.
+     Defaults to step 01 and does not auto-rotate: a carousel that
+     moves on its own steals attention from the copy beside it and
+     reliably tests worse than one the visitor drives.
      ============================================================== -->
 <section class="sec sec-white" id="landing-pages">
   <div class="sec-inner">
     <span class="eyebrow">Landing Pages</span>
-    <h2 class="sec-title reveal">We extend the ad experience with landing pages that <span class="accent">educate and nurture prospects</span></h2>
+    <h2 class="sec-title reveal">Landing pages that <span class="accent">educate and nurture prospects</span></h2>
 
-    <p class="prev-blurb reveal">Most landing pages are bare-bones: an offer, a form, and little else. They collect the lead, but inside sales starts the call at zero. Ours educate prospects before the call, so they&rsquo;re easier to set.</p>
+    <p class="lede reveal">Most landing pages are bare-bones: an offer, a form, and little else. They collect the lead, but inside sales starts the call at zero. Ours educate prospects before the call, so they&rsquo;re easier to set.</p>
 
-    <div class="lp-steps reveal">
-      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/problem.webp')" aria-label="View larger: Call attention to the problem">
-        <span class="lp-step-n">01</span>
-        <span class="lp-shot"><img src="lp/problem.webp" alt="Fisher Construction landing page: a "Don’t ignore the signs" section showing four roof problems" loading="lazy" width="480" height="982"></span>
-        <figcaption class="lp-cap">Call attention to the problem</figcaption>
-      </figure>
-      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/solution.webp')" aria-label="View larger: Show the solution">
-        <span class="lp-step-n">02</span>
-        <span class="lp-shot"><img src="lp/solution.webp" alt="Fisher Construction landing page: the solution section" loading="lazy" width="480" height="982"></span>
-        <figcaption class="lp-cap">Show the solution</figcaption>
-      </figure>
-      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/proof.webp')" aria-label="View larger: Provide proof from the strongest reviews">
-        <span class="lp-step-n">03</span>
-        <span class="lp-shot"><img src="lp/proof.webp" alt="Fisher Construction landing page: customer reviews" loading="lazy" width="480" height="982"></span>
-        <figcaption class="lp-cap">Provide proof from the strongest reviews</figcaption>
-      </figure>
-      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/product.webp')" aria-label="View larger: Showcase the product visually">
-        <span class="lp-step-n">04</span>
-        <span class="lp-shot"><img src="lp/product.webp" alt="Fisher Construction landing page: product photography" loading="lazy" width="480" height="982"></span>
-        <figcaption class="lp-cap">Showcase the product visually</figcaption>
-      </figure>
-      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/personal.webp')" aria-label="View larger: Build a personal connection">
-        <span class="lp-step-n">05</span>
-        <span class="lp-shot"><img src="lp/personal.webp" alt="Fisher Construction landing page: a portrait of the owner alongside the warranty story" loading="lazy" width="480" height="982"></span>
-        <figcaption class="lp-cap">Build a personal connection</figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FOUR PILLARS ====================================
-     ⚠ PLACEHOLDER COPY. The four headings are a reasonable framing of
-     what Alloy actually does (creative / offer / landing page /
-     measurement), but they are mine, not Alex's. TODO(copy).
-     ============================================================== -->
-<section class="sec sec-navy" id="pillars">
-  <div class="sec-inner">
-    <span class="eyebrow">The Framework</span>
-    <h2 class="sec-title reveal">Four Pillars to <span class="accent">Meta Ads That Work</span></h2>
-
-    <div class="pillars reveal">
-      <div class="pillar">
-        <div class="pillar-n">01</div>
-        <div class="pillar-h">Creative volume, not creative luck</div>
-        <p class="pillar-p">One ad that works is an accident. A library of angles tested on a schedule is a system. We publish new creative twice a month so there is always a challenger in market before the current winner fatigues.</p>
+    <div class="stepper reveal">
+      <div class="stepper-list">
+        <ol>
+          <li>
+            <button type="button" class="step is-active" data-step="problem" aria-pressed="true">
+              <span class="step-n">01</span>
+              <span class="step-t">Call attention to the problem</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="step" data-step="solution" aria-pressed="false">
+              <span class="step-n">02</span>
+              <span class="step-t">Show the solution</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="step" data-step="proof" aria-pressed="false">
+              <span class="step-n">03</span>
+              <span class="step-t">Provide proof from the strongest reviews</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="step" data-step="product" aria-pressed="false">
+              <span class="step-n">04</span>
+              <span class="step-t">Showcase the product visually</span>
+            </button>
+          </li>
+          <li>
+            <button type="button" class="step" data-step="personal" aria-pressed="false">
+              <span class="step-n">05</span>
+              <span class="step-t">Build a personal connection</span>
+            </button>
+          </li>
+        </ol>
+        <p class="stepper-hint">A live client page, top to bottom.</p>
       </div>
-      <div class="pillar">
-        <div class="pillar-n">02</div>
-        <div class="pillar-h">An offer a stranger can say yes to</div>
-        <p class="pillar-p">Most home improvement ads ask for a $12,000 decision from someone who has known the company for nine seconds. The offer has to be sized to the temperature of the traffic, or the cost per lead is the least of the problems.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-n">03</div>
-        <div class="pillar-h">A landing page that sells</div>
-        <p class="pillar-p">The click is half the job. A page that only collects a phone number hands your sales team a list of people who are still deciding. A page that educates and sells hands them people who have already decided.</p>
-      </div>
-      <div class="pillar">
-        <div class="pillar-n">04</div>
-        <div class="pillar-h">Measurement that reaches the contract</div>
-        <p class="pillar-p">If the only thing you can measure is the form fill, the only thing you can optimise is the form fill. We connect the CRM so the signed job is the number on the report &mdash; and the number the algorithm learns from.</p>
+
+      <!-- All five screens are in the DOM and cross-faded rather than
+           swapped by src: they are ~50KB each, so the whole set costs
+           less than one of the ad creatives, and switching is instant
+           with no flash of empty frame. -->
+      <div class="stepper-stage">
+        <div class="stage-frame">
+          <img class="stage-shot is-active" data-shot="problem" src="lp/problem.webp" alt="Fisher Construction landing page: the section naming four roof problems a homeowner can spot from the driveway" width="480" height="982">
+          <img class="stage-shot" data-shot="solution" src="lp/solution.webp" alt="Fisher Construction landing page: the product answer to those problems, with a before/after slider" loading="lazy" width="480" height="982">
+          <img class="stage-shot" data-shot="proof" src="lp/proof.webp" alt="Fisher Construction landing page: verified customer reviews with photos of the finished work" loading="lazy" width="480" height="982">
+          <img class="stage-shot" data-shot="product" src="lp/product.webp" alt="Fisher Construction landing page: the product shown in the styles a buyer can actually choose" loading="lazy" width="480" height="982">
+          <img class="stage-shot" data-shot="personal" src="lp/personal.webp" alt="Fisher Construction landing page: the owner, named and pictured, behind the warranty" loading="lazy" width="480" height="982">
+        </div>
       </div>
     </div>
   </div>
 </section>
+
 <!-- ============ CLOSED-LOOP INTEGRATION ========================
      Rebuilt 2026-09-12: new heading, new copy, new diagram.
 
@@ -3532,6 +3624,60 @@
         } else {
           console.warn('[Alloy Media] Video facade not configured: set data-embed or data-file.', facade);
         }
+      });
+    });
+  })();
+
+
+  // ── Horizontal rail (ad creative) ─────────────────────────────────────
+  // Native scrolling does the work; the arrows just page it. Each press
+  // moves by the visible width, so it always lands on whole cards
+  // (scroll-snap finishes the job). Arrows hide at the ends rather than
+  // greying out — a dead control is noise in a section whose whole
+  // problem was noise.
+  // Arrows page the rail by one screenful. Native scroll does the work;
+  // scroll-snap (proximity) tidies up where it lands.
+  document.querySelectorAll('.rail-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var rail = document.getElementById(btn.dataset.rail);
+      if (!rail) return;
+      rail.scrollBy({ left: rail.clientWidth * Number(btn.dataset.dir), behavior: 'smooth' });
+    });
+  });
+
+  document.querySelectorAll('.rail').forEach(function (rail) {
+    var wrap = rail.closest('.rail-wrap');
+    if (!wrap) return;
+    var prev = wrap.querySelector('.rail-btn--prev');
+    var next = wrap.querySelector('.rail-btn--next');
+    function sync() {
+      var max = rail.scrollWidth - rail.clientWidth;
+      if (prev) prev.hidden = rail.scrollLeft <= 4;
+      if (next) next.hidden = rail.scrollLeft >= max - 4 || max <= 0;
+    }
+    rail.addEventListener('scroll', sync, { passive: true });
+    window.addEventListener('resize', sync);
+    sync();
+  });
+
+  // ── Landing-page stepper ──────────────────────────────────────────────
+  // Click a step, the matching screen cross-fades in. No auto-rotation:
+  // a carousel that moves on its own competes with the copy beside it.
+  (function () {
+    var steps = document.querySelectorAll('.step[data-step]');
+    if (!steps.length) return;
+    var shots = document.querySelectorAll('.stage-shot[data-shot]');
+    steps.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = btn.dataset.step;
+        steps.forEach(function (b) {
+          var on = b === btn;
+          b.classList.toggle('is-active', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        shots.forEach(function (img) {
+          img.classList.toggle('is-active', img.dataset.shot === key);
+        });
       });
     });
   })();
