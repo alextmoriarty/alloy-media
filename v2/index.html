@@ -1512,18 +1512,57 @@
     font-size: 0.64rem; font-weight: 800; letter-spacing: 0.07em;
     text-transform: uppercase; padding: 4px 9px; border-radius: 100px;
   }
-  .lp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-top: 30px; }
-  .lp-card {
-    border-radius: 12px; overflow: hidden; background: var(--white);
-    border: 1px solid var(--gray-2); box-shadow: 0 2px 14px rgba(0,0,0,0.06);
-    cursor: pointer; transition: transform 0.16s ease, box-shadow 0.16s ease;
+  /* ── LANDING PAGE STEP STRIP ────────────────────────────────────
+     Five phone screens read across as the sequence a visitor actually
+     travels down the page, so they get numbers and sit in one row.
+     Replaces the earlier 3-up card grid, which could not hold five and
+     whose 3:4 window would have cropped the bottom 40% off a 1206x2622
+     phone capture. The frame matches the screenshots' own ratio
+     instead, so nothing is cut. */
+  .lp-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 26px 20px;
+    margin-top: 30px;
   }
-  .lp-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.14); }
-  .lp-shot { aspect-ratio: 3 / 4; overflow: hidden; background: var(--gray-1); }
-  .lp-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
-  .lp-cap { padding: 13px 16px 15px; }
-  .lp-cap-h { font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 1rem; color: var(--navy); }
-  .lp-cap-p { font-size: 0.82rem; color: var(--text-lt); margin-top: 3px; }
+  .lp-step { margin: 0; cursor: pointer; }
+  .lp-step-n {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.82rem; font-weight: 700;
+    letter-spacing: 0.12em;
+    color: var(--gold-ink);
+    margin-bottom: 9px;
+  }
+  .lp-shot {
+    display: block; position: relative;
+    aspect-ratio: 480 / 982;      /* the capture's own ratio — no cropping */
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-3);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    transition: transform 0.16s ease, box-shadow 0.16s ease;
+  }
+  .lp-step:hover .lp-shot {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.16);
+  }
+  .lp-shot img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .lp-cap {
+    margin-top: 11px;
+    font-size: 0.86rem; line-height: 1.45;
+    font-weight: 500;
+    color: var(--text-mid);
+  }
+
+  @media (max-width: 1000px) {
+    .lp-steps { grid-template-columns: repeat(3, 1fr); gap: 26px 18px; }
+  }
+  @media (max-width: 620px) {
+    .lp-steps { grid-template-columns: repeat(2, 1fr); gap: 22px 14px; }
+    .lp-cap { font-size: 0.8rem; }
+  }
 
   /* Shared placeholder tile for both galleries. Every one of these is a
      slot Alex is supplying an asset for — they are meant to look
@@ -2164,13 +2203,6 @@
       </div>
     </div>
 
-      <!-- Trust line under the hero form, same slot the client pages use. -->
-      <ul class="v2-benefits">
-        <li><span class="ck">&#10003;</span> <strong>Home Improvement Only</strong></li>
-        <li><span class="ck">&#10003;</span> <strong>Creative Published Twice a Month</strong></li>
-        <li><span class="ck">&#10003;</span> <strong>Tracking Down to the Signed Job</strong></li>
-      </ul>
-
     </div><!-- /.hero-content -->
   </div>
 </section>
@@ -2454,17 +2486,73 @@
         <span class="ad-tag">Education</span>
         <img src="ads/education.webp" alt="Education ad creative: Answering the question they arrived with" loading="lazy" width="720" height="1280">
       </figure>
-      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/comparison.webp')" aria-label="View larger: Comparison ad">
-        <span class="ad-tag">Comparison</span>
-        <img src="ads/comparison.webp" alt="Comparison ad creative: This product against the alternative" loading="lazy" width="720" height="1280">
-      </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/product.webp')" aria-label="View larger: Product Feature ad">
         <span class="ad-tag">Product Feature</span>
         <img src="ads/product.webp" alt="Product Feature ad creative: One feature, shown not claimed" loading="lazy" width="720" height="1280">
       </figure>
+      <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/comparison.webp')" aria-label="View larger: Comparison ad">
+        <span class="ad-tag">Comparison</span>
+        <img src="ads/comparison.webp" alt="Comparison ad creative: This product against the alternative" loading="lazy" width="720" height="1280">
+      </figure>
       <figure class="ad-card" role="button" tabindex="0" onclick="openLightbox('ads/promotion.webp')" aria-label="View larger: Promotion ad">
         <span class="ad-tag">Promotion</span>
         <img src="ads/promotion.webp" alt="Promotion ad creative: The offer, stated plainly" loading="lazy" width="720" height="1280">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LANDING PAGES =================================
+     Sits directly under the creative, so the two "here is the work"
+     sections run back to back: the ad earns the click, the page earns
+     the appointment.
+
+     Five real screens from a live client page (Fisher), captured on a
+     phone. The iOS status bar was cropped out of each — device noise
+     that says nothing about the page — but the Safari bar at the
+     bottom is deliberately KEPT: the real client domain in it is what
+     makes these read as shipped work rather than mockups.
+
+     Sources were 1.5-3.8MB PNGs, 11.9MB for the set. Re-encoded to
+     480px WebP q80: 0.24MB for all five. Originals untouched on the
+     CDN.
+
+     Numbered, because the five are a SEQUENCE — the argument a page
+     makes on the way down. Unnumbered they would read as five
+     unrelated features.
+     ============================================================== -->
+<section class="sec sec-white" id="landing-pages">
+  <div class="sec-inner">
+    <span class="eyebrow">Landing Pages</span>
+    <h2 class="sec-title reveal">We extend the ad experience with landing pages that <span class="accent">educate and nurture prospects</span></h2>
+
+    <p class="prev-blurb reveal">Most landing pages are bare-bones: an offer, a form, and little else. They collect the lead, but inside sales starts the call at zero. Ours educate prospects before the call, so they&rsquo;re easier to set.</p>
+
+    <div class="lp-steps reveal">
+      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/problem.webp')" aria-label="View larger: Call attention to the problem">
+        <span class="lp-step-n">01</span>
+        <span class="lp-shot"><img src="lp/problem.webp" alt="Fisher Construction landing page: a "Don’t ignore the signs" section showing four roof problems" loading="lazy" width="480" height="982"></span>
+        <figcaption class="lp-cap">Call attention to the problem</figcaption>
+      </figure>
+      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/solution.webp')" aria-label="View larger: Show the solution">
+        <span class="lp-step-n">02</span>
+        <span class="lp-shot"><img src="lp/solution.webp" alt="Fisher Construction landing page: the solution section" loading="lazy" width="480" height="982"></span>
+        <figcaption class="lp-cap">Show the solution</figcaption>
+      </figure>
+      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/proof.webp')" aria-label="View larger: Provide proof from the strongest reviews">
+        <span class="lp-step-n">03</span>
+        <span class="lp-shot"><img src="lp/proof.webp" alt="Fisher Construction landing page: customer reviews" loading="lazy" width="480" height="982"></span>
+        <figcaption class="lp-cap">Provide proof from the strongest reviews</figcaption>
+      </figure>
+      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/product.webp')" aria-label="View larger: Showcase the product visually">
+        <span class="lp-step-n">04</span>
+        <span class="lp-shot"><img src="lp/product.webp" alt="Fisher Construction landing page: product photography" loading="lazy" width="480" height="982"></span>
+        <figcaption class="lp-cap">Showcase the product visually</figcaption>
+      </figure>
+      <figure class="lp-step" role="button" tabindex="0" onclick="openLightbox('lp/personal.webp')" aria-label="View larger: Build a personal connection">
+        <span class="lp-step-n">05</span>
+        <span class="lp-shot"><img src="lp/personal.webp" alt="Fisher Construction landing page: a portrait of the owner alongside the warranty story" loading="lazy" width="480" height="982"></span>
+        <figcaption class="lp-cap">Build a personal connection</figcaption>
       </figure>
     </div>
   </div>
@@ -2518,36 +2606,6 @@
         <div class="pillar-n">04</div>
         <div class="pillar-h">Measurement that reaches the contract</div>
         <p class="pillar-p">If the only thing you can measure is the form fill, the only thing you can optimise is the form fill. We connect the CRM so the signed job is the number on the report &mdash; and the number the algorithm learns from.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ OUR APPROACH TO LANDING PAGES ===================
-     TODO(assets): three portrait screenshots of real client LPs. Full-page
-     captures at ~1200px wide look best in the 3:4 window; .lp-shot anchors
-     them to the top so the hero is what shows.
-     ============================================================== -->
-<section class="sec sec-white" id="landing-pages">
-  <div class="sec-inner">
-    <span class="eyebrow">Landing Pages</span>
-    <h2 class="sec-title reveal">Our Approach to <span class="accent">Landing Pages</span></h2>
-
-    <p class="prev-blurb reveal">A page that exists to collect a contact detail is a page that hands your sales team a list of strangers. We build pages that do the selling the ad started: what the product is, what it costs to run, what the warranty actually covers, who else nearby bought one.</p>
-    <p class="prev-blurb reveal">The form is multi-step and it qualifies before it asks for anything personal, so the leads that arrive have already answered the three questions your closer would have opened with. Fewer form fills, materially better ones. <em>You are looking at the template right now.</em></p>
-
-    <div class="lp-grid reveal">
-      <div class="lp-card" role="button" tabindex="0">
-        <div class="lp-shot"><div class="asset-ph"><strong>LP screenshot</strong>portrait, full-page</div></div>
-        <div class="lp-cap"><div class="lp-cap-h">Client One</div><div class="lp-cap-p">Windows &middot; replacement</div></div>
-      </div>
-      <div class="lp-card" role="button" tabindex="0">
-        <div class="lp-shot"><div class="asset-ph"><strong>LP screenshot</strong>portrait, full-page</div></div>
-        <div class="lp-cap"><div class="lp-cap-h">Client Two</div><div class="lp-cap-p">Bath &amp; shower remodel</div></div>
-      </div>
-      <div class="lp-card" role="button" tabindex="0">
-        <div class="lp-shot"><div class="asset-ph"><strong>LP screenshot</strong>portrait, full-page</div></div>
-        <div class="lp-cap"><div class="lp-cap-h">Client Three</div><div class="lp-cap-p">Roofing &middot; storm restoration</div></div>
       </div>
     </div>
   </div>
