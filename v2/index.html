@@ -1283,10 +1283,13 @@
     font-style: italic;
     font-size: 0.98rem;
   }
+  /* Same treatment for the same reason — a glyph that renders
+     differently across platforms, replaced with a shape that does not. */
   .vsl-arrow .chev {
-    font-size: 1.5rem; line-height: 1;
+    display: block; line-height: 1;
     animation: vslNudge 1.8s ease-in-out infinite;
   }
+  .vsl-arrow .chev svg { width: 22px; height: 22px; display: block; }
   @keyframes vslNudge {
     0%, 100% { transform: translateY(0); }
     50%      { transform: translateY(6px); }
@@ -1320,14 +1323,22 @@
     background: linear-gradient(150deg, #1b1a17 0%, #0E2A27 60%, #103a35 100%);
     color: #fff; font-family: 'Inter', sans-serif;
   }
+  /* The play mark was the character U+25B6. That codepoint has an emoji
+     presentation variant, so iOS rendered it as a colour emoji rather
+     than the flat dark triangle it is on desktop — and emoji metrics
+     differ enough that the `padding-left: 6px` optical nudge (which
+     existed to centre the TEXT glyph in the circle) pushed it visibly
+     off centre as well. It is an inline SVG now: identical everywhere,
+     no font dependency, and the optical offset is baked into the path
+     rather than faked with padding. */
   .vsl-play {
     width: 74px; height: 74px; border-radius: 50%;
     background: var(--orange); color: var(--navy);
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.7rem; padding-left: 6px;
     box-shadow: 0 6px 24px rgba(46,196,182,0.4);
     transition: transform 0.18s ease;
   }
+  .vsl-play svg { width: 30px; height: 30px; display: block; }
   .vsl-facade:hover .vsl-play { transform: scale(1.07); }
   .vsl-facade-label {
     font-size: 0.9rem; letter-spacing: 0.04em; text-transform: uppercase;
@@ -2399,7 +2410,7 @@
       <p class="vsl-sub">The 7 controllable factors that make Meta leads convert worse, and how we fix each one.</p>
 
       <div class="vsl-arrow" aria-hidden="true">
-        <span class="chev">&#9662;</span>
+        <span class="chev"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 16.5 5 8h14z"/></svg></span>
       </div>
 
       <!-- ═══════════════════════════════════════════════════════════
@@ -2427,7 +2438,7 @@
                 data-poster="https://i.ytimg.com/vi/nplyCc81fEU/maxresdefault.jpg"
                 data-poster-fallback="https://i.ytimg.com/vi/nplyCc81fEU/hqdefault.jpg"
                 aria-label="Play: what&rsquo;s unique about Alloy Media">
-          <span class="vsl-play" aria-hidden="true">&#9654;</span>
+          <span class="vsl-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.2v13.6L19 12z"/></svg></span>
           <span class="vsl-facade-label">Watch the intro</span>
         </button>
       </div>
@@ -2583,7 +2594,7 @@
                   data-poster="https://i.ytimg.com/vi/TCbIhWgwQOc/oardefault.jpg"
                   data-poster-fallback="https://i.ytimg.com/vi/TCbIhWgwQOc/hqdefault.jpg"
                   aria-label="Play the Elevated Windows &amp; Doors testimonial">
-            <span class="vsl-play" aria-hidden="true">&#9654;</span>
+            <span class="vsl-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.2v13.6L19 12z"/></svg></span>
           </button>
         </div>
         <!-- Portrait supplied 2026-09-12. The source is a full-length shot
@@ -3010,7 +3021,6 @@
 <section class="form-zone" id="form-zone-3">
   <div class="form-zone-inner">
     <h2 class="form-zone-h">Find out whether we&rsquo;re a fit.</h2>
-    <p class="form-zone-sub">Four questions. If we are not the right agency for you, the form will say so.</p>
     <div class="v2-form" id="mobile-form-anchor-3">
       <div class="v2-progress-dots" id="v2-dots-3">
         <div class="dot active" data-step="1"></div>
@@ -3112,8 +3122,7 @@
      ============================================================== -->
 <section class="sec sec-gray" id="faq">
   <div class="sec-inner">
-    <span class="eyebrow">FAQ</span>
-    <h2 class="sec-title reveal" style="text-align:center">Your Questions, <span class="accent">Answered</span></h2>
+    <h2 class="sec-title reveal" style="text-align:center">FAQ</h2>
     <div class="faq-list reveal">
 
       <div class="faq-item">
