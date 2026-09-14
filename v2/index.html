@@ -1369,14 +1369,21 @@
      rows are also given more air, both to close the gap and because
      cramped rows make a figure look like a spreadsheet rather than a
      result. */
+  /* A 9:16 video is inherently much taller than four rows of figures, so
+     this column pair can never match exactly — but it was leaving ~320px
+     of dead air under the table. Two changes close most of it: the video
+     is narrower (240px reads fine for a talking head and costs ~150px of
+     height), and the table rows are given more air, which it wanted
+     anyway — cramped rows make a result look like a spreadsheet entry.
+     What is left is absorbed by centring rather than top-aligning, now
+     that the two columns are close enough for centring not to leave a
+     hole under the heading. */
   .proof-grid {
     display: grid;
-    grid-template-columns: 290px minmax(0, 1fr);
-    gap: 52px; align-items: start; margin-top: 34px;
+    grid-template-columns: 240px minmax(0, 1fr);
+    gap: 48px; align-items: center; margin-top: 34px;
   }
-  .proof-grid .vid-testimonial { max-width: 290px; }
-  /* Pull the table's header row up level with the top of the video. */
-  .proof-grid .cmp { margin-top: -6px; }
+  .proof-grid .vid-testimonial { max-width: 240px; }
   .senja-slot {
     background: var(--white); border: 1px solid var(--gray-2);
     border-radius: 12px; padding: 26px 26px 22px;
@@ -1412,7 +1419,7 @@
     border-collapse: collapse;
     font-variant-numeric: tabular-nums;
   }
-  .cmp th, .cmp td { text-align: left; padding: 22px 8px; }
+  .cmp th, .cmp td { text-align: left; padding: 30px 8px; }
   .cmp thead th {
     font-family: 'Inter', sans-serif;
     font-size: 0.68rem; font-weight: 700;
@@ -2047,28 +2054,8 @@
   .loop-node--excluded { border-color: #E3B4AE; background: #FDF4F3; }
   .loop-node--excluded .loop-k { color: #A8362A; }
 
-  .loop-caption {
-    margin-top: 22px; text-align: center;
-    font-size: 0.86rem; font-style: italic;
-    color: var(--loop-sub);
-  }
 
   /* ── Copy above the diagram ── */
-  .attr-copy { columns: 2; column-gap: 46px; margin-top: 26px; }
-  .attr-copy p {
-    font-size: 0.97rem; line-height: 1.75;
-    color: rgba(240,237,230,0.74);
-    break-inside: avoid;
-  }
-  .attr-copy p + p { margin-top: 14px; }
-  .attr-copy strong { color: #fff; font-weight: 600; }
-  .attr-bonus {
-    max-width: 720px; margin-top: 22px; padding-left: 14px;
-    border-left: 2px solid var(--orange);
-    font-size: 0.94rem; line-height: 1.65;
-    color: rgba(240,237,230,0.68);
-  }
-  .attr-bonus strong { color: var(--orange); font-weight: 700; }
 
   /* ── Responsive ─────────────────────────────────────────────────
      Five nodes will not sit side by side on a phone, so below 900px
@@ -2094,7 +2081,6 @@
     .loop-aside { flex-direction: column; align-items: stretch; }
     .loop-aside .loop-arrow { transform: rotate(90deg); }
 
-    .attr-copy { columns: 1; }
   }
 
   /* ═══════════════════════════════════════════════════════════════
@@ -2126,8 +2112,6 @@
   .sec-navy .eyebrow { color: var(--gold); }
   .logos-kicker { color: rgba(226,169,122,0.55); }
   .prev-aside { border-left-color: var(--gold-deep); }
-  .attr-bonus { border-left-color: var(--gold); }
-  .attr-bonus strong { color: var(--gold); }
 
   /* ── LEDE ────────────────────────────────────────────────────────
      The argument sentence in a section whose evidence is visual. At
@@ -2196,59 +2180,39 @@
      noise in a section whose whole problem was noise. */
   .rail-btn[hidden] { display: none; }
 
-  /* ── LP STEPPER ──────────────────────────────────────────────────
-     Numbered list drives one screen. The number, the sentence and the
-     screenshot are one object now instead of a caption under a
-     thumbnail. */
-  /* Top-aligned, not centred. The phone is ~590px and five steps are
-     ~330px, so centring dropped a 240px hole between the lede and step
-     01 while the screen beside it started level with the lede — the
-     same dead space that had to be fixed in the before/after block.
-     Starting both at the same line puts the slack at the bottom, where
-     the phone's own mass fills it. */
-  .stepper {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 288px;
-    gap: 56px;
-    align-items: start;
-    margin-top: 34px;
+  /* ── LP TAB BAR ─────────────────────────────────────────────────
+     Replaces the numbered-list stepper. That version hid its own
+     affordance — five headings look like a list, not a control, and
+     the arrows only came into view after scrolling. Here the five
+     steps ARE the control and all of them are legible before anything
+     is clicked, so there is nothing left to discover.
+
+     The buttons keep the `step` class as the script's hook, but every
+     presentational rule lives on .lpt-tab so the two never fight. */
+  .lpt { margin-top: 30px; }
+  .lpt-tabs {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+    border-bottom: 1px solid var(--gray-2);
   }
-  /* Pull step 01 up level with the top of the screen. */
-  .stepper-list { margin-top: -14px; }
-  .stepper-list ol { list-style: none; margin: 0; padding: 0; }
-  .step {
-    display: flex; align-items: baseline; gap: 16px;
-    width: 100%; text-align: left;
-    background: none; border: 0;
-    border-left: 2px solid var(--gray-2);
-    padding: 15px 16px;
-    cursor: pointer;
-    transition: border-color 0.18s, background 0.18s;
+  .lpt-tab {
+    display: flex; align-items: baseline; gap: 11px;
+    width: 100%; text-align: left; cursor: pointer;
+    background: none; border: 0; border-bottom: 3px solid transparent;
+    padding: 0 6px 14px;
+    transition: border-color 0.18s;
   }
-  .step-n {
-    font-family: 'Oswald', sans-serif;
-    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em;
-    color: var(--text-lt);
-    transition: color 0.18s;
-    flex: 0 0 auto;
+  .lpt-n {
+    font-family: 'Oswald', sans-serif; font-size: 0.78rem;
+    font-weight: 700; letter-spacing: 0.12em; color: var(--text-lt);
+    flex: 0 0 auto; transition: color 0.18s;
   }
-  .step-t {
-    font-size: 1rem; line-height: 1.45;
-    color: var(--text-mid);
-    transition: color 0.18s;
-  }
-  .step:hover { background: var(--gray-1); }
-  .step.is-active {
-    border-left-color: var(--gold-deep);
-    background: var(--gray-1);
-  }
-  .step.is-active .step-n { color: var(--gold-deep); }
-  .step.is-active .step-t { color: var(--navy); font-weight: 500; }
-  .step:focus-visible { outline: 2px solid var(--orange); outline-offset: -2px; }
-  .stepper-hint {
-    margin-top: 16px; padding-left: 18px;
-    font-size: 0.82rem; font-style: italic; color: var(--text-lt);
-  }
+  .lpt-t { font-size: 0.9rem; line-height: 1.4; color: var(--text-mid); transition: color 0.18s; }
+  .lpt-tab:hover .lpt-t { color: var(--navy); }
+  .lpt-tab:focus-visible { outline: 2px solid var(--orange); outline-offset: 2px; }
+  .lpt-tab.is-active { border-bottom-color: var(--gold-deep); }
+  .lpt-tab.is-active .lpt-n { color: var(--gold-deep); }
+  .lpt-tab.is-active .lpt-t { color: var(--navy); font-weight: 600; }
+  .lpt-stage { width: 300px; margin: 34px auto 0; }
 
   .stage-frame {
     position: relative;
@@ -2269,14 +2233,17 @@
     .rail-item { flex: 0 0 calc((100% - 18px) / 2); }
     .rail-btn--prev { left: -8px; }
     .rail-btn--next { right: -8px; }
-    .stepper { grid-template-columns: 1fr; gap: 28px; }
-    /* width:100% + justify-self, NOT margin:0 auto. Auto margins on a
-       GRID item absorb the free space and switch it to shrink-to-fit —
-       and .stage-frame's only children are absolutely positioned, so
-       its content width is zero. The phone preview collapsed to 2px. */
-    .stepper-stage { width: 100%; max-width: 260px; justify-self: center; }
-    .stepper-hint { display: none; }
   }
+  /* Five tabs will not sit in a row on a phone. Two columns, and the
+     active marker moves to the LEFT edge: a bottom border under a
+     wrapped grid cell reads as a stray underline rather than a tab. */
+  @media (max-width: 800px) {
+    .lpt-tabs { grid-template-columns: repeat(2, 1fr); gap: 4px 14px; border-bottom: 0; }
+    .lpt-tab { border-bottom: 0; border-left: 3px solid transparent; padding: 9px 0 9px 12px; }
+    .lpt-tab.is-active { border-bottom-color: transparent; border-left-color: var(--gold-deep); }
+    .lpt-stage { width: 250px; margin-top: 26px; }
+  }
+
   @media (max-width: 560px) {
     .rail-item { flex: 0 0 calc((100% - 12px) / 2); }
     .rail { gap: 12px; }
@@ -2284,6 +2251,80 @@
   @media (prefers-reduced-motion: reduce) {
     .stage-shot { transition: none; }
   }
+
+  /* ═══════════════════════════════════════════════════════════════
+     BATCH 2026-09-14 — INTEGRATION SECTION, LP ARROWS
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* The integration section opened with four paragraphs in two columns
+     before the reader reached the diagram — a whitepaper opening on a
+     landing page, with the slowest explanation in front of the fastest
+     one. It is a single column now: headline, one paragraph, picture,
+     payoffs. The paragraph is capped at 820px because a 1200px measure
+     is unreadable regardless of how good the sentence is. */
+  #attribution .loop { margin-top: 34px; }
+
+  /* Paragraph and payoffs share a row under the graphic. Stacked, the
+     section ended in a long column of text beneath an already-tall
+     picture and the payoffs read as an afterthought. Side by side they
+     are one thought: here is what the diagram means, here is what it is
+     worth. The paragraph gets the wider column because it is prose;
+     the payoffs are scanned, not read. */
+  .integration-foot {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    gap: 54px;
+    align-items: start;
+    margin-top: 38px;
+  }
+  .integration-lede {
+    font-size: 1.02rem; line-height: 1.72;
+    color: rgba(240,237,230,0.8);
+  }
+  .integration-lede strong { color: #fff; font-weight: 600; }
+
+  /* ── Payoffs ─────────────────────────────────────────────────────
+     Below the diagram, not above it: they only mean anything once you
+     have seen what the loop actually does. Gold rule rather than a
+     card — the section already has one boxed object in it and a second
+     would start competing with the diagram. */
+  /* Stacked now, not side by side: they sit in the narrower right-hand
+     column. The gold rule on the first one lines up with the first line
+     of the paragraph opposite, which is what makes the two columns read
+     as one band rather than two loose blocks. */
+  .payoffs { display: grid; gap: 26px; }
+  .payoff { border-top: 2px solid var(--gold); padding-top: 16px; }
+  .payoff-h {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600; font-size: 1.12rem;
+    color: #F4F1EC; margin-bottom: 7px;
+    letter-spacing: 0.01em;
+  }
+  .payoff-p {
+    font-size: 0.95rem; line-height: 1.65;
+    color: rgba(240,237,230,0.72);
+  }
+
+  /* More air around the whole section, per the brief. */
+  @media (min-width: 769px) {
+    #attribution { padding-top: 96px; padding-bottom: 96px; }
+  }
+
+  /* ── Landing-page stepper arrows ─────────────────────────────────
+     The numbered list is clickable, but nothing about a list of five
+     headings says so — a visitor who does not try it sees one
+     screenshot and assumes that is all there is. The arrows make the
+     "there are more of these" affordance explicit, exactly as they do
+     on the ad rail, and the counter tells you how many more.
+     They reuse .rail-btn so both sections behave identically. */
+
+  @media (max-width: 900px) {
+    .integration-foot { grid-template-columns: 1fr; gap: 30px; }
+  }
+
+  /* Disabled rather than hidden here (unlike the rail): the stepper's
+     arrows sit in a fixed row with the counter between them, so removing
+     one would shift the counter sideways every time you reached an end. */
 </style>
 </head>
 <body>
@@ -2490,11 +2531,7 @@
            answers it with an outcome rather than an adjective. -->
       <div class="v2-pullquote">
         <p>&ldquo;We generated $100k in revenue on $7,500 in spend in our first month with Alloy Media. The leads have been tremendous.&rdquo;</p>
-        <!-- TODO(copy): attribution. The quote is real; the name under it is
-             not. A named client carries several times the weight of an
-             anonymous one at the exact moment someone is deciding whether to
-             hand over a phone number. -->
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Ian, Owner at Elevated Windows &amp; Doors</div>
       </div>
     </div>
 
@@ -2717,11 +2754,7 @@
            answers it with an outcome rather than an adjective. -->
       <div class="v2-pullquote">
         <p>&ldquo;We generated $100k in revenue on $7,500 in spend in our first month with Alloy Media. The leads have been tremendous.&rdquo;</p>
-        <!-- TODO(copy): attribution. The quote is real; the name under it is
-             not. A named client carries several times the weight of an
-             anonymous one at the exact moment someone is deciding whether to
-             hand over a phone number. -->
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Ian, Owner at Elevated Windows &amp; Doors</div>
       </div>
     </div>
 
@@ -2793,69 +2826,65 @@
 </section>
 
 <!-- ============ LANDING PAGES =================================
-     Simplified 2026-09-12, same problem as the creative section: five
-     dense phone screenshots side by side, each one illegible at that
-     size, five things competing where every other section has one.
+     Tab bar over one screen (variant B, chosen 2026-09-14 from three
+     built as local previews).
 
-     Now a stepper. The five captions become a numbered list you read
-     down, and ONE large screen shows whichever step is selected. That
-     also does what Alex asked for directly — the number, the sentence
-     and the screen are now the same object instead of a caption
-     floating under a thumbnail.
+     WHY THIS ONE. The previous version hid its own affordance: the
+     numbered list was clickable, but nothing about five headings says
+     so, and the arrows that would have said so only came into view
+     after scrolling. A visitor landing at the top of the section saw
+     one screenshot and no reason to think there were four more.
 
-     Defaults to step 01 and does not auto-rotate: a carousel that
-     moves on its own steals attention from the copy beside it and
-     reliably tests worse than one the visitor drives.
+     A tab bar has no hidden control at all — the five steps ARE the
+     control, and all five are legible before anything is clicked. It
+     also keeps the screen large (300px), which matters when the whole
+     point is showing what is actually on the page.
+
+     The two rejected variants, for the record: a filmstrip of all five
+     screens (best affordance of the three — the fifth card sliced by
+     the viewport edge — but it put five dense screenshots back on
+     screen at once, which is the layout this section was rebuilt to
+     get away from), and the same list with the arrows lifted into the
+     header (safe, but still asks the visitor to notice a control).
+
+     Defaults to 01 and does not auto-rotate: a carousel that moves on
+     its own competes with the copy above it.
      ============================================================== -->
 <section class="sec sec-white" id="landing-pages">
   <div class="sec-inner">
     <span class="eyebrow">Landing Pages</span>
     <h2 class="sec-title reveal">Landing pages that <span class="accent">educate and nurture prospects</span></h2>
 
-    <p class="lede reveal">Most landing pages are bare-bones: an offer, a form, and little else. They collect the lead, but inside sales starts the call at zero. Ours educate prospects before the call, so they&rsquo;re easier to set.</p>
+    <p class="lede reveal">Most landing pages are bare-bones: an offer, a form, and little else. They collect the lead, but inside sales starts the call at zero. Our landing pages educate prospects before the call, so they&rsquo;re easier to set.</p>
 
-    <div class="stepper reveal">
-      <div class="stepper-list">
-        <ol>
-          <li>
-            <button type="button" class="step is-active" data-step="problem" aria-pressed="true">
-              <span class="step-n">01</span>
-              <span class="step-t">Call attention to the problem</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="step" data-step="solution" aria-pressed="false">
-              <span class="step-n">02</span>
-              <span class="step-t">Show the solution</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="step" data-step="proof" aria-pressed="false">
-              <span class="step-n">03</span>
-              <span class="step-t">Provide proof from the strongest reviews</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="step" data-step="product" aria-pressed="false">
-              <span class="step-n">04</span>
-              <span class="step-t">Showcase the product visually</span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="step" data-step="personal" aria-pressed="false">
-              <span class="step-n">05</span>
-              <span class="step-t">Build a personal connection</span>
-            </button>
-          </li>
-        </ol>
-        <p class="stepper-hint">A live client page, top to bottom.</p>
+    <div class="lpt reveal">
+      <div class="lpt-tabs" role="group" aria-label="Landing page sections">
+        <button type="button" class="lpt-tab step is-active" data-step="problem" aria-pressed="true">
+          <span class="lpt-n">01</span>
+          <span class="lpt-t">Call attention to the problem</span>
+        </button>
+        <button type="button" class="lpt-tab step" data-step="solution" aria-pressed="false">
+          <span class="lpt-n">02</span>
+          <span class="lpt-t">Show the solution</span>
+        </button>
+        <button type="button" class="lpt-tab step" data-step="proof" aria-pressed="false">
+          <span class="lpt-n">03</span>
+          <span class="lpt-t">Provide proof from the strongest reviews</span>
+        </button>
+        <button type="button" class="lpt-tab step" data-step="product" aria-pressed="false">
+          <span class="lpt-n">04</span>
+          <span class="lpt-t">Showcase the product visually</span>
+        </button>
+        <button type="button" class="lpt-tab step" data-step="personal" aria-pressed="false">
+          <span class="lpt-n">05</span>
+          <span class="lpt-t">Build a personal connection</span>
+        </button>
       </div>
 
-      <!-- All five screens are in the DOM and cross-faded rather than
-           swapped by src: they are ~50KB each, so the whole set costs
-           less than one of the ad creatives, and switching is instant
-           with no flash of empty frame. -->
-      <div class="stepper-stage">
+      <!-- All five screens stay in the DOM and cross-fade rather than
+           swapping src: ~50KB each, so the set costs less than one ad
+           creative, and switching is instant with no empty frame. -->
+      <div class="lpt-stage">
         <div class="stage-frame">
           <img class="stage-shot is-active" data-shot="problem" src="lp/problem.webp" alt="Fisher Construction landing page: the section naming four roof problems a homeowner can spot from the driveway" width="480" height="982">
           <img class="stage-shot" data-shot="solution" src="lp/solution.webp" alt="Fisher Construction landing page: the product answer to those problems, with a before/after slider" loading="lazy" width="480" height="982">
@@ -2869,35 +2898,24 @@
 </section>
 
 <!-- ============ CLOSED-LOOP INTEGRATION ========================
-     Rebuilt 2026-09-12: new heading, new copy, new diagram.
+     Restructured 2026-09-14. The section was front-loaded with four
+     paragraphs in two columns before the reader reached the picture —
+     a whitepaper opening on a landing page. The diagram was always the
+     fastest explanation in the section and it was buried behind the
+     slowest one.
 
-     The old diagram showed platforms and CRMs either side of an
-     "attribution layer" with packets flowing both ways. It looked
-     technical but it argued the wrong thing — it read as "offline
-     conversions", which every agency claims. The point Alex wants made
-     is narrower and harder to copy: the WEB-side identifiers and the
-     CRM-side outcomes live in different systems, and Alloy is what
-     joins them. So the diagram is now a single left-to-right journey
-     with a return path, and the join is the one highlighted node.
+     Now: headline, ONE paragraph, then the graphic, then the two
+     payoffs. The prose sets up what the picture is about and stops;
+     the picture does the explaining; the payoffs say what it is worth.
 
-     PALETTE NOTE. The supplied brief asked for a white background with
-     blue accents. Kept the light ground — it makes the diagram the
-     brightest object on the page, which is right for the section that
-     carries the differentiator — but the accents are Alloy teal, not
-     blue. A blue diagram would be the only blue thing on the site.
+     The diagram itself is unchanged — same nodes, arrows, flow and
+     styling. Only its italic caption was removed, because the
+     supporting paragraph now makes that point in words.
      ============================================================== -->
 <section class="sec sec-navy" id="attribution">
   <div class="sec-inner">
     <span class="eyebrow">Alloy&rsquo;s Custom Infrastructure</span>
     <h2 class="sec-title reveal">Our custom integration turns every appointment and sale into <span class="accent">smarter targeting</span></h2>
-
-    <div class="attr-copy reveal">
-      <p>Meta lead gen campaigns work best when Meta can see which leads actually become appointments and sales. That feedback teaches the algorithm what a valuable lead looks like, so it can find more people like them.</p>
-      <p>Most campaigns never create that feedback loop because home-service CRMs like <strong>MarketSharp</strong>, <strong>Lead Perfection</strong>, and <strong>ServiceTitan</strong> weren&rsquo;t built to pass digital marketing data and downstream sales outcomes back to Meta. Out of the box, the web data and CRM data live in separate systems.</p>
-      <p>We built the integration that connects them. Every appointment and sale becomes another signal Meta can learn from, so targeting gets smarter over time.</p>
-    </div>
-
-    <p class="attr-bonus reveal"><strong>Bonus:</strong> we can also exclude leads from your other sources, reducing the chances you pay Meta to reach people already in your database.</p>
 
     <!-- ── The loop ────────────────────────────────────────────────
          One forward journey, one return path, one side path. Every
@@ -2970,7 +2988,31 @@
         </div>
       </div>
 
-      <p class="loop-caption">Most home-service CRMs stop at the lead. Alloy closes the loop.</p>
+    </div>
+
+    <!-- Everything below the graphic, per the new ordering: the picture
+         leads, the words explain it, the payoffs bank it.
+
+         The paragraph and the two payoffs share one row rather than
+         stacking as three separate blocks. Stacked, the section ended in
+         a long column of text under an already-tall graphic and the
+         payoffs read as an afterthought. Side by side, the explanation
+         and the "so what" are one thought — and the gold rules line up
+         with the paragraph's first line, which is what makes the pair
+         read as a set rather than two loose notes. -->
+    <div class="integration-foot reveal">
+      <p class="integration-lede"><strong>MarketSharp. Lead Perfection. ServiceTitan.</strong> Out of the box, they don&rsquo;t connect the web data from your ads to the appointments and sales stored in your CRM. We built an integration that does, so Meta&rsquo;s algorithm can learn which leads led to sales, and improve its targeting over time.</p>
+
+      <div class="payoffs">
+        <div class="payoff">
+          <h3 class="payoff-h">Smarter targeting over time</h3>
+          <p class="payoff-p">Every appointment and sale gives Meta another real outcome to learn from.</p>
+        </div>
+        <div class="payoff">
+          <h3 class="payoff-h">Fewer duplicate leads</h3>
+          <p class="payoff-p">Existing CRM leads can also be excluded from targeting, so you&rsquo;re not paying to reach people already in your database.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -3067,24 +3109,17 @@
            answers it with an outcome rather than an adjective. -->
       <div class="v2-pullquote">
         <p>&ldquo;We generated $100k in revenue on $7,500 in spend in our first month with Alloy Media. The leads have been tremendous.&rdquo;</p>
-        <!-- TODO(copy): attribution. The quote is real; the name under it is
-             not. A named client carries several times the weight of an
-             anonymous one at the exact moment someone is deciding whether to
-             hand over a phone number. -->
-        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Client Name &middot; Company</div>
+        <div class="by"><span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Ian, Owner at Elevated Windows &amp; Doors</div>
       </div>
     </div>
 
-    <p class="form-zone-trust">No pitch deck &middot; No obligation &middot; Takes 60 seconds</p>
   </div>
 </section>
 
 <!-- ============ FAQ ============================================
-     ⚠ PLACEHOLDER QUESTIONS. The brief says to use Fisher's FAQ as the
-     template — Fisher's are about roof age and hail, so what is carried
-     over here is the PATTERN (seven questions, the objection-shaped ones
-     first, accordion markup identical), not the wording. Alex is
-     supplying the real set. TODO(copy).
+     Questions and answers are Alex's, supplied 2026-09-14. The PATTERN
+     is Fisher's — seven items, the objection-shaped ones first, identical
+     accordion markup — but every word here is real now.
      ============================================================== -->
 <section class="sec sec-gray" id="faq">
   <div class="sec-inner">
@@ -3093,51 +3128,51 @@
     <div class="faq-list reveal">
 
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="faqToggle(this)">What does it cost to work with Alloy?</button>
+        <button type="button" class="faq-q" onclick="faqToggle(this)">What does it cost to work with Alloy Media?</button>
         <div class="faq-a">
-          <p>Placeholder. This is the first question everyone has and burying it costs more leads than answering it ever will. A range and what it depends on belongs here.</p>
+          <p>We charge between $2,000 &ndash; $3,500 per month, depending on the size of the campaign, and whether or not we run any additional lead generation platforms alongside Meta (e.g., Google Ads).</p>
         </div>
       </div>
 
       <div class="faq-item">
         <button type="button" class="faq-q" onclick="faqToggle(this)">How long before we see results?</button>
         <div class="faq-a">
-          <p>Placeholder. Worth splitting into two honest answers: when the ads start producing leads, and the longer window before the offline conversion data has taught the algorithm enough to change what the leads are worth.</p>
+          <p>Most clients see an immediate impact within the first 30 days.</p>
         </div>
       </div>
 
       <div class="faq-item">
         <button type="button" class="faq-q" onclick="faqToggle(this)">Do we have to use your landing pages?</button>
         <div class="faq-a">
-          <p>Placeholder.</p>
+          <p>No. We&rsquo;ve rigorously tested the base structure behind our landing pages and know it converts Meta traffic reliably, but if you have a landing page that&rsquo;s already working for your business that you&rsquo;d prefer to use, we&rsquo;re happy to work with it.</p>
         </div>
       </div>
 
       <div class="faq-item">
-        <button type="button" class="faq-q" onclick="faqToggle(this)">Who owns the ad account, the creative and the data?</button>
+        <button type="button" class="faq-q" onclick="faqToggle(this)">Who owns the ad account, the creative, the data?</button>
         <div class="faq-a">
-          <p>Placeholder. A real objection for anyone who has been burned by an agency that held the account hostage on the way out.</p>
+          <p>You do. The ad account stays in your Business Manager, the creative is yours to keep using, and the data stays with you. If we part ways, you keep everything.</p>
         </div>
       </div>
 
       <div class="faq-item">
         <button type="button" class="faq-q" onclick="faqToggle(this)">Will this work with our CRM?</button>
         <div class="faq-a">
-          <p>Placeholder. MarketSharp, Lead Perfection, ServiceTitan and JobNimbus are already wired; anything else is a scoping question.</p>
+          <p>Yes. All we need to set up our integrations is a daily CSV report documenting the dispositions/status of your leads.</p>
         </div>
       </div>
 
       <div class="faq-item">
         <button type="button" class="faq-q" onclick="faqToggle(this)">Do you work with competitors in our market?</button>
         <div class="faq-a">
-          <p>Placeholder.</p>
+          <p>No. We provide market exclusivity and will only work with one business per vertical in every market.</p>
         </div>
       </div>
 
       <div class="faq-item">
         <button type="button" class="faq-q" onclick="faqToggle(this)">What is the contract length?</button>
         <div class="faq-a">
-          <p>Placeholder.</p>
+          <p>The initial term is 90 days. After that, the agreement continues month-to-month.</p>
         </div>
       </div>
 
@@ -3660,26 +3695,31 @@
     sync();
   });
 
-  // ── Landing-page stepper ──────────────────────────────────────────────
-  // Click a step, the matching screen cross-fades in. No auto-rotation:
-  // a carousel that moves on its own competes with the copy beside it.
+  // ── Landing-page tab bar ──────────────────────────────────────────────
+  // Five tabs, one screen. The tabs are the only control — there is no
+  // counter or arrow to keep in sync, because every step is already
+  // visible and labelled. No auto-rotation: a panel that changes on its
+  // own competes with the copy above it.
   (function () {
-    var steps = document.querySelectorAll('.step[data-step]');
-    if (!steps.length) return;
+    var tabs = Array.prototype.slice.call(document.querySelectorAll('.step[data-step]'));
+    if (!tabs.length) return;
     var shots = document.querySelectorAll('.stage-shot[data-shot]');
-    steps.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var key = btn.dataset.step;
-        steps.forEach(function (b) {
-          var on = b === btn;
-          b.classList.toggle('is-active', on);
-          b.setAttribute('aria-pressed', on ? 'true' : 'false');
-        });
-        shots.forEach(function (img) {
-          img.classList.toggle('is-active', img.dataset.shot === key);
-        });
+
+    function show(i) {
+      var key = tabs[i].dataset.step;
+      tabs.forEach(function (b, n) {
+        b.classList.toggle('is-active', n === i);
+        b.setAttribute('aria-pressed', n === i ? 'true' : 'false');
       });
+      shots.forEach(function (img) {
+        img.classList.toggle('is-active', img.dataset.shot === key);
+      });
+    }
+
+    tabs.forEach(function (btn, n) {
+      btn.addEventListener('click', function () { show(n); });
     });
+    show(0);
   })();
 
 </script>
