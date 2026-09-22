@@ -1570,7 +1570,8 @@
   .tvid-frame {
     position: relative;
     width: 100%;
-    aspect-ratio: 9 / 16;
+    /* 3/4 to match the 2160x2880 source. Was 9/16 for the old YouTube Short. */
+    aspect-ratio: 3 / 4;
     background: #000;
     border: 1px solid var(--gray-2);
     border-radius: 12px;
@@ -2414,16 +2415,16 @@
       </div>
 
       <!-- ═══════════════════════════════════════════════════════════
-           VSL SLOT — wired 2026-09-11 to "Alloy Media Intro"
-           (youtu.be/nplyCc81fEU, Alloy Media channel).
+           VSL SLOT — rewired 2026-09-22 to Vimeo: "Updated 2 Min VSL w Music"
+           (vimeo.com/1229343079). 2:03, 16:9, which is what .vsl-frame
+           already is, so no CSS change was needed here.
 
-           ⚠ This is the UN-EDITED intro video, dropped in so the hero can
-           be seen with a real player in it. It is not the finished VSL and
-           the "4 min" label below is a guess — swap both when the real one
-           is recorded.
+           Vimeo rather than YouTube so the player carries no suggested-video
+           grid or host branding, and so watch-time analytics land in Vimeo.
+           Player params strip the title, byline, portrait and badge chrome.
 
-           It is a FACADE, not a live embed: the poster is YouTube's own
-           thumbnail and nothing from the player loads until someone clicks.
+           It is a FACADE, not a live embed: the poster is a local WebP and
+           nothing from the player loads until someone clicks.
            That keeps the host's script off the critical path of a page
            about to carry paid traffic. Host-agnostic — to swap video or
            host, change data-embed (and the poster) and nothing else:
@@ -2434,12 +2435,11 @@
            ═══════════════════════════════════════════════════════════ -->
       <div class="vsl-frame" id="vsl-frame">
         <button type="button" class="vsl-facade js-video-facade" id="vsl-facade"
-                data-embed="https://www.youtube-nocookie.com/embed/nplyCc81fEU?autoplay=1&amp;rel=0&amp;modestbranding=1"
-                data-poster="https://i.ytimg.com/vi/nplyCc81fEU/maxresdefault.jpg"
-                data-poster-fallback="https://i.ytimg.com/vi/nplyCc81fEU/hqdefault.jpg"
-                aria-label="Play: what&rsquo;s unique about Alloy Media">
+                data-embed="https://player.vimeo.com/video/1229343079?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;autoplay=1"
+                data-poster="img/vsl-poster.webp"
+                aria-label="Play the 2 minute overview">
           <span class="vsl-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.2v13.6L19 12z"/></svg></span>
-          <span class="vsl-facade-label">Watch the intro</span>
+          <span class="vsl-facade-label">Watch (2 min)</span>
         </button>
       </div>
 
@@ -2575,13 +2575,15 @@
     <div class="proof-grid reveal">
 
       <!-- ── Video testimonial ───────────────────────────────────────
-           "Elevated Windows & Doors Testimonial"
-           (youtube.com/shorts/TCbIhWgwQOc, Alloy Media channel).
+           Rewired 2026-09-22 to Vimeo: "TestimonialForWebsite"
+           (vimeo.com/1229344740). 0:51.
 
-           A 9:16 Short, so the frame is 9:16 and the poster is YouTube's
-           `oardefault.jpg` — the original-aspect thumbnail. The usual
-           hqdefault is a 16:9 crop and would sit letterboxed in a
-           vertical frame, so do not swap it for that one.
+           The source is 2160x2880, i.e. 3:4 portrait — NOT the 9:16 this
+           frame used to be, and NOT the 4:3 that Vimeo's own copy-paste
+           embed code suggests (it emits padding-top:75%, which is the
+           ratio inverted). .tvid-frame is 3/4 to match; if this video is
+           ever re-cut, check the real dimensions before trusting the
+           snippet Vimeo hands you.
 
            Same click-to-load facade as the hero VSL — no player JS until
            someone presses play.
@@ -2590,9 +2592,8 @@
       <div class="vid-testimonial">
         <div class="tvid-frame" id="tvid-frame">
           <button type="button" class="tvid-facade js-video-facade" id="tvid-facade"
-                  data-embed="https://www.youtube-nocookie.com/embed/TCbIhWgwQOc?autoplay=1&amp;rel=0&amp;modestbranding=1"
-                  data-poster="https://i.ytimg.com/vi/TCbIhWgwQOc/oardefault.jpg"
-                  data-poster-fallback="https://i.ytimg.com/vi/TCbIhWgwQOc/hqdefault.jpg"
+                  data-embed="https://player.vimeo.com/video/1229344740?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;autoplay=1"
+                  data-poster="img/testimonial-poster.webp"
                   aria-label="Play the Elevated Windows &amp; Doors testimonial">
             <span class="vsl-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.2v13.6L19 12z"/></svg></span>
           </button>
@@ -3617,9 +3618,9 @@
     if (!facades.length) return;
 
     facades.forEach(function (facade) {
-      // Poster. data-poster-fallback covers maxresdefault, which YouTube
-      // does not generate for every upload and which 404s silently when it
-      // is missing; hqdefault always exists.
+      // Poster. data-poster-fallback is optional and exists for hosts whose
+      // thumbnail URLs 404 silently (YouTube's maxresdefault did). The Vimeo
+      // posters are local files, so neither video sets a fallback now.
       var poster = facade.getAttribute('data-poster');
       var fallback = facade.getAttribute('data-poster-fallback');
       if (poster) {
