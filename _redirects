@@ -1,0 +1,3 @@
+# Everything that is not /v1 is the current site.
+# /v2/* existed while the rebuild was staged there; it is the root now.
+/v2/*  /  301
