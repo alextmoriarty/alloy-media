@@ -2423,14 +2423,13 @@
            grid or host branding, and so watch-time analytics land in Vimeo.
            Player params strip the title, byline, portrait and badge chrome.
 
-           DELIBERATELY NO data-poster. Every frame of this video carries the
-           burned-in motion graphic and a hard-coded caption from 0:01 onward,
-           so any still pulled from it puts competing headlines and subtitle
-           text directly under the H1 and makes the hero read as cluttered.
-           With no poster the facade falls back to its own dark teal gradient,
-           which is the clean state the section was designed around: one play
-           button, nothing else. If a clean still is ever exported from the
-           raw footage (no graphic, no caption), set data-poster to it.
+           Poster is a frame pulled from 1:24, where the burned-in motion
+           graphic that runs over the opening is gone. Cropped to 16:9 so the
+           subtitle line and the player chrome fall outside it, and framed so
+           his face sits dead centre -- the play button lands on it, which is
+           deliberate. Do NOT swap this for Vimeo's auto-picked thumbnail:
+           that one is the opening frame, graphic and caption included, and it
+           is what made the hero read as cluttered.
 
            It is a FACADE, not a live embed: nothing from the player loads
            until someone clicks.
@@ -2445,6 +2444,7 @@
       <div class="vsl-frame" id="vsl-frame">
         <button type="button" class="vsl-facade js-video-facade" id="vsl-facade"
                 data-embed="https://player.vimeo.com/video/1229343079?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;autoplay=1"
+                data-poster="img/vsl-poster.webp"
                 aria-label="Play the 2 minute overview">
           <span class="vsl-play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.5 5.2v13.6L19 12z"/></svg></span>
         </button>
